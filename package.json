@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^5.2.0",
+    "@blueprintjs/icons": "^5.1.5",
     "i18next": "^23.4.4",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
@@ -38,6 +39,7 @@
     "jest": "^29.6.3",
     "jest-css-modules-transform": "^4.4.2",
     "jest-environment-jsdom": "^29.6.3",
+    "sass": "^1.66.1",
     "ts-jest": "^29.1.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"

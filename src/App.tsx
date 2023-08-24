@@ -1,7 +1,10 @@
-import './index.css';
+import Button from './components/UI/Button/Button';
+import './index.scss';
+import './types/index.d.ts';
+import './theme.scss';
 
 function App() {
-  return <div>Hello World!</div>;
+  return <Button>Hello World!</Button>;
 }
 
 export default App;

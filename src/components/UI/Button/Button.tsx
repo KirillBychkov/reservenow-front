@@ -1,15 +1,16 @@
-// import { StyledButton } from './styles';
-import { Button as BpButton } from '@blueprintjs/core';
+import { Button as PrButton } from 'primereact/button';
 
 interface ButtonProps {
-  children: string;
+  children?: React.ReactNode;
+  icon?: React.ReactNode;
+  // label: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ children }) => {
+const Button: React.FC<ButtonProps> = ({ children, icon }) => {
   return (
-    <BpButton intent='primary' large>
+    <PrButton raised icon={icon} iconPos='left'>
       {children}
-    </BpButton>
+    </PrButton>
   );
 };
 

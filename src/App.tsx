@@ -1,10 +1,9 @@
 import Button from './components/UI/Button/Button';
-import './index.scss';
+import { Home } from '@blueprintjs/icons';
 import './types/index.d.ts';
-import './theme.scss';
 
 function App() {
-  return <Button>Hello World!</Button>;
+  return <Button icon={<Home />}>Hi</Button>;
 }
 
 export default App;

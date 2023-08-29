@@ -3,9 +3,12 @@
     background: $buttonBg;
     border: $buttonBorder;
     padding: $buttonPadding;
-    font-size: $fontSize;
+    font-size: $buttonFontSize;
     transition: $formElementTransition;
     border-radius: $buttonBorderRadius;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
 
     @include button-states {
         &:hover {

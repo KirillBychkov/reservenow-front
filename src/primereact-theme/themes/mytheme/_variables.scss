@@ -1,6 +1,6 @@
 $primaryColor: #7961DB;
+$primaryDarkColor: #634DBF;
 $primaryBgColor: #EDEFF2;
-$primaryDarkColor: #1E88E5;
 $primaryDarkerColor: #1976D2;
 $primaryTextColor: #ffffff;
 
@@ -16,7 +16,7 @@ $colors: (
     "bluegray": #607D8B,
     "purple": #9C27B0,
     "red": #FF4032,
-    "primary": $primaryColor
+    "primary": $primaryColor,
 );
 
 // Mandatory Designer Variables
@@ -38,9 +38,14 @@ $colors: (
     --surface-d:#dee2e6;
     --surface-e:#ffffff;
     --surface-f:#ffffff;
+    --text-heading-color:#111418;
+    --text-body-color:#1C2127;
     --text-color:#495057;
     --text-color-secondary:#6c757d;
     --primary-color:#7961DB;
+    --light-gray-4: #EDEFF2;
+    --light-gray-5: #F6F7F9;
+    --gray-2: #738091;
     --primary-color-text:#ffffff;
     --font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --surface-0: #ffffff;

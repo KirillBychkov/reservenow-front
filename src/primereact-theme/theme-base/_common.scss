@@ -29,6 +29,11 @@
     font-size: $primeIconFontSize;
 }
 
+.bp5-icon {
+    display: flex;
+    align-items: center;    
+}
+
 .p-icon {
     width: $primeIconFontSize;
     height: $primeIconFontSize;

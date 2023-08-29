@@ -29,6 +29,7 @@
 
 @mixin invalid-input() {
 	border-color: $inputErrorBorderColor;
+    color: $inputErrorBorderColor;
 }
 
 @mixin menuitem-link {

@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
+
+//scss types
+import './types/index.d.ts';
+
 //theme
 import './primereact-theme/themes/mytheme/theme.scss';
 

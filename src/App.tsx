@@ -1,9 +1,18 @@
-import Button from './components/UI/Button/Button';
-import { Home } from '@blueprintjs/icons';
-import './types/index.d.ts';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Signin from '@/pages/signin/signin.tsx';
 
 function App() {
-  return <Button icon={<Home />}>Hi</Button>;
+  return (
+    <Router>
+      <div className='App'>
+        <div className='Content'>
+          <Routes>
+            <Route path='/signin' element={<Signin />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

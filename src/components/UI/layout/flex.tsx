@@ -5,6 +5,7 @@ import classNames from 'classnames';
 interface FlexProps {
   children: React.ReactNode;
   options?: {
+    gap?: number;
     direction?: 'column';
     justify?: 'center' | 'space-between';
     align?: 'center' | 'space-between';
@@ -23,6 +24,7 @@ const Flex: React.FC<FlexProps> = ({ children, options }) => {
         [styles['flex--align-space-between']]:
           options?.align === 'space-between',
       })}
+      style={{ gap: `${options?.gap}rem` }}
     >
       {children}
     </div>

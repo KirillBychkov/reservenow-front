@@ -1,26 +1,34 @@
-import { useState } from 'react';
-import styles from './button.module.scss';
+import styles from './menuButton.module.scss';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 
 interface MenuButtonProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
+  page: string;
+  isSelected: boolean;
+  setIsSelected: (state: boolean) => void;
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ children, icon }) => {
-  const [selected, setSelected] = useState(false);
-
+const MenuButton: React.FC<MenuButtonProps> = ({
+  children,
+  icon,
+  page,
+  isSelected,
+  setIsSelected,
+}) => {
   return (
-    <button
+    <NavLink
+      to={page}
       type='button'
-      onClick={() => setSelected(!selected)}
+      onClick={() => setIsSelected(true)}
       className={classNames(styles['menu-button'], {
-        [styles['menu-button--selected']]: selected,
+        [styles['menu-button--selected']]: isSelected,
       })}
     >
       {icon && <div className={styles['menu-button-icon']}>{icon}</div>}
       {children}
-    </button>
+    </NavLink>
   );
 };
 

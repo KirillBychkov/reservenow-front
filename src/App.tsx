@@ -5,13 +5,14 @@ import Clients from '@/pages/clients/clients';
 import Requests from '@/pages/requests/requests';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
+import Flex from './components/UI/layout/flex';
 
 const App = () => {
   return (
     <Router>
       <div className='App'>
-        <div className='Content'>
-          <Header />
+        <Header />
+        <Flex>
           <Sidebar />
           <Routes>
             <Route path='/signin' element={<Signin />} />
@@ -19,7 +20,7 @@ const App = () => {
             <Route path='/clients' element={<Clients />} />
             <Route path='/requests' element={<Requests />} />
           </Routes>
-        </div>
+        </Flex>
       </div>
     </Router>
   );

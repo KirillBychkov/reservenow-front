@@ -5,6 +5,8 @@ interface ButtonProps {
   icon?: React.ReactNode;
   severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help';
   outlined?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  fill?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,9 +14,13 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   severity,
   outlined,
+  type = 'button',
+  fill,
 }) => {
   return (
     <PrButton
+      style={{ width: fill ? '100%' : 'auto' }}
+      type={type}
       icon={icon}
       outlined={outlined}
       severity={severity}

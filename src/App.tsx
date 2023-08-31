@@ -5,22 +5,34 @@ import Clients from '@/pages/clients/clients';
 import Requests from '@/pages/requests/requests';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
-import Flex from './components/UI/layout/flex';
+import Flex from '@/components/UI/layout/flex';
 
 const App = () => {
   return (
     <Router>
       <div className='App'>
-        <Header />
-        <Flex>
-          <Sidebar />
-          <Routes>
-            <Route path='/signin' element={<Signin />} />
-            <Route path='/' element={<Home />} />
-            <Route path='/clients' element={<Clients />} />
-            <Route path='/requests' element={<Requests />} />
-          </Routes>
-        </Flex>
+        <Routes>
+          {/* Routes without Header and Sidebar */}
+          <Route path='/signin' element={<Signin />} />
+
+          {/* Routes with Header and Sidebar */}
+          <Route
+            path='*'
+            element={
+              <>
+                <Header />
+                <Flex>
+                  <Sidebar />
+                  <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/clients' element={<Clients />} />
+                    <Route path='/requests' element={<Requests />} />
+                  </Routes>
+                </Flex>
+              </>
+            }
+          />
+        </Routes>
       </div>
     </Router>
   );

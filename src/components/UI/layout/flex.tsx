@@ -10,12 +10,13 @@ interface FlexProps {
     justify?: 'center' | 'space-between';
     align?: 'center' | 'space-between';
   };
+  className?: string;
 }
 
-const Flex: React.FC<FlexProps> = ({ children, options }) => {
+const Flex: React.FC<FlexProps> = ({ children, options, className }) => {
   return (
     <div
-      className={classNames(styles.flex, {
+      className={classNames(styles.flex, className, {
         [styles['flex--column']]: options?.direction === 'column',
         [styles['flex--justify-center']]: options?.justify === 'center',
         [styles['flex--justify-space-between']]:

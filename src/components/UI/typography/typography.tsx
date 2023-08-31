@@ -1,34 +1,65 @@
 import classNames from 'classnames';
 import styles from './typography.module.scss';
 
-export const Heading1: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <h1 className={styles.heading1}>{children}</h1>;
+type textColor = 'primary' | 'error';
+interface HeadingProps {
+  children: React.ReactNode;
+  textColor?: textColor;
+}
+
+export const Heading1: React.FC<HeadingProps> = ({ children, textColor }) => {
+  return (
+    <h1
+      className={classNames(styles.heading, styles['heading-1'], {
+        [styles[`heading-${textColor}`]]: textColor,
+      })}
+    >
+      {children}
+    </h1>
+  );
 };
 
-export const Heading2: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <h2 className={styles.heading2}>{children}</h2>;
+export const Heading2: React.FC<HeadingProps> = ({ children, textColor }) => {
+  return (
+    <h2
+      className={classNames(styles.heading, styles['heading-2'], {
+        [styles[`heading-${textColor}`]]: textColor,
+      })}
+    >
+      {children}
+    </h2>
+  );
 };
 
-export const Heading3: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <h3 className={styles.heading3}>{children}</h3>;
+export const Heading3: React.FC<HeadingProps> = ({ children, textColor }) => {
+  return (
+    <h3
+      className={classNames(styles.heading, styles['heading-3'], {
+        [styles[`heading-${textColor}`]]: textColor,
+      })}
+    >
+      {children}
+    </h3>
+  );
 };
 
 type ParagraphSize = 'normal' | 'large' | 'small';
-
-export const Paragraph: React.FC<{
+interface ParagraphProps {
   children: React.ReactNode;
   size?: ParagraphSize;
-}> = ({ children, size = 'normal' }) => {
+  textColor?: textColor;
+}
+
+export const Paragraph: React.FC<ParagraphProps> = ({
+  children,
+  size = 'normal',
+  textColor,
+}) => {
   return (
     <p
       className={classNames(styles.paragraph, {
         [styles[`paragraph--${size}`]]: size,
+        [styles[`paragraph-${textColor}`]]: textColor,
       })}
     >
       {children}

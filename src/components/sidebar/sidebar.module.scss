@@ -1,5 +1,16 @@
-
 .sidebar {
+  .separator {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(224, 225, 226, 0) 0%,
+      #e0e1e2 49.52%,
+      rgba(224, 225, 226, 0.15625) 99.04%
+    );
+    margin-bottom: 25px;
+    width: 100%;
+  }
+
   max-width: 275px;
   width: 100%;
   padding: 0 1rem;
@@ -7,6 +18,6 @@
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
-    gap: .25rem;
+    gap: 0.25rem;
   }
 }

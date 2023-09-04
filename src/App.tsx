@@ -6,7 +6,7 @@ import Requests from '@/pages/requests/requests';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
 import Flex from '@/components/UI/layout/flex';
-import AddClient from '@/pages/clients/clientsAdd/addClientForm';
+import AddClient from '@/pages/clients/clientsAdd/addClient';
 
 const App = () => {
   return (

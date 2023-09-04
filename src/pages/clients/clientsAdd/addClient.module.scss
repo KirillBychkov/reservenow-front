@@ -1,4 +1,3 @@
-
 .addClient {
   padding: 24px;
   width: 100%;
@@ -6,12 +5,9 @@
     margin-bottom: 0.63rem;
   }
   .formContainer {
-    margin-top: 1.5rem;
+    max-width: 40rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    
+    margin: 0 auto;
+    margin-top: 1.5rem;
   }
 }

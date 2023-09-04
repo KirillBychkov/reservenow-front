@@ -3,7 +3,7 @@ import React from 'react';
 import SigninForm from '@/components/forms/signinForm';
 import Flex from '@/components/UI/layout/flex';
 import styles from './signin.module.scss';
-import { ReactComponent as Logo } from '@/assets/logo.svg';
+import { ReactComponent as Logo } from '@/assets/logo-white-indigo.svg';
 
 const Signin: React.FC = () => {
   return (

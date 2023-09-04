@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormField from '@/components/UI/input/input';
 import Button from '@/components/UI/buttons/button';
-import styles from './signin.module.scss';
+import styles from './signinForm.module.scss';
 import { Password } from 'primereact/password';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
@@ -28,8 +28,6 @@ const SigninForm: React.FC = () => {
       resetForm();
     },
   });
-
-  console.log(formik.values);
 
   return (
     <form onSubmit={formik.handleSubmit}>

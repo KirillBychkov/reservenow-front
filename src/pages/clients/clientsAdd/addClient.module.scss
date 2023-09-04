@@ -1,0 +1,17 @@
+
+.addClient {
+  padding: 24px;
+  width: 100%;
+  .heading {
+    margin-bottom: 0.63rem;
+  }
+  .formContainer {
+    margin-top: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    
+  }
+}

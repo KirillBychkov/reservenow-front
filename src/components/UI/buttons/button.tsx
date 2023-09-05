@@ -7,6 +7,7 @@ interface ButtonProps {
   outlined?: boolean;
   type?: 'button' | 'submit' | 'reset';
   fill?: boolean;
+  onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   outlined,
   type = 'button',
   fill,
+  onClick,
 }) => {
   return (
     <PrButton
@@ -25,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       outlined={outlined}
       severity={severity}
       iconPos='left'
+      onClick={onClick}
     >
       {children}
     </PrButton>

@@ -11,6 +11,7 @@
  html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
+  height: 100%;
 }
 
 /* Sections
@@ -24,6 +25,7 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   background-color: var(--light-gray-4);
+  height: 100%;
 }
 
 /**
@@ -169,6 +171,10 @@ textarea {
   margin: 0; /* 2 */
 }
 
+
+a {
+  text-decoration: none;
+}
 /**
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.

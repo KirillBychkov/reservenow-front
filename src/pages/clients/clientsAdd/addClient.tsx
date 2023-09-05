@@ -4,6 +4,7 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import AddClientForm from '@/components/forms/addClientForm';
+import { UserStatus } from '@/types/user';
 
 const AddClient: React.FC = () => {
   return (
@@ -19,7 +20,17 @@ const AddClient: React.FC = () => {
         ]}
       />
       <div className={styles.formContainer}>
-        <AddClientForm />
+        <AddClientForm
+          initialValues={{
+            firstName: 'Nazar',
+            lastName: 'Vovk',
+            id: 1,
+            email: 'nvovk.2004@gmail.com',
+            phone: '0683036415',
+            companyName: 'Ficus Technologies',
+            status: UserStatus.PENDING,
+          }}
+        />
       </div>
     </div>
   );

@@ -36,7 +36,7 @@ const Clients: React.FC = () => {
       </div>
       <div className={styles.content}>
         <Heading2 textColor='primary'>Наразі немає жодного клієнта</Heading2>
-        <Button icon={<Plus color='white' onClick={() => navigate('add')} />}>
+        <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
           Додати клієнта
         </Button>
       </div>

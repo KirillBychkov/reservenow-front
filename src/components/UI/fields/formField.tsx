@@ -1,6 +1,5 @@
-import { Paragraph } from '@/components/UI/typography/typography';
 import React from 'react';
-import styles from './input.module.scss';
+import styles from './formField.module.scss';
 
 interface FormFieldProps {
   label?: string;
@@ -18,11 +17,11 @@ const FormField: React.FC<FormFieldProps> = ({
   return (
     <label>
       <div className={styles.label}>
-        <Paragraph size='small'>{label}</Paragraph>
+        <span className='paragraph paragraph=small'>{label}</span>
         {!isValid && (
-          <Paragraph textColor='error' size='small'>
+          <span className='paragraph paragraph=small paragraph-error'>
             {invalidMessage}
-          </Paragraph>
+          </span>
         )}
       </div>
       {children}

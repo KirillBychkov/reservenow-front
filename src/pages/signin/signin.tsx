@@ -1,4 +1,3 @@
-import { Heading1, Paragraph } from '@/components/UI/typography/typography';
 import React from 'react';
 import SigninForm from '@/components/forms/signinForm';
 import Flex from '@/components/UI/layout/flex';
@@ -11,10 +10,12 @@ const Signin: React.FC = () => {
       <div className={styles.signin}>
         <div className={styles.container}>
           <div className={styles.heading}>
-            <Heading1 textColor='primary'>Увійти до ReservNow</Heading1>
-            <Paragraph>
+            <h1 className='heading heading-1 heading-primary'>
+              Увійти до ReservNow
+            </h1>
+            <p className='paragraph'>
               Введіть адресу електронної пошти та пароль для входу!
-            </Paragraph>
+            </p>
           </div>
           <SigninForm />
         </div>

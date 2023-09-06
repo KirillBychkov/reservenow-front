@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import FormField from '@/components/UI/input/input';
+import FormField from '@/components/UI/fields/formField';
 import Button from '@/components/UI/buttons/button';
 import { InputText } from 'primereact/inputtext';
 import { InputMask } from 'primereact/inputmask';

@@ -30,9 +30,7 @@ const AddClient: React.FC<AddClientProps> = ({ initialValues }) => {
         model={[
           { label: 'Клієнти', url: '/clients' },
           {
-            label: initialValues
-              ? `${initialValues?.firstName} ${initialValues?.lastName}`
-              : 'Додати клієнта',
+            label: initialValues ? `${initialValues.id}` : 'Додати клієнта',
             url: '/clients/add',
           },
         ]}

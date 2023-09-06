@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './input.module.scss';
+import styles from './formField.module.scss';
 
 interface FormFieldProps {
   label?: string;

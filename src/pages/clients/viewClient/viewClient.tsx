@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './viewClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home, ChevronLeft } from '@blueprintjs/icons';
@@ -12,7 +12,22 @@ interface ViewClientProps {
 
 const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
   const navigate = useNavigate();
-  console.log(initialValues);
+
+  const UserInfoList = useMemo(
+    () =>
+      Object.entries(initialValues).map(([key, value], index) => {
+        if (key === 'id' || key === 'status' || !value) return null;
+        return (
+          <div className={styles.clientInfoItem} key={index}>
+            <h4 className='heading heading-4'>
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+            </h4>
+            <p className='paragraph'>{value}</p>
+          </div>
+        );
+      }),
+    [initialValues]
+  );
 
   return (
     <div className={styles.viewClient}>
@@ -50,17 +65,7 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
             Загальна інформація
             <span className='heading heading-4'>{initialValues.status}</span>
           </h4>
-          {Object.entries(initialValues).map(([key, value], index) => {
-            if (key === 'id' || key === 'status' || !value) return null;
-            return (
-              <div className={styles.clientInfoItem} key={index}>
-                <h4 className='heading heading-4'>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </h4>
-                <p className='paragraph'>{value}</p>
-              </div>
-            );
-          })}
+          {UserInfoList}
         </div>
       </div>
     </div>

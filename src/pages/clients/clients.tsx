@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './clients.module.scss';
-import { Heading2, Heading3 } from '@/components/UI/typography/typography';
 import { InputText } from 'primereact/inputtext';
 import { Search, Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -11,7 +10,7 @@ const Clients: React.FC = () => {
 
   return (
     <div className={styles.clients}>
-      <Heading3>Клієнти</Heading3>
+      <h3 className='heading heading-3'>Клієнти</h3>
       <div className={styles.controls}>
         <div className={styles.search}>
           <span className='p-input-icon-left'>
@@ -35,7 +34,9 @@ const Clients: React.FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        <Heading2 textColor='primary'>Наразі немає жодного клієнта</Heading2>
+        <h2 className='heading heading-2 heading-primary'>
+          Наразі немає жодного клієнта
+        </h2>
         <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
           Додати клієнта
         </Button>

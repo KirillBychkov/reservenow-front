@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './homeCard.module.scss';
-import { Heading3 } from '../typography/typography';
 import { NavLink } from 'react-router-dom';
 
 interface HomeCardProps {
@@ -14,7 +13,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ path, icon, heading }) => {
     <div className={styles.card}>
       <NavLink to={path}>
         <div className={styles.icon}>{icon}</div>
-        <Heading3>{heading}</Heading3>
+        <h3 className='heading heading-3'>{heading}</h3>
       </NavLink>
     </div>
   );

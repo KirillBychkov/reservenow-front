@@ -18,9 +18,9 @@ interface AddClientFormProps {
 
 const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
   const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    surname: Yup.string().required('Required'),
-    phoneNumber: Yup.string().required('Required'),
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
+    phone: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email format').required('Required'),
     companyName: Yup.string().required('Required'),
   });
@@ -51,7 +51,9 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.form}>
-        <h4 className='heading-4 heading-primary'>Загальна інформація</h4>
+        <h4 className='heading heading-4 heading-primary'>
+          Загальна інформація
+        </h4>
         <FormField
           label="Ім'я*"
           isValid={!(formik.touched.firstName && formik.errors.firstName)}

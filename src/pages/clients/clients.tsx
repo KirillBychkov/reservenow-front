@@ -1,17 +1,18 @@
 import React from 'react';
 import styles from './clients.module.scss';
-import { Heading2, Heading3 } from '@/components/UI/typography/typography';
 import { InputText } from 'primereact/inputtext';
 import { Search, Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Clients: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className={styles.clients}>
-      <Heading3>Клієнти</Heading3>
+      <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
         <div className={styles.search}>
           <span className='p-input-icon-left'>
@@ -21,23 +22,25 @@ const Clients: React.FC = () => {
             <InputText placeholder='Search' className={styles.input} />
           </span>
           <div className={styles.buttonGroup}>
-            <Button>Пошук</Button>
-            <Button severity='secondary'>Очистити</Button>
+            <Button>{t('clients.search')}</Button>
+            <Button severity='secondary'>{t('clients.clear')}</Button>
           </div>
         </div>
         <div className={styles.buttonGroup}>
           <Button icon={<Export color='white' />} severity='secondary'>
-            Експорт
+            {t('clients.export')}
           </Button>
           <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
-            Додати клієнта
+            {t('clients.add')}
           </Button>
         </div>
       </div>
       <div className={styles.content}>
-        <Heading2 textColor='primary'>Наразі немає жодного клієнта</Heading2>
-        <Button icon={<Plus color='white' onClick={() => navigate('add')} />}>
-          Додати клієнта
+        <h2 className='heading heading-2 heading-primary'>
+          {t('clients.null')}
+        </h2>
+        <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
+          {t('clients.add')}
         </Button>
       </div>
     </div>

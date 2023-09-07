@@ -8,6 +8,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   fill?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   fill,
   onClick,
+  className,
 }) => {
   return (
     <PrButton
@@ -28,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
       severity={severity}
       iconPos='left'
       onClick={onClick}
+      className={className}
     >
       {children}
     </PrButton>

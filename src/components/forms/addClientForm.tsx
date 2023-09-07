@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import FormField from '@/components/UI/input/input';
+import FormField from '@/components/UI/fields/formField';
 import Button from '@/components/UI/buttons/button';
 import { InputText } from 'primereact/inputtext';
 import { InputMask } from 'primereact/inputmask';
@@ -9,81 +9,101 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
+import { User, UserStatus, StatusOptions } from '@/types/user';
+import { Dropdown } from 'primereact/dropdown';
+import { useTranslation } from 'react-i18next';
 
-const AddClientForm: React.FC = () => {
+interface AddClientFormProps {
+  initialValues?: User;
+}
+
+const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    surname: Yup.string().required('Required'),
-    phoneNumber: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid email format').required('Required'),
-    companyName: Yup.string().required('Required'),
+    firstName: Yup.string().required(t('invalid.required')),
+    lastName: Yup.string().required(t('invalid.required')),
+    phone: Yup.string().required(t('invalid.required')),
+    email: Yup.string()
+      .email(t('invalid.email'))
+      .required(t('invalid.required')),
+    companyName: Yup.string().required(t('invalid.required')),
   });
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      surname: '',
-      phoneNumber: '',
+    initialValues: initialValues || {
+      firstName: '',
+      lastName: '',
+      phone: '',
       email: '',
       companyName: '',
       description: '',
+      status: UserStatus.PENDING,
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      // TODO: implement submit functionality
       resetForm();
     },
   });
 
+  const handleDeleteUser = () => {
+    // TODO: implement delete functionality
+  };
+
+  const handleClearForm = () => formik.resetForm();
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.form}>
-        <h4 className='heading-4 heading-primary'>Загальна інформація</h4>
+        <h4 className='heading heading-4 heading-primary'>
+          {t('forms.overallInfo')}
+        </h4>
         <FormField
-          label="Ім'я*"
-          isValid={!(formik.touched.name && formik.errors.name)}
-          invalidMessage={formik.errors.name}
+          label={t('forms.firstName')}
+          isValid={!(formik.touched.firstName && formik.errors.firstName)}
+          invalidMessage={formik.errors.firstName}
         >
           <InputText
-            name='name'
-            value={formik.values.name}
+            name='firstName'
+            value={formik.values.firstName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Ім'я"
-            className={classNames(isValidClassname(formik, 'name'))}
+            placeholder={t('forms.enterFirstName')}
+            className={classNames(isValidClassname(formik, 'firstName'))}
           />
         </FormField>
         <FormField
-          label='Прізвище*'
-          isValid={!(formik.touched.surname && formik.errors.surname)}
-          invalidMessage={formik.errors.surname}
+          label={t('forms.lastName')}
+          isValid={!(formik.touched.lastName && formik.errors.lastName)}
+          invalidMessage={formik.errors.lastName}
         >
           <InputText
-            name='surname'
-            value={formik.values.surname}
+            name='lastName'
+            value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Прізвище'
-            className={classNames(isValidClassname(formik, 'surname'))}
+            placeholder={t('forms.enterLastName')}
+            className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
         <FormField
-          label='Номер телефону*'
-          isValid={!(formik.touched.phoneNumber && formik.errors.phoneNumber)}
-          invalidMessage={formik.errors.phoneNumber}
+          label={t('forms.phone')}
+          isValid={!(formik.touched.phone && formik.errors.phone)}
+          invalidMessage={formik.errors.phone}
         >
           <InputMask
-            name='phoneNumber'
+            name='phone'
             mask='+38 (999) 999-9999'
             placeholder='+38 (___) ___-____'
-            value={formik.values.phoneNumber}
+            value={formik.values.phone}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classNames(isValidClassname(formik, 'phoneNumber'))}
+            className={classNames(isValidClassname(formik, 'phone'))}
           />
         </FormField>
         <FormField
-          label='Електронна адреса*'
+          label={t('forms.email')}
           isValid={!(formik.touched.email && formik.errors.email)}
           invalidMessage={formik.errors.email}
         >
@@ -92,12 +112,12 @@ const AddClientForm: React.FC = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Електронна адреса'
+            placeholder={t('forms.enterEmail')}
             className={classNames(isValidClassname(formik, 'email'))}
           />
         </FormField>
         <FormField
-          label='Назва компанії*'
+          label={t('forms.companyName')}
           isValid={!(formik.touched.companyName && formik.errors.companyName)}
           invalidMessage={formik.errors.companyName}
         >
@@ -106,26 +126,53 @@ const AddClientForm: React.FC = () => {
             value={formik.values.companyName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Назва компанії'
+            placeholder={t('forms.enterCompanyName')}
             className={classNames(isValidClassname(formik, 'companyName'))}
           />
         </FormField>
-        <FormField label='Опис'>
+        <FormField label={t('forms.description')}>
           <InputTextarea
             autoResize
             name='description'
             value={formik.values.description}
             onChange={formik.handleChange}
-            placeholder='Введіть опис'
+            placeholder={t('forms.enterDescription')}
           />
         </FormField>
+        {initialValues && (
+          <FormField label={t('forms.status')}>
+            <Dropdown
+              className={styles.dropdown}
+              name='status'
+              value={formik.values.status}
+              onChange={formik.handleChange}
+              options={StatusOptions}
+            />
+          </FormField>
+        )}
       </div>
       <div className={styles.controls}>
-        <Button severity='danger' fill onClick={() => formik.resetForm()}>
-          Скасувати
+        {initialValues && (
+          <Button
+            severity='secondary'
+            fill
+            className={styles.button}
+            outlined
+            onClick={handleDeleteUser}
+          >
+            {t('actions.delete')}
+          </Button>
+        )}
+        <Button
+          severity='danger'
+          fill
+          className={styles.button}
+          onClick={handleClearForm}
+        >
+          {t('actions.clear')}
         </Button>
-        <Button type='submit' fill>
-          Зберегти
+        <Button type='submit' fill className={styles.button}>
+          {t('actions.submit')}
         </Button>
       </div>
     </form>

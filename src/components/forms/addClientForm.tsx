@@ -11,18 +11,23 @@ import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
 import { User, UserStatus, StatusOptions } from '@/types/user';
 import { Dropdown } from 'primereact/dropdown';
+import { useTranslation } from 'react-i18next';
 
 interface AddClientFormProps {
   initialValues?: User;
 }
 
 const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object({
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required'),
-    phone: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid email format').required('Required'),
-    companyName: Yup.string().required('Required'),
+    firstName: Yup.string().required(t('invalid.required')),
+    lastName: Yup.string().required(t('invalid.required')),
+    phone: Yup.string().required(t('invalid.required')),
+    email: Yup.string()
+      .email(t('invalid.email'))
+      .required(t('invalid.required')),
+    companyName: Yup.string().required(t('invalid.required')),
   });
 
   const formik = useFormik({
@@ -52,10 +57,10 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.form}>
         <h4 className='heading heading-4 heading-primary'>
-          Загальна інформація
+          {t('forms.overallInfo')}
         </h4>
         <FormField
-          label="Ім'я*"
+          label={t('forms.firstName')}
           isValid={!(formik.touched.firstName && formik.errors.firstName)}
           invalidMessage={formik.errors.firstName}
         >
@@ -64,12 +69,12 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             value={formik.values.firstName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Ім'я"
+            placeholder={t('forms.enterFirstName')}
             className={classNames(isValidClassname(formik, 'firstName'))}
           />
         </FormField>
         <FormField
-          label='Прізвище*'
+          label={t('forms.lastName')}
           isValid={!(formik.touched.lastName && formik.errors.lastName)}
           invalidMessage={formik.errors.lastName}
         >
@@ -78,12 +83,12 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Прізвище'
+            placeholder={t('forms.enterLastName')}
             className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
         <FormField
-          label='Номер телефону*'
+          label={t('forms.phone')}
           isValid={!(formik.touched.phone && formik.errors.phone)}
           invalidMessage={formik.errors.phone}
         >
@@ -98,7 +103,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
           />
         </FormField>
         <FormField
-          label='Електронна адреса*'
+          label={t('forms.email')}
           isValid={!(formik.touched.email && formik.errors.email)}
           invalidMessage={formik.errors.email}
         >
@@ -107,12 +112,12 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Електронна адреса'
+            placeholder={t('forms.enterEmail')}
             className={classNames(isValidClassname(formik, 'email'))}
           />
         </FormField>
         <FormField
-          label='Назва компанії*'
+          label={t('forms.companyName')}
           isValid={!(formik.touched.companyName && formik.errors.companyName)}
           invalidMessage={formik.errors.companyName}
         >
@@ -121,21 +126,21 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             value={formik.values.companyName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='Назва компанії'
+            placeholder={t('forms.enterCompanyName')}
             className={classNames(isValidClassname(formik, 'companyName'))}
           />
         </FormField>
-        <FormField label='Опис'>
+        <FormField label={t('forms.description')}>
           <InputTextarea
             autoResize
             name='description'
             value={formik.values.description}
             onChange={formik.handleChange}
-            placeholder='Введіть опис'
+            placeholder={t('forms.enterDescription')}
           />
         </FormField>
         {initialValues && (
-          <FormField label='Статус'>
+          <FormField label={t('forms.status')}>
             <Dropdown
               className={styles.dropdown}
               name='status'
@@ -155,7 +160,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             outlined
             onClick={handleDeleteUser}
           >
-            Видалити
+            {t('actions.delete')}
           </Button>
         )}
         <Button
@@ -164,10 +169,10 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
           className={styles.button}
           onClick={handleClearForm}
         >
-          Скасувати
+          {t('actions.clear')}
         </Button>
         <Button type='submit' fill className={styles.button}>
-          Зберегти
+          {t('actions.submit')}
         </Button>
       </div>
     </form>

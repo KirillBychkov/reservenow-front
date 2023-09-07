@@ -5,6 +5,7 @@ import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { User } from '@/types/user';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface ViewClientProps {
   initialValues: User;
@@ -12,6 +13,7 @@ interface ViewClientProps {
 
 const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const UserInfoList = useMemo(
     () =>
@@ -19,14 +21,12 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
         if (key === 'id' || key === 'status' || !value) return null;
         return (
           <div className={styles.clientInfoItem} key={index}>
-            <h4 className='heading heading-4'>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </h4>
+            <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
             <p className='paragraph'>{value}</p>
           </div>
         );
       }),
-    [initialValues]
+    [initialValues, t]
   );
 
   return (
@@ -37,7 +37,7 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
-          { label: 'Клієнти', url: '/clients' },
+          { label: t('clients.clients'), url: '/clients' },
           {
             label: `${initialValues.id}`,
             url: '/clients/view',
@@ -53,7 +53,7 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
           onClick={() => navigate('/clients')}
         >
           <ChevronLeft />
-          Повернутися назад
+          {t('actions.goBack')}
         </a>
         <div className={styles.clientInfo}>
           <h4
@@ -62,7 +62,7 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
               styles.status
             )}
           >
-            Загальна інформація
+            {t('forms.overallInfo')}
             <span className='heading heading-4'>{initialValues.status}</span>
           </h4>
           {UserInfoList}

@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
+//translations
+import './i18next.ts';
+
 //scss types
 import './types/index.d.ts';
 

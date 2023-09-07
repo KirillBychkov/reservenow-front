@@ -1,0 +1,70 @@
+{
+  "header": {},
+  "home": {
+    "clients": "Клієнти",
+    "requests": "Запити"
+  },
+  "sidebar": {
+    "home": "Головна",
+    "clients": "Клієнти",
+    "requests": "Запити"
+  },
+  "signin": {
+    "heading": "Увійти до ReservNow",
+    "subheading": "Введіть адресу електронної пошти та пароль для входу!"
+  },
+  "clients": {
+    "clients": "Клієнти",
+    "search": "Пошук",
+    "add": "Додати клієнта",
+    "clear": "Очистити",
+    "export": "Експорт",
+    "null": "Наразі немає клієнтів"
+  },
+  "requests": {
+    "requests": "Запити"
+  },
+  "forms": {
+    "overallInfo": "Загальна інформація",
+
+    "email": "Електронна пошта",
+    "enterEmail": "Введіть адресу електронної пошти",
+    "password": "Пароль",
+    "enterPassword": "Введіть пароль",
+    "firstName": "Ім'я",
+    "enterFirstName": "Введіть ім'я",
+    "lastName": "Прізвище",
+    "enterLastName": "Введіть прізвище",
+    "phone": "Номер телефону",
+    "enterPhone": "Введіть номер телефону",
+    "companyName": "Назва компанії",
+    "enterCompanyName": "Введіть назву компанії",
+    "description": "Опис",
+    "enterDescription": "Введіть опис",
+    "status": "Статус",
+    "enterStatus": "Оберіть статус"
+  },
+  "invalid": {
+    "required": "Обов'язкове поле",
+    "email": "Невірний формат електронної пошти",
+    "passwordLength": "Пароль повинен містити не менше 6 символів"
+  },
+  "actions": {
+    "add": "Додати",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "submit": "Підтвердити",
+    "close": "Закрити",
+    "search": "Пошук",
+    "clear": "Очистити",
+    "export": "Експорт",
+    "signin": "Увійти",
+    "signout": "Вийти",
+    "back": "Назад",
+    "goBack": "Повернутися назад",
+    "addClient": "Додати клієнта",
+    "editClient": "Редагувати клієнта"
+  }
+}

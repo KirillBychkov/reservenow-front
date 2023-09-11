@@ -30,8 +30,9 @@ const App = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/clients' element={<Clients />} />
                     <Route path='/clients/add' element={<AddClient />} />
+                    <Route path='/clients/:id/edit' element={<AddClient />} />
                     <Route
-                      path='/clients/view'
+                      path='/clients/:id'
                       element={
                         <ViewClient
                           initialValues={{

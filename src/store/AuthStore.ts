@@ -2,7 +2,7 @@ import { IAccount } from '@/models/IUser';
 import AuthService from '@/services/authService';
 import { makeAutoObservable } from 'mobx';
 
-export default class AuthStore {
+class AuthStore {
   user = {} as IAccount;
   isAuth = false;
 
@@ -42,7 +42,7 @@ export default class AuthStore {
 
   async checkAuth() {
     try {
-      const response = await AuthService.verify();
+      const response = await AuthService.getUser();
       localStorage.setItem('token', response.data.access_token);
       this.setAuth(true);
       this.setUser(response.data.account);
@@ -51,3 +51,6 @@ export default class AuthStore {
     }
   }
 }
+
+const authStore = new AuthStore();
+export default authStore;

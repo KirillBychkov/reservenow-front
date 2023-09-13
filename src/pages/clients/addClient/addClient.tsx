@@ -4,14 +4,29 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import AddClientForm from '@/components/forms/addClientForm';
-import { User } from '@/types/user';
+import { User, UserStatus } from '@/types/user';
 import { useTranslation } from 'react-i18next';
-interface AddClientProps {
-  initialValues?: User;
-}
+import { useParams } from 'react-router-dom';
 
-const AddClient: React.FC<AddClientProps> = ({ initialValues }) => {
+const AddClient: React.FC = () => {
   const { t } = useTranslation();
+
+  const { id } = useParams();
+  console.log(id);
+
+  // TODO: get user by id from Mobx store
+  const initialValues = id
+    ? ({
+        firstName: 'Nazar',
+        lastName: 'Vovk',
+        id: 1,
+        email: 'nvovk.2004@gmail.com',
+        phone: '+380683036415',
+        companyName: 'Ficus Technologies',
+        status: UserStatus.PENDING,
+        description: 'Lorem ipsum dolor sit amet',
+      } as User)
+    : undefined;
 
   return (
     <div className={styles.addClient}>

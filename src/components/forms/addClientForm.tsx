@@ -12,6 +12,7 @@ import styles from './addClientForm.module.scss';
 import { User, UserStatus, StatusOptions } from '@/types/user';
 import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
+import UserService from '@/services/userService';
 
 interface AddClientFormProps {
   initialValues?: User;
@@ -41,8 +42,19 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
       status: UserStatus.PENDING,
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      // TODO: implement submit functionality
+    onSubmit: async (values, { resetForm }) => {
+      const response = await UserService.createUser({
+        email: values.email,
+        user: {
+          first_name: values.firstName,
+          last_name: values.lastName,
+          phone: values.phone,
+          domain_url: values.companyName,
+          description: values.description,
+        },
+      });
+      console.log(response);
+
       resetForm();
     },
   });

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@blueprintjs/icons": "^5.1.5",
+    "axios": "^1.5.0",
     "classnames": "^2.3.2",
     "formik": "^2.4.3",
     "i18next": "^23.4.4",

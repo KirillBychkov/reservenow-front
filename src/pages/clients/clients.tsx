@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './clients.module.scss';
 import { InputText } from 'primereact/inputtext';
 import { Search, Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { User } from '@/types/user';
+import UserService from '@/services/userService';
 
 const Clients: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [clients, setClients] = React.useState([] as User[]);
+
+  useEffect(() => {
+    const getClients = async () => {
+      const response = await UserService.getUsers();
+      console.log(response);
+      setClients(response.data);
+    };
+    getClients();
+  }, []);
 
   return (
     <div className={styles.clients}>

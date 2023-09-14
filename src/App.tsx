@@ -9,8 +9,18 @@ import Flex from '@/components/UI/layout/flex';
 import AddClient from '@/pages/clients/addClient/addClient';
 import ViewClient from './pages/clients/viewClient/viewClient';
 import { UserStatus } from './types/user';
+import { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import authStore from './store/AuthStore';
 
-const App = () => {
+const App = observer(() => {
+  useEffect(() => {
+    const getUser = async () => {
+      await authStore.getUser();
+    };
+    getUser();
+  }, []);
+
   return (
     <Router>
       <div className='App'>
@@ -58,6 +68,6 @@ const App = () => {
       </div>
     </Router>
   );
-};
+});
 
 export default App;

@@ -9,16 +9,20 @@ import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import { useTranslation } from 'react-i18next';
+import { observer } from 'mobx-react-lite';
+import authStore from '@/store/AuthStore';
+import { useNavigate } from 'react-router-dom';
 
-const SigninForm: React.FC = () => {
+const SigninForm: React.FC = observer(() => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email(t('invalid.email'))
       .required(t('invalid.required')),
     password: Yup.string()
-      .min(6, t('invalid.passwordLength'))
+      .min(4, t('invalid.passwordLength'))
       .required(t('invalid.required')),
   });
 
@@ -28,9 +32,11 @@ const SigninForm: React.FC = () => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      const response = await authStore.login(values);
+      console.log(response);
       resetForm();
+      navigate('/');
     },
   });
 
@@ -73,6 +79,6 @@ const SigninForm: React.FC = () => {
       </Button>
     </form>
   );
-};
+});
 
 export default SigninForm;

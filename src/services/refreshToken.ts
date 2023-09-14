@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { BASE_API_URL } from '@/http';
+import { AuthDTO } from '@/models/IAuth';
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
 
-  // Check if refreshToken is available
   if (!refreshToken) {
-    throw new Error('Refresh token is missing.');
+    return {} as AuthDTO;
   }
 
   const headers = {
@@ -14,7 +14,7 @@ const refreshToken = async () => {
   };
 
   try {
-    const response = await axios.post(
+    const response: AxiosResponse<AuthDTO> = await axios.post(
       `${BASE_API_URL}/auth/refresh`,
       {},
       { headers }
@@ -22,8 +22,10 @@ const refreshToken = async () => {
 
     localStorage.setItem('token', response.data.access_token);
     localStorage.setItem('refreshToken', response.data.refresh_token);
+    return response.data;
   } catch (error) {
     console.error('Refresh token error:', error);
+    return {} as AuthDTO;
   }
 };
 

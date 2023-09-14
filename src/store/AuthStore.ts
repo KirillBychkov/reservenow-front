@@ -18,9 +18,11 @@ class AuthStore {
     this.user = user;
   }
 
-  async login(email: string, password: string) {
+  async login({ email, password }: { email: string; password: string }) {
     try {
       const response = await AuthService.login({ email, password });
+      console.log(response);
+
       localStorage.setItem('token', response.data.access_token);
       this.setAuth(true);
       this.setUser(response.data.account);
@@ -40,12 +42,12 @@ class AuthStore {
     }
   }
 
-  async checkAuth() {
+  async getUser() {
     try {
       const response = await AuthService.getUser();
-      localStorage.setItem('token', response.data.access_token);
       this.setAuth(true);
       this.setUser(response.data.account);
+      return response.data.account;
     } catch (e) {
       console.log(e);
     }

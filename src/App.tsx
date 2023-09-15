@@ -9,17 +9,10 @@ import Flex from '@/components/UI/layout/flex';
 import AddClient from '@/pages/clients/addClient/addClient';
 import ViewClient from './pages/clients/viewClient/viewClient';
 import { UserStatus } from './types/user';
-import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import authStore from './store/AuthStore';
+import UseProtectedRoute from './hooks/useProtectedRoute';
 
 const App = observer(() => {
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     await authStore.getUser();
-  //   };
-  // }, []);
-
   return (
     <Router>
       <div className='App'>
@@ -31,7 +24,7 @@ const App = observer(() => {
           <Route
             path='*'
             element={
-              <>
+              <UseProtectedRoute redirectPath='/signin'>
                 <Header />
                 <Flex>
                   <Sidebar />
@@ -60,7 +53,7 @@ const App = observer(() => {
                     <Route path='/requests' element={<Requests />} />
                   </Routes>
                 </Flex>
-              </>
+              </UseProtectedRoute>
             }
           />
         </Routes>

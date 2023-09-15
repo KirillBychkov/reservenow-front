@@ -15,9 +15,9 @@ const refreshToken = async () => {
 
   try {
     const response: AxiosResponse<AuthDTO> = await axios.post(
-      `${BASE_API_URL}/auth/refresh`,
+      `${BASE_API_URL}/token/refresh`,
       {},
-      { headers }
+      { headers, withCredentials: false, baseURL: BASE_API_URL }
     );
 
     localStorage.setItem('token', response.data.access_token);

@@ -33,8 +33,7 @@ const SigninForm: React.FC = observer(() => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      const response = await authStore.login(values);
-      console.log(response);
+      await authStore.login(values);
       resetForm();
       navigate('/');
     },

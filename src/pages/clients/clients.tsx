@@ -16,7 +16,6 @@ const Clients: React.FC = () => {
   useEffect(() => {
     const getClients = async () => {
       const response = await UserService.getUsers();
-      console.log(response);
       setClients(response.data);
     };
     getClients();

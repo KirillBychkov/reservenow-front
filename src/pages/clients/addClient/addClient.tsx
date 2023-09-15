@@ -12,7 +12,6 @@ const AddClient: React.FC = () => {
   const { t } = useTranslation();
 
   const { id } = useParams();
-  console.log(id);
 
   // TODO: get user by id from Mobx store
   const initialValues = id

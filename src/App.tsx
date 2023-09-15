@@ -14,12 +14,11 @@ import { observer } from 'mobx-react-lite';
 import authStore from './store/AuthStore';
 
 const App = observer(() => {
-  useEffect(() => {
-    const getUser = async () => {
-      await authStore.getUser();
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     await authStore.getUser();
+  //   };
+  // }, []);
 
   return (
     <Router>

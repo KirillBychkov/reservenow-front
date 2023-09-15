@@ -43,7 +43,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      const response = await UserService.createUser({
+      await UserService.createUser({
         email: values.email,
         user: {
           first_name: values.firstName,
@@ -53,8 +53,6 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
           description: values.description,
         },
       });
-      console.log(response);
-
       resetForm();
     },
   });

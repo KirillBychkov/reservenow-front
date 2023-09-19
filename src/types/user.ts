@@ -1,3 +1,4 @@
+// TODO: use IUser or another data from models/ instead of User
 export interface User {
   id: number;
   firstName: string;

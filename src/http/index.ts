@@ -6,6 +6,10 @@ export const BASE_API_URL = 'http://51.15.35.161';
 const $api = axios.create({
   withCredentials: false,
   baseURL: BASE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: '*/*',
+  },
 });
 
 $api.interceptors.request.use((config) => {

@@ -48,7 +48,7 @@ const Clients: React.FC = observer(() => {
           </Button>
         </div>
       </div>
-      {clients ? (
+      {clients.length ? (
         <ClientsTable clients={clients} />
       ) : (
         <div className={styles.content}>

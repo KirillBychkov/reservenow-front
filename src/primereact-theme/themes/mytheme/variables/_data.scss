@@ -64,23 +64,23 @@ $paginatorElementPadding: 0;
 
 /// Border of a table header
 /// @group data
-$tableHeaderBorder: 1px solid #e9ecef;
+$tableHeaderBorder: 1px solid #F0F1F3;
 
 /// Border width of a table header
 /// @group data
-$tableHeaderBorderWidth: 0 0 1px 0;
+$tableHeaderBorderWidth: 1px;
 
 /// Background of a table header
 /// @group data
-$tableHeaderBg: #f8f9fa;
+$tableHeaderBg: #F9F9FC;
 
 /// Text color of a table header
 /// @group data
-$tableHeaderTextColor: $textColor;
+$tableHeaderTextColor: #1C2127;
 
 /// Font weight of a table header
 /// @group data
-$tableHeaderFontWeight: 600;
+$tableHeaderFontWeight: 500;
 
 /// Padding of a table header, must be defined with a shorthand for vertical and horizontal values e.g. ".5rem .5rem"
 /// @group data
@@ -92,15 +92,15 @@ $tableHeaderCellPadding: 1rem 1rem;
 
 /// Background of a table header cell
 /// @group data
-$tableHeaderCellBg: #f8f9fa;
+$tableHeaderCellBg: #F9F9FC;
 
 /// Text color of a table header cell
 /// @group data
-$tableHeaderCellTextColor: $textColor;
+$tableHeaderCellTextColor: #1C2127;
 
 /// Font weight of a table header cell
 /// @group data
-$tableHeaderCellFontWeight: 600;
+$tableHeaderCellFontWeight: 500;
 
 /// Border of a table header cell
 /// @group data
@@ -108,7 +108,7 @@ $tableHeaderCellBorder: 1px solid #e9ecef;
 
 /// Border width of a table header cell
 /// @group data
-$tableHeaderCellBorderWidth: 0 0 1px 0;
+$tableHeaderCellBorderWidth: 1px 0 1px 0;
 
 /// Background of a table header cell in hover state
 /// @group data
@@ -116,7 +116,7 @@ $tableHeaderCellHoverBg: #e9ecef;
 
 /// Text color of a table header cell in hover state
 /// @group data
-$tableHeaderCellTextHoverColor: $textColor;
+$tableHeaderCellTextHoverColor: #1C2127;
 
 /// Icon color of a table header cell
 /// @group data
@@ -152,7 +152,7 @@ $tableBodyRowBg: #ffffff;
 
 /// Text color of a table body row
 /// @group data
-$tableBodyRowTextColor: $textColor;
+$tableBodyRowTextColor: var(--text-body-color);
 
 /// Background of an even table body row
 /// @group data

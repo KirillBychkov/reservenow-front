@@ -1,8 +1,7 @@
 import refreshToken from '@/services/refreshToken';
 import axios from 'axios';
 
-export const BASE_API_URL = 'http://51.15.35.161';
-
+export const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 const $api = axios.create({
   withCredentials: false,
   baseURL: BASE_API_URL,

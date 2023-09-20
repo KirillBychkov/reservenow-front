@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './addClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import AddClientForm from '@/components/forms/addClientForm';
-import { User, UserStatus } from '@/types/user';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import clientsStore from '@/store/ClientsStore';
+import { IUser } from '@/models/IUser';
 
-const AddClient: React.FC = () => {
+const AddClient: React.FC = observer(() => {
   const { t } = useTranslation();
 
   const { id } = useParams();
 
-  // TODO: get user by id from Mobx store
-  const initialValues = id
-    ? ({
-        firstName: 'Nazar',
-        lastName: 'Vovk',
-        id: 1,
-        email: 'nvovk.2004@gmail.com',
-        phone: '+380683036415',
-        companyName: 'Ficus Technologies',
-        status: UserStatus.PENDING,
-        description: 'Lorem ipsum dolor sit amet',
-      } as User)
-    : undefined;
+  const [initialValues, setInitialValues] = useState<IUser | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const fetchUserById = async (userId: number) => {
+      try {
+        const user = await clientsStore.getUserById(userId);
+        console.log(user);
+
+        setInitialValues(user);
+      } catch (error) {
+        // Handle any errors here
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    if (id) {
+      fetchUserById(parseInt(id));
+    }
+  }, [id]);
 
   return (
     <div className={styles.addClient}>
@@ -49,6 +59,6 @@ const AddClient: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AddClient;

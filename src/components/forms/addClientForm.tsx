@@ -14,7 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
 
-export interface AddClientInitialValues {
+export interface PlainClientInfo {
   id?: number;
   firstName: string;
   lastName: string;
@@ -26,7 +26,7 @@ export interface AddClientInitialValues {
 }
 
 interface Props {
-  initialValues?: AddClientInitialValues;
+  initialValues?: PlainClientInfo;
 }
 
 const AddClientForm: React.FC<Props> = ({ initialValues }) => {
@@ -50,7 +50,7 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
     companyName: Yup.string().required(t('invalid.required')),
   });
 
-  const formData: AddClientInitialValues = initialValues || {
+  const formData: PlainClientInfo = initialValues || {
     firstName: '',
     lastName: '',
     phone: '',

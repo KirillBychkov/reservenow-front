@@ -1,46 +1,72 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './viewClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import { User } from '@/types/user';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import clientsStore from '@/store/ClientsStore';
+import { observer } from 'mobx-react-lite';
+import { PlainClientInfo } from '@/components/forms/addClientForm';
 
-interface ViewClientProps {
-  initialValues: User;
-}
-
-const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
+const ViewClient: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { id } = useParams();
 
-  const UserInfoList = useMemo(
-    () =>
-      Object.entries(initialValues).map(([key, value], index) => {
-        if (key === 'id' || key === 'status' || !value) return null;
-        return (
-          <div className={styles.clientInfoItem} key={index}>
-            <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
-            <p className='paragraph'>{value}</p>
-          </div>
-        );
-      }),
-    [initialValues, t]
-  );
+  const [initialValues, setInitialValues] = useState<
+    PlainClientInfo | undefined
+  >(undefined);
+
+  useEffect(() => {
+    const fetchUserById = (userId: number) => {
+      try {
+        const user = clientsStore.getPlainClientInfo(userId);
+        if (user) setInitialValues(user);
+      } catch (error) {
+        // Handle any errors here
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    if (id) {
+      fetchUserById(parseInt(id));
+    }
+  }, [id]);
+
+  const UserInfoList = useMemo(() => {
+    if (!initialValues) return null;
+    const neededKeys = [
+      'firstName',
+      'lastName',
+      'phone',
+      'email',
+      'companyName',
+      'description',
+    ];
+    return Object.entries(initialValues).map(([key, value], index) => {
+      if (!neededKeys.includes(key)) return null;
+      return (
+        <div className={styles.clientInfoItem} key={index}>
+          <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
+          <p className='paragraph'>{value}</p>
+        </div>
+      );
+    });
+  }, [initialValues, t]);
 
   return (
     <div className={styles.viewClient}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {`${initialValues.firstName} ${initialValues.lastName}`}
+        {`${initialValues?.firstName} ${initialValues?.lastName}`}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
           { label: t('clients.clients'), url: '/clients' },
           {
-            label: `${initialValues.id}`,
-            url: '/clients/view',
+            label: `${initialValues?.id}`,
+            url: `/clients/${initialValues?.id}`,
           },
         ]}
       />
@@ -63,13 +89,13 @@ const ViewClient: React.FC<ViewClientProps> = ({ initialValues }) => {
             )}
           >
             {t('forms.overallInfo')}
-            <span className='heading heading-4'>{initialValues.status}</span>
+            <span className='heading heading-4'>{initialValues?.status}</span>
           </h4>
           {UserInfoList}
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default ViewClient;

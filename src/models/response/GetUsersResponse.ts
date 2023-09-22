@@ -1,4 +1,4 @@
-import { IAccount } from '../IUser';
+import { IAccount, IUser } from '../IUser';
 
 export interface IFilters {
   skip?: number;
@@ -6,7 +6,12 @@ export interface IFilters {
   search?: string;
   total: number;
 }
-export interface IGetAllUsers {
+
+export interface IClient extends IUser {
+  account: Pick<IAccount, 'email' | 'role' | 'status'>;
+}
+
+export interface IClients {
   filters: IFilters;
-  data: IAccount[];
+  data: IClient[];
 }

@@ -1,6 +1,6 @@
 export interface IRoleDTO {
   name: string;
-  permissions: string[];
+  permissions?: string[];
 }
 
 export interface IRole extends IRoleDTO {

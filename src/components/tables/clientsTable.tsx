@@ -1,27 +1,27 @@
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { IUser } from '@/models/IUser';
+import { IAccount } from '@/models/IUser';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronUp } from '@blueprintjs/icons';
+import styles from './clientsTable.module.scss';
+import classNames from 'classnames';
+
 interface ClientsTableProps {
-  clients: IUser[];
+  clients: IAccount[];
 }
 
 const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  console.log(i18n.language);
 
   const handleNavigate = (id: number) => {
     navigate(`${id}/edit`);
   };
 
-  // Define options for date formatting (locale and style)
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
-    month: 'long', // Use "long" for the full month name
+    month: 'long',
     day: 'numeric',
   };
 
@@ -32,7 +32,6 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
       options
     ).format(date);
 
-    // Create a new object with the formatted date
     return {
       ...client,
       created_at_string: formattedDate,
@@ -41,28 +40,39 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
 
   return (
     <div>
-      <DataTable
-        value={formattedClients}
-        // sortIcon={<ChevronDown className='p-icon p-sortable-column-icon' />}
-        // sortIcon={<ChevronDown />}
-      >
-        <Column field='id' header='ID' sortable></Column>
-        <Column field='first_name' header='Name' sortable></Column>
-        <Column field='last_name' header='Surname' sortable></Column>
-        <Column field='phone' header='Phone'></Column>
-        <Column field='created_at_string' header='Created At' sortable></Column>
+      <DataTable value={formattedClients}>
+        <Column field='id' header='ID' sortable />
         <Column
-          header='Actions'
-          body={(
-            rowData: IUser // Create a custom column with a button
-          ) => (
+          field='user.first_name'
+          header={t('forms.firstName')}
+          sortable
+        />
+        <Column field='user.last_name' header={t('forms.lastName')} sortable />
+        <Column field='user.phone' header={t('forms.phone')} />
+        <Column field='email' header={t('forms.email')} />
+        <Column
+          header={t('forms.status')}
+          body={(rowData: IAccount) => (
+            <div className={classNames(styles.status, styles[rowData.status])}>
+              {t(`status.${rowData.status}`)}
+            </div>
+          )}
+        />
+        <Column
+          field='created_at_string'
+          header={t('dates.createdAt')}
+          sortable
+        />
+        <Column
+          header={t('actions.actions')}
+          body={(rowData: IAccount) => (
             <Button
               style={{ maxHeight: '1.5rem' }}
               label={t('actions.edit')}
               size='small'
               rounded
               severity='secondary'
-              onClick={() => handleNavigate(rowData.id)} // Call the onEditClient function with the client ID
+              onClick={() => handleNavigate(rowData.id)}
             />
           )}
         />

@@ -18,6 +18,7 @@ export interface IUser extends IUserDTO {
 
 export interface ICreateUserDTO {
   email: string;
+  status: UserStatus;
   user: IUserDTO;
 }
 

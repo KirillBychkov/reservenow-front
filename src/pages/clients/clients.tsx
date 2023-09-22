@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 import ClientsTable from '@/components/tables/clientsTable';
 import { observer } from 'mobx-react-lite';
 import clientsStore from '@/store/ClientsStore';
-import { IUser } from '@/models/IUser';
+import { IAccount } from '@/models/IUser';
 
 const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [clients, setClients] = useState<IUser[]>([] as IUser[]);
+  const [clients, setClients] = useState<IAccount[]>([] as IAccount[]);
 
   useEffect(() => {
     const getClients = async () => {

@@ -23,13 +23,13 @@ export default class UserService {
   }
 
   static async updateUser(
-    id: string,
+    id: number,
     user: Partial<IUserDTO>
   ): Promise<AxiosResponse> {
     return $api.patch(`${BASE_API_URL}/users/${id}`, user);
   }
 
-  static async deleteUser(id: string): Promise<AxiosResponse> {
+  static async deleteUser(id: number): Promise<AxiosResponse> {
     return $api.delete(`${BASE_API_URL}/users/${id}`);
   }
 }

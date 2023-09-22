@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './clients.module.scss';
 import { InputText } from 'primereact/inputtext';
 import { Search, Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { User } from '@/types/user';
-import UserService from '@/services/userService';
+import ClientsTable from '@/components/tables/clientsTable';
+import { observer } from 'mobx-react-lite';
+import clientsStore from '@/store/ClientsStore';
+import { IAccount } from '@/models/IUser';
 
-const Clients: React.FC = () => {
+const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [clients, setClients] = React.useState([] as User[]);
+  const [clients, setClients] = useState<IAccount[]>([] as IAccount[]);
 
   useEffect(() => {
     const getClients = async () => {
-      const response = await UserService.getUsers();
-      setClients(response.data);
+      const data = await clientsStore.getClients();
+      setClients(data);
     };
     getClients();
   }, []);
@@ -46,16 +48,20 @@ const Clients: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className={styles.content}>
-        <h2 className='heading heading-2 heading-primary'>
-          {t('clients.null')}
-        </h2>
-        <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
-          {t('clients.add')}
-        </Button>
-      </div>
+      {clients.length ? (
+        <ClientsTable clients={clients} />
+      ) : (
+        <div className={styles.content}>
+          <h2 className='heading heading-2 heading-primary'>
+            {t('clients.null')}
+          </h2>
+          <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
+            {t('clients.add')}
+          </Button>
+        </div>
+      )}
     </div>
   );
-};
+});
 
 export default Clients;

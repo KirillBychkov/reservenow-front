@@ -12,12 +12,13 @@ export interface IUserDTO {
 
 export interface IUser extends IUserDTO {
   id: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Date | string;
+  updated_at: Date | string;
 }
 
 export interface ICreateUserDTO {
   email: string;
+  status: UserStatus;
   user: IUserDTO;
 }
 

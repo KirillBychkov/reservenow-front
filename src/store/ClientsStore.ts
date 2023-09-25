@@ -42,7 +42,6 @@ class ClientsStore {
   async getClients(): Promise<IClient[]> {
     try {
       const response = await UserService.getUsers();
-      // console.log(response.data);
 
       this.setClients(response.data.data);
       this.setFilters(response.data.filters);

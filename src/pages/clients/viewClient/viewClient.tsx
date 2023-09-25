@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './viewClient.module.scss';
+import statusStyles from '@/components/tables/clientsTable.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
@@ -22,9 +23,9 @@ const ViewClient: React.FC = observer(() => {
     const fetchUserById = (userId: number) => {
       try {
         const user = clientsStore.getPlainClientInfo(userId);
+
         if (user) setInitialValues(user);
       } catch (error) {
-        // Handle any errors here
         console.error('Error fetching user:', error);
       }
     };
@@ -45,7 +46,7 @@ const ViewClient: React.FC = observer(() => {
       'description',
     ];
     return Object.entries(initialValues).map(([key, value], index) => {
-      if (!neededKeys.includes(key)) return null;
+      if (!neededKeys.includes(key) || !value) return null;
       return (
         <div className={styles.clientInfoItem} key={index}>
           <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
@@ -85,11 +86,20 @@ const ViewClient: React.FC = observer(() => {
           <h4
             className={classNames(
               'heading heading-4 heading-primary',
-              styles.status
+              styles.clientInfoHeading
             )}
           >
             {t('forms.overallInfo')}
-            <span className='heading heading-4'>{initialValues?.status}</span>
+            <span
+              className={classNames(
+                'heading heading-4',
+                styles.status,
+                statusStyles.status,
+                statusStyles[initialValues?.status || 'pending']
+              )}
+            >
+              {t(`status.${initialValues?.status}`)}
+            </span>
           </h4>
           {UserInfoList}
         </div>

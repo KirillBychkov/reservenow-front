@@ -45,7 +45,6 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
       created_at_string: formattedDate,
     };
   });
-  // console.log(formattedClients[0]);
 
   return (
     <div>

@@ -18,8 +18,6 @@ const Clients: React.FC = observer(() => {
   useEffect(() => {
     const getClients = async () => {
       const data = await clientsStore.getClients();
-      // console.log(data);
-
       setClients(data);
     };
     getClients();

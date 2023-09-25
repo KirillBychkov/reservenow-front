@@ -1,6 +1,7 @@
-import { UserStatus } from '@/types/user';
+// import { UserStatus } from '@/types/user';
 import { IRole } from './IRole';
 
+// check types after merge
 export interface IUserDTO {
   first_name: string;
   last_name: string;
@@ -29,7 +30,7 @@ export interface IAccount {
   manager?: IUser;
   trainer?: IUser;
   role: IRole;
-  status: UserStatus;
+  // status: UserStatus;
   created_at: Date;
   updated_at: Date;
 }

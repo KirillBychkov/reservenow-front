@@ -4,9 +4,10 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import AddClientForm from '@/components/forms/addClientForm';
-import { User, UserStatus } from '@/types/user';
+import { User } from '@/types/user';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { UserStatus } from '@/types/enums/user';
 
 const AddClient: React.FC = () => {
   const { t } = useTranslation();

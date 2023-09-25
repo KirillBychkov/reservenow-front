@@ -9,10 +9,11 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
-import { User, UserStatus, StatusOptions } from '@/types/user';
+import { User } from '@/types/user';
 import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
+import { StatusOptions, UserStatus } from '@/types/enums/user';
 
 interface AddClientFormProps {
   initialValues?: User;

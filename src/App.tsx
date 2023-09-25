@@ -8,9 +8,11 @@ import Sidebar from '@/components/sidebar/sidebar';
 import Flex from '@/components/UI/layout/flex';
 import AddClient from '@/pages/clients/addClient/addClient';
 import ViewClient from './pages/clients/viewClient/viewClient';
-import { UserStatus } from './types/user';
+
 import { observer } from 'mobx-react-lite';
 import UseProtectedRoute from './hooks/useProtectedRoute';
+import ActivateAccount from './pages/b2bPages/activateAccount/activateAccount';
+import { UserStatus } from './types/enums/user';
 
 const App = observer(() => {
   return (
@@ -19,6 +21,8 @@ const App = observer(() => {
         <Routes>
           {/* Routes without Header and Sidebar */}
           <Route path='/signin' element={<Signin />} />
+          {/* Route for b2bclient testing purposes */}
+          <Route path='/activate-account' element={<ActivateAccount />} />
 
           {/* Routes with Header and Sidebar */}
           <Route

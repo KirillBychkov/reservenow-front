@@ -1,0 +1,22 @@
+@import 'src/primereact-theme/themes/mytheme/_variables.scss';
+
+.faqButton {
+  display: flex;
+  justify-content: space-between;
+  height: 35px;
+  width: 99px;
+  background-color: transparent;
+  //   color: $primaryTextColor;
+  color: var(--primary-color-text);
+  border: solid 1px $primaryTextColor;
+  //   font: ;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+
+  &:hover {
+    background-color: var(--primary-color-text);
+    color: var(--primary-color);
+  }
+}

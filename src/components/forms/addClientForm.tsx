@@ -9,12 +9,11 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
-import { UserStatus, StatusOptions } from '@/types/user';
-import { Dropdown } from 'primereact/dropdown';
+import { UserStatus } from '@/types/user';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
 
-export interface AddClientInitialValues {
+export interface PlainClientInfo {
   id?: number;
   firstName: string;
   lastName: string;
@@ -26,7 +25,7 @@ export interface AddClientInitialValues {
 }
 
 interface Props {
-  initialValues?: AddClientInitialValues;
+  initialValues?: PlainClientInfo;
 }
 
 const AddClientForm: React.FC<Props> = ({ initialValues }) => {
@@ -50,7 +49,7 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
     companyName: Yup.string().required(t('invalid.required')),
   });
 
-  const formData: AddClientInitialValues = initialValues || {
+  const formData: PlainClientInfo = initialValues || {
     firstName: '',
     lastName: '',
     phone: '',
@@ -96,7 +95,7 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
     },
   });
 
-  const handleDeleteUser = () => {
+  const handleDeleteUser = async () => {
     // TODO: implement delete functionality
   };
 
@@ -188,17 +187,6 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
             placeholder={t('forms.enterDescription')}
           />
         </FormField>
-        {initialValues && (
-          <FormField label={t('forms.status')}>
-            <Dropdown
-              className={styles.dropdown}
-              name='status'
-              value={formik.values.status}
-              onChange={formik.handleChange}
-              options={StatusOptions}
-            />
-          </FormField>
-        )}
       </div>
       <div className={styles.controls}>
         {initialValues && (

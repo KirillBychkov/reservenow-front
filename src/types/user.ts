@@ -12,10 +12,10 @@
 // }
 
 export enum UserStatus {
-  PENDING = 'Pending',
-  ACTIVE = 'Active',
-  BLOCKED = 'Blocked',
-  DELETED = 'Deleted',
+  PENDING = 'pending',
+  ACTIVE = 'active',
+  BLOCKED = 'blocked',
+  DELETED = 'deleted',
 }
 
 export const StatusOptions: UserStatus[] = [

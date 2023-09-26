@@ -8,10 +8,23 @@
     "home": "Головна",
     "clients": "Клієнти",
     "requests": "Запити"
-  },
+  , "b2bsidebar": {
+    "home": "Головна",
+    "schedule": "Розклад",
+    "booking": "Бронювання",
+    "clients": "Клієнти",
+    "organisations": "Організації",
+    "products": "Товари",
+    "personnel": "Персонал",
+    "statistics": "Статистика"
+  }},
   "signin": {
     "heading": "Увійти до ReservNow",
     "subheading": "Введіть адресу електронної пошти та пароль для входу!"
+  },
+  "b2bsignup": {
+    "heading": "Створити пароль",   
+    "subheading": "Введіть свій новий пароль, щоб увійти"      
   },
   "clients": {
     "clients": "Клієнти",
@@ -28,8 +41,10 @@
     "overallInfo": "Загальна інформація",
     "email": "Електронна пошта",
     "enterEmail": "Введіть адресу електронної пошти",
-    "password": "Пароль",
+    "password": "Пароль*",
     "enterPassword": "Введіть пароль",
+    "b2benterPassword": "Ваш пароль",
+    "b2bconfirmPassword": "Підтвердити пароль*",
     "firstName": "Ім'я",
     "enterFirstName": "Введіть ім'я",
     "lastName": "Прізвище",
@@ -47,6 +62,7 @@
     "required": "Обов'язкове поле",
     "email": "Невірний формат електронної пошти",
     "passwordLength": "Пароль повинен містити не менше 6 символів",
+    "passwordMatch": "Невірний пароль",
     "phone": "Невірний формат номеру телефону"
   },
   "dates": {
@@ -73,6 +89,7 @@
     "clear": "Очистити",
     "export": "Експорт",
     "signin": "Увійти",
+    "b2bsignup": "Створити",
     "signout": "Вийти",
     "back": "Назад",
     "goBack": "Повернутися назад",

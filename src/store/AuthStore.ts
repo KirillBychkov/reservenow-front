@@ -1,21 +1,18 @@
+import { UserRole } from '@/types/enums/user';
 import { IAccount } from '@/models/IUser';
 import AuthService from '@/services/authService';
-import { makeAutoObservable } from 'mobx';
+import { computed, makeAutoObservable } from 'mobx';
 
 class AuthStore {
   user = {} as IAccount;
   isAuth = false;
+  userRole = '';
 
   constructor() {
-    makeAutoObservable(this);
-  }
-
-  setAuth(bool: boolean) {
-    this.isAuth = bool;
-  }
-
-  setUser(user: IAccount) {
-    this.user = user;
+    makeAutoObservable(this, {
+      getUserRole: computed,
+    });
+    this.initAuth();
   }
 
   async login({ email, password }: { email: string; password: string }) {
@@ -26,7 +23,8 @@ class AuthStore {
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
       this.setAuth(true);
-      this.setUser(response.data.account);
+      this.setUser(response.data as any); // check types after merge
+      this.setUserRoleFromResponse(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -47,11 +45,41 @@ class AuthStore {
     try {
       const response = await AuthService.getUser();
       this.setAuth(true);
-      this.setUser(response.data.account);
-      return response.data.account;
+      this.setUser(response.data);
+      this.setUserRoleFromResponse(response.data);
+      return response.data;
     } catch (e) {
       console.log(e);
     }
+  }
+
+  /*
+    UTILS 
+  */
+  setAuth(bool: boolean) {
+    this.isAuth = bool;
+  }
+
+  setUser(user: IAccount) {
+    this.user = user;
+  }
+
+  initAuth() {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (token && refreshToken) {
+      this.getUser();
+    }
+  }
+
+  setUserRoleFromResponse(responseData: any) {
+    this.userRole =
+      responseData?.account?.role?.name || responseData?.role?.name || '';
+  }
+
+  get getUserRole() {
+    return this.userRole as UserRole;
   }
 }
 

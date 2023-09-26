@@ -1,22 +1,24 @@
 import HomeCard from '@/components/UI/cards/homeCard';
 import React from 'react';
-import { People, Refresh } from '@blueprintjs/icons';
 import styles from './home.module.scss';
-import { useTranslation } from 'react-i18next';
+import useRoleBasedMenu from '@/hooks/useRoleBasedMenu';
+import { observer } from 'mobx-react-lite';
 
 const Home: React.FC = () => {
-  const { t } = useTranslation();
+  const menu = useRoleBasedMenu().filter((item) => item.page !== '/');
 
   return (
     <div className={styles.home}>
-      <HomeCard icon={<People />} path='/clients' heading={t('home.clients')} />
-      <HomeCard
-        icon={<Refresh />}
-        path='/requests'
-        heading={t('home.requests')}
-      />
+      {menu.map((item) => (
+        <HomeCard
+          key={item.text}
+          icon={item.icon}
+          path={item.page}
+          heading={item.text}
+        ></HomeCard>
+      ))}
     </div>
   );
 };
 
-export default Home;
+export default observer(Home);

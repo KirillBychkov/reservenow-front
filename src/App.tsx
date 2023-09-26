@@ -10,6 +10,7 @@ import AddClient from '@/pages/clients/addClient/addClient';
 import ViewClient from './pages/clients/viewClient/viewClient';
 import { observer } from 'mobx-react-lite';
 import UseProtectedRoute from './hooks/useProtectedRoute';
+import ActivateAccount from './pages/b2bPages/activateAccount/activateAccount';
 
 const App = observer(() => {
   return (
@@ -18,6 +19,8 @@ const App = observer(() => {
         <Routes>
           {/* Routes without Header and Sidebar */}
           <Route path='/signin' element={<Signin />} />
+          {/* Route for b2bclient testing purposes */}
+          <Route path='/activate-account' element={<ActivateAccount />} />
 
           {/* Routes with Header and Sidebar */}
           <Route

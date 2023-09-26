@@ -9,56 +9,93 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
-import { User } from '@/types/user';
-import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
-import { StatusOptions, UserStatus } from '@/types/enums/user';
+import { UserStatus } from '@/types/enums/user';
 
-interface AddClientFormProps {
-  initialValues?: User;
+export interface PlainClientInfo {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  companyName: string;
+  description: string;
+  status: UserStatus;
 }
 
-const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
+interface Props {
+  initialValues?: PlainClientInfo;
+}
+
+const AddClientForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
 
   const validationSchema = Yup.object({
+    id: Yup.number(),
     firstName: Yup.string().required(t('invalid.required')),
     lastName: Yup.string().required(t('invalid.required')),
-    phone: Yup.string().required(t('invalid.required')),
+    phone: Yup.string()
+      .required(t('invalid.required'))
+      .test('phone', t('invalid.phone'), (value) => {
+        if (value) {
+          return !value.includes('_');
+        }
+        return false;
+      }),
     email: Yup.string()
       .email(t('invalid.email'))
       .required(t('invalid.required')),
     companyName: Yup.string().required(t('invalid.required')),
   });
 
+  const formData: PlainClientInfo = initialValues || {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    companyName: '',
+    description: '',
+    status: UserStatus.PENDING,
+  };
+
   const formik = useFormik({
-    initialValues: initialValues || {
-      firstName: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      companyName: '',
-      description: '',
-      status: UserStatus.PENDING,
-    },
+    initialValues: formData,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await UserService.createUser({
-        email: values.email,
-        user: {
-          first_name: values.firstName,
-          last_name: values.lastName,
-          phone: values.phone,
-          domain_url: values.companyName,
-          description: values.description,
-        },
-      });
-      resetForm();
+      try {
+        if (initialValues) {
+          await UserService.updateUser(initialValues.id || 0, {
+            first_name: values.firstName,
+            last_name: values.lastName,
+            phone: values.phone,
+            domain_url: values.companyName,
+            description: values.description,
+          });
+
+          return;
+        }
+
+        await UserService.createUser({
+          email: values.email,
+          status: values.status,
+          user: {
+            first_name: values.firstName,
+            last_name: values.lastName,
+            phone: values.phone,
+            domain_url: values.companyName,
+            description: values.description,
+          },
+        });
+
+        resetForm();
+      } catch (error) {
+        console.error('Error creating user:', error);
+      }
     },
   });
 
-  const handleDeleteUser = () => {
+  const handleDeleteUser = async () => {
     // TODO: implement delete functionality
   };
 
@@ -150,17 +187,6 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ initialValues }) => {
             placeholder={t('forms.enterDescription')}
           />
         </FormField>
-        {initialValues && (
-          <FormField label={t('forms.status')}>
-            <Dropdown
-              className={styles.dropdown}
-              name='status'
-              value={formik.values.status}
-              onChange={formik.handleChange}
-              options={StatusOptions}
-            />
-          </FormField>
-        )}
       </div>
       <div className={styles.controls}>
         {initialValues && (

@@ -1,9 +1,10 @@
 import $api, { BASE_API_URL } from '@/http';
 import { ICreateUserDTO, IUserDTO } from '@/models/IUser';
+import { IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(): Promise<AxiosResponse> {
+  static async getUsers(): Promise<AxiosResponse<IUsers>> {
     return $api.get(`${BASE_API_URL}/users`);
   }
 
@@ -22,13 +23,13 @@ export default class UserService {
   }
 
   static async updateUser(
-    id: string,
+    id: number,
     user: Partial<IUserDTO>
   ): Promise<AxiosResponse> {
     return $api.patch(`${BASE_API_URL}/users/${id}`, user);
   }
 
-  static async deleteUser(id: string): Promise<AxiosResponse> {
+  static async deleteUser(id: number): Promise<AxiosResponse> {
     return $api.delete(`${BASE_API_URL}/users/${id}`);
   }
 }

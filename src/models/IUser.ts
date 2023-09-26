@@ -1,7 +1,18 @@
-// import { UserStatus } from '@/types/user';
+import { UserStatus } from '@/types/enums/user';
 import { IRole } from './IRole';
 
-// check types after merge
+export interface IAccount {
+  id: number;
+  email: string;
+  password?: string;
+  manager?: IUser;
+  trainer?: IUser;
+  role: IRole;
+  status: UserStatus;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface IUserDTO {
   first_name: string;
   last_name: string;
@@ -11,26 +22,16 @@ export interface IUserDTO {
   description?: string;
 }
 
+//TODO: add manager and trainer DTOs
 export interface IUser extends IUserDTO {
   id: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Date | string;
+  updated_at: Date | string;
+  account: IAccount;
 }
 
 export interface ICreateUserDTO {
   email: string;
+  status: UserStatus;
   user: IUserDTO;
-}
-
-export interface IAccount {
-  id: number;
-  email: string;
-  password?: string;
-  user?: IUser;
-  manager?: IUser;
-  trainer?: IUser;
-  role: IRole;
-  // status: UserStatus;
-  created_at: Date;
-  updated_at: Date;
 }

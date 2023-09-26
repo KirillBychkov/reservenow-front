@@ -1,32 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './addClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import AddClientForm from '@/components/forms/addClientForm';
-import { User } from '@/types/user';
+import AddClientForm, {
+  PlainClientInfo,
+} from '@/components/forms/addClientForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { UserStatus } from '@/types/enums/user';
+import { observer } from 'mobx-react-lite';
+import clientsStore from '@/store/ClientsStore';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
-const AddClient: React.FC = () => {
+const AddClient: React.FC = observer(() => {
   const { t } = useTranslation();
 
   const { id } = useParams();
 
-  // TODO: get user by id from Mobx store
-  const initialValues = id
-    ? ({
-        firstName: 'Nazar',
-        lastName: 'Vovk',
-        id: 1,
-        email: 'nvovk.2004@gmail.com',
-        phone: '+380683036415',
-        companyName: 'Ficus Technologies',
-        status: UserStatus.PENDING,
-        description: 'Lorem ipsum dolor sit amet',
-      } as User)
-    : undefined;
+  const [isLoading, setIsLoading] = useState<boolean>(!!id);
+  const [initialValues, setInitialValues] = useState<
+    PlainClientInfo | undefined
+  >(undefined);
+
+  useEffect(() => {
+    const fetchUserById = (userId: number) => {
+      try {
+        setIsLoading(true);
+        const user = clientsStore.getPlainClientInfo(userId);
+        setInitialValues(user);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchUserById(parseInt(id));
+    }
+  }, [id]);
 
   return (
     <div className={styles.addClient}>
@@ -46,10 +58,14 @@ const AddClient: React.FC = () => {
         ]}
       />
       <div className={styles.formContainer}>
-        <AddClientForm initialValues={initialValues} />
+        {isLoading ? (
+          <ProgressSpinner />
+        ) : (
+          <AddClientForm initialValues={id ? initialValues : undefined} />
+        )}
       </div>
     </div>
   );
-};
+});
 
 export default AddClient;

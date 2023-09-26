@@ -18,6 +18,8 @@ class AuthStore {
   async login({ email, password }: { email: string; password: string }) {
     try {
       const response = await AuthService.login({ email, password });
+      console.log(response);
+
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
       this.setAuth(true);

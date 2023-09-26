@@ -9,9 +9,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
-import { UserStatus } from '@/types/user';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
+import { UserStatus } from '@/types/enums/user';
 
 export interface PlainClientInfo {
   id?: number;

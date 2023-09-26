@@ -1,4 +1,4 @@
-import { UserStatus } from '@/types/user';
+import { UserStatus } from '@/types/enums/user';
 import { IRole } from './IRole';
 
 export interface IAccount {

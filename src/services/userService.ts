@@ -1,10 +1,10 @@
 import $api, { BASE_API_URL } from '@/http';
 import { ICreateUserDTO, IUserDTO } from '@/models/IUser';
-import { IGetAllUsers } from '@/models/response/GetUsersResponse';
+import { IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(): Promise<AxiosResponse<IGetAllUsers>> {
+  static async getUsers(): Promise<AxiosResponse<IUsers>> {
     return $api.get(`${BASE_API_URL}/users`);
   }
 

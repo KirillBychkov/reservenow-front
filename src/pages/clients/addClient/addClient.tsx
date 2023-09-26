@@ -1,17 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './addClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import AddClientForm, {
-  AddClientInitialValues,
+  PlainClientInfo,
 } from '@/components/forms/addClientForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import clientsStore from '@/store/ClientsStore';
-import { IAccount } from '@/models/IUser';
-import { UserStatus } from '@/types/user';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 const AddClient: React.FC = observer(() => {
@@ -19,33 +17,18 @@ const AddClient: React.FC = observer(() => {
 
   const { id } = useParams();
 
-  const [initialValues, setInitialValues] = useState<IAccount | undefined>(
-    undefined
-  );
   const [isLoading, setIsLoading] = useState<boolean>(!!id);
-
-  const formProps: AddClientInitialValues = useMemo(
-    () => ({
-      id: initialValues?.id,
-      email: initialValues?.email || '',
-      status: initialValues?.status || UserStatus.PENDING,
-      firstName: initialValues?.user?.first_name || '',
-      lastName: initialValues?.user?.last_name || '',
-      phone: initialValues?.user?.phone || '',
-      companyName: initialValues?.user?.domain_url || '',
-      description: initialValues?.user?.description || '',
-    }),
-    [initialValues]
-  );
+  const [initialValues, setInitialValues] = useState<
+    PlainClientInfo | undefined
+  >(undefined);
 
   useEffect(() => {
-    const fetchUserById = async (userId: number) => {
+    const fetchUserById = (userId: number) => {
       try {
         setIsLoading(true);
-        const user = await clientsStore.getUserById(userId);
+        const user = clientsStore.getPlainClientInfo(userId);
         setInitialValues(user);
       } catch (error) {
-        // Handle any errors here
         console.error('Error fetching user:', error);
       } finally {
         setIsLoading(false);
@@ -78,7 +61,7 @@ const AddClient: React.FC = observer(() => {
         {isLoading ? (
           <ProgressSpinner />
         ) : (
-          <AddClientForm initialValues={id ? formProps : undefined} />
+          <AddClientForm initialValues={id ? initialValues : undefined} />
         )}
       </div>
     </div>

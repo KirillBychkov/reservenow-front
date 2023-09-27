@@ -1,18 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Signin from '@/pages/signin/signin.tsx';
 import Home from '@/pages/home/home';
-import Clients from '@/pages/clients/clients';
-import Requests from '@/pages/requests/requests';
+import Clients from '@/pages/superadminPages/clients/clients';
+import Requests from '@/pages/superadminPages/requests/requests';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
 import Flex from '@/components/UI/layout/flex';
-import AddClient from '@/pages/clients/addClient/addClient';
-import ViewClient from './pages/clients/viewClient/viewClient';
-import { observer } from 'mobx-react-lite';
+import AddClient from '@/pages/superadminPages/clients/addClient/addClient';
+import ViewClient from './pages/superadminPages/clients/viewClient/viewClient';
 import UseProtectedRoute from './hooks/useProtectedRoute';
 import ActivateAccount from './pages/b2bPages/activateAccount/activateAccount';
 
-const App = observer(() => {
+const App = () => {
   return (
     <Router>
       <div className='App'>
@@ -46,6 +45,6 @@ const App = observer(() => {
       </div>
     </Router>
   );
-});
+};
 
 export default App;

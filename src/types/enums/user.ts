@@ -13,9 +13,4 @@ export enum UserStatus {
   DELETED = 'Deleted',
 }
 
-export const StatusOptions: UserStatus[] = [
-  UserStatus.PENDING,
-  UserStatus.ACTIVE,
-  UserStatus.BLOCKED,
-  UserStatus.DELETED,
-];
+export const UserStatusOptions: UserStatus[] = Object.values(UserStatus);

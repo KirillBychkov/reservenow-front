@@ -29,9 +29,3 @@ export interface IUser extends IUserDTO {
   updated_at: Date | string;
   account: IAccount;
 }
-
-export interface ICreateUserDTO {
-  email: string;
-  status: UserStatus;
-  user: IUserDTO;
-}

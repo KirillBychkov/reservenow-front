@@ -15,7 +15,7 @@ const Requests: React.FC = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getClients = async () => {
+    const getSupportRecords = async () => {
       try {
         const data = await supportRecordsStore.getSupportRecords();
         setSupportRecords(data);
@@ -25,7 +25,7 @@ const Requests: React.FC = observer(() => {
         setIsLoading(false);
       }
     };
-    getClients();
+    getSupportRecords();
   }, []);
 
   return (

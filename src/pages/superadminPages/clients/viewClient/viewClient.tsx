@@ -27,8 +27,6 @@ const ViewClient: React.FC = observer(() => {
       try {
         setIsLoading(true);
         const user = await clientsStore.getPlainClientInfo(userId);
-        console.log(user);
-
         setInitialValues(user);
       } catch (error) {
         console.error('Error fetching user:', error);

@@ -40,7 +40,9 @@ const Requests: React.FC = observer(() => {
         <SupportRecordsTable supportRecords={supportRecords} />
       ) : (
         <div className={styles.content}>
-          <p>{t('requests.null')}</p>
+          <h2 className='heading heading-2 heading-primary text-center'>
+            {t('requests.null')}
+          </h2>
         </div>
       )}
     </div>

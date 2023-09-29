@@ -40,7 +40,7 @@ const ViewClient: React.FC = observer(() => {
     }
   }, [id]);
 
-  const UserInfoList = useMemo(() => {
+  const userInfoList = useMemo(() => {
     if (!initialValues) return null;
     const neededKeys = [
       'firstName',
@@ -64,7 +64,7 @@ const ViewClient: React.FC = observer(() => {
   return (
     <div className={styles.viewClient}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {`${initialValues?.firstName} ${initialValues?.lastName}`}
+        {`${initialValues?.firstName || ''} ${initialValues?.lastName || ''}`}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
@@ -109,7 +109,7 @@ const ViewClient: React.FC = observer(() => {
                 {t(`status.${initialValues?.status}`)}
               </span>
             </h4>
-            {UserInfoList}
+            {userInfoList}
           </div>
         )}
       </div>

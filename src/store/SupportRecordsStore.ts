@@ -16,13 +16,25 @@ class SupportRecordsStore {
   async getSupportRecords(): Promise<ISupport[]> {
     try {
       const response = await SupportService.getAllSupportRecords();
-      console.log(response.data);
-
       this.setSupportRecords(response.data);
       return response.data;
     } catch (e) {
       console.log(e);
       return [];
+    }
+  }
+
+  async getSupportRecordById(id: number): Promise<ISupport> {
+    try {
+      const existedRecord = this.supportRecords.find(
+        (record) => record.id === id
+      );
+      if (existedRecord) return existedRecord;
+      const { data } = await SupportService.getSupportRecordById(id);
+      return data;
+    } catch (e) {
+      console.log(e);
+      return {} as ISupport;
     }
   }
 }

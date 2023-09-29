@@ -8,6 +8,7 @@ import styles from './status.module.scss';
 import classNames from 'classnames';
 import { IUser } from '@/models/IUser';
 import { useMemo, useState } from 'react';
+import { getFormattedDate } from '@/utils/parseFormattedDate';
 
 interface Props {
   clients: IUser[];
@@ -28,18 +29,8 @@ const ClientsTable: React.FC<Props> = ({ clients }) => {
   };
 
   const formattedClients: IUser[] = useMemo(() => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-
     return clients.map((client) => {
-      const date = new Date(client.created_at);
-      const formattedDate = new Intl.DateTimeFormat(
-        i18n.language,
-        options
-      ).format(date);
+      const formattedDate = getFormattedDate(client.created_at, i18n.language);
 
       return {
         ...client,

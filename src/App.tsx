@@ -10,6 +10,7 @@ import AddClient from '@/pages/superadminPages/clients/addClient/addClient';
 import ViewClient from './pages/superadminPages/clients/viewClient/viewClient';
 import UseProtectedRoute from './hooks/useProtectedRoute';
 import ActivateAccount from './pages/b2bPages/activateAccount/activateAccount';
+import OpenRequest from './pages/superadminPages/requests/openRequest/openRequest';
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
                     <Route path='/clients/:id/edit' element={<AddClient />} />
                     <Route path='/clients/:id' element={<ViewClient />} />
                     <Route path='/requests' element={<Requests />} />
+                    <Route path='/requests/:id' element={<OpenRequest />} />
                   </Routes>
                 </Flex>
               </UseProtectedRoute>

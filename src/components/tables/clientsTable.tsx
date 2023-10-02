@@ -4,21 +4,22 @@ import { IAccount } from '@/models/IUser';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import styles from './clientsTable.module.scss';
+import styles from './status.module.scss';
 import classNames from 'classnames';
-import { IClient } from '@/models/response/GetUsersResponse';
-import { useState } from 'react';
+import { IUser } from '@/models/IUser';
+import { useMemo, useState } from 'react';
+import { getFormattedDate } from '@/utils/parseFormattedDate';
 
-interface ClientsTableProps {
-  clients: IClient[];
+interface Props {
+  clients: IUser[];
 }
 
-const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
+const ClientsTable: React.FC<Props> = ({ clients }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
+  const [selectedClient, setSelectedClient] = useState<IUser | null>(null);
 
-  const handleViewClient = (client: IClient) => {
+  const handleViewClient = (client: IUser) => {
     setSelectedClient(client);
     navigate(`${client.id}`);
   };
@@ -27,24 +28,16 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
     navigate(`${id}/edit`);
   };
 
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
+  const formattedClients: IUser[] = useMemo(() => {
+    return clients.map((client) => {
+      const formattedDate = getFormattedDate(client.created_at, i18n.language);
 
-  const formattedClients: IClient[] = clients.map((client) => {
-    const date = new Date(client.created_at);
-    const formattedDate = new Intl.DateTimeFormat(
-      i18n.language,
-      options
-    ).format(date);
-
-    return {
-      ...client,
-      created_at_string: formattedDate,
-    };
-  });
+      return {
+        ...client,
+        created_at_string: formattedDate,
+      };
+    });
+  }, [clients, i18n.language]);
 
   return (
     <div>
@@ -62,7 +55,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients }) => {
         <Column field='account.email' header={t('forms.email')} />
         <Column
           header={t('forms.status')}
-          body={(rowData: IClient) => (
+          body={(rowData: IUser) => (
             <div
               className={classNames(
                 styles.status,

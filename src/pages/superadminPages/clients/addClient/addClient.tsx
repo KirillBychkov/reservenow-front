@@ -23,10 +23,10 @@ const AddClient: React.FC = observer(() => {
   >(undefined);
 
   useEffect(() => {
-    const fetchUserById = (userId: number) => {
+    const fetchUserById = async (userId: number) => {
       try {
         setIsLoading(true);
-        const user = clientsStore.getPlainClientInfo(userId);
+        const user = await clientsStore.getPlainClientInfo(userId);
         setInitialValues(user);
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -43,16 +43,17 @@ const AddClient: React.FC = observer(() => {
   return (
     <div className={styles.addClient}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {initialValues ? t('actions.editClient') : t('actions.addClient')}
+        {id && initialValues ? t('actions.editClient') : t('actions.addClient')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
           { label: t('clients.clients'), url: '/clients' },
           {
-            label: initialValues
-              ? `${initialValues.id}`
-              : t('actions.addClient'),
+            label:
+              id && initialValues
+                ? `${initialValues.id}`
+                : t('actions.addClient'),
             url: '/clients/add',
           },
         ]}

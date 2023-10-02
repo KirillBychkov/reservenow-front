@@ -60,7 +60,9 @@
     "description": "Опис",
     "enterDescription": "Введіть опис",
     "status": "Статус",
-    "enterStatus": "Оберіть статус"
+    "enterStatus": "Оберіть статус",
+    "clientDescription": "Опис",
+    "resultDescription": "Опис"
   },
   "invalid": {
     "required": "Обов'язкове поле",
@@ -78,7 +80,10 @@
     "active": "Активний",
     "blocked": "Заблокований",
     "deleted": "Видалений",
-    "new": "Новий"
+    "new": "Новий",
+    "in_progress": "Обробляється",
+    "fixed": "Виконано",
+    "rejected": "Відхилено"
   },
   "actions": {
     "action": "Дія",

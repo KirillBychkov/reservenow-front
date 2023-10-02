@@ -1,7 +1,20 @@
 import { ISupport } from '@/models/ISupport';
 import SupportService from '@/services/supportService';
+import { SupportStatus } from '@/types/enums/support';
 import { makeAutoObservable } from 'mobx';
 
+export interface PlainSupportRecordInfo {
+  id: number;
+  createdAt: Date | string;
+  clientDescription: string;
+  email: string;
+  status: SupportStatus;
+  resultDescription: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  companyName: string;
+}
 class SupportRecordsStore {
   supportRecords: ISupport[] = [];
 
@@ -36,6 +49,22 @@ class SupportRecordsStore {
       console.log(e);
       return {} as ISupport;
     }
+  }
+
+  async getPlainSupportRecordInfo(id: number): Promise<PlainSupportRecordInfo> {
+    const supportRecord = await this.getSupportRecordById(id);
+    return {
+      id: supportRecord.id,
+      firstName: supportRecord.user.first_name,
+      lastName: supportRecord.user.last_name,
+      email: supportRecord?.user?.account?.email || '',
+      phone: supportRecord.user.phone,
+      companyName: supportRecord.user.domain_url,
+      clientDescription: supportRecord.client_description,
+      createdAt: supportRecord.created_at,
+      status: (supportRecord.status as SupportStatus) || SupportStatus.NEW,
+      resultDescription: supportRecord.result_description || '',
+    };
   }
 }
 

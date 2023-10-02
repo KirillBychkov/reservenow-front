@@ -5,8 +5,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styles from './openRequest.module.scss';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import supportRecordsStore from '@/store/SupportRecordsStore';
-import { ISupport } from '@/models/ISupport';
+import supportRecordsStore, {
+  PlainSupportRecordInfo,
+} from '@/store/SupportRecordsStore';
 import { useTranslation } from 'react-i18next';
 import FormField from '@/components/UI/fields/formField';
 import { Dropdown } from 'primereact/dropdown';
@@ -15,22 +16,24 @@ import { useFormik } from 'formik';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Button from '@/components/UI/buttons/button';
+import * as Yup from 'yup';
+import SupportService from '@/services/supportService';
+import isValidClassname from '@/utils/isValidClassname';
 
 const OpenRequest: React.FC = observer(() => {
   const { t } = useTranslation();
   const { id } = useParams();
-  const [initialValues, setInitialValues] = useState<ISupport | undefined>(
-    undefined
-  );
+  const [initialValues, setInitialValues] = useState<
+    PlainSupportRecordInfo | undefined
+  >(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(!!id);
 
   useEffect(() => {
     const getSupportRecord = async (id: number) => {
       try {
         setIsLoading(true);
-        const supportRecord = await supportRecordsStore.getSupportRecordById(
-          id
-        );
+        const supportRecord =
+          await supportRecordsStore.getPlainSupportRecordInfo(id);
         setInitialValues(supportRecord);
         console.log(supportRecord);
       } catch (error) {
@@ -44,9 +47,15 @@ const OpenRequest: React.FC = observer(() => {
 
   const requestInfoList = useMemo(() => {
     if (!initialValues) return null;
-
+    const neededKeys = [
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+      'clientDescription',
+    ];
     return Object.entries(initialValues).map(([key, value], index) => {
-      if (!value) return null;
+      if (!neededKeys.includes(key) || !value) return null;
       return (
         <div className={styles.requestInfoItem} key={index}>
           <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
@@ -58,20 +67,33 @@ const OpenRequest: React.FC = observer(() => {
 
   const requestData = useMemo(() => {
     return {
-      status:
-        (`${
-          initialValues?.status?.charAt(0).toUpperCase() +
-          (initialValues?.status?.slice(1) || '')
-        }` as SupportStatus) || SupportStatus.IN_PROGRESS,
-      description: initialValues?.result_description || '',
+      status: initialValues?.status || SupportStatus.IN_PROGRESS,
+      description: initialValues?.resultDescription || '',
     };
   }, [initialValues]);
 
+  const validationSchema = Yup.object({
+    description: Yup.string().required(t('invalid.required')),
+  });
+
   const formik = useFormik({
     initialValues: requestData,
+    validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      if (!initialValues) return;
+      try {
+        const response = await SupportService.updateSupportRecordById(
+          initialValues.id,
+          {
+            status: values.status,
+            result_description: values.description,
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.error('Error updating support record:', error);
+      }
       resetForm();
     },
   });
@@ -119,12 +141,22 @@ const OpenRequest: React.FC = observer(() => {
                   onChange={formik.handleChange}
                 />
               </FormField>
-              <FormField label={t('forms.description')}>
+              <FormField
+                label={t('forms.description')}
+                isValid={
+                  !(formik.touched.description && formik.errors.description)
+                }
+                invalidMessage={formik.errors.description}
+              >
                 <InputTextarea
                   name='description'
                   value={formik.values.description}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder={t('forms.enterDescription')}
+                  className={classNames(
+                    isValidClassname(formik, 'description')
+                  )}
                 />
               </FormField>
             </div>

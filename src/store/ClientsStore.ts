@@ -7,8 +7,8 @@ import { makeAutoObservable } from 'mobx';
 
 class ClientsStore {
   // consider using Map instead of array
-  clients = [] as IUser[];
-  filters = {} as IFilters;
+  clients: IUser[] = [];
+  filters: IFilters = { total: 0 };
 
   constructor() {
     makeAutoObservable(this);
@@ -22,35 +22,39 @@ class ClientsStore {
     this.filters = filters;
   }
 
-  getUserById(id: number) {
-    return this.clients.find((client) => client.id === id);
+  async getUserById(id: number): Promise<IUser> {
+    const client = this.clients.find((client) => client.id === id);
+    if (client) {
+      return client;
+    }
+    const fetchedClient = await UserService.getUserById(id);
+    this.clients.push(fetchedClient.data);
+    return fetchedClient.data;
   }
 
-  getPlainClientInfo(id: number): PlainClientInfo {
-    const client = this.getUserById(id);
+  async getPlainClientInfo(id: number): Promise<PlainClientInfo> {
+    const client = await this.getUserById(id);
     return {
-      id: client?.id,
-      email: client?.account.email || '',
-      status: client?.account.status || UserStatus.PENDING,
-      firstName: client?.first_name || '',
-      lastName: client?.last_name || '',
-      phone: client?.phone || '',
-      companyName: client?.domain_url || '',
-      description: client?.description || '',
+      id: client.id,
+      email: client?.account?.email || '',
+      status: client?.account?.status || UserStatus.PENDING,
+      firstName: client.first_name,
+      lastName: client.last_name,
+      phone: client.phone,
+      companyName: client.domain_url,
+      description: client.description || '',
     };
   }
 
   async getClients(): Promise<IUser[]> {
     try {
       const response = await UserService.getUsers();
-      console.log(response);
-
       this.setClients(response.data.data);
       this.setFilters(response.data.filters);
       return response.data.data;
     } catch (e) {
       console.log(e);
-      return [] as IUser[];
+      return [];
     }
   }
 }

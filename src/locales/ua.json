@@ -7,24 +7,25 @@
   "sidebar": {
     "home": "Головна",
     "clients": "Клієнти",
-    "requests": "Запити"
-  , "b2bsidebar": {
-    "home": "Головна",
-    "schedule": "Розклад",
-    "booking": "Бронювання",
-    "clients": "Клієнти",
-    "organisations": "Організації",
-    "products": "Товари",
-    "personnel": "Персонал",
-    "statistics": "Статистика"
-  }},
+    "requests": "Запити",
+    "b2bsidebar": {
+      "home": "Головна",
+      "schedule": "Розклад",
+      "booking": "Бронювання",
+      "clients": "Клієнти",
+      "organisations": "Організації",
+      "products": "Товари",
+      "personnel": "Персонал",
+      "statistics": "Статистика"
+    }
+  },
   "signin": {
     "heading": "Увійти до ReservNow",
     "subheading": "Введіть адресу електронної пошти та пароль для входу!"
   },
   "b2bsignup": {
-    "heading": "Створити пароль",   
-    "subheading": "Введіть свій новий пароль, щоб увійти"      
+    "heading": "Створити пароль",
+    "subheading": "Введіть свій новий пароль, щоб увійти"
   },
   "clients": {
     "clients": "Клієнти",
@@ -35,7 +36,10 @@
     "null": "Наразі немає клієнтів"
   },
   "requests": {
-    "requests": "Запити"
+    "requests": "Запити",
+    "request": "Запит",
+    "null": "Список запитів порожній",
+    "response": "Рішення по запиту"
   },
   "forms": {
     "overallInfo": "Загальна інформація",
@@ -73,7 +77,8 @@
     "pending": "Очікує",
     "active": "Активний",
     "blocked": "Заблокований",
-    "deleted": "Видалений"
+    "deleted": "Видалений",
+    "new": "Новий"
   },
   "actions": {
     "action": "Дія",
@@ -84,6 +89,7 @@
     "save": "Зберегти",
     "cancel": "Скасувати",
     "submit": "Підтвердити",
+    "open": "Відкрити",
     "close": "Закрити",
     "search": "Пошук",
     "clear": "Очистити",

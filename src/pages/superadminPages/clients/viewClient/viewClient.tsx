@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './viewClient.module.scss';
-import statusStyles from '@/components/tables/clientsTable.module.scss';
+import statusStyles from '@/components/tables/status.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import clientsStore from '@/store/ClientsStore';
 import { observer } from 'mobx-react-lite';
 import { PlainClientInfo } from '@/components/forms/addClientForm';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const ViewClient: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -19,14 +20,18 @@ const ViewClient: React.FC = observer(() => {
     PlainClientInfo | undefined
   >(undefined);
 
-  useEffect(() => {
-    const fetchUserById = (userId: number) => {
-      try {
-        const user = clientsStore.getPlainClientInfo(userId);
+  const [isLoading, setIsLoading] = useState<boolean>(!!id);
 
-        if (user) setInitialValues(user);
+  useEffect(() => {
+    const fetchUserById = async (userId: number) => {
+      try {
+        setIsLoading(true);
+        const user = await clientsStore.getPlainClientInfo(userId);
+        setInitialValues(user);
       } catch (error) {
         console.error('Error fetching user:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -35,7 +40,7 @@ const ViewClient: React.FC = observer(() => {
     }
   }, [id]);
 
-  const UserInfoList = useMemo(() => {
+  const userInfoList = useMemo(() => {
     if (!initialValues) return null;
     const neededKeys = [
       'firstName',
@@ -59,7 +64,7 @@ const ViewClient: React.FC = observer(() => {
   return (
     <div className={styles.viewClient}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {`${initialValues?.firstName} ${initialValues?.lastName}`}
+        {`${initialValues?.firstName || ''} ${initialValues?.lastName || ''}`}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
@@ -82,27 +87,31 @@ const ViewClient: React.FC = observer(() => {
           <ChevronLeft />
           {t('actions.goBack')}
         </a>
-        <div className={styles.clientInfo}>
-          <h4
-            className={classNames(
-              'heading heading-4 heading-primary',
-              styles.clientInfoHeading
-            )}
-          >
-            {t('forms.overallInfo')}
-            <span
+        {isLoading ? (
+          <ProgressSpinner />
+        ) : (
+          <div className={styles.clientInfo}>
+            <h4
               className={classNames(
-                'heading heading-4',
-                styles.status,
-                statusStyles.status,
-                statusStyles[initialValues?.status || 'pending']
+                'heading heading-4 heading-primary',
+                styles.clientInfoHeading
               )}
             >
-              {t(`status.${initialValues?.status}`)}
-            </span>
-          </h4>
-          {UserInfoList}
-        </div>
+              {t('forms.overallInfo')}
+              <span
+                className={classNames(
+                  'heading heading-4',
+                  styles.status,
+                  statusStyles.status,
+                  statusStyles[initialValues?.status || 'pending']
+                )}
+              >
+                {t(`status.${initialValues?.status}`)}
+              </span>
+            </h4>
+            {userInfoList}
+          </div>
+        )}
       </div>
     </div>
   );

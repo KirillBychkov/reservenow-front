@@ -58,7 +58,7 @@ const Clients: React.FC = observer(() => {
         <ClientsTable clients={clients} />
       ) : (
         <div className={styles.content}>
-          <h2 className='heading heading-2 heading-primary'>
+          <h2 className='heading heading-2 heading-primary text-center'>
             {t('clients.null')}
           </h2>
           <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>

@@ -1,0 +1,64 @@
+import { IOrganization } from '@/models/response/OrganizationsResponse';
+import OrganizationService from '@/services/organizationService';
+import { CatchError } from '@/types/errors';
+import { action, makeAutoObservable, observable, runInAction } from 'mobx';
+
+class OrganizationStore {
+  isLoading: boolean = false;
+  isSuccess: boolean = false;
+  isError: boolean = false;
+  errorMessage: string = '';
+  // organizations: Map<number, Organization> = new Map();
+  organizations: IOrganization[] | null = null;
+
+  constructor() {
+    makeAutoObservable(this, {
+      organizations: observable,
+      getOrganizations: action,
+    });
+  }
+
+  async getOrganizations() {
+    if (this.isLoading) {
+      return;
+    }
+    this.setLoading(true);
+    try {
+      const organizationsData = await OrganizationService.getOrganizations();
+      runInAction(() => {
+        this.organizations = organizationsData;
+        this.setLoading(false);
+        this.setSuccess(true);
+      });
+    } catch (e) {
+      if (e instanceof Error) {
+        this.setError(true, e.message as CatchError);
+        this.setLoading(false);
+      }
+    }
+  }
+
+  /*
+    UTILS 
+  */
+  setSuccess(bool: boolean) {
+    this.isSuccess = bool;
+    this.resetError();
+  }
+
+  setError(bool: boolean, message: string) {
+    this.isError = bool;
+    this.errorMessage = message;
+  }
+  setLoading(bool: boolean) {
+    this.isLoading = bool;
+  }
+
+  resetError() {
+    this.isError = false;
+    this.errorMessage = '';
+  }
+}
+
+const organizationStore = new OrganizationStore();
+export default organizationStore;

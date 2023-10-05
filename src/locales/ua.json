@@ -7,25 +7,24 @@
   "sidebar": {
     "home": "Головна",
     "clients": "Клієнти",
-    "requests": "Запити",
-    "b2bsidebar": {
-      "home": "Головна",
-      "schedule": "Розклад",
-      "booking": "Бронювання",
-      "clients": "Клієнти",
-      "organisations": "Організації",
-      "products": "Товари",
-      "personnel": "Персонал",
-      "statistics": "Статистика"
-    }
-  },
+    "requests": "Запити"
+  , "b2bsidebar": {
+    "home": "Головна",
+    "schedule": "Розклад",
+    "booking": "Бронювання",
+    "clients": "Клієнти",
+    "organizations": "Організації",
+    "products": "Товари",
+    "personnel": "Персонал",
+    "statistics": "Статистика"
+  }},
   "signin": {
     "heading": "Увійти до ReservNow",
     "subheading": "Введіть адресу електронної пошти та пароль для входу!"
   },
   "b2bsignup": {
-    "heading": "Створити пароль",
-    "subheading": "Введіть свій новий пароль, щоб увійти"
+    "heading": "Створити пароль",   
+    "subheading": "Введіть свій новий пароль, щоб увійти"      
   },
   "clients": {
     "clients": "Клієнти",
@@ -36,10 +35,7 @@
     "null": "Наразі немає клієнтів"
   },
   "requests": {
-    "requests": "Запити",
-    "request": "Запит",
-    "null": "Список запитів порожній",
-    "response": "Рішення по запиту"
+    "requests": "Запити"
   },
   "forms": {
     "overallInfo": "Загальна інформація",
@@ -62,6 +58,23 @@
     "status": "Статус",
     "enterStatus": "Оберіть статус"
   },
+    "organizations": {
+    "organizations": "Організації",
+    "add": "Додати Організацію",
+    "null": "Нажаль ви ще не створили жодної організації"
+  },
+  "addOrganizationForm": {
+    "name": "Назва організації",
+    "enterName": "Введіть тут назву організації. . .",
+    "enterDescription": "Введіть тут опис організації. . .",
+    "location": "Місцезнаходження",
+    "enterLocation": "Розташування організації",
+    "image": "Зображення організації",
+    "workHours": "Години роботи",
+    "full": "Цілодобово, враховуючи вихідні дні",
+    "from": "Від",
+    "to" : "До"
+  },
   "invalid": {
     "required": "Обов'язкове поле",
     "email": "Невірний формат електронної пошти",
@@ -73,23 +86,31 @@
     "createdAt": "Дата створення",
     "updatedAt": "Дата оновлення"
   },
+  "days": {
+    "monday": "Пн",
+    "tuesday": "Вт",
+    "wednesday": "Ср",
+    "thursday": "Чт",
+    "friday": "Пт",
+    "saturday": "Сб",
+    "sunday": "Нд"
+  },
   "status": {
     "pending": "Очікує",
     "active": "Активний",
     "blocked": "Заблокований",
-    "deleted": "Видалений",
-    "new": "Новий"
+    "deleted": "Видалений"
   },
   "actions": {
     "action": "Дія",
     "actions": "Дії",
     "add": "Додати",
+    "open": "Відкрити",
     "edit": "Редагувати",
     "delete": "Видалити",
     "save": "Зберегти",
     "cancel": "Скасувати",
     "submit": "Підтвердити",
-    "open": "Відкрити",
     "close": "Закрити",
     "search": "Пошук",
     "clear": "Очистити",
@@ -100,6 +121,8 @@
     "back": "Назад",
     "goBack": "Повернутися назад",
     "addClient": "Додати клієнта",
-    "editClient": "Редагувати клієнта"
+    "editClient": "Редагувати клієнта",
+    "addImage": "Додати зображення",
+    "chooseOption": "Виберіть варіант"
   }
 }

@@ -58,9 +58,9 @@ const useRoleBasedMenu = () => {
         text: 'sidebar.b2bsidebar.clients',
       },
       {
-        page: '/organisations',
+        page: '/organizations',
         icon: <LayoutGrid />,
-        text: 'sidebar.b2bsidebar.organisations',
+        text: 'sidebar.b2bsidebar.organizations',
       },
       {
         page: '/products',

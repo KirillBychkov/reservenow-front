@@ -83,7 +83,8 @@
     "new": "Новий",
     "in_progress": "Обробляється",
     "fixed": "Виконано",
-    "rejected": "Відхилено"
+    "rejected": "Відхилено",
+    "undefined": "Невідомий"
   },
   "actions": {
     "action": "Дія",

@@ -1,4 +1,4 @@
-import { DataTable } from 'primereact/datatable';
+import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { IAccount } from '@/models/IUser';
 import { Button } from 'primereact/button';
@@ -9,12 +9,14 @@ import classNames from 'classnames';
 import { IUser } from '@/models/IUser';
 import { useMemo, useState } from 'react';
 import { getFormattedDate } from '@/utils/parseFormattedDate';
+import { Paginator } from 'primereact/paginator';
 
 interface Props {
   clients: IUser[];
+  setPage: (page: number) => void;
 }
 
-const ClientsTable: React.FC<Props> = ({ clients }) => {
+const ClientsTable: React.FC<Props> = ({ clients, setPage }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [selectedClient, setSelectedClient] = useState<IUser | null>(null);
@@ -47,6 +49,13 @@ const ClientsTable: React.FC<Props> = ({ clients }) => {
         selectionMode='single'
         selection={selectedClient!}
         onSelectionChange={(e) => handleViewClient(e.value)}
+        paginator
+        totalRecords={64}
+        rows={8}
+        pageLinkSize={8}
+        alwaysShowPaginator={true}
+        paginatorTemplate='PrevPageLink PageLinks NextPageLink'
+        // onPage={(e: DataTableStateEvent) => setPage((e.page || 0) + 1)}
       >
         <Column field='id' header='ID' sortable />
         <Column field='first_name' header={t('forms.firstName')} sortable />
@@ -59,10 +68,10 @@ const ClientsTable: React.FC<Props> = ({ clients }) => {
             <div
               className={classNames(
                 styles.status,
-                styles[rowData.account.status]
+                styles[rowData?.account?.status]
               )}
             >
-              {t(`status.${rowData.account.status}`)}
+              {t(`status.${rowData?.account?.status}`)}
             </div>
           )}
         />
@@ -84,6 +93,7 @@ const ClientsTable: React.FC<Props> = ({ clients }) => {
             />
           )}
         />
+        <Paginator></Paginator>
       </DataTable>
     </div>
   );

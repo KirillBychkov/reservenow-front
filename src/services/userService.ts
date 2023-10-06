@@ -5,8 +5,16 @@ import { IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(): Promise<AxiosResponse<IUsers>> {
-    return $api.get(`${BASE_API_URL}/users`);
+  static async getUsers(
+    limit = 20,
+    skip = 0,
+    search?: string
+  ): Promise<AxiosResponse<IUsers>> {
+    return $api.get(
+      `${BASE_API_URL}/users?limit=${limit}&skip=${skip}${
+        search ? `&search=${search}` : ''
+      }`
+    );
   }
 
   static async createUser(user: ICreateUserDTO): Promise<AxiosResponse> {

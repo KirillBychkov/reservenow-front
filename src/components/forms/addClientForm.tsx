@@ -12,6 +12,8 @@ import styles from './addClientForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import UserService from '@/services/userService';
 import { UserStatus } from '@/types/enums/user';
+import { observer } from 'mobx-react-lite';
+import clientsStore from '@/store/ClientsStore';
 
 export interface PlainClientInfo {
   id?: number;
@@ -28,7 +30,7 @@ interface Props {
   initialValues?: PlainClientInfo;
 }
 
-const AddClientForm: React.FC<Props> = ({ initialValues }) => {
+const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
 
   const validationSchema = Yup.object({
@@ -96,7 +98,10 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
   });
 
   const handleDeleteUser = async () => {
-    // TODO: implement delete functionality
+    if (!initialValues) {
+      return;
+    }
+    return await clientsStore.deleteClient(initialValues.id!);
   };
 
   const handleClearForm = () => formik.resetForm();
@@ -150,20 +155,22 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
             className={classNames(isValidClassname(formik, 'phone'))}
           />
         </FormField>
-        <FormField
-          label={t('forms.email')}
-          isValid={!(formik.touched.email && formik.errors.email)}
-          invalidMessage={formik.errors.email}
-        >
-          <InputText
-            name='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            placeholder={t('forms.enterEmail')}
-            className={classNames(isValidClassname(formik, 'email'))}
-          />
-        </FormField>
+        {!initialValues && (
+          <FormField
+            label={t('forms.email')}
+            isValid={!(formik.touched.email && formik.errors.email)}
+            invalidMessage={formik.errors.email}
+          >
+            <InputText
+              name='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder={t('forms.enterEmail')}
+              className={classNames(isValidClassname(formik, 'email'))}
+            />
+          </FormField>
+        )}
         <FormField
           label={t('forms.companyName')}
           isValid={!(formik.touched.companyName && formik.errors.companyName)}
@@ -214,6 +221,6 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
       </div>
     </form>
   );
-};
+});
 
 export default AddClientForm;

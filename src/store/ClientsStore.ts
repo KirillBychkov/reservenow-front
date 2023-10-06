@@ -2,11 +2,10 @@ import { PlainClientInfo } from '@/components/forms/addClientForm';
 import { IUser } from '@/models/IUser';
 import { IFilters } from '@/models/response/GetUsersResponse';
 import UserService from '@/services/userService';
-import { UserStatus } from '@/types/user';
+import { ResponseWithErrors } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
 class ClientsStore {
-  // consider using Map instead of array
   clients: IUser[] = [];
   filters: IFilters = { total: 0 };
 
@@ -22,41 +21,50 @@ class ClientsStore {
     this.filters = filters;
   }
 
-  async getUserById(id: number): Promise<IUser> {
+  getClientById = async (id: number): Promise<ResponseWithErrors<IUser>> => {
     const client = this.clients.find((client) => client.id === id);
     if (client) {
-      return client;
+      return { data: client, error: '' };
     }
     const fetchedClient = await UserService.getUserById(id);
     this.clients.push(fetchedClient.data);
-    return fetchedClient.data;
-  }
+    return { data: fetchedClient.data, error: '' };
+  };
 
-  async getPlainClientInfo(id: number): Promise<PlainClientInfo> {
-    const client = await this.getUserById(id);
+  deleteClient = async (id: number): Promise<void> => {
+    try {
+      await UserService.deleteUser(id);
+      this.clients = this.clients.filter((client) => client.id !== id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getPlainClientInfo = async (id: number): Promise<PlainClientInfo> => {
+    const { data: client } = await this.getClientById(id);
     return {
       id: client.id,
       email: client?.account?.email || '',
-      status: client?.account?.status || UserStatus.PENDING,
+      status: client?.account?.status,
       firstName: client.first_name,
       lastName: client.last_name,
       phone: client.phone,
       companyName: client.domain_url,
       description: client.description || '',
     };
-  }
+  };
 
-  async getClients(): Promise<IUser[]> {
+  getClients = async (): Promise<ResponseWithErrors<IUser[]>> => {
     try {
       const response = await UserService.getUsers();
       this.setClients(response.data.data);
       this.setFilters(response.data.filters);
-      return response.data.data;
+      return { data: response.data.data, error: '' };
     } catch (e) {
       console.log(e);
-      return [];
+      return { data: [], error: 'An error occurred while fetching clients.' };
     }
-  }
+  };
 }
 
 const clientsStore = new ClientsStore();

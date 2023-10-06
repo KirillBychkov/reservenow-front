@@ -21,22 +21,15 @@ const ViewClient: React.FC = observer(() => {
   >(undefined);
 
   const [isLoading, setIsLoading] = useState<boolean>(!!id);
+  console.log(initialValues?.status);
 
   useEffect(() => {
-    const fetchUserById = async (userId: number) => {
-      try {
-        setIsLoading(true);
-        const user = await clientsStore.getPlainClientInfo(userId);
-        setInitialValues(user);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     if (id) {
-      fetchUserById(parseInt(id));
+      setIsLoading(true);
+      clientsStore.getPlainClientInfo(parseInt(id)).then((user) => {
+        setInitialValues(user);
+        setIsLoading(false);
+      });
     }
   }, [id]);
 
@@ -103,7 +96,7 @@ const ViewClient: React.FC = observer(() => {
                   'heading heading-4',
                   styles.status,
                   statusStyles.status,
-                  statusStyles[initialValues?.status || 'pending']
+                  statusStyles[initialValues?.status || '']
                 )}
               >
                 {t(`status.${initialValues?.status}`)}

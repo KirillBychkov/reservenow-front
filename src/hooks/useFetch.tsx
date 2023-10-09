@@ -10,7 +10,10 @@ interface UseFetchResult<T> {
   errorMsg: string | null;
 }
 
-function useFetch<T>(fetchFunction: FetchFunction<T>): UseFetchResult<T> {
+function useFetch<T>(
+  fetchFunction: FetchFunction<T>,
+  dependencies?: any[]
+): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMsg, setError] = useState<string | null>(null);
@@ -24,7 +27,7 @@ function useFetch<T>(fetchFunction: FetchFunction<T>): UseFetchResult<T> {
       }
       setIsLoading(false);
     });
-  }, [fetchFunction]);
+  }, dependencies || []);
 
   return { data, isLoading, errorMsg };
 }

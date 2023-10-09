@@ -1,18 +1,14 @@
 import $api, { BASE_API_URL } from '@/http';
 import { IUser } from '@/models/IUser';
 import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IUsers } from '@/models/response/GetUsersResponse';
+import { IFilters, IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(
-    limit = 20,
-    skip = 0,
-    search?: string
-  ): Promise<AxiosResponse<IUsers>> {
+  static async getUsers(filters: IFilters): Promise<AxiosResponse<IUsers>> {
     return $api.get(
-      `${BASE_API_URL}/users?limit=${limit}&skip=${skip}${
-        search ? `&search=${search}` : ''
+      `${BASE_API_URL}/users?limit=${filters.limit}&skip=${filters.skip}${
+        filters.search ? `&search=${filters.search}` : ''
       }`
     );
   }

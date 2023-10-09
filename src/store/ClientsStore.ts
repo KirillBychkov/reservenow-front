@@ -13,6 +13,10 @@ class ClientsStore {
     makeAutoObservable(this);
   }
 
+  getFilters() {
+    return this.filters;
+  }
+
   setClients(clients: IUser[]) {
     this.clients = clients;
   }
@@ -54,11 +58,15 @@ class ClientsStore {
     };
   };
 
-  getClients = async (): Promise<ResponseWithErrors<IUser[]>> => {
+  getClients = async (
+    filters: IFilters
+  ): Promise<ResponseWithErrors<IUser[]>> => {
     try {
-      const response = await UserService.getUsers();
-      this.setClients(response.data.data);
+      const response = await UserService.getUsers(filters);
+      console.log(response);
+
       this.setFilters(response.data.filters);
+      this.setClients(response.data.data);
       return { data: response.data.data, error: '' };
     } catch (e) {
       console.log(e);

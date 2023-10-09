@@ -1,6 +1,5 @@
 /* Customizations to the designer theme should be defined here */
 
-
 .p-datatable .p-datatable-thead > tr > th:first-child {
   border-top-left-radius: 15px;
   border-left: 1px solid #e9ecef;
@@ -32,4 +31,8 @@
 .p-datatable .p-datatable-tbody > tr > td:last-child,
 .p-datatable .p-datatable-thead > tr > th:last-child {
   width: 100px;
+}
+.p-dropdown {
+  background: var(--neutral-gray-gray-25, #f9f9fc);
+  border-radius: 8px;
 }

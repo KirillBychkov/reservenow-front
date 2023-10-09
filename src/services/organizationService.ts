@@ -1,5 +1,7 @@
 import $api, { BASE_API_URL } from '@/http';
-import { IOrganization } from '@/models/response/OrganizationsResponse';
+import { IOrganization } from '@/models/IOrganization';
+import { ICreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
+
 import { AxiosResponse } from 'axios';
 
 export default class OrganizationService {
@@ -9,7 +11,7 @@ export default class OrganizationService {
   }
 
   static async addOrganization(
-    organization: IOrganization
+    organization: ICreateOrganizationDTO
   ): Promise<AxiosResponse> {
     const response = await $api.post(
       `${BASE_API_URL}/organization`,

@@ -1,10 +1,12 @@
+import { IUser } from './IUser';
+
 export interface IOrganization {
   id: number;
   name: string;
+  user: IUser[];
   description: string;
   phone: string;
-  lat: number;
-  lon: number;
+  address: string;
   monday_start_hours: number;
   monday_end_hours: number;
   tuesday_start_hours: number;

@@ -1,4 +1,5 @@
-import { IOrganization } from '@/models/response/OrganizationsResponse';
+import { IOrganization } from '@/models/IOrganization';
+import { ICreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
 import { CatchError } from '@/types/errors';
 import { action, makeAutoObservable, observable, runInAction } from 'mobx';
@@ -8,7 +9,6 @@ class OrganizationStore {
   isSuccess: boolean = false;
   isError: boolean = false;
   errorMessage: string = '';
-  // organizations: Map<number, Organization> = new Map();
   organizations: IOrganization[] | null = null;
 
   constructor() {
@@ -34,6 +34,16 @@ class OrganizationStore {
       if (e instanceof Error) {
         this.setError(true, e.message as CatchError);
         this.setLoading(false);
+      }
+    }
+  }
+
+  async addOrganization(organization: ICreateOrganizationDTO) {
+    try {
+      await OrganizationService.addOrganization(organization);
+    } catch (e) {
+      if (e instanceof Error) {
+        this.setError(true, e.message as CatchError);
       }
     }
   }

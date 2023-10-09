@@ -1,12 +1,13 @@
 $common-padding: 1.5rem;
-$common-margin-bottom: 40px;
+$common-margin-bottom: 24px;
 $common-border: 1px solid var(--neutral-gray-gray-100, #e0e2e7);
 $common-background: var(--neutral-white, #fff);
 $common-box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
 
 .Form {
   textarea,
-  input {
+  input,
+  label {
     background-color: var(--neutral-gray-gray-25, #f9f9fc);
   }
 }
@@ -71,6 +72,14 @@ $common-box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
       flex: 1;
       display: flex;
       gap: 14px;
+      width: 100%;
+
+      & .WorkingHours-DropdownLeft {
+        width: 50%;
+      }
+      & .WorkingHours-DropdownRight {
+        width: 50%;
+      }
     }
   }
 }

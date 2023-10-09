@@ -3,7 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import styles from './CustomDropdown.module.scss';
 
 interface CustomDropdownProps {
-  value: number;
+  value: number | null;
   options: { label: string; value: number }[];
   onChange: (e: { value: number | null }) => void;
   disabled: boolean;

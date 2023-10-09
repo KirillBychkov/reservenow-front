@@ -1,11 +1,10 @@
 .customDropdown {
   width: 100%;
-  border-radius: 8px !important;
   display: flex;
   height: 40px;
   justify-content: center;
   align-items: center;
   align-self: stretch;
   border: 1px solid var(--neutral-gray-gray-100, #e0e2e7);
-  background: var(--neutral-gray-gray-25, #f9f9fc);
 }
+// edit /extension dropdown add border-radius

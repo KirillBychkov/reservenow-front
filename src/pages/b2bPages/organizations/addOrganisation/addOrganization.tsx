@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import AddOrganizationForm, {
-  addOrganizationInfo,
-} from '@/components/b2bclient/forms/addOrganizationForm';
+  AddOrganizationInfo,
+} from '@/components/b2bclient/forms/addOrganizationForm/addOrganizationForm';
 
 const AddOrganisation: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ const AddOrganisation: React.FC = observer(() => {
 
   const [isLoading, setIsLoading] = useState<boolean>(!!id);
   const [initialValues, setInitialValues] = useState<
-    addOrganizationInfo | undefined
+    AddOrganizationInfo | undefined
   >(undefined);
 
   useEffect(() => {}, []);
@@ -39,11 +39,7 @@ const AddOrganisation: React.FC = observer(() => {
         ]}
       />
       <div className={styles.formContainer}>
-        {isLoading ? (
-          <ProgressSpinner />
-        ) : (
-          <AddOrganizationForm initialValues={id ? initialValues : undefined} />
-        )}
+        {isLoading ? <ProgressSpinner /> : <AddOrganizationForm />}
       </div>
     </div>
   );

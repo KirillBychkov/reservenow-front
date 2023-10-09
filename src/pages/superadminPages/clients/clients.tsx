@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './clients.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -11,19 +11,22 @@ import { IUser } from '@/models/IUser';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';
 import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
 
 const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const [page, setPage] = useState<number>(0);
-  console.log(page);
+  const { showError } = useContext(ToastContext);
 
   const {
     data: clients,
-    error,
+    errorMsg,
     isLoading,
   } = useFetch<IUser[]>(clientsStore.getClients);
+
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   return (
     <div className={styles.clients}>
@@ -49,7 +52,7 @@ const Clients: React.FC = observer(() => {
           <ProgressSpinner />
         </div>
       ) : clients?.length ? (
-        <ClientsTable clients={clients} setPage={setPage} />
+        <ClientsTable clients={clients} />
       ) : (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>

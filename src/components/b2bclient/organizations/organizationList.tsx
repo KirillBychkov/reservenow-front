@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import organizationStore from '@/store/OrganizationsStore';
 import OrganizationCard from './organizationCard';
-import { IOrganization } from '@/models/response/OrganizationsResponse';
 import styles from './OrganizationList.module.scss';
+import { IOrganization } from '@/models/IOrganization';
 
 const OrganizationList: React.FC = observer(() => {
   const organizations = organizationStore.organizations?.values() || [];

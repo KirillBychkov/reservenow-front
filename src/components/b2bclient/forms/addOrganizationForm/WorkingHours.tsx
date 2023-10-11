@@ -25,6 +25,10 @@ interface WorkingHoursProps {
   dropdownOptions: DropdownOption[];
 }
 
+// non working = null null
+// validation on backed: a < b
+//
+
 export const WorkingHours = ({
   t,
   workingHours,

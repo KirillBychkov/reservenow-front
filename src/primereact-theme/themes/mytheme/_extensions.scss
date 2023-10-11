@@ -36,3 +36,7 @@
   background: var(--neutral-gray-gray-25, #f9f9fc);
   border-radius: 8px;
 }
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  transform: translateX(1.65rem);
+}

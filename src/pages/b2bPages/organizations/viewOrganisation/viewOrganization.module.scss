@@ -8,3 +8,63 @@
     justify-content: space-between;
   }
 }
+
+.FlexContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 100%;
+  gap: 24px;
+
+  .LeftSide {
+    background-color: beige;
+    display: flex;
+    height: 625px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 360px;
+
+    .OrgDetails {
+      width: 100%;
+
+      .OrgImageDiv {
+        align-items: center;
+        justify-content: center;
+
+        .OrgImage {
+          padding: 14px;
+          width: 100%;
+          height: 100%;
+          flex-shrink: 0;
+          border-radius: 20px;
+        }
+      }
+
+      .OrgDetailsBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  .RightSide {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 10%;
+
+    .TopCards {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .BottomTable {
+      width: 100%;
+      background-color: green;
+    }
+  }
+}

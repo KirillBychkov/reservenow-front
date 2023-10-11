@@ -3,7 +3,7 @@ export const generateDropdownOptions = () => {
   for (let i = 0; i < 24; i++) {
     options.push({ label: `${i.toString().padStart(2, '0')}:00`, value: i });
   }
-  // options.unshift({ label: '00:00', value: 0 });
+  // options.unshift({ label: 'test', value: 0 });
   return options;
 };
 

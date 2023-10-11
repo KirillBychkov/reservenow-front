@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { IOrganization } from '@/models/response/OrganizationsResponse';
 import styles from './OrganizationCard.module.scss';
 import Button from '@/components/UI/buttons/button';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { IOrganization } from '@/models/IOrganization';
 
 interface OrganizationCardProps {
   organization: IOrganization;

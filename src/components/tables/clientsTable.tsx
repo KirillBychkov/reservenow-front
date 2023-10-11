@@ -10,7 +10,7 @@ import { IUser } from '@/models/IUser';
 import { useMemo, useState } from 'react';
 import { getFormattedDate } from '@/utils/parseFormattedDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
-import clientsStore from '@/store/ClientsStore';
+// import clientsStore from '@/store/ClientsStore';
 import { observer } from 'mobx-react-lite';
 
 interface Props {
@@ -24,7 +24,7 @@ const ClientsTable: React.FC<Props> = observer(
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const [selectedClient, setSelectedClient] = useState<IUser | null>(null);
-    const filters = clientsStore.getFilters();
+    // const filters = clientsStore.getFilters();
 
     const handleViewClient = (client: IUser) => {
       setSelectedClient(client);
@@ -61,7 +61,7 @@ const ClientsTable: React.FC<Props> = observer(
             <Paginator
               first={first}
               rows={8}
-              totalRecords={18}
+              totalRecords={120}
               onPageChange={onPageChange}
             />
           }

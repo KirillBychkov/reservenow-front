@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormField from '@/components/UI/fields/formField';
@@ -10,21 +10,10 @@ import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
 import { useTranslation } from 'react-i18next';
-import UserService from '@/services/userService';
-import { UserStatus } from '@/types/enums/user';
 import { observer } from 'mobx-react-lite';
 import clientsStore from '@/store/ClientsStore';
-
-export interface PlainClientInfo {
-  id?: number;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  companyName: string;
-  description: string;
-  status: UserStatus;
-}
+import { PlainClientInfo } from '@/types/user';
+import ToastContext from '@/context/toast';
 
 interface Props {
   initialValues?: PlainClientInfo;
@@ -32,6 +21,7 @@ interface Props {
 
 const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const validationSchema = Yup.object({
     id: Yup.number(),
@@ -51,36 +41,37 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
     companyName: Yup.string().required(t('invalid.required')),
   });
 
-  const formData: PlainClientInfo = initialValues || {
+  const formData: Omit<PlainClientInfo, 'status'> = initialValues || {
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     companyName: '',
     description: '',
-    status: UserStatus.PENDING,
   };
 
   const formik = useFormik({
     initialValues: formData,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      try {
-        if (initialValues) {
-          await UserService.updateUser(initialValues.id || 0, {
+      let successMessage = '';
+      let errorMessage = '';
+      if (initialValues?.id) {
+        const { successMsg, errorMsg } = await clientsStore.updateClient(
+          initialValues.id,
+          {
             first_name: values.firstName,
             last_name: values.lastName,
             phone: values.phone,
             domain_url: values.companyName,
             description: values.description,
-          });
-
-          return;
-        }
-
-        await UserService.createUser({
+          }
+        );
+        successMessage = successMsg;
+        errorMessage = errorMsg;
+      } else {
+        const { successMsg, errorMsg } = await clientsStore.addClient({
           email: values.email,
-          status: values.status,
           user: {
             first_name: values.firstName,
             last_name: values.lastName,
@@ -89,11 +80,15 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
             description: values.description,
           },
         });
-
-        resetForm();
-      } catch (error) {
-        console.error('Error creating user:', error);
+        successMessage = successMsg;
+        errorMessage = errorMsg;
       }
+      if (successMessage) {
+        showSuccess(successMessage);
+      } else {
+        showError(errorMessage);
+      }
+      resetForm();
     },
   });
 

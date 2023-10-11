@@ -1,8 +1,9 @@
-import { PlainClientInfo } from '@/components/forms/addClientForm';
 import { IUser } from '@/models/IUser';
+import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
 import { IFilters } from '@/models/response/GetUsersResponse';
 import UserService from '@/services/userService';
-import { ResponseWithErrors } from '@/types/store';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { PlainClientInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
 class ClientsStore {
@@ -25,14 +26,41 @@ class ClientsStore {
     this.filters = filters;
   }
 
-  getClientById = async (id: number): Promise<ResponseWithErrors<IUser>> => {
+  addClient = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
+    try {
+      await UserService.createUser(data);
+      return { successMsg: 'Created client', errorMsg: '' };
+    } catch (e) {
+      console.log(e);
+      return { successMsg: '', errorMsg: 'Error creating client' };
+    }
+  };
+
+  updateClient = async (
+    id: number,
+    data: IUpdateUserDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      await UserService.updateUser(id, data);
+      return { successMsg: 'Updated client', errorMsg: '' };
+    } catch (e) {
+      console.log(e);
+      return { successMsg: '', errorMsg: 'Error updating client' };
+    }
+  };
+
+  getClientById = async (id: number): Promise<ResponseOrError<IUser>> => {
     const client = this.clients.find((client) => client.id === id);
     if (client) {
       return { data: client, error: '' };
     }
-    const fetchedClient = await UserService.getUserById(id);
-    this.clients.push(fetchedClient.data);
-    return { data: fetchedClient.data, error: '' };
+    try {
+      const fetchedClient = await UserService.getUserById(id);
+      this.clients.push(fetchedClient.data);
+      return { data: fetchedClient.data, error: '' };
+    } catch (error) {
+      return { data: {} as IUser, error: 'Client not found' };
+    }
   };
 
   deleteClient = async (id: number): Promise<void> => {
@@ -44,9 +72,14 @@ class ClientsStore {
     }
   };
 
-  getPlainClientInfo = async (id: number): Promise<PlainClientInfo> => {
-    const { data: client } = await this.getClientById(id);
-    return {
+  getPlainClientInfo = async (
+    id: number
+  ): Promise<ResponseOrError<PlainClientInfo>> => {
+    const { data: client, error } = await this.getClientById(id);
+    if (error) {
+      return { data: {} as PlainClientInfo, error: error };
+    }
+    const plainClientInfo: PlainClientInfo = {
       id: client.id,
       email: client?.account?.email || '',
       status: client?.account?.status,
@@ -56,15 +89,12 @@ class ClientsStore {
       companyName: client.domain_url,
       description: client.description || '',
     };
+    return { data: plainClientInfo, error: '' };
   };
 
-  getClients = async (
-    filters: IFilters
-  ): Promise<ResponseWithErrors<IUser[]>> => {
+  getClients = async (filters: IFilters): Promise<ResponseOrError<IUser[]>> => {
     try {
       const response = await UserService.getUsers(filters);
-      console.log(response);
-
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };

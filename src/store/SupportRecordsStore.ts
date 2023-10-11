@@ -1,20 +1,11 @@
 import { ISupport } from '@/models/ISupport';
+import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
 import SupportService from '@/services/supportService';
 import { SupportStatus } from '@/types/enums/support';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { PlainSupportRecordInfo } from '@/types/support';
 import { makeAutoObservable } from 'mobx';
 
-export interface PlainSupportRecordInfo {
-  id: number;
-  createdAt: Date | string;
-  clientDescription: string;
-  email: string;
-  status: SupportStatus;
-  resultDescription: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  companyName: string;
-}
 class SupportRecordsStore {
   supportRecords: ISupport[] = [];
 
@@ -26,34 +17,56 @@ class SupportRecordsStore {
     this.supportRecords = supportRecords;
   }
 
-  async getSupportRecords(): Promise<ISupport[]> {
+  getSupportRecords = async (): Promise<ResponseOrError<ISupport[]>> => {
     try {
       const response = await SupportService.getAllSupportRecords();
       this.setSupportRecords(response.data);
-      return response.data;
+      return { data: response.data, error: '' };
     } catch (e) {
       console.log(e);
-      return [];
+      return { data: [], error: 'Error getting support records' };
     }
-  }
+  };
 
-  async getSupportRecordById(id: number): Promise<ISupport> {
+  updateSupportRecord = async (
+    id: number,
+    data: IUpdateSupportDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      const res = await SupportService.updateSupportRecordById(id, data);
+      const updatedRecord = res.data;
+      this.supportRecords[updatedRecord.id] = updatedRecord;
+      return { successMsg: 'Support record updated', errorMsg: '' };
+    } catch (e) {
+      console.log(e);
+      return { successMsg: '', errorMsg: 'Error updating support record' };
+    }
+  };
+
+  getSupportRecordById = async (
+    id: number
+  ): Promise<ResponseOrError<ISupport>> => {
     try {
       const existedRecord = this.supportRecords.find(
         (record) => record.id === id
       );
-      if (existedRecord) return existedRecord;
+      if (existedRecord) return { data: existedRecord, error: '' };
       const { data } = await SupportService.getSupportRecordById(id);
-      return data;
+      return { data, error: '' };
     } catch (e) {
       console.log(e);
-      return {} as ISupport;
+      return { data: {} as ISupport, error: 'Support record not found' };
     }
-  }
+  };
 
-  async getPlainSupportRecordInfo(id: number): Promise<PlainSupportRecordInfo> {
-    const supportRecord = await this.getSupportRecordById(id);
-    return {
+  getPlainSupportRecordInfo = async (
+    id: number
+  ): Promise<ResponseOrError<PlainSupportRecordInfo>> => {
+    const { data: supportRecord, error } = await this.getSupportRecordById(id);
+    if (error) {
+      return { data: {} as PlainSupportRecordInfo, error: error };
+    }
+    const plainSupportRecordInfo: PlainSupportRecordInfo = {
       id: supportRecord.id,
       firstName: supportRecord.user.first_name,
       lastName: supportRecord.user.last_name,
@@ -65,7 +78,8 @@ class SupportRecordsStore {
       status: (supportRecord.status as SupportStatus) || SupportStatus.NEW,
       resultDescription: supportRecord.result_description || '',
     };
-  }
+    return { data: plainSupportRecordInfo, error: '' };
+  };
 }
 
 const supportRecordsStore = new SupportRecordsStore();

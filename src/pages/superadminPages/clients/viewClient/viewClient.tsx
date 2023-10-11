@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './viewClient.module.scss';
 import statusStyles from '@/components/tables/status.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -8,30 +8,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import clientsStore from '@/store/ClientsStore';
 import { observer } from 'mobx-react-lite';
-import { PlainClientInfo } from '@/components/forms/addClientForm';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { PlainClientInfo } from '@/types/user';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
 
 const ViewClient: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const [initialValues, setInitialValues] = useState<
-    PlainClientInfo | undefined
-  >(undefined);
+  const {
+    data: initialValues,
+    isLoading,
+    errorMsg,
+  } = useFetch<PlainClientInfo>(
+    () => clientsStore.getPlainClientInfo(parseInt(id || '0')),
+    [id]
+  );
 
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
-  console.log(initialValues?.status);
-
-  useEffect(() => {
-    if (id) {
-      setIsLoading(true);
-      clientsStore.getPlainClientInfo(parseInt(id)).then((user) => {
-        setInitialValues(user);
-        setIsLoading(false);
-      });
-    }
-  }, [id]);
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   const userInfoList = useMemo(() => {
     if (!initialValues) return null;

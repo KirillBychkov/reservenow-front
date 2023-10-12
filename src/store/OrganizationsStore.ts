@@ -16,6 +16,7 @@ class OrganizationStore {
       organizations: observable,
       getOrganizations: action,
     });
+    this.initOrg();
   }
 
   async getOrganizations() {
@@ -51,6 +52,15 @@ class OrganizationStore {
   /*
     UTILS 
   */
+
+  initOrg() {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (token && refreshToken) {
+      this.getOrganizations();
+    }
+  }
   setSuccess(bool: boolean) {
     this.isSuccess = bool;
     this.resetError();

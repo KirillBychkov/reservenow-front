@@ -1,3 +1,5 @@
+import { daysOfWeek } from '../organizationHelpers';
+
 export const generateDropdownOptions = () => {
   const options = [];
   for (let i = 0; i < 24; i++) {
@@ -27,16 +29,7 @@ export const getUpdatedWorkingHoursForAllDays = (
 };
 
 export const getDayKey = (index: number, timing: 'start' | 'end') => {
-  const days = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-    'sunday',
-  ];
-  const day = days[index];
+  const day = daysOfWeek[index];
   const timingKey = timing === 'start' ? 'start_hours' : 'end_hours';
   return `${day}_${timingKey}`;
 };
@@ -54,15 +47,6 @@ export const initializeWorkingHours = (numDays: number) => {
 export const numDaysInWeek = 7;
 
 export const getDayLabel = (index: number) => {
-  const daysOfWeek = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-    'sunday',
-  ];
   const dayIndex = index % 7;
   return daysOfWeek[dayIndex];
 };

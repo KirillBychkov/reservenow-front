@@ -67,3 +67,22 @@
 .text-center {
   text-align: center;
 }
+
+.text {
+  &-medium {
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.07px;
+
+    &-normal {
+      color: var(--text_normal, #1c2127);
+    }
+
+    &-muted {
+      color: var(--text_muted, #5f6b7c);
+    }
+  }
+}

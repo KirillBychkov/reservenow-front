@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import styles from './viewOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Home, People } from '@blueprintjs/icons';
+import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,11 @@ import { observer } from 'mobx-react-lite';
 import organisationStore from '@/store/OrganizationsStore';
 import organizationStore from '@/store/OrganizationsStore';
 import Button from '@/components/UI/buttons/button';
-import OrganizationCard from '@/components/UI/cards/organizationStatsCard';
+import OrganizationCard, {
+  cardData,
+} from '@/components/b2bclient/organizations/organizationStatsCard';
+import OrganizationDetailsLeft from '../../../../components/b2bclient/organizations/OrganizationDetailsLeft';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const ViewOrganisation: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -23,26 +27,9 @@ const ViewOrganisation: React.FC = observer(() => {
   const organization = organizationStore.organizations?.find(
     (org) => org.id === (id ? parseInt(id, 10) : undefined)
   );
-
-  // Test mock
-  const cardData = [
-    {
-      icon: <Home />,
-      heading: 'sidebar.home',
-      subheading: 'Всього продажiв',
-    },
-    {
-      icon: <People />,
-      heading: 'sidebar.home',
-      subheading: 'Всього бронювань',
-    },
-    {
-      icon: <People />,
-      heading: 'sidebar.home',
-      subheading: 'Всього клієнтів',
-    },
-  ];
-
+  if (!organization) {
+    return <ProgressSpinner />;
+  }
   return (
     <div className={styles['Vieworganizations']}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
@@ -75,7 +62,7 @@ const ViewOrganisation: React.FC = observer(() => {
             </div>
             {/* DetailsBottom */}
             <div className={styles.OrgDetailsBottom}>
-              <h5>DetailsBottom</h5>
+              <OrganizationDetailsLeft organization={organization} />
             </div>
           </div>
         </div>

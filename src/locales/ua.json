@@ -62,7 +62,10 @@
     "organizations": {
     "organizations": "Організації",
     "add": "Додати Організацію",
-    "null": "Нажаль ви ще не створили жодної організації"
+    "null": "Нажаль ви ще не створили жодної організації",
+    "totalSales": "Всього продажів",
+    "totalBookings": "Всього бронювань",
+    "totalClients": "Всього клієнтів"
   },
   "addOrganizationForm": {
     "name": "Назва організації",
@@ -95,7 +98,8 @@
     "thursday": "Чт",
     "friday": "Пт",
     "saturday": "Сб",
-    "sunday": "Нд"
+    "sunday": "Нд",
+    "dayOff": "Вихідний"
   },
   "status": {
     "pending": "Очікує",

@@ -17,27 +17,32 @@
   gap: 24px;
 
   .LeftSide {
-    background-color: beige;
+    background-color: var(--neutral-white, #fff);
     display: flex;
     height: 625px;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
     width: 360px;
+    border-radius: 10px;
 
     .OrgDetails {
       width: 100%;
 
+      flex-direction: column;
+      align-items: flex-start;
+
       .OrgImageDiv {
+        display: flex;
         align-items: center;
         justify-content: center;
+        padding: 14px;
 
         .OrgImage {
-          padding: 14px;
-          width: 100%;
-          height: 100%;
+          height: 231px;
+          width: 332px;
           flex-shrink: 0;
-          border-radius: 20px;
+          border-radius: 10px;
         }
       }
 
@@ -45,6 +50,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        padding: 0px 24px 24px 24px;
       }
     }
   }

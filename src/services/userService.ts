@@ -5,7 +5,9 @@ import { IFilters, IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(filters: IFilters): Promise<AxiosResponse<IUsers>> {
+  static async getUsers(
+    filters: Omit<IFilters, 'total'>
+  ): Promise<AxiosResponse<IUsers>> {
     return $api.get(
       `${BASE_API_URL}/users?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''

@@ -6,9 +6,16 @@ import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainClientInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
+export interface Pagination {
+  rowsPerPage: number;
+}
+
 class ClientsStore {
   clients: IUser[] = [];
-  filters: IFilters = { total: 0 };
+  filters: IFilters = { total: 0, limit: 8 };
+  pagination: Pagination = {
+    rowsPerPage: 8,
+  };
 
   constructor() {
     makeAutoObservable(this);
@@ -92,9 +99,13 @@ class ClientsStore {
     return { data: plainClientInfo, error: '' };
   };
 
-  getClients = async (filters: IFilters): Promise<ResponseOrError<IUser[]>> => {
+  getClients = async (
+    filters: Omit<IFilters, 'total'>
+  ): Promise<ResponseOrError<IUser[]>> => {
     try {
       const response = await UserService.getUsers(filters);
+      console.log(response);
+
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };

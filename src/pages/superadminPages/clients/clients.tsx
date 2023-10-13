@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './clients.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -12,28 +12,24 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
-import { PaginatorPageChangeEvent } from 'primereact/paginator';
+import usePaginate from '@/hooks/usePaginate';
 
 const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
 
-  const [first, setFirst] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
-
-  const onPageChange = (event: PaginatorPageChangeEvent) => {
-    setPage(event.page);
-    setFirst(event.first);
-  };
+  const { limit, skip, first, onPageChange } = usePaginate(
+    clientsStore.pagination
+  );
 
   const {
     data: clients,
     errorMsg,
     isLoading,
   } = useFetch<IUser[]>(
-    () => clientsStore.getClients({ limit: 8 + page * 8, skip: page * 8 }),
-    [page]
+    () => clientsStore.getClients({ limit, skip }),
+    [limit, skip]
   );
 
   if (errorMsg) {

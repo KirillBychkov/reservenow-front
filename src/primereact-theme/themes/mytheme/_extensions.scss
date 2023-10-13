@@ -33,6 +33,20 @@
   width: 100px;
 }
 
-.p-datatable .p-paginator-bottom {
-  justify-content: flex-end;
+.p-datatable .p-datatable-footer {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #e9ecef;
+  border-top: none;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.p-paginator {
+  padding: 0;
+}
+
+.p-paginator .p-paginator-current {
+  margin-right: auto;
+  color: black;
 }

@@ -59,6 +59,14 @@ const ClientsTable: React.FC<Props> = observer(
           onSelectionChange={(e) => handleViewClient(e.value)}
           footer={
             <Paginator
+              template={{
+                layout:
+                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+              }}
+              currentPageReportTemplate={`${t(
+                'states.showed'
+              )} {first} - {last} ${t('states.of')} {totalRecords}`}
+              style={{ justifyContent: 'flex-end' }}
               first={first}
               rows={clientsStore.pagination.rowsPerPage}
               totalRecords={filters.total}
@@ -102,7 +110,6 @@ const ClientsTable: React.FC<Props> = observer(
               />
             )}
           />
-          <Paginator></Paginator>
         </DataTable>
       </div>
     );

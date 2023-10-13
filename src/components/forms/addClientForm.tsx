@@ -82,13 +82,13 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
         });
         successMessage = successMsg;
         errorMessage = errorMsg;
+        resetForm();
       }
       if (successMessage) {
         showSuccess(successMessage);
       } else {
         showError(errorMessage);
       }
-      resetForm();
     },
   });
 

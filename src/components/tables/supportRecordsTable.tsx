@@ -37,7 +37,9 @@ const SupportRecordsTable: React.FC<Props> = ({ supportRecords }) => {
     <div>
       <DataTable value={supportRecordsData} removableSort>
         <Column field='id' header='ID' sortable />
-        {/* <Column field='user.account.email' header={t('forms.email')} /> */}
+        <Column field='user.first_name' header={t('forms.firstName')} />
+        <Column field='user.last_name' header={t('forms.lastName')} />
+        <Column field='user.account.email' header={t('forms.email')} />
         <Column
           header={t('forms.status')}
           body={(rowData: ISupport) => (

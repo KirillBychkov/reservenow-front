@@ -27,4 +27,8 @@
     background: rgba(45, 114, 210, 0.15);
     color: #215db0;
   }
+  &.undefined {
+    background: rgba(0, 0, 0, 0.15);
+    color: #000000;
+  }
 }

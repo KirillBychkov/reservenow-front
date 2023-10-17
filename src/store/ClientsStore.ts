@@ -1,17 +1,28 @@
-import { PlainClientInfo } from '@/components/forms/addClientForm';
 import { IUser } from '@/models/IUser';
+import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
 import { IFilters } from '@/models/response/GetUsersResponse';
 import UserService from '@/services/userService';
-import { UserStatus } from '@/types/user';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { PlainClientInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
+export interface Pagination {
+  rowsPerPage: number;
+}
+
 class ClientsStore {
-  // consider using Map instead of array
   clients: IUser[] = [];
-  filters: IFilters = { total: 0 };
+  filters: IFilters = { total: 0, limit: 8 };
+  pagination: Pagination = {
+    rowsPerPage: 8,
+  };
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  getFilters() {
+    return this.filters;
   }
 
   setClients(clients: IUser[]) {
@@ -22,41 +33,88 @@ class ClientsStore {
     this.filters = filters;
   }
 
-  async getUserById(id: number): Promise<IUser> {
+  addClient = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
+    try {
+      await UserService.createUser(data);
+      return { successMsg: 'Created client', errorMsg: '' };
+    } catch (e) {
+      console.log(e);
+      return { successMsg: '', errorMsg: 'Error creating client' };
+    }
+  };
+
+  updateClient = async (
+    id: number,
+    data: IUpdateUserDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      await UserService.updateUser(id, data);
+      return { successMsg: 'Updated client', errorMsg: '' };
+    } catch (e) {
+      console.log(e);
+      return { successMsg: '', errorMsg: 'Error updating client' };
+    }
+  };
+
+  getClientById = async (id: number): Promise<ResponseOrError<IUser>> => {
     const client = this.clients.find((client) => client.id === id);
     if (client) {
-      return client;
+      return { data: client, error: '' };
     }
-    const fetchedClient = await UserService.getUserById(id);
-    this.clients.push(fetchedClient.data);
-    return fetchedClient.data;
-  }
+    try {
+      const fetchedClient = await UserService.getUserById(id);
+      this.clients.push(fetchedClient.data);
+      return { data: fetchedClient.data, error: '' };
+    } catch (error) {
+      return { data: {} as IUser, error: 'Client not found' };
+    }
+  };
 
-  async getPlainClientInfo(id: number): Promise<PlainClientInfo> {
-    const client = await this.getUserById(id);
-    return {
+  deleteClient = async (id: number): Promise<void> => {
+    try {
+      await UserService.deleteUser(id);
+      this.clients = this.clients.filter((client) => client.id !== id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getPlainClientInfo = async (
+    id: number
+  ): Promise<ResponseOrError<PlainClientInfo>> => {
+    const { data: client, error } = await this.getClientById(id);
+    if (error) {
+      return { data: {} as PlainClientInfo, error: error };
+    }
+    const plainClientInfo: PlainClientInfo = {
       id: client.id,
       email: client?.account?.email || '',
-      status: client?.account?.status || UserStatus.PENDING,
+      status: client?.account?.status,
       firstName: client.first_name,
       lastName: client.last_name,
       phone: client.phone,
       companyName: client.domain_url,
       description: client.description || '',
     };
-  }
+    return { data: plainClientInfo, error: '' };
+  };
 
-  async getClients(): Promise<IUser[]> {
+  getClients = async (
+    filters: Omit<IFilters, 'total'>
+  ): Promise<ResponseOrError<IUser[]>> => {
     try {
-      const response = await UserService.getUsers();
-      this.setClients(response.data.data);
+      const response = await UserService.getUsers(filters);
+      if (response.data.data.length === 0) {
+        return { data: [], error: 'No clients found' };
+      }
       this.setFilters(response.data.filters);
-      return response.data.data;
+      this.setClients(response.data.data);
+      return { data: response.data.data, error: '' };
     } catch (e) {
       console.log(e);
-      return [];
+      return { data: [], error: 'An error occurred while fetching clients.' };
     }
-  }
+  };
 }
 
 const clientsStore = new ClientsStore();

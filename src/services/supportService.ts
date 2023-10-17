@@ -1,5 +1,6 @@
 import $api, { BASE_API_URL } from '@/http';
 import { ISupport } from '@/models/ISupport';
+import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
 import { AxiosResponse } from 'axios';
 
 export default class SupportService {
@@ -17,8 +18,11 @@ export default class SupportService {
     return $api.get(`${BASE_API_URL}/support/${id}`);
   }
 
-  static async updateSupportRecordById(id: number, status: string) {
-    return $api.patch(`${BASE_API_URL}/support/${id}`, { status });
+  static async updateSupportRecordById(
+    id: number,
+    updateDTO: IUpdateSupportDTO
+  ) {
+    return $api.patch(`${BASE_API_URL}/support/${id}`, updateDTO);
   }
 
   static async deleteSupportRecordById(id: number) {

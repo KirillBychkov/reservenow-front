@@ -14,6 +14,7 @@ import { observer } from 'mobx-react-lite';
 import clientsStore from '@/store/ClientsStore';
 import { PlainClientInfo } from '@/types/user';
 import ToastContext from '@/context/toast';
+import ModalContext from '@/context/modal';
 
 interface Props {
   initialValues?: PlainClientInfo;
@@ -22,6 +23,14 @@ interface Props {
 const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
+  const { showModal } = useContext(ModalContext);
+
+  const handleShowModalAndSubmit = async () => {
+    const res = await showModal(t('forms.areYouSure'));
+    if (res) {
+      await formik.handleSubmit();
+    }
+  };
 
   const validationSchema = Yup.object({
     id: Yup.number(),
@@ -210,7 +219,11 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
         >
           {t('actions.clear')}
         </Button>
-        <Button type='submit' fill className={styles.button}>
+        <Button
+          onClick={handleShowModalAndSubmit}
+          fill
+          className={styles.button}
+        >
           {t('actions.submit')}
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './requests.module.scss';
 import Searchbar from '@/components/searchbar/searchbar';
@@ -7,26 +7,22 @@ import { ISupport } from '@/models/ISupport';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
 
 const Requests: React.FC = observer(() => {
   const { t } = useTranslation();
+  const { showError } = useContext(ToastContext);
 
-  const [supportRecords, setSupportRecords] = useState<ISupport[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    data: supportRecords,
+    isLoading,
+    errorMsg,
+  } = useFetch<ISupport[]>(supportRecordsStore.getSupportRecords, []);
 
-  useEffect(() => {
-    const getSupportRecords = async () => {
-      try {
-        const data = await supportRecordsStore.getSupportRecords();
-        setSupportRecords(data);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getSupportRecords();
-  }, []);
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   return (
     <div className={styles.requests}>
@@ -36,7 +32,7 @@ const Requests: React.FC = observer(() => {
       </div>
       {isLoading ? (
         <ProgressSpinner />
-      ) : supportRecords.length ? (
+      ) : supportRecords?.length ? (
         <SupportRecordsTable supportRecords={supportRecords} />
       ) : (
         <div className={styles.content}>

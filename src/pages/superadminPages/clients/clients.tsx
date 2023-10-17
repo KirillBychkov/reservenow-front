@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './clients.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -10,26 +10,31 @@ import clientsStore from '@/store/ClientsStore';
 import { IUser } from '@/models/IUser';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
+import usePaginate from '@/hooks/usePaginate';
 
 const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [clients, setClients] = useState<IUser[]>([] as IUser[]);
-  const [loading, setLoading] = useState(true);
+  const { showError } = useContext(ToastContext);
 
-  useEffect(() => {
-    const getClients = async () => {
-      try {
-        const data = await clientsStore.getClients();
-        setClients(data);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getClients();
-  }, []);
+  const { limit, skip, first, onPageChange } = usePaginate(
+    clientsStore.pagination
+  );
+
+  const {
+    data: clients,
+    errorMsg,
+    isLoading,
+  } = useFetch<IUser[]>(
+    () => clientsStore.getClients({ limit, skip }),
+    [limit, skip]
+  );
+
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   return (
     <div className={styles.clients}>
@@ -45,7 +50,7 @@ const Clients: React.FC = observer(() => {
           </Button>
         </div>
       </div>
-      {loading ? (
+      {isLoading ? (
         <div
           style={{
             display: 'flex',
@@ -54,8 +59,12 @@ const Clients: React.FC = observer(() => {
         >
           <ProgressSpinner />
         </div>
-      ) : clients.length ? (
-        <ClientsTable clients={clients} />
+      ) : clients?.length ? (
+        <ClientsTable
+          clients={clients}
+          onPageChange={onPageChange}
+          first={first}
+        />
       ) : (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>

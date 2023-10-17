@@ -1,15 +1,13 @@
-// TODO: use IUser or another data from models/ instead of User
-// export interface User {
-//   id: number;
-//   firstName: string;
-//   lastName: string;
-//   phone: string;
-//   email: string;
-//   companyName: string;
-//   image?: string;
-//   description?: string;
-//   status: UserStatus;
-// }
+export interface PlainClientInfo {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  companyName: string;
+  description: string;
+  status: UserStatus;
+}
 
 export enum UserStatus {
   PENDING = 'pending',

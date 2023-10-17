@@ -1,0 +1,19 @@
+@use '../../pages/superadminPages/requests/openRequest/openRequest.module.scss'
+  as openRequest;
+
+.form {
+  margin: 0 auto;
+  max-width: 40.625rem;
+  .response {
+    @include openRequest.card();
+  }
+  .controls {
+    display: flex;
+    justify-content: end;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+    .button {
+      max-width: 170px;
+    }
+  }
+}

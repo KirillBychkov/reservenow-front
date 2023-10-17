@@ -1,8 +1,8 @@
 export enum SupportStatus {
-  NEW = 'New',
-  IN_PROGRESS = 'In progress',
-  FIXED = 'Fixed',
-  REJECTED = 'Rejected',
+  NEW = 'new',
+  IN_PROGRESS = 'in_progress',
+  FIXED = 'fixed',
+  REJECTED = 'rejected',
 }
 
 export const SupportStatusOptions: SupportStatus[] =

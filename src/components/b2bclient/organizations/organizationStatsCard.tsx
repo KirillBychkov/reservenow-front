@@ -14,6 +14,7 @@ const ICON_PROPS = {
 };
 
 // Test mock
+// /organization/statistics/id
 export const cardData = [
   {
     icon: <BankAccount {...ICON_PROPS} />,
@@ -32,21 +33,23 @@ export const cardData = [
   },
 ];
 
-const OrganizationCard: React.FC<CardProps> = ({
+const OrganizationStatsCard: React.FC<CardProps> = ({
   icon,
   heading,
   subheading,
 }) => {
   const { t } = useTranslation();
   return (
-    <div className={styles.card}>
-      <div className={styles.icon}>{icon}</div>
-      <div className={styles.content}>
-        <p className={'heading-5 ' + styles.subheading}>{t(`${subheading}`)}</p>
+    <div className={styles.Card}>
+      <div className={styles.Icon}>{icon}</div>
+      <div className={styles.Content}>
+        <p className={'heading-5  heading-muted heading' + styles.Subheading}>
+          {t(`${subheading}`)}
+        </p>
         <h4 className='heading-3'>{heading}</h4>
       </div>
     </div>
   );
 };
 
-export default OrganizationCard;
+export default OrganizationStatsCard;

@@ -1,54 +1,55 @@
-.Organization-Card {
+.OrganizationCard {
   max-width: 385px;
   width: 100%;
 
-  &__Box {
+  .CardBox {
     display: flex;
     flex-direction: column;
     align-items: start;
     height: 322px;
     flex-shrink: 0;
     margin-bottom: 1.875rem;
-  }
 
-  &__Image {
-    width: 100%;
-    min-height: 190px;
-    max-width: 100%;
-    object-fit: cover;
-    background-color: bisque; // temporary, no img
-    border-radius: 10px;
-  }
+    .CardImage {
+      width: 100%;
+      min-height: 190px;
+      max-width: 100%;
+      object-fit: cover;
+      background-color: bisque; // temporary, no img
+      border-radius: 10px;
+    }
 
-  &__InfoBox {
-    padding: 18px 10px 10px 10px;
-  }
+    .CardInfoBox {
+      padding: 18px 10px 10px 10px;
 
-  &__Title {
-    min-height: 25px;
-    text-align: left;
-    margin-bottom: 8px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-  &__Description {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-height: 36px;
-    padding-bottom: 10px;
-    color: var(--text_muted);
-    font-family: Roboto;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
+      .CardTitle {
+        min-height: 25px;
+        text-align: left;
+        margin-bottom: 8px;
+        font-family: Roboto;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
 
-  &__Button {
-    align-self: start;
+      .CardDescription {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 36px;
+        padding-bottom: 10px;
+        color: var(--text_muted);
+        font-family: Roboto;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .CardButton {
+        align-self: start;
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './OrganizationDetailsLeft.module.scss';
 import { daysOfWeek } from '@/utils/organizationHelpers';
 import { renderWorkingHours } from './renderWorkingHours';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   organization: IOrganization;
@@ -10,23 +11,32 @@ type Props = {
 
 const OrganizationDetailsLeft = ({ organization }: Props) => {
   const { name, id, address } = organization;
+  const { t } = useTranslation();
 
   return (
     <>
-      <div className={styles.orgId}>
-        <p className={classNames('heading heading-6')}>ID організації</p>
+      <div className={styles.OrganizationId}>
+        <p className={classNames('heading-muted heading-6')}>
+          {t('organizations.organizationId')}
+        </p>
         <h6 className={classNames('heading heading-6')}>{id}</h6>
       </div>
-      <div className={styles.orgName}>
-        <h6 className={classNames('heading heading-6')}>Назва організації</h6>
+      <div className={styles.OrganizationName}>
+        <h6 className={classNames('heading-muted heading-6')}>
+          {t('organizations.name')}
+        </h6>
         <h6 className={classNames('heading heading-6')}>{name}</h6>
       </div>
-      <div className={styles.orgAddress}>
-        <h6 className={classNames('heading heading-6')}>Місцезнаходження</h6>
+      <div className={styles.OrganizationAddress}>
+        <h6 className={classNames('heading-muted heading-6')}>
+          {t('organizations.location')}
+        </h6>
         <h6 className={classNames('heading heading-6')}>{address}</h6>
       </div>
-      <div className={styles.orgWorkingHours}>
-        <h6 className={classNames('heading heading-6')}>Години роботи</h6>
+      <div className={styles.OrganizationWorkingHours}>
+        <h6 className={classNames('heading heading-6')}>
+          {t('organizations.workHours')}
+        </h6>
         {daysOfWeek.map((day) => renderWorkingHours(organization, day))}
       </div>
     </>

@@ -16,7 +16,7 @@ export const renderWorkingHours = (
   const endHour = organization[endHourKey];
 
   // Check if both startHour and endHour are 0
-  const isDayOff = startHour === 0 && endHour === 0;
+  const isDayOff = startHour === null && endHour === null;
 
   return (
     <p className={classNames('text-medium')} key={day}>

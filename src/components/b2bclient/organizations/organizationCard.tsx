@@ -16,21 +16,17 @@ const OrganizationCard: React.FC<OrganizationCardProps> = observer(
     const { name, description } = organization;
 
     return (
-      <div className={styles['Organization-Card']}>
-        <div className={styles['Organization-Card__Box']}>
-          <img
-            src='src'
-            alt='Organization'
-            className={styles['Organization-Card__Image']}
-          />
-          <div className={styles['Organization-Card__InfoBox']}>
-            <h2 className={styles['Organization-Card__Title']}>{name}</h2>
-            <div className={styles['Organization-Card__Description']}>
+      <div className={styles.OrganizationCard}>
+        <div className={styles.CardBox}>
+          <img src='src' alt='Organization' className={styles.CardImage} />
+          <div className={styles.CardInfoBox}>
+            <h2 className={styles.CardTitle}>{name}</h2>
+            <div className={styles.CardDescription}>
               <p>{description}</p>
             </div>
             <Link to={`/organizations/${organization.id}`}>
               <Button
-                className={styles['Organization-Card__Button']}
+                className={styles.CardButton}
                 type='button'
                 outlined={true}
               >

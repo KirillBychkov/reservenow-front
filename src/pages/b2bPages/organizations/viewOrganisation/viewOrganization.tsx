@@ -9,19 +9,19 @@ import { observer } from 'mobx-react-lite';
 import organisationStore from '@/store/OrganizationsStore';
 import organizationStore from '@/store/OrganizationsStore';
 import Button from '@/components/UI/buttons/button';
-import OrganizationCard, {
-  cardData,
-} from '@/components/b2bclient/organizations/organizationStatsCard';
-import OrganizationDetailsLeft from '../../../../components/b2bclient/organizations/OrganizationDetailsLeft';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import ViewStatsLayout from '@/components/UI/layout/ViewStatsLayout';
+import LeftSideComponent from '@/components/b2bclient/organizations/LeftSideComponent';
+import RightSideComponent from '@/components/b2bclient/organizations/RightSideComponent';
 
-const ViewOrganisation: React.FC = observer(() => {
+const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id } = useParams();
 
   useEffect(() => {
     organisationStore.getOrganizations();
+    // store get objects and pass it to the table
   }, []);
 
   const organization = organizationStore.organizations?.find(
@@ -31,11 +31,11 @@ const ViewOrganisation: React.FC = observer(() => {
     return <ProgressSpinner />;
   }
   return (
-    <div className={styles['Vieworganizations']}>
+    <div className={styles.ViewOrganizations}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
         {organization?.name}
       </h3>
-      <div className={styles['Vieworganizations-Heading']}>
+      <div className={styles.Heading}>
         <BreadCrumb
           home={{ icon: <Home color='gray' />, url: '/' }}
           model={[
@@ -49,39 +49,12 @@ const ViewOrganisation: React.FC = observer(() => {
         <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
       </div>
       {/* <MetricsOrganization /> */}
-      <div className={styles.FlexContainer}>
-        <div className={styles.LeftSide}>
-          <div className={styles.OrgDetails}>
-            {/* Image */}
-            <div className={styles.OrgImageDiv}>
-              <img
-                className={styles.OrgImage}
-                src='https://images.pexels.com/photos/17307123/pexels-photo-17307123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                alt={organization?.name}
-              />
-            </div>
-            {/* DetailsBottom */}
-            <div className={styles.OrgDetailsBottom}>
-              <OrganizationDetailsLeft organization={organization} />
-            </div>
-          </div>
-        </div>
-        <div className={styles.RightSide}>
-          <div className={styles.TopCards}>
-            {cardData.map((card, index) => (
-              <OrganizationCard
-                key={index}
-                icon={card.icon}
-                heading={card.heading}
-                subheading={card.subheading}
-              />
-            ))}
-          </div>
-          <div className={styles.BottomTable}>Table</div>
-        </div>
-      </div>
+      <ViewStatsLayout
+        LeftSideComponent={<LeftSideComponent organization={organization} />}
+        RightSideComponent={<RightSideComponent />}
+      />
     </div>
   );
 });
 
-export default ViewOrganisation;
+export default ViewOrganization;

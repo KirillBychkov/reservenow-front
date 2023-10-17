@@ -53,8 +53,11 @@ const AddOrganizationForm: React.FC<Props> = () => {
 
   const dropdownOptions = generateDropdownOptions();
 
-  const handleClearForm = () => formik.resetForm();
-
+  const handleClearForm = () => {
+    formik.resetForm();
+    setWorkingHours(initialWorkingHours);
+    setAllHoursEnabled(false);
+  };
   const handleAllHoursChange = (e: InputSwitchChangeEvent) => {
     const updatedWorkingHours = workingHours.map((day) => ({
       ...day,

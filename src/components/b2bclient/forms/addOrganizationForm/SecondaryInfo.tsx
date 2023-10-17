@@ -22,7 +22,7 @@ export const SecondaryInfo = ({ t, formik }: any) => (
       />
     </div>
     <div>
-      <h6 className='heading-6'>{t('addOrganizationForm.name')}</h6>
+      <h6 className='heading-6'>{t('organizations.location')}</h6>
 
       <InputText
         name='address'

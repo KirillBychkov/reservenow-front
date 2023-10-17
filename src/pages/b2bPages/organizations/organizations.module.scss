@@ -3,22 +3,22 @@
   width: 100%;
   height: 100%;
 
-  &-Heading {
+  .Heading {
     max-height: 40px;
     width: 100%;
     display: flex;
     justify-content: space-between;
 
-    &-Button {
+    .HeadingButton {
       margin-top: 4px;
       gap: 12px;
     }
   }
 
-  &-Content {
+  .OrganizationsContent {
     margin-top: 44px;
 
-    &_null {
+    .OrganizationsContentNull {
       margin-top: 13rem;
       width: 100%;
       height: 100%;

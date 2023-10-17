@@ -22,11 +22,11 @@ const Organizations: React.FC = observer(() => {
 
   return (
     <div className={styles.Organizations}>
-      <div className={styles['Organizations-Heading']}>
+      <div className={styles.Heading}>
         <h3 className='heading heading-3'>
           {t('organizations.organizations')}
         </h3>
-        <div className={styles['Heading-Button']}>
+        <div className={styles.HeadingButton}>
           <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
             {t('organizations.add')}
           </Button>
@@ -42,11 +42,11 @@ const Organizations: React.FC = observer(() => {
           <ProgressSpinner />
         </div>
       ) : organizations && organizations.length ? (
-        <div className={styles['Organizations-Content']}>
+        <div className={styles.OrganizationsContent}>
           <OrganizationList />
         </div>
       ) : (
-        <div className={styles['Organizations-Content_null']}>
+        <div className={styles.OrganizationsContentNull}>
           <h2 className='heading heading-2 heading-primary'>
             {t('organizations.null')}
           </h2>

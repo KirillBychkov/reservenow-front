@@ -1,13 +1,14 @@
-.ViewOrganizations {
-  padding: 19px 28px 0px 0px;
-  width: 100%;
+/* Layout */
+// .View {
+//   padding: 19px 28px 0px 0px;
+//   width: 100%;
 
-  .Heading {
-    margin-bottom: 0.63rem;
-    display: flex;
-    justify-content: space-between;
-  }
-}
+//   &-Heading {
+//     margin-bottom: 0.63rem;
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }
 
 .FlexContainer {
   display: flex;
@@ -73,4 +74,26 @@
       background-color: green;
     }
   }
+}
+
+/* Card Component Styles */
+.card {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.icon {
+  margin-right: 16px;
+}
+
+.content {
+  flex: 1;
+}
+
+.subheading {
+  font-size: 14px;
+  color: #666;
 }

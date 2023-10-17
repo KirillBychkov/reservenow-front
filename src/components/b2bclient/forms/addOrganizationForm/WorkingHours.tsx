@@ -42,9 +42,7 @@ export const WorkingHours = ({
   <div className={styles['Form-WorkingHours']}>
     <div className={styles['WorkingHours-Row']}>
       <div className={styles['InputSwitch-Container']}>
-        <h4 className='heading heading-4'>
-          {t('addOrganizationForm.workHours')}
-        </h4>
+        <h4 className='heading heading-4'>{t('organizations.workHours')}</h4>
         <div className={styles['InputSwitch-Label']}>
           <div className={styles['WorkingHours-Switch']}>
             <InputSwitch

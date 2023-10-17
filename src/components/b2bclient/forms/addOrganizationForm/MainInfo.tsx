@@ -8,7 +8,7 @@ export const MainInfo = ({ t, formik }: any) => (
       {t('forms.overallInfo')}
     </h4>
     <div>
-      <h6 className='heading-6'>{t('addOrganizationForm.name')}</h6>
+      <h6 className='heading-6'>{t('organizations.name')}</h6>
       {/* margin-bottom: 0.3rem; */}
       <InputText
         name='name'
@@ -16,7 +16,6 @@ export const MainInfo = ({ t, formik }: any) => (
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         placeholder={t('addOrganizationForm.enterName')}
-        // className={classNames(isValidClassname(formik, 'name'))}
       />
     </div>
 

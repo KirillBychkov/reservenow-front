@@ -7,9 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import AddOrganizationForm, {
-  AddOrganizationInfo,
-} from '@/components/b2bclient/forms/addOrganizationForm/addOrganizationForm';
+import AddOrganizationForm from '@/components/b2bclient/forms/addOrganizationForm/addOrganizationForm';
 
 const AddOrganisation: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -17,11 +15,6 @@ const AddOrganisation: React.FC = observer(() => {
   const { id } = useParams();
 
   const [isLoading, setIsLoading] = useState<boolean>(!!id);
-  const [initialValues, setInitialValues] = useState<
-    AddOrganizationInfo | undefined
-  >(undefined);
-
-  useEffect(() => {}, []);
 
   return (
     <div className={styles.AddOrganization}>

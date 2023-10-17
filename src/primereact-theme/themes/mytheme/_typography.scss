@@ -37,6 +37,9 @@
   &-error {
     color: var(--text-error-color);
   }
+  &-muted {
+    color: var(--text-color-muted);
+  }
 }
 
 .paragraph {
@@ -78,11 +81,11 @@
     letter-spacing: 0.07px;
 
     &-normal {
-      color: var(--text_normal, #1c2127);
+      color: var(--text-body-color);
     }
 
     &-muted {
-      color: var(--text_muted, #5f6b7c);
+      color: var(--text-color-muted);
     }
   }
 }

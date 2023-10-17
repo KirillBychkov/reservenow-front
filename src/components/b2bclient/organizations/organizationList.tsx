@@ -9,7 +9,7 @@ const OrganizationList: React.FC = observer(() => {
   const organizations = organizationStore.organizations?.values() || [];
 
   return (
-    <div className={styles['Organization-List']}>
+    <div className={styles.OrganizationList}>
       {Array.from(organizations).map((org: IOrganization) => (
         <OrganizationCard organization={org} key={org.id} />
       ))}

@@ -4,6 +4,7 @@ export interface ICreateSupportDTO {
   client_description: string;
 }
 
-export interface IUpdateSupportDTO extends ICreateSupportDTO {
+export interface IUpdateSupportDTO {
   status: SupportStatus;
+  result_description: string;
 }

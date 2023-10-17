@@ -33,7 +33,7 @@ const SigninForm: React.FC = observer(() => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await authStore.login(values);
+      await authStore.login(values); // TODO: make request with store method, not directly, handle success and/or error messages
       resetForm();
       navigate('/');
     },

@@ -1,52 +1,45 @@
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './openRequest.module.scss';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
-import { ISupport } from '@/models/ISupport';
 import { useTranslation } from 'react-i18next';
-import FormField from '@/components/UI/fields/formField';
-import { Dropdown } from 'primereact/dropdown';
-import { SupportStatus, SupportStatusOptions } from '@/types/enums/support';
-import { useFormik } from 'formik';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import Button from '@/components/UI/buttons/button';
+import { PlainSupportRecordInfo } from '@/types/support';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
+import OpenRequestForm from '@/components/forms/openRequestForm';
 
 const OpenRequest: React.FC = observer(() => {
   const { t } = useTranslation();
+  const { showError } = useContext(ToastContext);
   const { id } = useParams();
-  const [initialValues, setInitialValues] = useState<ISupport | undefined>(
-    undefined
-  );
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
-
-  useEffect(() => {
-    const getSupportRecord = async (id: number) => {
-      try {
-        setIsLoading(true);
-        const supportRecord = await supportRecordsStore.getSupportRecordById(
-          id
-        );
-        setInitialValues(supportRecord);
-        console.log(supportRecord);
-      } catch (error) {
-        console.error('Error fetching support record:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (id) getSupportRecord(parseInt(id));
+  const {
+    data: initialValues,
+    errorMsg,
+    isLoading,
+  } = useFetch<PlainSupportRecordInfo>(() => {
+    return supportRecordsStore.getPlainSupportRecordInfo(parseInt(id || '0'));
   }, [id]);
+
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   const requestInfoList = useMemo(() => {
     if (!initialValues) return null;
-
+    const neededKeys = [
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+      'clientDescription',
+    ];
     return Object.entries(initialValues).map(([key, value], index) => {
-      if (!value) return null;
+      if (!neededKeys.includes(key) || !value) return null;
       return (
         <div className={styles.requestInfoItem} key={index}>
           <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
@@ -55,30 +48,6 @@ const OpenRequest: React.FC = observer(() => {
       );
     });
   }, [initialValues, t]);
-
-  const requestData = useMemo(() => {
-    return {
-      status:
-        (`${
-          initialValues?.status?.charAt(0).toUpperCase() +
-          (initialValues?.status?.slice(1) || '')
-        }` as SupportStatus) || SupportStatus.IN_PROGRESS,
-      description: initialValues?.result_description || '',
-    };
-  }, [initialValues]);
-
-  const formik = useFormik({
-    initialValues: requestData,
-    enableReinitialize: true,
-    onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
-      resetForm();
-    },
-  });
-
-  const handleClearForm = () => {
-    formik.resetForm();
-  };
 
   return (
     <div className={styles.openRequest}>
@@ -105,44 +74,7 @@ const OpenRequest: React.FC = observer(() => {
             )} #${initialValues?.id}`}</h3>
             {requestInfoList}
           </div>
-          <form className={styles.form} onSubmit={formik.handleSubmit}>
-            <div className={styles.response}>
-              <h3 className='heading heading-3 heading-primary'>{`${t(
-                'requests.response'
-              )} #${initialValues?.id}`}</h3>
-              <FormField label={t('forms.status')}>
-                <Dropdown
-                  name='status'
-                  style={{ width: '100%' }}
-                  value={formik.values.status}
-                  options={SupportStatusOptions}
-                  onChange={formik.handleChange}
-                />
-              </FormField>
-              <FormField label={t('forms.description')}>
-                <InputTextarea
-                  name='description'
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  placeholder={t('forms.enterDescription')}
-                />
-              </FormField>
-            </div>
-
-            <div className={styles.controls}>
-              <Button
-                severity='danger'
-                fill
-                className={styles.button}
-                onClick={handleClearForm}
-              >
-                {t('actions.clear')}
-              </Button>
-              <Button type='submit' fill className={styles.button}>
-                {t('actions.submit')}
-              </Button>
-            </div>
-          </form>
+          <OpenRequestForm initialValues={initialValues ?? undefined} />
         </>
       )}
     </div>

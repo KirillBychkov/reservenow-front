@@ -40,3 +40,54 @@
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
   transform: translateX(1.65rem);
 }
+.p-datatable .p-datatable-footer {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #e9ecef;
+  border-top: none;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.p-paginator {
+  padding: 0;
+}
+
+.p-paginator .p-paginator-current {
+  margin-right: auto;
+  color: #111418;
+  font-size: 0.875rem;
+}
+
+.p-dialog {
+  .p-dialog-content {
+    padding: 20px 20px 30px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &:last-of-type {
+      border-bottom-right-radius: 0.625rem;
+      border-bottom-left-radius: 0.625rem;
+    }
+  }
+  .p-dialog-header {
+    border-top-right-radius: 0.625rem;
+    border-top-left-radius: 0.625rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid #b8b8ba;
+    .p-dialog-title {
+      color: #111418;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+  }
+  .p-dialog-footer {
+    border-bottom-right-radius: 0.625rem;
+    border-bottom-left-radius: 0.625rem;
+    border-top: none;
+    padding: 0 20px 15px;
+    & button {
+      margin: 0;
+    }
+  }
+}

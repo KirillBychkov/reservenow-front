@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormField from '@/components/UI/fields/formField';
@@ -10,26 +10,27 @@ import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import styles from './addClientForm.module.scss';
 import { useTranslation } from 'react-i18next';
-import UserService from '@/services/userService';
-import { UserStatus } from '@/types/enums/user';
-
-export interface PlainClientInfo {
-  id?: number;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  companyName: string;
-  description: string;
-  status: UserStatus;
-}
+import { observer } from 'mobx-react-lite';
+import clientsStore from '@/store/ClientsStore';
+import { PlainClientInfo } from '@/types/user';
+import ToastContext from '@/context/toast';
+import ModalContext from '@/context/modal';
 
 interface Props {
   initialValues?: PlainClientInfo;
 }
 
-const AddClientForm: React.FC<Props> = ({ initialValues }) => {
+const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
+  const { showSuccess, showError } = useContext(ToastContext);
+  const { showModal } = useContext(ModalContext);
+
+  const handleShowModalAndSubmit = async () => {
+    const res = await showModal(t('forms.areYouSure'));
+    if (res) {
+      await formik.handleSubmit();
+    }
+  };
 
   const validationSchema = Yup.object({
     id: Yup.number(),
@@ -49,36 +50,37 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
     companyName: Yup.string().required(t('invalid.required')),
   });
 
-  const formData: PlainClientInfo = initialValues || {
+  const formData: Omit<PlainClientInfo, 'status'> = initialValues || {
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     companyName: '',
     description: '',
-    status: UserStatus.PENDING,
   };
 
   const formik = useFormik({
     initialValues: formData,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      try {
-        if (initialValues) {
-          await UserService.updateUser(initialValues.id || 0, {
+      let successMessage = '';
+      let errorMessage = '';
+      if (initialValues?.id) {
+        const { successMsg, errorMsg } = await clientsStore.updateClient(
+          initialValues.id,
+          {
             first_name: values.firstName,
             last_name: values.lastName,
             phone: values.phone,
             domain_url: values.companyName,
             description: values.description,
-          });
-
-          return;
-        }
-
-        await UserService.createUser({
+          }
+        );
+        successMessage = successMsg;
+        errorMessage = errorMsg;
+      } else {
+        const { successMsg, errorMsg } = await clientsStore.addClient({
           email: values.email,
-          status: values.status,
           user: {
             first_name: values.firstName,
             last_name: values.lastName,
@@ -87,16 +89,23 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
             description: values.description,
           },
         });
-
+        successMessage = successMsg;
+        errorMessage = errorMsg;
         resetForm();
-      } catch (error) {
-        console.error('Error creating user:', error);
+      }
+      if (successMessage) {
+        showSuccess(successMessage);
+      } else {
+        showError(errorMessage);
       }
     },
   });
 
   const handleDeleteUser = async () => {
-    // TODO: implement delete functionality
+    if (!initialValues) {
+      return;
+    }
+    return await clientsStore.deleteClient(initialValues.id!);
   };
 
   const handleClearForm = () => formik.resetForm();
@@ -150,20 +159,22 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
             className={classNames(isValidClassname(formik, 'phone'))}
           />
         </FormField>
-        <FormField
-          label={t('forms.email')}
-          isValid={!(formik.touched.email && formik.errors.email)}
-          invalidMessage={formik.errors.email}
-        >
-          <InputText
-            name='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            placeholder={t('forms.enterEmail')}
-            className={classNames(isValidClassname(formik, 'email'))}
-          />
-        </FormField>
+        {!initialValues && (
+          <FormField
+            label={t('forms.email')}
+            isValid={!(formik.touched.email && formik.errors.email)}
+            invalidMessage={formik.errors.email}
+          >
+            <InputText
+              name='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder={t('forms.enterEmail')}
+              className={classNames(isValidClassname(formik, 'email'))}
+            />
+          </FormField>
+        )}
         <FormField
           label={t('forms.companyName')}
           isValid={!(formik.touched.companyName && formik.errors.companyName)}
@@ -208,12 +219,16 @@ const AddClientForm: React.FC<Props> = ({ initialValues }) => {
         >
           {t('actions.clear')}
         </Button>
-        <Button type='submit' fill className={styles.button}>
+        <Button
+          onClick={handleShowModalAndSubmit}
+          fill
+          className={styles.button}
+        >
           {t('actions.submit')}
         </Button>
       </div>
     </form>
   );
-};
+});
 
 export default AddClientForm;

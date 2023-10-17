@@ -1,44 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './addClient.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import AddClientForm, {
-  PlainClientInfo,
-} from '@/components/forms/addClientForm';
+import AddClientForm from '@/components/forms/addClientForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import clientsStore from '@/store/ClientsStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { PlainClientInfo } from '@/types/user';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
 
 const AddClient: React.FC = observer(() => {
   const { t } = useTranslation();
-
+  const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
-  const [initialValues, setInitialValues] = useState<
-    PlainClientInfo | undefined
-  >(undefined);
+  const {
+    data: initialValues,
+    isLoading,
+    errorMsg,
+  } = useFetch<PlainClientInfo>(
+    () =>
+      id
+        ? clientsStore.getPlainClientInfo(parseInt(id)) // if id is defined, get client info (Update mode)
+        : Promise.resolve({ data: {} as PlainClientInfo, error: '' }), // else, return empty object (Add mode)
+    [id]
+  );
 
-  useEffect(() => {
-    const fetchUserById = async (userId: number) => {
-      try {
-        setIsLoading(true);
-        const user = await clientsStore.getPlainClientInfo(userId);
-        setInitialValues(user);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchUserById(parseInt(id));
-    }
-  }, [id]);
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   return (
     <div className={styles.addClient}>
@@ -62,7 +56,9 @@ const AddClient: React.FC = observer(() => {
         {isLoading ? (
           <ProgressSpinner />
         ) : (
-          <AddClientForm initialValues={id ? initialValues : undefined} />
+          <AddClientForm
+            initialValues={id ? initialValues ?? undefined : undefined}
+          />
         )}
       </div>
     </div>

@@ -9,16 +9,26 @@ import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
+import usePaginate from '@/hooks/usePaginate';
 
 const Requests: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
 
+  const { limit, skip, first, onPageChange } = usePaginate(
+    supportRecordsStore.pagination
+  );
+
   const {
     data: supportRecords,
     isLoading,
     errorMsg,
-  } = useFetch<ISupport[]>(supportRecordsStore.getSupportRecords, []);
+  } = useFetch<ISupport[]>(
+    () => supportRecordsStore.getSupportRecords({ limit, skip }),
+    [limit, skip]
+  );
+
+  // console.log(supportRecords);
 
   if (errorMsg) {
     showError(errorMsg);
@@ -33,7 +43,11 @@ const Requests: React.FC = observer(() => {
       {isLoading ? (
         <ProgressSpinner />
       ) : supportRecords?.length ? (
-        <SupportRecordsTable supportRecords={supportRecords} />
+        <SupportRecordsTable
+          supportRecords={supportRecords}
+          first={first}
+          onPageChange={onPageChange}
+        />
       ) : (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>

@@ -1,3 +1,4 @@
+import { IFilters } from '@/models/IFilters';
 import { ISupport } from '@/models/ISupport';
 import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
 import SupportService from '@/services/supportService';
@@ -5,9 +6,14 @@ import { SupportStatus } from '@/types/enums/support';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainSupportRecordInfo } from '@/types/support';
 import { makeAutoObservable } from 'mobx';
+import { Pagination } from './ClientsStore';
 
 class SupportRecordsStore {
   supportRecords: ISupport[] = [];
+  filters: IFilters = { total: 0, limit: 1 };
+  pagination: Pagination = {
+    rowsPerPage: 1,
+  };
 
   constructor() {
     makeAutoObservable(this);
@@ -17,11 +23,25 @@ class SupportRecordsStore {
     this.supportRecords = supportRecords;
   }
 
-  getSupportRecords = async (): Promise<ResponseOrError<ISupport[]>> => {
+  getFilters() {
+    return this.filters;
+  }
+
+  setFilters(filters: IFilters) {
+    this.filters = filters;
+  }
+
+  getSupportRecords = async (
+    filters: Omit<IFilters, 'total'>
+  ): Promise<ResponseOrError<ISupport[]>> => {
     try {
-      const response = await SupportService.getAllSupportRecords();
-      this.setSupportRecords(response.data);
-      return { data: response.data, error: '' };
+      const response = await SupportService.getAllSupportRecords(filters);
+      if (response.data.data.length === 0) {
+        return { data: [], error: 'No records found' };
+      }
+      this.setSupportRecords(response.data.data);
+      this.setFilters(response.data.filters);
+      return { data: response.data.data, error: '' };
     } catch (e) {
       console.log(e);
       return { data: [], error: 'Error getting support records' };

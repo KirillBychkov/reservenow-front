@@ -1,6 +1,6 @@
 import { IUser } from '@/models/IUser';
 import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IFilters } from '@/models/response/GetUsersResponse';
+import { IFilters } from '@/models/IFilters';
 import UserService from '@/services/userService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainClientInfo } from '@/types/user';

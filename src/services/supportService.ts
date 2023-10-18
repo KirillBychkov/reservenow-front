@@ -1,6 +1,8 @@
 import $api, { BASE_API_URL } from '@/http';
+import { IFilters } from '@/models/IFilters';
 import { ISupport } from '@/models/ISupport';
 import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
+import { ISupportRecords } from '@/models/response/GetSupportRecordsResponse';
 import { AxiosResponse } from 'axios';
 
 export default class SupportService {
@@ -8,8 +10,14 @@ export default class SupportService {
     return $api.post(`${BASE_API_URL}/support`, { client_description });
   }
 
-  static async getAllSupportRecords(): Promise<AxiosResponse<ISupport[]>> {
-    return $api.get(`${BASE_API_URL}/support`);
+  static async getAllSupportRecords(
+    filters: Omit<IFilters, 'total'>
+  ): Promise<AxiosResponse<ISupportRecords>> {
+    return $api.get(
+      `${BASE_API_URL}/support?limit=${filters.limit}&skip=${filters.skip}${
+        filters.search ? `&search=${filters.search}` : ''
+      }`
+    );
   }
 
   static async getSupportRecordById(

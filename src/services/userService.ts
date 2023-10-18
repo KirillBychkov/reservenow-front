@@ -1,7 +1,8 @@
 import $api, { BASE_API_URL } from '@/http';
+import { IFilters } from '@/models/IFilters';
 import { IUser } from '@/models/IUser';
 import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IFilters, IUsers } from '@/models/response/GetUsersResponse';
+import { IUsers } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {

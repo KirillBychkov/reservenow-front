@@ -18,6 +18,7 @@ const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
+  const [search, setSearch] = React.useState('');
 
   const { limit, skip, first, onPageChange } = usePaginate(
     clientsStore.pagination
@@ -28,8 +29,8 @@ const Clients: React.FC = observer(() => {
     errorMsg,
     isLoading,
   } = useFetch<IUser[]>(
-    () => clientsStore.getClients({ limit, skip }),
-    [limit, skip]
+    () => clientsStore.getClients({ limit, skip, search }),
+    [limit, skip, search]
   );
 
   if (errorMsg) {
@@ -40,7 +41,7 @@ const Clients: React.FC = observer(() => {
     <div className={styles.clients}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar />
+        <Searchbar setSearch={setSearch} />
         <div className={styles.buttonGroup}>
           <Button icon={<Export color='white' />} severity='secondary'>
             {t('clients.export')}

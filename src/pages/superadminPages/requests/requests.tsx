@@ -14,6 +14,7 @@ import usePaginate from '@/hooks/usePaginate';
 const Requests: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
+  const [search, setSearch] = React.useState('');
 
   const { limit, skip, first, onPageChange } = usePaginate(
     supportRecordsStore.pagination
@@ -24,11 +25,9 @@ const Requests: React.FC = observer(() => {
     isLoading,
     errorMsg,
   } = useFetch<ISupport[]>(
-    () => supportRecordsStore.getSupportRecords({ limit, skip }),
-    [limit, skip]
+    () => supportRecordsStore.getSupportRecords({ limit, skip, search }),
+    [limit, skip, search]
   );
-
-  // console.log(supportRecords);
 
   if (errorMsg) {
     showError(errorMsg);
@@ -38,7 +37,7 @@ const Requests: React.FC = observer(() => {
     <div className={styles.requests}>
       <h3 className='heading heading-3'>{t('requests.requests')}</h3>
       <div className={styles.controls}>
-        <Searchbar />
+        <Searchbar setSearch={setSearch} />
       </div>
       {isLoading ? (
         <ProgressSpinner />

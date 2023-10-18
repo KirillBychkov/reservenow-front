@@ -63,7 +63,8 @@
     "status": "Статус",
     "enterStatus": "Оберіть статус",
     "clientDescription": "Опис",
-    "resultDescription": "Опис"
+    "resultDescription": "Опис",
+    "areYouSure": "Ви впевнені?"
   },
   "organizations": {
     "organizationId": "ID організації",

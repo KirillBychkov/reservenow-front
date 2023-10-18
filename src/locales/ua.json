@@ -35,7 +35,10 @@
     "null": "Наразі немає клієнтів"
   },
   "requests": {
-    "requests": "Запити"
+    "requests": "Запити",
+    "request": "Запит",
+    "null": "Список запитів порожній",
+    "response": "Рішення по запиту"
   },
   "forms": {
     "info": "Інформація",
@@ -60,28 +63,6 @@
     "enterStatus": "Оберіть статус",
     "clientDescription": "Опис",
     "resultDescription": "Опис"
-  },
-    "organizations": {
-    "organizationId": "ID організації",
-    "name": "Назва організації",
-    "organizations": "Організації",
-    "add": "Додати Організацію",
-    "null": "Нажаль ви ще не створили жодної організації",
-    "totalSales": "Всього продажів",
-    "totalBookings": "Всього бронювань",
-    "totalClients": "Всього клієнтів",
-    "location": "Місцезнаходження",
-    "workHours": "Години роботи"
-  },
-  "addOrganizationForm": {
-    "enterName": "Введіть тут назву організації. . .",
-    "enterDescription": "Введіть тут опис організації. . .",
-    "phone": "Телефон",
-    "enterLocation": "Розташування організації",
-    "image": "Зображення організації",
-    "full": "Цілодобово, враховуючи вихідні дні",
-    "from": "Від",
-    "to" : "До"
   },
     "organizations": {
     "organizationId": "ID організації",
@@ -131,6 +112,7 @@
     "active": "Активний",
     "blocked": "Заблокований",
     "deleted": "Видалений",
+    "new": "Новий",
     "in_progress": "Обробляється",
     "fixed": "Виконано",
     "rejected": "Відхилено",

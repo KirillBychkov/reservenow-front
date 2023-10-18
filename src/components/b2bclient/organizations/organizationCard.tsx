@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import styles from './OrganizationCard.module.scss';
+import styles from './organizationCard.module.scss';
 import Button from '@/components/UI/buttons/button';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

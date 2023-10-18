@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormField from '@/components/UI/fields/formField';
 import Button from '@/components/UI/buttons/button';
-import styles from './ActivateAccountForm.module.scss';
+import styles from './activateAccountForm.module.scss';
 import { Password } from 'primereact/password';
 
 import classNames from 'classnames';

@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import organizationStore from '@/store/OrganizationsStore';
 import OrganizationCard from './organizationCard';
-import styles from './OrganizationList.module.scss';
+import styles from './organizationList.module.scss';
 import { IOrganization } from '@/models/IOrganization';
 
 const OrganizationList: React.FC = observer(() => {

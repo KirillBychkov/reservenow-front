@@ -1,0 +1,27 @@
+.OrganizationDetails {
+  width: 100%;
+
+  flex-direction: column;
+  align-items: flex-start;
+
+  .OrganizationImageDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+
+    .OrganizationImage {
+      height: 231px;
+      width: 332px;
+      flex-shrink: 0;
+      border-radius: 10px;
+    }
+  }
+
+  .OrganizationDetailsBottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 24px 24px 24px;
+  }
+}

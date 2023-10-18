@@ -1,0 +1,76 @@
+.ViewOrganizations {
+  padding: 19px 28px 0px 0px;
+  width: 100%;
+
+  .Heading {
+    margin-bottom: 0.63rem;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.FlexContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 100%;
+  gap: 24px;
+
+  .LeftSide {
+    background-color: var(--neutral-white, #fff);
+    display: flex;
+    height: 625px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 360px;
+    border-radius: 10px;
+
+    .OrgDetails {
+      width: 100%;
+
+      flex-direction: column;
+      align-items: flex-start;
+
+      .OrgImageDiv {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+
+        .OrgImage {
+          height: 231px;
+          width: 332px;
+          flex-shrink: 0;
+          border-radius: 10px;
+        }
+      }
+
+      .OrgDetailsBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px 24px 24px 24px;
+      }
+    }
+  }
+
+  .RightSide {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 10%;
+
+    .TopCards {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .BottomTable {
+      width: 100%;
+      background-color: green;
+    }
+  }
+}

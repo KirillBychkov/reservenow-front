@@ -32,7 +32,14 @@
 .p-datatable .p-datatable-thead > tr > th:last-child {
   width: 100px;
 }
+.p-dropdown {
+  background: var(--neutral-gray-gray-25, #f9f9fc);
+  border-radius: 8px;
+}
 
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  transform: translateX(1.65rem);
+}
 .p-datatable .p-datatable-footer {
   background-color: white;
   padding: 1rem;

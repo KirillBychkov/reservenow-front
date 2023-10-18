@@ -7,24 +7,25 @@
   "sidebar": {
     "home": "Головна",
     "clients": "Клієнти",
-    "requests": "Запити"
-  , "b2bsidebar": {
-    "home": "Головна",
-    "schedule": "Розклад",
-    "booking": "Бронювання",
-    "clients": "Клієнти",
-    "organizations": "Організації",
-    "products": "Товари",
-    "personnel": "Персонал",
-    "statistics": "Статистика"
-  }},
+    "requests": "Запити",
+    "b2bsidebar": {
+      "home": "Головна",
+      "schedule": "Розклад",
+      "booking": "Бронювання",
+      "clients": "Клієнти",
+      "organizations": "Організації",
+      "products": "Товари",
+      "personnel": "Персонал",
+      "statistics": "Статистика"
+    }
+  },
   "signin": {
     "heading": "Увійти до ReservNow",
     "subheading": "Введіть адресу електронної пошти та пароль для входу!"
   },
   "b2bsignup": {
-    "heading": "Створити пароль",   
-    "subheading": "Введіть свій новий пароль, щоб увійти"      
+    "heading": "Створити пароль",
+    "subheading": "Введіть свій новий пароль, щоб увійти"
   },
   "clients": {
     "clients": "Клієнти",
@@ -35,7 +36,8 @@
     "null": "Наразі немає клієнтів"
   },
   "requests": {
-    "requests": "Запити"
+    "requests": "Запити",
+    "null": "Наразі немає запитів"
   },
   "forms": {
     "info": "Інформація",
@@ -61,7 +63,7 @@
     "clientDescription": "Опис",
     "resultDescription": "Опис"
   },
-    "organizations": {
+  "organizations": {
     "organizationId": "ID організації",
     "name": "Назва організації",
     "organizations": "Організації",
@@ -81,29 +83,7 @@
     "image": "Зображення організації",
     "full": "Цілодобово, враховуючи вихідні дні",
     "from": "Від",
-    "to" : "До"
-  },
-    "organizations": {
-    "organizationId": "ID організації",
-    "name": "Назва організації",
-    "organizations": "Організації",
-    "add": "Додати Організацію",
-    "null": "Нажаль ви ще не створили жодної організації",
-    "totalSales": "Всього продажів",
-    "totalBookings": "Всього бронювань",
-    "totalClients": "Всього клієнтів",
-    "location": "Місцезнаходження",
-    "workHours": "Години роботи"
-  },
-  "addOrganizationForm": {
-    "enterName": "Введіть тут назву організації. . .",
-    "enterDescription": "Введіть тут опис організації. . .",
-    "phone": "Телефон",
-    "enterLocation": "Розташування організації",
-    "image": "Зображення організації",
-    "full": "Цілодобово, враховуючи вихідні дні",
-    "from": "Від",
-    "to" : "До"
+    "to": "До"
   },
   "invalid": {
     "required": "Обов'язкове поле",
@@ -134,7 +114,8 @@
     "in_progress": "Обробляється",
     "fixed": "Виконано",
     "rejected": "Відхилено",
-    "undefined": "Невідомий"
+    "undefined": "Невідомий",
+    "new": "Новий"
   },
   "actions": {
     "action": "Дія",

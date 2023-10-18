@@ -1,4 +1,4 @@
-import ActivateAccountForm from '@/components/b2bclient/forms/activateAccountForm';
+import ActivateAccountForm from '@/components/b2bclient/forms/ActivateAccountForm';
 
 import Home from '@/pages/home/home';
 import Signin from '@/pages/signin/signin';

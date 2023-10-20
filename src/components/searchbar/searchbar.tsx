@@ -13,6 +13,12 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
   const { t } = useTranslation();
   const [value, setValue] = React.useState('');
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setSearch(value);
+    }
+  };
+
   return (
     <div className={styles.search}>
       <span className='p-input-icon-left'>
@@ -24,22 +30,21 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
           className={styles.input}
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
       </span>
       <div className={styles.buttonGroup}>
         <Button onClick={() => setSearch(value)}>{t('clients.search')}</Button>
-        {value && (
-          <Button
-            // disabled={!value}
-            severity='secondary'
-            onClick={() => {
-              setValue('');
-              setSearch('');
-            }}
-          >
-            {t('clients.clear')}
-          </Button>
-        )}
+        <Button
+          disabled={!value}
+          severity='secondary'
+          onClick={() => {
+            setValue('');
+            setSearch('');
+          }}
+        >
+          {t('clients.clear')}
+        </Button>
       </div>
     </div>
   );

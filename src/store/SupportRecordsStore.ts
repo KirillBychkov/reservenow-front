@@ -43,7 +43,6 @@ class SupportRecordsStore {
       this.setFilters(response.data.filters);
       return { data: response.data.data, error: '' };
     } catch (e) {
-      console.log(e);
       return { data: [], error: 'Error getting support records' };
     }
   };
@@ -58,7 +57,6 @@ class SupportRecordsStore {
       this.supportRecords[updatedRecord.id] = updatedRecord;
       return { successMsg: 'Support record updated', errorMsg: '' };
     } catch (e) {
-      console.log(e);
       return { successMsg: '', errorMsg: 'Error updating support record' };
     }
   };
@@ -74,7 +72,6 @@ class SupportRecordsStore {
       const { data } = await SupportService.getSupportRecordById(id);
       return { data, error: '' };
     } catch (e) {
-      console.log(e);
       return { data: {} as ISupport, error: 'Support record not found' };
     }
   };

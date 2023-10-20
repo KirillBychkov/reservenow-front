@@ -16,7 +16,7 @@ export default class SupportService {
     return $api.get(
       `${BASE_API_URL}/support?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`
     );
   }
 

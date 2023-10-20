@@ -10,6 +10,7 @@ import supportRecordsStore from '@/store/SupportRecordsStore';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import usePaginate from '@/hooks/usePaginate';
+import { useSort } from '@/hooks/useSort';
 
 const Requests: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -20,13 +21,15 @@ const Requests: React.FC = observer(() => {
     supportRecordsStore.pagination
   );
 
+  const { sortField, sortOrder, handleSort, sort } = useSort();
+
   const {
     data: supportRecords,
     isLoading,
     errorMsg,
   } = useFetch<ISupport[]>(
-    () => supportRecordsStore.getSupportRecords({ limit, skip, search }),
-    [limit, skip, search]
+    () => supportRecordsStore.getSupportRecords({ limit, skip, search, sort }),
+    [limit, skip, search, sort]
   );
 
   if (errorMsg) {
@@ -46,6 +49,9 @@ const Requests: React.FC = observer(() => {
           supportRecords={supportRecords}
           first={first}
           onPageChange={onPageChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={handleSort}
         />
       ) : (
         <div className={styles.content}>

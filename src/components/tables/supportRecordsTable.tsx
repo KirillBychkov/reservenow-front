@@ -1,7 +1,7 @@
 import { ISupport } from '@/models/ISupport';
 import classNames from 'classnames';
 import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
+import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
@@ -11,15 +11,26 @@ import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import supportRecordsStore from '@/store/SupportRecordsStore';
+import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {
   supportRecords: ISupport[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
+  sortField: SortField;
+  sortOrder: SortOrder;
+  onSortChange: (e: DataTableStateEvent) => void;
 }
 
 const SupportRecordsTable: React.FC<Props> = observer(
-  ({ supportRecords, first, onPageChange }) => {
+  ({
+    supportRecords,
+    first,
+    onPageChange,
+    sortField,
+    sortOrder,
+    onSortChange,
+  }) => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const filters = supportRecordsStore.getFilters();
@@ -32,10 +43,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
       return supportRecords.map((supportRecord) => {
         return {
           ...supportRecord,
-          created_at_string: getFormattedDate(
-            supportRecord.created_at,
-            i18n.language
-          ),
+          created_at: getFormattedDate(supportRecord.created_at, i18n.language),
         };
       });
     }, [i18n.language, supportRecords]);
@@ -45,6 +53,10 @@ const SupportRecordsTable: React.FC<Props> = observer(
         <DataTable
           value={supportRecordsData}
           removableSort
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSort={onSortChange}
+          lazy={true}
           footer={
             <Paginator
               template={{
@@ -76,11 +88,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column
-            field='created_at_string'
-            header={t('dates.createdAt')}
-            sortable
-          />
+          <Column field='created_at' header={t('dates.createdAt')} sortable />
           <Column
             header={t('actions.actions')}
             body={(rowData: ISupport) => (

@@ -12,7 +12,7 @@ export default class UserService {
     return $api.get(
       `${BASE_API_URL}/users?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`
     );
   }
 

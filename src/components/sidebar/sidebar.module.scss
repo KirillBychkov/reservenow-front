@@ -18,6 +18,20 @@
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 0.25rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+    max-width: 100px;
+    &__menu {
+      padding: 0;
+    }
+    .separator {
+      opacity: 0;
+    }
   }
 }

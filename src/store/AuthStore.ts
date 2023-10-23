@@ -1,7 +1,9 @@
 import { UserRole } from '@/types/enums/user';
-import { IAccount } from '@/models/IUser';
+import { IAccount, IUser } from '@/models/IUser';
 import AuthService from '@/services/authService';
 import { computed, makeAutoObservable } from 'mobx';
+import { ISignInDTO } from '@/models/requests/AuthRequests';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
 
 class AuthStore {
   user = {} as IAccount;
@@ -15,54 +17,57 @@ class AuthStore {
     this.initAuth();
   }
 
-  async login({ email, password }: { email: string; password: string }) {
+  async login(user: ISignInDTO): Promise<SuccessOrError> {
     try {
-      const response = await AuthService.login({ email, password });
+      const response = await AuthService.login(user);
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
       this.setAuth(true);
-      this.setUser(response.data as any); // check types after merge
-      this.setUserRoleFromResponse(response.data);
+      this.setUser(response.data.account);
+      this.setUserRoleFromResponse(response.data.account);
+      return { successMsg: 'Logged in succesfully', errorMsg: '' };
     } catch (e) {
-      console.log(e);
+      return { successMsg: '', errorMsg: 'Error logging in' };
     }
   }
 
-  async logout() {
+  async logout(): Promise<SuccessOrError> {
     try {
       await AuthService.logout();
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       this.setAuth(false);
       this.setUser({} as IAccount);
+      return { successMsg: 'Logged out succesfully', errorMsg: '' };
     } catch (e) {
-      console.log(e);
+      return { successMsg: '', errorMsg: 'Error logging out' };
     }
   }
 
-  async getUser() {
+  async getUser(): Promise<ResponseOrError<IAccount>> {
     try {
       const response = await AuthService.getUser();
       this.setAuth(true);
       this.setUser(response.data);
       this.setUserRoleFromResponse(response.data);
-      return response.data;
+      return { data: response.data, error: '' };
     } catch (e) {
-      console.log(e);
+      return { data: {} as IAccount, error: 'Error getting user' };
     }
   }
 
   /*
     UTILS 
   */
-  setAuth(bool: boolean) {
+  setAuth(bool: boolean): void {
     this.isAuth = bool;
   }
 
-  setUser(user: IAccount) {
+  setUser(user: IAccount): void {
     this.user = user;
   }
 
-  initAuth() {
+  initAuth(): void {
     const token = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -71,12 +76,15 @@ class AuthStore {
     }
   }
 
-  setUserRoleFromResponse(responseData: any) {
-    this.userRole =
-      responseData?.account?.role?.name || responseData?.role?.name || '';
+  setUserRoleFromResponse(responseData: IUser | IAccount): void {
+    if ('account' in responseData) {
+      this.userRole = responseData.account.role.name;
+    } else {
+      this.userRole = responseData.role.name;
+    }
   }
 
-  get getUserRole() {
+  get getUserRole(): UserRole {
     return this.userRole as UserRole;
   }
 }

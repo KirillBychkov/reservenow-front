@@ -11,12 +11,12 @@
   background-color: var(--light-gray-4);
   border: none;
   cursor: pointer;
-  transition: all .3s ease-out;
+  transition: all 0.3s ease-out;
   &:hover {
     color: var(--primary-color);
     .menu-button-icon > * {
       fill: var(--primary-color);
-      transition: all .3s ease-out;
+      transition: all 0.3s ease-out;
     }
   }
   &--selected {
@@ -27,18 +27,27 @@
     }
     .menu-button-icon > * {
       fill: var(--primary-color);
-      transition: all .3s ease-out;
+      transition: all 0.3s ease-out;
     }
   }
 
   &-icon {
     fill: var(--gray-2);
-    transition: all .3s ease-out;
+    transition: all 0.3s ease-out;
     width: 30px;
     height: 30px;
     border-radius: 0.75rem;
     background-color: white;
     display: grid;
     place-items: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .menu-button {
+    max-width: 62px;
+    .menu-button-text {
+      display: none;
+    }
   }
 }

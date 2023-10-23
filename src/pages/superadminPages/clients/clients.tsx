@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './clients.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -13,11 +13,16 @@ import Searchbar from '@/components/searchbar/searchbar';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import usePaginate from '@/hooks/usePaginate';
+import { useSort } from '@/hooks/useSort';
 
 const Clients: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
+
+  const [search, setSearch] = useState('');
+
+  const { sortField, sortOrder, handleSort, sort } = useSort();
 
   const { limit, skip, first, onPageChange } = usePaginate(
     clientsStore.pagination
@@ -28,8 +33,14 @@ const Clients: React.FC = observer(() => {
     errorMsg,
     isLoading,
   } = useFetch<IUser[]>(
-    () => clientsStore.getClients({ limit, skip }),
-    [limit, skip]
+    () =>
+      clientsStore.getClients({
+        limit,
+        skip,
+        search,
+        sort,
+      }),
+    [limit, skip, search, sort]
   );
 
   if (errorMsg) {
@@ -40,7 +51,7 @@ const Clients: React.FC = observer(() => {
     <div className={styles.clients}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar />
+        <Searchbar setSearch={setSearch} />
         <div className={styles.buttonGroup}>
           <Button icon={<Export color='white' />} severity='secondary'>
             {t('clients.export')}
@@ -64,6 +75,9 @@ const Clients: React.FC = observer(() => {
           clients={clients}
           onPageChange={onPageChange}
           first={first}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={handleSort}
         />
       ) : (
         <div className={styles.content}>

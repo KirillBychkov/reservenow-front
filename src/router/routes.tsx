@@ -1,4 +1,4 @@
-import ActivateAccountForm from '@/components/b2bclient/forms/activateAccountForm';
+import ActivateAccountForm from '@/components/b2bclient/forms/ActivateAccountForm';
 
 import Home from '@/pages/home/home';
 import Signin from '@/pages/signin/signin';
@@ -10,6 +10,7 @@ import Clients from '@/pages/superadminPages/clients/clients';
 import AddClient from '@/pages/superadminPages/clients/addClient/addClient';
 import ViewClient from '@/pages/superadminPages/clients/viewClient/viewClient';
 import Requests from '@/pages/superadminPages/requests/requests';
+import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
 
 interface IRoute {
   path: string;
@@ -41,6 +42,7 @@ export const routes: IRoute[] = [
     params: { id: ':id' },
   },
   { path: '/requests', element: <Requests />, isProtected: true },
+  { path: '/requests/:id', element: <OpenRequest />, isProtected: true },
   { path: '/organizations', element: <Organizations />, isProtected: true },
   {
     path: '/organizations/add',

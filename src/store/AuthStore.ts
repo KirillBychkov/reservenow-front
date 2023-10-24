@@ -5,8 +5,9 @@ import { computed, makeAutoObservable } from 'mobx';
 
 class AuthStore {
   user = {} as IAccount;
-  isAuth = false;
-  userRole = '';
+  isAuth: boolean = false;
+  userRole: string = '';
+  userName: string = '';
 
   constructor() {
     makeAutoObservable(this, {
@@ -23,6 +24,7 @@ class AuthStore {
       this.setAuth(true);
       this.setUser(response.data as any); // check types after merge
       this.setUserRoleFromResponse(response.data);
+      this.setUserNameFromResponse(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -45,6 +47,7 @@ class AuthStore {
       this.setAuth(true);
       this.setUser(response.data);
       this.setUserRoleFromResponse(response.data);
+      this.setUserNameFromResponse(response.data);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -75,9 +78,18 @@ class AuthStore {
     this.userRole =
       responseData?.account?.role?.name || responseData?.role?.name || '';
   }
+  setUserNameFromResponse(responseData: any) {
+    this.userName =
+      responseData?.user?.first_name + ' ' + responseData?.user?.last_name ||
+      '';
+  }
 
   get getUserRole() {
     return this.userRole as UserRole;
+  }
+
+  get getUserName(): string {
+    return this.userName;
   }
 }
 

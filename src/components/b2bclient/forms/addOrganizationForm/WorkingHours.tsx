@@ -56,7 +56,6 @@ export const WorkingHours = ({
         </div>
       </div>
     </div>
-
     {workingHours.map((row: any, index: number) => (
       <div key={index} className={styles['WorkingHours-Row']}>
         <div className={styles['WorkingHours-Group']}>

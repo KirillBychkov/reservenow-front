@@ -20,7 +20,7 @@ const Clients: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
 
   const { limit, skip, first, onPageChange } = usePaginate(
-    clientsStore.pagination
+    clientsStore.filters
   );
 
   const {

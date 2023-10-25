@@ -32,7 +32,6 @@ const EditOrganization: React.FC = observer(() => {
   if (errorMsg) {
     showError(errorMsg);
   }
-  console.log(initialValues);
 
   const transformedData: IAddOrganizationInfo = {
     name: initialValues?.name || '',
@@ -57,6 +56,15 @@ const EditOrganization: React.FC = observer(() => {
     },
   };
 
+  [
+    {
+      enabled: initialValues?.monday_start_hours !== null,
+      monday_start_hours: initialValues?.monday_start_hours || 0,
+      monday_end_hours: initialValues?.monday_end_hours || 0,
+    },
+  ];
+
+  console.log('transformedData', transformedData);
   return (
     <div className={styles.AddOrganization}>
       <h3 className={classNames('heading heading-3', styles.heading)}>

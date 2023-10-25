@@ -2,6 +2,7 @@ import styles from './addOrganizationForm.module.scss';
 import CustomDropdown from '@/components/UI/Dropdown/CustomDropdown';
 import { getDayLabel } from '@/utils/formHelpers/formHelpers';
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
+import { IWorkingHours } from '../editOrganizationForm/editOrganizationForm';
 
 interface DropdownOption {
   label: string;

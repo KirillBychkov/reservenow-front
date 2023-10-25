@@ -18,27 +18,30 @@ import {
 import organizationStore from '@/store/OrganizationsStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
+// add check if empty form dont send request
+// if switch is off setvalues null
+export interface IWorkingHours {
+  monday_start_hours: number;
+  monday_end_hours: number;
+  tuesday_start_hours: number;
+  tuesday_end_hours: number;
+  wednesday_start_hours: number;
+  wednesday_end_hours: number;
+  thursday_start_hours: number;
+  thursday_end_hours: number;
+  friday_start_hours: number;
+  friday_end_hours: number;
+  saturday_start_hours: number;
+  saturday_end_hours: number;
+  sunday_start_hours: number;
+  sunday_end_hours: number;
+}
 export interface IAddOrganizationInfo {
   name: string;
   description: string;
   phone: string;
   address: string;
-  workingHours: {
-    monday_start_hours: number;
-    monday_end_hours: number;
-    tuesday_start_hours: number;
-    tuesday_end_hours: number;
-    wednesday_start_hours: number;
-    wednesday_end_hours: number;
-    thursday_start_hours: number;
-    thursday_end_hours: number;
-    friday_start_hours: number;
-    friday_end_hours: number;
-    saturday_start_hours: number;
-    saturday_end_hours: number;
-    sunday_start_hours: number;
-    sunday_end_hours: number;
-  };
+  workingHours: IWorkingHours;
 }
 
 interface Props {
@@ -135,24 +138,23 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
     description: initialValues?.description,
     phone: initialValues?.phone,
     address: initialValues?.address,
-    workingHours:
-      initialValues?.workingHours || initializeWorkingHours(numDaysInWeek),
-    //  || {
-    //   monday_start_hours: 0,
-    //   monday_end_hours: 0,
-    //   tuesday_start_hours: 0,
-    //   tuesday_end_hours: 0,
-    //   wednesday_start_hours: 0,
-    //   wednesday_end_hours: 0,
-    //   thursday_start_hours: 0,
-    //   thursday_end_hours: 0,
-    //   friday_start_hours: 0,
-    //   friday_end_hours: 0,
-    //   saturday_start_hours: 0,
-    //   saturday_end_hours: 0,
-    //   sunday_start_hours: 0,
-    //   sunday_end_hours: 0,
-    // },
+    workingHours: initialValues?.workingHours || {
+      // || initializeWorkingHours(numDaysInWeek),
+      monday_start_hours: 0,
+      monday_end_hours: 0,
+      tuesday_start_hours: 0,
+      tuesday_end_hours: 0,
+      wednesday_start_hours: 0,
+      wednesday_end_hours: 0,
+      thursday_start_hours: 0,
+      thursday_end_hours: 0,
+      friday_start_hours: 0,
+      friday_end_hours: 0,
+      saturday_start_hours: 0,
+      saturday_end_hours: 0,
+      sunday_start_hours: 0,
+      sunday_end_hours: 0,
+    },
   };
   console.log('FORM INITV', formData);
   const formik = useFormik({

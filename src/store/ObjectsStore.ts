@@ -1,7 +1,7 @@
+import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
 import { IObjects } from '@/models/response/GetObjectsResponse';
 import ObjectService from '@/services/objectService';
-import { IFilters } from '@/types/pagination';
 import { ResponseOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 

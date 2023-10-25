@@ -21,7 +21,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ children, icon, page }) => {
       }
     >
       {icon && <div className={styles['menu-button-icon']}>{icon}</div>}
-      {children}
+      <div className={styles['menu-button-text']}>{children}</div>
     </NavLink>
   );
 };

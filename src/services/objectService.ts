@@ -1,6 +1,6 @@
 import $api, { BASE_API_URL } from '@/http';
+import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
-import { IFilters } from '@/types/pagination';
 
 import { AxiosResponse } from 'axios';
 

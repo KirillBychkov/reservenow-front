@@ -9,16 +9,28 @@ import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
+import usePaginate from '@/hooks/usePaginate';
+import { useSort } from '@/hooks/useSort';
 
 const Requests: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
+  const [search, setSearch] = React.useState('');
+
+  const { limit, skip, first, onPageChange } = usePaginate(
+    supportRecordsStore.filters
+  );
+
+  const { sortField, sortOrder, handleSort, sort } = useSort();
 
   const {
     data: supportRecords,
     isLoading,
     errorMsg,
-  } = useFetch<ISupport[]>(supportRecordsStore.getSupportRecords, []);
+  } = useFetch<ISupport[]>(
+    () => supportRecordsStore.getSupportRecords({ limit, skip, search, sort }),
+    [limit, skip, search, sort]
+  );
 
   if (errorMsg) {
     showError(errorMsg);
@@ -28,12 +40,19 @@ const Requests: React.FC = observer(() => {
     <div className={styles.requests}>
       <h3 className='heading heading-3'>{t('requests.requests')}</h3>
       <div className={styles.controls}>
-        <Searchbar />
+        <Searchbar setSearch={setSearch} />
       </div>
       {isLoading ? (
         <ProgressSpinner />
       ) : supportRecords?.length ? (
-        <SupportRecordsTable supportRecords={supportRecords} />
+        <SupportRecordsTable
+          supportRecords={supportRecords}
+          first={first}
+          onPageChange={onPageChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={handleSort}
+        />
       ) : (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>

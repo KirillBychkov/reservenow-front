@@ -1,4 +1,4 @@
-import { DataTable } from 'primereact/datatable';
+import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { IAccount } from '@/models/IUser';
 import { Button } from 'primereact/button';
@@ -12,15 +12,19 @@ import { getFormattedDate } from '@/utils/parseFormattedDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import clientsStore from '@/store/ClientsStore';
 import { observer } from 'mobx-react-lite';
+import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {
   clients: IUser[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
+  sortField: SortField;
+  sortOrder: SortOrder;
+  onSortChange: (e: DataTableStateEvent) => void;
 }
 
 const ClientsTable: React.FC<Props> = observer(
-  ({ clients, onPageChange, first }) => {
+  ({ clients, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const [selectedClient, setSelectedClient] = useState<IUser | null>(null);
@@ -44,7 +48,7 @@ const ClientsTable: React.FC<Props> = observer(
 
         return {
           ...client,
-          created_at_string: formattedDate,
+          created_at: formattedDate,
         };
       });
     }, [clients, i18n.language]);
@@ -57,6 +61,10 @@ const ClientsTable: React.FC<Props> = observer(
           selectionMode='single'
           selection={selectedClient!}
           onSelectionChange={(e) => handleViewClient(e.value)}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSort={onSortChange}
+          lazy={true}
           footer={
             <Paginator
               template={{
@@ -92,11 +100,7 @@ const ClientsTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column
-            field='created_at_string'
-            header={t('dates.createdAt')}
-            sortable
-          />
+          <Column field='created_at' header={t('dates.createdAt')} sortable />
           <Column
             header={t('actions.actions')}
             body={(rowData: IAccount) => (

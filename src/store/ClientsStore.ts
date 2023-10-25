@@ -1,6 +1,6 @@
 import { IUser } from '@/models/IUser';
 import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IFilters } from '@/models/response/GetUsersResponse';
+import { IFilters } from '@/models/IFilters';
 import UserService from '@/services/userService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainClientInfo } from '@/types/user';
@@ -31,7 +31,6 @@ class ClientsStore {
       await UserService.createUser(data);
       return { successMsg: 'Created client', errorMsg: '' };
     } catch (e) {
-      console.log(e);
       return { successMsg: '', errorMsg: 'Error creating client' };
     }
   };
@@ -44,7 +43,6 @@ class ClientsStore {
       await UserService.updateUser(id, data);
       return { successMsg: 'Updated client', errorMsg: '' };
     } catch (e) {
-      console.log(e);
       return { successMsg: '', errorMsg: 'Error updating client' };
     }
   };
@@ -63,12 +61,13 @@ class ClientsStore {
     }
   };
 
-  deleteClient = async (id: number): Promise<void> => {
+  deleteClient = async (id: number): Promise<SuccessOrError> => {
     try {
       await UserService.deleteUser(id);
       this.clients = this.clients.filter((client) => client.id !== id);
+      return { successMsg: 'Deleted client succesfully', errorMsg: '' };
     } catch (e) {
-      console.log(e);
+      return { successMsg: '', errorMsg: 'Error deleting client' };
     }
   };
 
@@ -104,7 +103,6 @@ class ClientsStore {
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };
     } catch (e) {
-      console.log(e);
       return { data: [], error: 'An error occurred while fetching clients.' };
     }
   };

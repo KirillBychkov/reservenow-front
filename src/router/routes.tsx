@@ -10,6 +10,7 @@ import Requests from '@/pages/superadminPages/requests/requests';
 import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/editOrganization';
 import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
+import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
 
 interface IRoute {
   path: string;
@@ -60,6 +61,12 @@ export const routes: IRoute[] = [
   {
     path: '/requests',
     element: <Requests />,
+    isProtected: true,
+    allowedRoles: [UserRole.Superuser],
+  },
+  {
+    path: '/requests/:id',
+    element: <OpenRequest />,
     isProtected: true,
     allowedRoles: [UserRole.Superuser],
   },

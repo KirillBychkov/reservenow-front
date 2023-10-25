@@ -7,24 +7,25 @@
   "sidebar": {
     "home": "Головна",
     "clients": "Клієнти",
-    "requests": "Запити"
-  , "b2bsidebar": {
-    "home": "Головна",
-    "schedule": "Розклад",
-    "booking": "Бронювання",
-    "clients": "Клієнти",
-    "organizations": "Організації",
-    "products": "Товари",
-    "personnel": "Персонал",
-    "statistics": "Статистика"
-  }},
+    "requests": "Запити",
+    "b2bsidebar": {
+      "home": "Головна",
+      "schedule": "Розклад",
+      "booking": "Бронювання",
+      "clients": "Клієнти",
+      "organizations": "Організації",
+      "products": "Товари",
+      "personnel": "Персонал",
+      "statistics": "Статистика"
+    }
+  },
   "signin": {
     "heading": "Увійти до ReservNow",
     "subheading": "Введіть адресу електронної пошти та пароль для входу!"
   },
   "b2bsignup": {
-    "heading": "Створити пароль",   
-    "subheading": "Введіть свій новий пароль, щоб увійти"      
+    "heading": "Створити пароль",
+    "subheading": "Введіть свій новий пароль, щоб увійти"
   },
   "clients": {
     "clients": "Клієнти",
@@ -62,7 +63,8 @@
     "status": "Статус",
     "enterStatus": "Оберіть статус",
     "clientDescription": "Опис",
-    "resultDescription": "Опис"
+    "resultDescription": "Опис",
+    "areYouSure": "Ви впевнені?"
   },
     "organizations": {
     "organizationId": "ID організації",
@@ -124,7 +126,8 @@
     "in_progress": "Обробляється",
     "fixed": "Виконано",
     "rejected": "Відхилено",
-    "undefined": "Невідомий"
+    "undefined": "Невідомий",
+    "new": "Новий"
   },
   "actions": {
     "action": "Дія",

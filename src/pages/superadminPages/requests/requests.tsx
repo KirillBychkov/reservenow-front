@@ -18,7 +18,7 @@ const Requests: React.FC = observer(() => {
   const [search, setSearch] = React.useState('');
 
   const { limit, skip, first, onPageChange } = usePaginate(
-    supportRecordsStore.pagination
+    supportRecordsStore.filters
   );
 
   const { sortField, sortOrder, handleSort, sort } = useSort();

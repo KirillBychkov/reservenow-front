@@ -2,6 +2,7 @@ import styles from './addOrganizationForm.module.scss';
 import CustomDropdown from '@/components/UI/Dropdown/CustomDropdown';
 import { getDayLabel } from '@/utils/formHelpers/formHelpers';
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
+import { IWorkingHours } from '../editOrganizationForm/editOrganizationForm';
 
 interface DropdownOption {
   label: string;
@@ -56,7 +57,6 @@ export const WorkingHours = ({
         </div>
       </div>
     </div>
-
     {workingHours.map((row: any, index: number) => (
       <div key={index} className={styles['WorkingHours-Row']}>
         <div className={styles['WorkingHours-Group']}>

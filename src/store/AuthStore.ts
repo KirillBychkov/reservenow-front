@@ -7,8 +7,9 @@ import { ResponseOrError, SuccessOrError } from '@/types/store';
 
 class AuthStore {
   user = {} as IAccount;
-  isAuth = false;
-  userRole = '';
+  isAuth: boolean = false;
+  userRole: string = '';
+  userName: string = '';
 
   constructor() {
     makeAutoObservable(this, {
@@ -23,6 +24,7 @@ class AuthStore {
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
       this.setAuth(true);
+      this.setUserNameFromResponse(response.data);
       this.setUser(response.data.account);
       this.setUserRoleFromResponse(response.data.account);
       return { successMsg: 'Logged in succesfully', errorMsg: '' };
@@ -50,6 +52,7 @@ class AuthStore {
       this.setAuth(true);
       this.setUser(response.data);
       this.setUserRoleFromResponse(response.data);
+      this.setUserNameFromResponse(response.data);
       return { data: response.data, error: '' };
     } catch (e) {
       return { data: {} as IAccount, error: 'Error getting user' };
@@ -83,9 +86,18 @@ class AuthStore {
       this.userRole = responseData.role.name;
     }
   }
+  setUserNameFromResponse(responseData: any) {
+    this.userName =
+      responseData?.user?.first_name + ' ' + responseData?.user?.last_name ||
+      '';
+  }
 
   get getUserRole(): UserRole {
     return this.userRole as UserRole;
+  }
+
+  get getUserName(): string {
+    return this.userName;
   }
 }
 

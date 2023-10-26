@@ -19,4 +19,9 @@ export default class OrganizationService {
     );
     return response.data;
   }
+
+  static async getOrganizationById(id: number): Promise<any> {
+    const response = await $api.get(`${BASE_API_URL}/organization/${id}`);
+    return response.data;
+  }
 }

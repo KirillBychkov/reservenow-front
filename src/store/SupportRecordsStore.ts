@@ -6,14 +6,10 @@ import { SupportStatus } from '@/types/enums/support';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainSupportRecordInfo } from '@/types/support';
 import { makeAutoObservable } from 'mobx';
-import { Pagination } from './ClientsStore';
 
 class SupportRecordsStore {
   supportRecords: ISupport[] = [];
   filters: IFilters = { total: 0, limit: 1 };
-  pagination: Pagination = {
-    rowsPerPage: 1,
-  };
 
   constructor() {
     makeAutoObservable(this);

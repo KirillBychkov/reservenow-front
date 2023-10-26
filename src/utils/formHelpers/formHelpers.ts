@@ -40,6 +40,10 @@ export const initializeWorkingHours = (numDays: number) => {
     dropdown1Value: 0,
     dropdown2Value: 0,
   };
+  console.error(
+    '---initializeWorkingHours',
+    Array.from({ length: numDays }, () => ({ ...defaultHours }))
+  );
 
   return Array.from({ length: numDays }, () => ({ ...defaultHours }));
 };

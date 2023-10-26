@@ -6,16 +6,9 @@ import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainClientInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
-export interface Pagination {
-  rowsPerPage: number;
-}
-
 class ClientsStore {
   clients: IUser[] = [];
   filters: IFilters = { total: 0, limit: 8 };
-  pagination: Pagination = {
-    rowsPerPage: 8,
-  };
 
   constructor() {
     makeAutoObservable(this);

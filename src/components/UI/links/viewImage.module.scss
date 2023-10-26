@@ -1,0 +1,17 @@
+.viewImage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  padding: 8px 12px;
+  gap: 4px;
+  border-radius: 8px;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
+  color: var(--text-heading-color);
+  &:visited,
+  &:hover,
+  &:active {
+    color: var(--text-heading-color);
+  }
+}

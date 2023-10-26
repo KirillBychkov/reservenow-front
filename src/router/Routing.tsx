@@ -16,6 +16,7 @@ const Routing: React.FC = () => {
               <ProtectedRoute
                 redirectPath='/signin'
                 isProtected={route.isProtected}
+                allowedRoles={route.allowedRoles}
               >
                 {route.element}
               </ProtectedRoute>

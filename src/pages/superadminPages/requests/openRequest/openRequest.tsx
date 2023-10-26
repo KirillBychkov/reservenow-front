@@ -12,6 +12,7 @@ import { PlainSupportRecordInfo } from '@/types/support';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import OpenRequestForm from '@/components/forms/openRequestForm';
+import ViewImage from '@/components/UI/links/viewImage';
 
 const OpenRequest: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -37,9 +38,17 @@ const OpenRequest: React.FC = observer(() => {
       'email',
       'phone',
       'clientDescription',
+      'file',
     ];
     return Object.entries(initialValues).map(([key, value], index) => {
       if (!neededKeys.includes(key) || !value) return null;
+      if (key === 'file')
+        return (
+          <div className={styles.requestInfoItem} key={index}>
+            <h4 className='heading heading-4'>{t(`requests.openImage`)}</h4>
+            <ViewImage imageUrl={value} />
+          </div>
+        );
       return (
         <div className={styles.requestInfoItem} key={index}>
           <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>

@@ -90,6 +90,7 @@ class SupportRecordsStore {
       createdAt: supportRecord.created_at,
       status: (supportRecord.status as SupportStatus) || SupportStatus.NEW,
       resultDescription: supportRecord.result_description || '',
+      file: supportRecord.file || '',
     };
     return { data: plainSupportRecordInfo, error: '' };
   };

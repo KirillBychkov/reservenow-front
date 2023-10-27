@@ -41,6 +41,8 @@ const SupportRecordsTable: React.FC<Props> = observer(
 
     const supportRecordsData = useMemo(() => {
       return supportRecords.map((supportRecord) => {
+        console.log(supportRecord.status);
+
         return {
           ...supportRecord,
           created_at: getFormattedDate(supportRecord.created_at, i18n.language),

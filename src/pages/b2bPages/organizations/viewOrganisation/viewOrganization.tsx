@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from './viewOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
@@ -13,23 +13,46 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/ViewStatsLayout';
 import LeftSideComponent from '@/components/b2bclient/organizations/LeftSideComponent';
 import RightSideComponent from '@/components/b2bclient/organizations/RightSideComponent';
+import ObjectsTable from '@/components/b2bclient/tables/ObjectsTable';
+import objectsStore from '@/store/ObjectsStore';
+import usePaginate from '@/hooks/usePaginate';
+import useFetch from '@/hooks/useFetch';
+import ToastContext from '@/context/toast';
+import { IObjects } from '@/models/response/GetObjectsResponse';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id } = useParams();
+  const { showError } = useContext(ToastContext);
+
+  const { limit, skip, first, onPageChange } = usePaginate(
+    objectsStore.filters
+  );
 
   useEffect(() => {
     organisationStore.getOrganizations();
-    // store get objects and pass it to the table
   }, []);
-
   const organization = organizationStore.organizations?.find(
     (org) => org.id === (id ? parseInt(id, 10) : undefined)
   );
-  if (!organization) {
+
+  const {
+    data: objects,
+    errorMsg,
+    isLoading,
+  } = useFetch<IObjects[]>(
+    () => objectsStore.fetchObjects({ limit, skip }),
+    [limit, skip]
+  );
+
+  if (!organization || !objects) {
     return <ProgressSpinner />;
   }
+  if (errorMsg) {
+    showError(errorMsg);
+  }
+
   return (
     <div className={styles.ViewOrganizations}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
@@ -49,10 +72,37 @@ const ViewOrganization: React.FC = observer(() => {
         <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
       </div>
       {/* <MetricsOrganization /> */}
-      <ViewStatsLayout
-        LeftSideComponent={<LeftSideComponent organization={organization} />}
-        RightSideComponent={<RightSideComponent />}
-      />
+      {isLoading ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <ProgressSpinner />
+        </div>
+      ) : (
+        <>
+          <ViewStatsLayout
+            LeftSideComponent={
+              <LeftSideComponent organization={organization} />
+            }
+            RightSideComponent={
+              <RightSideComponent
+                heading={t('objects.objects')}
+                buttonText={t('objects.add')}
+              />
+            }
+            Table={
+              <ObjectsTable
+                objects={objects}
+                first={first}
+                onPageChange={onPageChange}
+              />
+            }
+          />
+        </>
+      )}
     </div>
   );
 });

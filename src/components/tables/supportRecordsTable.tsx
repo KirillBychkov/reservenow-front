@@ -68,7 +68,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
-              rows={supportRecordsStore.pagination.rowsPerPage}
+              rows={supportRecordsStore.filters.limit}
               totalRecords={filters.total}
               onPageChange={onPageChange}
             />

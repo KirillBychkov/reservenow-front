@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from '@/assets/logo-white-indigo.svg';
 import { useTranslation } from 'react-i18next';
 import ActivateAccountForm from '@/components/b2bclient/forms/ActivateAccountForm';
 
-const SignUp: React.FC = () => {
+const ActivateAccount: React.FC = () => {
   const { t } = useTranslation();
 
   const resetToken =
@@ -31,4 +31,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default ActivateAccount;

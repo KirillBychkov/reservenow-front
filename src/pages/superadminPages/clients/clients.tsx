@@ -25,7 +25,7 @@ const Clients: React.FC = observer(() => {
   const { sortField, sortOrder, handleSort, sort } = useSort();
 
   const { limit, skip, first, onPageChange } = usePaginate(
-    clientsStore.pagination
+    clientsStore.filters
   );
 
   const {

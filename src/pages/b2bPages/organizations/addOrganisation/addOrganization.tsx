@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './addOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
@@ -13,8 +13,6 @@ const AddOrganisation: React.FC = observer(() => {
   const { t } = useTranslation();
 
   const { id } = useParams();
-
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
 
   return (
     <div className={styles.AddOrganization}>
@@ -32,7 +30,7 @@ const AddOrganisation: React.FC = observer(() => {
         ]}
       />
       <div className={styles.formContainer}>
-        {isLoading ? <ProgressSpinner /> : <AddOrganizationForm />}
+        {id ? <ProgressSpinner /> : <AddOrganizationForm />}
       </div>
     </div>
   );

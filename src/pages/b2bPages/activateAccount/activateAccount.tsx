@@ -2,7 +2,7 @@ import Flex from '@/components/UI/layout/flex';
 import styles from './activateAccount.module.scss';
 import { ReactComponent as Logo } from '@/assets/logo-white-indigo.svg';
 import { useTranslation } from 'react-i18next';
-import ActivateAccountForm from '@/components/b2bclient/forms/activateAccountForm';
+import ActivateAccountForm from '@/components/b2bclient/forms/ActivateAccountForm';
 
 const SignUp: React.FC = () => {
   const { t } = useTranslation();

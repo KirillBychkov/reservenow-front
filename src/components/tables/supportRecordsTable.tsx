@@ -2,7 +2,7 @@ import { ISupport } from '@/models/ISupport';
 import classNames from 'classnames';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import { Button } from 'primereact/button';
@@ -39,16 +39,10 @@ const SupportRecordsTable: React.FC<Props> = observer(
       navigate(`${id}`);
     };
 
-    const supportRecordsData = useMemo(() => {
-      return supportRecords.map((supportRecord) => {
-        console.log(supportRecord.status);
-
-        return {
-          ...supportRecord,
-          created_at: getFormattedDate(supportRecord.created_at, i18n.language),
-        };
-      });
-    }, [i18n.language, supportRecords]);
+    const supportRecordsData = supportRecords.map((supportRecord) => ({
+      ...supportRecord,
+      created_at: getFormattedDate(supportRecord.created_at, i18n.language),
+    }));
 
     return (
       <div>

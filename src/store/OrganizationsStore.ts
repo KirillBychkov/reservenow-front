@@ -2,6 +2,7 @@ import { IOrganization } from '@/models/IOrganization';
 import { ICreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
 import { CatchError } from '@/types/errors';
+import { ResponseOrError } from '@/types/store';
 import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 
 class OrganizationStore {
@@ -48,6 +49,26 @@ class OrganizationStore {
       }
     }
   }
+
+  getOrganizationById = async (
+    id: number
+  ): Promise<ResponseOrError<IOrganization>> => {
+    const organization = this.organizations?.find(
+      (organization) => organization?.id === id
+    );
+
+    if (organization) return { data: organization, error: '' };
+
+    try {
+      const organizationData = await OrganizationService.getOrganizationById(
+        id
+      );
+      this.organizations?.push(organizationData);
+      return { data: organizationData, error: '' };
+    } catch (e) {
+      return { data: {} as IOrganization, error: 'Client not found' };
+    }
+  };
 
   /*
     UTILS 

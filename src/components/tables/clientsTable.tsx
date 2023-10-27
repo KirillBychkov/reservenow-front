@@ -76,7 +76,7 @@ const ClientsTable: React.FC<Props> = observer(
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
-              rows={clientsStore.pagination.rowsPerPage}
+              rows={clientsStore.filters.limit}
               totalRecords={filters.total}
               onPageChange={onPageChange}
             />

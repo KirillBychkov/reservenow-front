@@ -11,4 +11,5 @@ export interface PlainSupportRecordInfo {
   lastName: string;
   phone: string;
   companyName: string;
+  file?: string;
 }

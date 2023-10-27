@@ -1,13 +1,12 @@
-import { Pagination } from '@/store/ClientsStore';
 import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useState } from 'react';
 
-const usePaginate = ({ rowsPerPage }: Pagination) => {
+const usePaginate = ({ limit }: any) => {
   const [first, setFirst] = useState<number>(0);
   const [skip, setSkip] = useState<number>(0);
 
   const handleSetPage = (page: number) => {
-    setSkip(page * rowsPerPage);
+    setSkip(page * limit);
   };
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
@@ -15,7 +14,7 @@ const usePaginate = ({ rowsPerPage }: Pagination) => {
     setFirst(event.first);
   };
 
-  return { limit: rowsPerPage, skip, first, onPageChange };
+  return { limit, skip, first, onPageChange };
 };
 
 export default usePaginate;

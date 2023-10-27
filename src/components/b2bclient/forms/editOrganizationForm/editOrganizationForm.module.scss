@@ -1,0 +1,96 @@
+$common-padding: 1.5rem;
+$common-margin-bottom: 24px;
+$common-border: 1px solid var(--neutral-gray-gray-100, #e0e2e7);
+$common-background: var(--neutral-white, #fff);
+$common-box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
+
+.Form {
+  textarea,
+  input,
+  label {
+    background-color: var(--neutral-gray-gray-25, #f9f9fc);
+  }
+}
+
+@mixin form-section {
+  padding: $common-padding;
+  margin-bottom: $common-margin-bottom;
+  border: $common-border;
+  background: $common-background;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  border-radius: 0.5rem;
+  box-shadow: $common-box-shadow;
+}
+
+.Form-MainInfo {
+  @include form-section;
+}
+
+.Form-SecondaryInfo {
+  @include form-section;
+}
+
+.Form-UploadFile {
+  @include form-section;
+}
+
+.Form-WorkingHours {
+  @include form-section;
+
+  & .InputSwitch-Label {
+    display: flex;
+    flex: 1 0 0;
+    align-items: center;
+    padding-top: 14px;
+  }
+
+  & .WorkingHours-Row {
+    align-self: stretch;
+    gap: 14px;
+
+    & .WorkingHours-Switch {
+      display: flex;
+      width: 84px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      & .InputSwitch {
+        width: 58px;
+        height: 33.143px;
+      }
+    }
+
+    & .WorkingHours-Group {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    & .WorkingHours-Dropdowns {
+      flex: 1;
+      display: flex;
+      gap: 14px;
+      width: 100%;
+
+      & .WorkingHours-DropdownLeft {
+        width: 50%;
+      }
+      & .WorkingHours-DropdownRight {
+        width: 50%;
+      }
+    }
+  }
+}
+
+.Controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+
+  .Button {
+    max-width: 170px;
+  }
+}

@@ -14,8 +14,6 @@ const AddOrganisation: React.FC = observer(() => {
 
   const { id } = useParams();
 
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
-
   return (
     <div className={styles.AddOrganization}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
@@ -32,7 +30,7 @@ const AddOrganisation: React.FC = observer(() => {
         ]}
       />
       <div className={styles.formContainer}>
-        {isLoading ? <ProgressSpinner /> : <AddOrganizationForm />}
+        {id ? <ProgressSpinner /> : <AddOrganizationForm />}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@
   align-items: center;
   gap: 0.25rem;
   border-radius: 1.875rem;
+  max-width: 10rem;
   width: 100%;
   &.active {
     background: rgba(35, 133, 81, 0.15);
@@ -16,6 +17,10 @@
     color: #8e292c;
   }
   &.pending {
+    background: rgba(255, 193, 7, 0.15);
+    color: #b58c2a;
+  }
+  &.in_progress {
     background: rgba(255, 193, 7, 0.15);
     color: #b58c2a;
   }

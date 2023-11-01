@@ -14,7 +14,7 @@ const AddOrganisation: React.FC = observer(() => {
 
   const { id } = useParams();
 
-  const [isLoading, setIsLoading] = useState<boolean>(!!id);
+  const [isLoading] = useState<boolean>(!!id);
 
   return (
     <div className={styles.AddOrganization}>

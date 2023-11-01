@@ -5,9 +5,9 @@ import Button from '@/components/UI/buttons/button';
 import styles from './editOrganizationForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { InputSwitchChangeEvent } from 'primereact/inputswitch';
-import { MainInfo } from '@/components/b2bclient/forms/addOrganizationForm/MainInfo';
-import { SecondaryInfo } from '@/components/b2bclient/forms/addOrganizationForm/SecondaryInfo';
-import { WorkingHours } from '@/components/b2bclient/forms/addOrganizationForm/WorkingHours';
+import { MainInfo } from '@/components/b2bclient/forms/addOrganizationForm/mainInfo';
+import { SecondaryInfo } from '@/components/b2bclient/forms/addOrganizationForm/secondaryInfo';
+import { WorkingHours } from '@/components/b2bclient/forms/addOrganizationForm/workingHours';
 import {
   generateDropdownOptions,
   getDayKey,
@@ -17,6 +17,8 @@ import {
 } from '@/utils/formHelpers/formHelpers';
 import organizationStore from '@/store/OrganizationsStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { useParams } from 'react-router-dom';
+import FormFileUpload from '../addOrganizationForm/formFileUpload';
 
 // add check if empty form dont send request
 // if switch is off setvalues null
@@ -50,7 +52,10 @@ interface Props {
 
 const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
-
+  console.log(initialValues);
+  const idParam = useParams().id;
+  const id = parseInt(idParam!, 10);
+  console.log(id);
   if (!initialValues) return <ProgressSpinner />;
   const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
 
@@ -176,22 +181,23 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
       //       },
       //   };
 
-      await organizationStore.addOrganization(formattedValues);
+      await organizationStore.editOrganization(id, formattedValues);
       formik.resetForm();
     },
   });
-
+  console.log('initialValues.workingHours', initialValues.workingHours);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.Form}>
         <MainInfo t={t} formik={formik} />
         <SecondaryInfo t={t} formik={formik} />
         {/* FileUpload */}
-        {/* <div className={styles['Form-UploadFile']}>
-          <FileUpload />
-        </div> */}
+        <div className={styles['Form-UploadFile']}>
+          <FormFileUpload id={id} />
+        </div>
         <WorkingHours
           t={t}
+          // workingHours={initialValues.workingHours}
           workingHours={workingHours}
           handleAllHoursChange={handleAllHoursChange}
           handleDaySwitchChange={handleDaySwitchChange}

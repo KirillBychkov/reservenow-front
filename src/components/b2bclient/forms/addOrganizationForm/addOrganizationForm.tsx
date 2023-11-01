@@ -5,9 +5,6 @@ import Button from '@/components/UI/buttons/button';
 import styles from './addOrganizationForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { InputSwitchChangeEvent } from 'primereact/inputswitch';
-import { MainInfo } from './MainInfo';
-import { SecondaryInfo } from './SecondaryInfo';
-import { WorkingHours } from './WorkingHours';
 import {
   generateDropdownOptions,
   getDayKey,
@@ -16,6 +13,10 @@ import {
   numDaysInWeek,
 } from '@/utils/formHelpers/formHelpers';
 import organizationStore from '@/store/OrganizationsStore';
+import { MainInfo } from './mainInfo';
+import { SecondaryInfo } from './secondaryInfo';
+import FormFileUpload from './formFileUpload';
+import { WorkingHours } from './workingHours';
 
 export interface IAddOrganizationInfo {
   name: string;
@@ -170,9 +171,9 @@ const AddOrganizationForm: React.FC<Props> = () => {
         <MainInfo t={t} formik={formik} />
         <SecondaryInfo t={t} formik={formik} />
         {/* FileUpload */}
-        {/* <div className={styles['Form-UploadFile']}>
-          <FileUpload />
-        </div> */}
+        <div className={styles['Form-UploadFile']}>
+          <FormFileUpload />
+        </div>
         <WorkingHours
           t={t}
           workingHours={workingHours}

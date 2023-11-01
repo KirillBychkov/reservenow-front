@@ -56,13 +56,32 @@ const EditOrganization: React.FC = observer(() => {
     },
   };
 
-  [
-    {
-      enabled: initialValues?.monday_start_hours !== null,
-      monday_start_hours: initialValues?.monday_start_hours || 0,
-      monday_end_hours: initialValues?.monday_end_hours || 0,
-    },
-  ];
+  // [
+  //   {
+  //     enabled: initialValues?.monday_start_hours !== null,
+  //     monday_start_hours: initialValues?.monday_start_hours || 0,
+  //     monday_end_hours: initialValues?.monday_end_hours || 0,
+  //   },
+  // ];
+
+  // const newValue = [
+  //   'monday',
+  //   'tuesday',
+  //   'wednesday',
+  //   'thursday',
+  //   'friday',
+  //   'saturday',
+  //   'sunday',
+  // ].reduce((acc, value):any => {
+  //   const start = ${value}_start_hours;
+  //   const end = ${value}_end_hours;
+  //   const obj = {
+  //     [start]: initialValues?.[start],
+  //     [end]: initialValues[end],
+  //     enabled: initialValues[start] !== null,
+  //   };
+  //   return [...acc, obj];
+  // }, []);
 
   console.log('transformedData', transformedData);
   return (

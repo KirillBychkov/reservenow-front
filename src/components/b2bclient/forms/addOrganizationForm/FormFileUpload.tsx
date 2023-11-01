@@ -2,25 +2,26 @@ import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { FileUpload, FileUploadUploadEvent } from 'primereact/fileupload';
 import { Tooltip } from 'primereact/tooltip';
+import { BASE_API_URL } from '@/http';
 
-export default function FormFileUpload() {
+interface FormFileUploadProps {
+  id?: number;
+}
+
+export default function FormFileUpload({ id }: FormFileUploadProps) {
   const toast = useRef<Toast>(null);
+
+  const url = `${BASE_API_URL}/organization/upload/image/${id}`;
+
   const [totalSize, setTotalSize] = useState(0);
+
   const fileUploadRef = useRef<FileUpload>(null);
 
   const onTemplateUpload = (e: FileUploadUploadEvent) => {
-    let _totalSize = 0;
-
-    e.files.forEach((file) => {
-      _totalSize += file.size || 0;
-    });
-
-    setTotalSize(_totalSize);
-    toast.current?.show({
-      severity: 'info',
-      summary: 'Success',
-      detail: 'File Uploaded',
-    });
+    console.log('files', e.files);
+    // console.log('id', id);
+    // //upload service
+    // organizationStore.uploadOrgImage(id!, e.files);
   };
 
   const onTemplateClear = () => {
@@ -77,9 +78,11 @@ export default function FormFileUpload() {
 
       <FileUpload
         ref={fileUploadRef}
-        name='demo[]'
-        url='/api/upload'
-        multiple
+        url={url}
+        // multiple
+        withCredentials={true}
+        mode='advanced'
+        previewWidth={200}
         accept='image/*'
         maxFileSize={200000}
         onUpload={onTemplateUpload}

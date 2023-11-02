@@ -10,7 +10,7 @@ import organisationStore from '@/store/OrganizationsStore';
 import organizationStore from '@/store/OrganizationsStore';
 import Button from '@/components/UI/buttons/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import ViewStatsLayout from '@/components/UI/layout/ViewStatsLayout';
+import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 import objectsStore from '@/store/ObjectsStore';
 import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';

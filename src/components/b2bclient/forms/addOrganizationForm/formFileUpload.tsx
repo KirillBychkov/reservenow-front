@@ -13,7 +13,7 @@ export default function FormFileUpload({ id }: FormFileUploadProps) {
 
   const url = `${BASE_API_URL}/organization/upload/image/${id}`;
 
-  const [totalSize, setTotalSize] = useState(0);
+  const [, setTotalSize] = useState(0);
 
   const fileUploadRef = useRef<FileUpload>(null);
 

@@ -56,7 +56,6 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   const idParam = useParams().id;
   const id = parseInt(idParam!, 10);
   console.log(id);
-  if (!initialValues) return <ProgressSpinner />;
   const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
 
   const [allHoursEnabled, setAllHoursEnabled] = useState<boolean>(false);
@@ -139,10 +138,10 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   const validationSchema = Yup.object({});
 
   const formData: IAddOrganizationInfo = {
-    name: initialValues?.name,
-    description: initialValues?.description,
-    phone: initialValues?.phone,
-    address: initialValues?.address,
+    name: initialValues?.name || '',
+    description: initialValues?.description || '',
+    phone: initialValues?.phone || '',
+    address: initialValues?.address || '',
     workingHours: initialValues?.workingHours || {
       // || initializeWorkingHours(numDaysInWeek),
       monday_start_hours: 0,
@@ -185,7 +184,9 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
       formik.resetForm();
     },
   });
-  console.log('initialValues.workingHours', initialValues.workingHours);
+  // console.log('initialValues.workingHours', initialValues.workingHours);
+  if (!initialValues) return <ProgressSpinner />;
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.Form}>

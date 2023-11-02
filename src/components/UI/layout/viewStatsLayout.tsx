@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ViewStatsLayout.module.scss';
+import styles from './viewStatsLayout.module.scss';
 
 interface ViewStatsLayoutProps {
   LeftSideComponent: React.ReactNode;

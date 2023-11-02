@@ -1,7 +1,6 @@
 import $api, { BASE_API_URL } from '@/http';
 import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
-
 import { AxiosResponse } from 'axios';
 
 export default class ObjectService {
@@ -19,7 +18,7 @@ export default class ObjectService {
     return response.data;
   }
 
-  static async getObjectById(id: number): Promise<any> {
+  static async getObjectById(id: number): Promise<AxiosResponse> {
     const response = await $api.get(`${BASE_API_URL}/rental_object/${id}`);
     return response.data;
   }

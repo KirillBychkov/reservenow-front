@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'primereact/dropdown';
-import styles from './CustomDropdown.module.scss';
+import styles from './customDropdown.module.scss';
 
 interface CustomDropdownProps {
   value: number | null;

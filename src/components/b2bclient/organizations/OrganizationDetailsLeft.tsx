@@ -1,6 +1,6 @@
 import { IOrganization } from '@/models/IOrganization';
 import classNames from 'classnames';
-import styles from './OrganizationDetailsLeft.module.scss';
+import styles from './organizationDetailsLeft.module.scss';
 import { daysOfWeek } from '@/utils/organizationHelpers';
 import { renderWorkingHours } from './renderWorkingHours';
 import { useTranslation } from 'react-i18next';

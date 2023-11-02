@@ -70,6 +70,39 @@ class OrganizationStore {
     }
   };
 
+  editOrganization = async (
+    id: number,
+    organization: ICreateOrganizationDTO
+  ): Promise<ResponseOrError<IOrganization>> => {
+    try {
+      const organizationData = await OrganizationService.editOrganization(
+        id,
+        organization
+      );
+      return { data: organizationData, error: '' };
+    } catch (e) {
+      return {
+        data: {} as IOrganization,
+        error: 'Error while updating Organization',
+      };
+    }
+  };
+
+  uploadOrgImage = async (
+    id: number,
+    file: any
+  ): Promise<ResponseOrError<IOrganization>> => {
+    try {
+      const organizationData = await OrganizationService.uploadImage(id, file);
+      return { data: organizationData, error: '' };
+    } catch (e) {
+      return {
+        data: {} as IOrganization,
+        error: 'Error while uploading image',
+      };
+    }
+  };
+
   /*
     UTILS 
   */

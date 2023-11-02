@@ -1,6 +1,6 @@
 import { IOrganization } from '@/models/IOrganization';
-import styles from './LeftSideComponent.module.scss';
-import OrganizationDetailsLeft from './OrganizationDetailsLeft';
+import styles from './leftSideComponent.module.scss';
+import OrganizationDetailsLeft from './organizationDetailsLeft';
 interface LeftSideComponentProps {
   organization: IOrganization;
 }

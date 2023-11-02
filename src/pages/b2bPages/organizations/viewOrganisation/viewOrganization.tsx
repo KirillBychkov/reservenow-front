@@ -11,14 +11,14 @@ import organizationStore from '@/store/OrganizationsStore';
 import Button from '@/components/UI/buttons/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/ViewStatsLayout';
-import LeftSideComponent from '@/components/b2bclient/organizations/LeftSideComponent';
-import RightSideComponent from '@/components/b2bclient/organizations/RightSideComponent';
-import ObjectsTable from '@/components/b2bclient/tables/ObjectsTable';
 import objectsStore from '@/store/ObjectsStore';
 import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import { IObjects } from '@/models/response/GetObjectsResponse';
+import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
+import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
+import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();

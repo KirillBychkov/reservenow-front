@@ -1,5 +1,5 @@
 import Button from '@/components/UI/buttons/button';
-import styles from './RightSideComponent.module.scss';
+import styles from './rightSideComponent.module.scss';
 import OrganizationStatsCard, { cardData } from './organizationStatsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';

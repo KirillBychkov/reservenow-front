@@ -11,6 +11,8 @@ import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/ed
 import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
 import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
+import Personnel from '@/pages/b2bPages/personnel/personnel';
+import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
 
 interface IRoute {
   path: string;
@@ -94,6 +96,18 @@ export const routes: IRoute[] = [
     element: <EditOrganization />,
     isProtected: true,
     params: { id: 'id' },
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel',
+    element: <Personnel />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/add',
+    element: <AddPersonnel />,
+    isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },
 ];

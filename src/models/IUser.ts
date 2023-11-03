@@ -22,7 +22,6 @@ export interface IUserDTO {
   description?: string;
 }
 
-//TODO: add manager and trainer DTOs
 export interface IUser extends IUserDTO {
   id: number;
   created_at: Date | string;

@@ -52,10 +52,8 @@ interface Props {
 
 const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
-  console.log(initialValues);
   const idParam = useParams().id;
   const id = parseInt(idParam!, 10);
-  console.log(id);
   const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
 
   const [allHoursEnabled, setAllHoursEnabled] = useState<boolean>(false);
@@ -160,7 +158,6 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
       sunday_end_hours: 0,
     },
   };
-  console.log('FORM INITV', formData);
   const formik = useFormik({
     initialValues: formData as IAddOrganizationInfo,
     // : initialValues as IAddOrganizationInfo,

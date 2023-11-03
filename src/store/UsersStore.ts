@@ -3,11 +3,11 @@ import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
 import { IFilters } from '@/models/IFilters';
 import UserService from '@/services/userService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
-import { PlainClientInfo } from '@/types/user';
+import { PlainUserInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
-class ClientsStore {
-  clients: IUser[] = [];
+class UsersStore {
+  users: IUser[] = [];
   filters: IFilters = { total: 0, limit: 8 };
 
   constructor() {
@@ -18,15 +18,15 @@ class ClientsStore {
     return this.filters;
   }
 
-  setClients(clients: IUser[]) {
-    this.clients = clients;
+  setClients(users: IUser[]) {
+    this.users = users;
   }
 
   setFilters(filters: IFilters) {
     this.filters = filters;
   }
 
-  addClient = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
+  addUser = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
     try {
       await UserService.createUser(data);
       return { successMsg: 'Created client', errorMsg: '' };
@@ -35,7 +35,7 @@ class ClientsStore {
     }
   };
 
-  updateClient = async (
+  updateUser = async (
     id: number,
     data: IUpdateUserDTO
   ): Promise<SuccessOrError> => {
@@ -47,51 +47,51 @@ class ClientsStore {
     }
   };
 
-  getClientById = async (id: number): Promise<ResponseOrError<IUser>> => {
-    const client = this.clients.find((client) => client.id === id);
-    if (client) {
-      return { data: client, error: '' };
+  getUserById = async (id: number): Promise<ResponseOrError<IUser>> => {
+    const user = this.users.find((user) => user.id === id);
+    if (user) {
+      return { data: user, error: '' };
     }
     try {
       const fetchedClient = await UserService.getUserById(id);
-      this.clients.push(fetchedClient.data);
+      this.users.push(fetchedClient.data);
       return { data: fetchedClient.data, error: '' };
     } catch (error) {
       return { data: {} as IUser, error: 'Client not found' };
     }
   };
 
-  deleteClient = async (id: number): Promise<SuccessOrError> => {
+  deleteUser = async (id: number): Promise<SuccessOrError> => {
     try {
       await UserService.deleteUser(id);
-      this.clients = this.clients.filter((client) => client.id !== id);
+      this.users = this.users.filter((user) => user.id !== id);
       return { successMsg: 'Deleted client succesfully', errorMsg: '' };
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error deleting client' };
     }
   };
 
-  getPlainClientInfo = async (
+  getPlainUserInfo = async (
     id: number
-  ): Promise<ResponseOrError<PlainClientInfo>> => {
-    const { data: client, error } = await this.getClientById(id);
+  ): Promise<ResponseOrError<PlainUserInfo>> => {
+    const { data: user, error } = await this.getUserById(id);
     if (error) {
-      return { data: {} as PlainClientInfo, error: error };
+      return { data: {} as PlainUserInfo, error: error };
     }
-    const plainClientInfo: PlainClientInfo = {
-      id: client.id,
-      email: client?.account?.email || '',
-      status: client?.account?.status,
-      firstName: client.first_name,
-      lastName: client.last_name,
-      phone: client.phone,
-      companyName: client.domain_url,
-      description: client.description || '',
+    const plainUserInfo: PlainUserInfo = {
+      id: user.id,
+      email: user?.account?.email || '',
+      status: user?.account?.status,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phone: user.phone,
+      companyName: user.domain_url,
+      description: user.description || '',
     };
-    return { data: plainClientInfo, error: '' };
+    return { data: plainUserInfo, error: '' };
   };
 
-  getClients = async (
+  getUsers = async (
     filters: Omit<IFilters, 'total'>
   ): Promise<ResponseOrError<IUser[]>> => {
     try {
@@ -108,5 +108,5 @@ class ClientsStore {
   };
 }
 
-const clientsStore = new ClientsStore();
-export default clientsStore;
+const usersStore = new UsersStore();
+export default usersStore;

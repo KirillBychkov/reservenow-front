@@ -26,7 +26,7 @@ const useRoleBasedMenu = () => {
         text: 'sidebar.home',
       },
       {
-        page: '/clients',
+        page: '/users',
         icon: <People />,
         text: 'sidebar.clients',
       },
@@ -53,7 +53,7 @@ const useRoleBasedMenu = () => {
         text: 'sidebar.b2bsidebar.booking',
       },
       {
-        page: '/clients',
+        page: '/b2bclients',
         icon: <People />,
         text: 'sidebar.b2bsidebar.clients',
       },

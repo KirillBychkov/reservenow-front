@@ -1,0 +1,22 @@
+.personnel {
+  padding: 25px 25px 25px 0;
+  width: 100%;
+  height: 100%;
+  .controls {
+    margin-top: 20px;
+    max-height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .content {
+    margin-top: 13rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+}

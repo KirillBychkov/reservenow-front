@@ -67,7 +67,7 @@
     "resultDescription": "Опис",
     "areYouSure": "Ви впевнені?"
   },
-    "organizations": {
+  "organizations": {
     "organizationId": "ID організації",
     "name": "Назва організації",
     "organizations": "Організації",
@@ -80,11 +80,11 @@
     "workHours": "Години роботи"
   },
   "objects": {
-    "objects" : "Об'єкти",
+    "objects": "Об'єкти",
     "id": "Номер",
     "name": "Назва об'єкту",
     "sportType": "Вид спорту",
-    "add":"Додати об'єкт"
+    "add": "Додати об'єкт"
   },
   "addOrganizationForm": {
     "enterName": "Введіть тут назву організації. . .",
@@ -94,7 +94,12 @@
     "image": "Зображення організації",
     "full": "Цілодобово, враховуючи вихідні дні",
     "from": "Від",
-    "to" : "До"
+    "to": "До"
+  },
+  "personnel": {
+    "personnel": "Персонал",
+    "add": "Додати персонал",
+    "null": "Наразі немає персоналу"
   },
   "invalid": {
     "required": "Обов'язкове поле",
@@ -127,8 +132,7 @@
     "in_progress": "Обробляється",
     "fixed": "Виконано",
     "rejected": "Відхилено",
-    "undefined": "Невідомий",
-    "new": "Новий"
+    "undefined": "Невідомий"
   },
   "actions": {
     "action": "Дія",

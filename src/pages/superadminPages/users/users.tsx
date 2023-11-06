@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import styles from './clients.module.scss';
+import styles from './users.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import ClientsTable from '@/components/tables/clientsTable';
+import UsersTable from '@/components/tables/usersTable';
 import { observer } from 'mobx-react-lite';
-import clientsStore from '@/store/ClientsStore';
+import usersStore from '@/store/UsersStore';
 import { IUser } from '@/models/IUser';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';
@@ -15,7 +15,7 @@ import ToastContext from '@/context/toast';
 import usePaginate from '@/hooks/usePaginate';
 import { useSort } from '@/hooks/useSort';
 
-const Clients: React.FC = observer(() => {
+const Users: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
@@ -24,17 +24,15 @@ const Clients: React.FC = observer(() => {
 
   const { sortField, sortOrder, handleSort, sort } = useSort();
 
-  const { limit, skip, first, onPageChange } = usePaginate(
-    clientsStore.filters
-  );
+  const { limit, skip, first, onPageChange } = usePaginate(usersStore.filters);
 
   const {
-    data: clients,
+    data: users,
     errorMsg,
     isLoading,
   } = useFetch<IUser[]>(
     () =>
-      clientsStore.getClients({
+      usersStore.getUsers({
         limit,
         skip,
         search,
@@ -48,7 +46,7 @@ const Clients: React.FC = observer(() => {
   }
 
   return (
-    <div className={styles.clients}>
+    <div className={styles.users}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
         <Searchbar setSearch={setSearch} />
@@ -70,9 +68,9 @@ const Clients: React.FC = observer(() => {
         >
           <ProgressSpinner />
         </div>
-      ) : clients?.length ? (
-        <ClientsTable
-          clients={clients}
+      ) : users?.length ? (
+        <UsersTable
+          users={users}
           onPageChange={onPageChange}
           first={first}
           sortField={sortField}
@@ -93,4 +91,4 @@ const Clients: React.FC = observer(() => {
   );
 });
 
-export default Clients;
+export default Users;

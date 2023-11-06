@@ -10,12 +10,12 @@ import { IUser } from '@/models/IUser';
 import { useMemo, useState } from 'react';
 import { getFormattedDate } from '@/utils/parseFormattedDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
-import clientsStore from '@/store/ClientsStore';
+import usersStore from '@/store/UsersStore';
 import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {
-  clients: IUser[];
+  users: IUser[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -23,44 +23,41 @@ interface Props {
   onSortChange: (e: DataTableStateEvent) => void;
 }
 
-const ClientsTable: React.FC<Props> = observer(
-  ({ clients, onPageChange, first, sortField, sortOrder, onSortChange }) => {
+const UsersTable: React.FC<Props> = observer(
+  ({ users, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
-    const [selectedClient, setSelectedClient] = useState<IUser | null>(null);
-    const filters = clientsStore.getFilters();
+    const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+    const filters = usersStore.getFilters();
 
-    const handleViewClient = (client: IUser) => {
-      setSelectedClient(client);
-      navigate(`${client.id}`);
+    const handleViewUser = (user: IUser) => {
+      setSelectedUser(user);
+      navigate(`${user.id}`);
     };
 
-    const handleEditClient = (id: number) => {
+    const handleEditUser = (id: number) => {
       navigate(`${id}/edit`);
     };
 
-    const formattedClients: IUser[] = useMemo(() => {
-      return clients.map((client) => {
-        const formattedDate = getFormattedDate(
-          client.created_at,
-          i18n.language
-        );
+    const formattedUsers: IUser[] = useMemo(() => {
+      return users.map((user) => {
+        const formattedDate = getFormattedDate(user.created_at, i18n.language);
 
         return {
-          ...client,
+          ...user,
           created_at: formattedDate,
         };
       });
-    }, [clients, i18n.language]);
+    }, [users, i18n.language]);
 
     return (
       <div>
         <DataTable
           removableSort
-          value={formattedClients}
+          value={formattedUsers}
           selectionMode='single'
-          selection={selectedClient!}
-          onSelectionChange={(e) => handleViewClient(e.value)}
+          selection={selectedUser!}
+          onSelectionChange={(e) => handleViewUser(e.value)}
           sortField={sortField}
           sortOrder={sortOrder}
           onSort={onSortChange}
@@ -76,7 +73,7 @@ const ClientsTable: React.FC<Props> = observer(
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
-              rows={clientsStore.filters.limit}
+              rows={usersStore.filters.limit}
               totalRecords={filters.total}
               onPageChange={onPageChange}
             />
@@ -110,7 +107,7 @@ const ClientsTable: React.FC<Props> = observer(
                 size='small'
                 rounded
                 severity='secondary'
-                onClick={() => handleEditClient(rowData.id)}
+                onClick={() => handleEditUser(rowData.id)}
               />
             )}
           />
@@ -120,4 +117,4 @@ const ClientsTable: React.FC<Props> = observer(
   }
 );
 
-export default ClientsTable;
+export default UsersTable;

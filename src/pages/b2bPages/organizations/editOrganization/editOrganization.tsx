@@ -83,7 +83,6 @@ const EditOrganization: React.FC = observer(() => {
   //   return [...acc, obj];
   // }, []);
 
-  console.log('transformedData', transformedData);
   return (
     <div className={styles.AddOrganization}>
       <h3 className={classNames('heading heading-3', styles.heading)}>

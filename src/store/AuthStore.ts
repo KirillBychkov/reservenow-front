@@ -24,7 +24,7 @@ class AuthStore {
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
       this.setAuth(true);
-      this.setUserNameFromResponse(response.data);
+      this.setUserNameFromResponse(response.data.account);
       this.setUser(response.data.account);
       this.setUserRoleFromResponse(response.data.account);
       return { successMsg: 'Logged in succesfully', errorMsg: '' };
@@ -86,10 +86,11 @@ class AuthStore {
       this.userRole = responseData.role.name;
     }
   }
-  setUserNameFromResponse(responseData: any) {
-    this.userName =
-      responseData?.user?.first_name + ' ' + responseData?.user?.last_name ||
-      '';
+
+  setUserNameFromResponse(responseData: IAccount) {
+    const firstName = responseData.user?.first_name;
+    const lastName = responseData.user?.last_name;
+    this.userName = `${firstName || ''} ${lastName || ''}`.trim();
   }
 
   get getUserRole(): UserRole {

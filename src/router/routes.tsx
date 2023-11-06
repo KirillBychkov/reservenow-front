@@ -3,9 +3,9 @@ import Signin from '@/pages/signin/signin';
 import Organizations from '@/pages/b2bPages/organizations/organizations';
 import AddOrganization from '@/pages/b2bPages/organizations/addOrganisation/addOrganization';
 import ViewOrganization from '@/pages/b2bPages/organizations/viewOrganisation/viewOrganization';
-import Clients from '@/pages/superadminPages/clients/clients';
-import AddClient from '@/pages/superadminPages/clients/addClient/addClient';
-import ViewClient from '@/pages/superadminPages/clients/viewClient/viewClient';
+import Users from '@/pages/superadminPages/users/users';
+import ManageUser from '@/pages/superadminPages/users/manageUser/manageUser';
+import ViewClient from '@/pages/superadminPages/users/viewUser/viewUser';
 import Requests from '@/pages/superadminPages/requests/requests';
 import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/editOrganization';
 import { UserRole } from '@/types/enums/user';
@@ -35,30 +35,30 @@ export const routes: IRoute[] = [
     isProtected: false,
   },
   {
-    path: '/clients',
-    element: <Clients />,
+    path: '/users',
+    element: <Users />,
     isProtected: true,
-    allowedRoles: [UserRole.Superuser, UserRole.UserFull],
+    allowedRoles: [UserRole.Superuser],
   },
   {
-    path: '/clients/add',
-    element: <AddClient />,
+    path: '/users/add',
+    element: <ManageUser />,
     isProtected: true,
-    allowedRoles: [UserRole.Superuser, UserRole.UserFull],
+    allowedRoles: [UserRole.Superuser],
   },
   {
-    path: '/clients/:id/edit',
-    element: <AddClient />,
+    path: '/users/:id/edit',
+    element: <ManageUser />,
     isProtected: true,
     params: { id: ':id' },
-    allowedRoles: [UserRole.Superuser, UserRole.UserFull],
+    allowedRoles: [UserRole.Superuser],
   },
   {
-    path: '/clients/:id',
+    path: '/users/:id',
     element: <ViewClient />,
     isProtected: true,
     params: { id: ':id' },
-    allowedRoles: [UserRole.Superuser, UserRole.UserFull],
+    allowedRoles: [UserRole.Superuser],
   },
   {
     path: '/requests',

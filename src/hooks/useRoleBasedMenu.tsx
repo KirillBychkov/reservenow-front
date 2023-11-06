@@ -26,7 +26,7 @@ const useRoleBasedMenu = () => {
         text: 'sidebar.home',
       },
       {
-        page: '/clients',
+        page: '/users',
         icon: <People />,
         text: 'sidebar.clients',
       },

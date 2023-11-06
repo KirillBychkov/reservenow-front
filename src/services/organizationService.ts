@@ -25,7 +25,6 @@ export default class OrganizationService {
   }
 
   static async uploadImage(id: number, file: any): Promise<any> {
-    console.log('file', file);
     const formData = new FormData();
     formData.append('image', file);
     const reponse = await $api.post(

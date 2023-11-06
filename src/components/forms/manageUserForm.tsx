@@ -8,19 +8,19 @@ import { InputMask } from 'primereact/inputmask';
 import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
-import styles from './addClientForm.module.scss';
+import styles from './manageUserForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import clientsStore from '@/store/ClientsStore';
-import { PlainClientInfo } from '@/types/user';
+import usersStore from '@/store/UsersStore';
+import { PlainUserInfo } from '@/types/user';
 import ToastContext from '@/context/toast';
 import ModalContext from '@/context/modal';
 
 interface Props {
-  initialValues?: PlainClientInfo;
+  initialValues?: PlainUserInfo;
 }
 
-const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
+const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
   const { showModal } = useContext(ModalContext);
@@ -50,7 +50,7 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
     companyName: Yup.string().required(t('invalid.required')),
   });
 
-  const formData: Omit<PlainClientInfo, 'status'> = initialValues || {
+  const formData: Omit<PlainUserInfo, 'status'> = initialValues || {
     firstName: '',
     lastName: '',
     phone: '',
@@ -66,7 +66,7 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
       let successMessage = '';
       let errorMessage = '';
       if (initialValues?.id) {
-        const { successMsg, errorMsg } = await clientsStore.updateClient(
+        const { successMsg, errorMsg } = await usersStore.updateUser(
           initialValues.id,
           {
             first_name: values.firstName,
@@ -79,7 +79,7 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
         successMessage = successMsg;
         errorMessage = errorMsg;
       } else {
-        const { successMsg, errorMsg } = await clientsStore.addClient({
+        const { successMsg, errorMsg } = await usersStore.addUser({
           email: values.email,
           user: {
             first_name: values.firstName,
@@ -105,7 +105,7 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
     if (!initialValues) {
       return;
     }
-    return await clientsStore.deleteClient(initialValues.id!);
+    return await usersStore.deleteUser(initialValues.id!);
   };
 
   const handleClearForm = () => formik.resetForm();
@@ -231,4 +231,4 @@ const AddClientForm: React.FC<Props> = observer(({ initialValues }) => {
   );
 });
 
-export default AddClientForm;
+export default ManageUserForm;

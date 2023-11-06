@@ -15,7 +15,6 @@ const OrganizationCard: React.FC<OrganizationCardProps> = observer(
   ({ organization }) => {
     const { t } = useTranslation();
     const { name, description, photo } = organization;
-    console.log(photo);
     return (
       <div className={styles.OrganizationCard}>
         <div className={styles.CardBox}>

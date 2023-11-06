@@ -1,17 +1,26 @@
 import React, { useContext, useMemo } from 'react';
-import styles from './viewClient.module.scss';
+import styles from './viewUser.module.scss';
 import statusStyles from '@/components/tables/status.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import clientsStore from '@/store/ClientsStore';
+import usersStore from '@/store/UsersStore';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { PlainClientInfo } from '@/types/user';
+import { PlainUserInfo } from '@/types/user';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
+
+const neededKeys = [
+  'firstName',
+  'lastName',
+  'phone',
+  'email',
+  'companyName',
+  'description',
+];
 
 const ViewClient: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -23,8 +32,8 @@ const ViewClient: React.FC = observer(() => {
     data: initialValues,
     isLoading,
     errorMsg,
-  } = useFetch<PlainClientInfo>(
-    () => clientsStore.getPlainClientInfo(parseInt(id || '0')),
+  } = useFetch<PlainUserInfo>(
+    () => usersStore.getPlainUserInfo(parseInt(id || '0')),
     [id]
   );
 
@@ -34,18 +43,10 @@ const ViewClient: React.FC = observer(() => {
 
   const userInfoList = useMemo(() => {
     if (!initialValues) return null;
-    const neededKeys = [
-      'firstName',
-      'lastName',
-      'phone',
-      'email',
-      'companyName',
-      'description',
-    ];
     return Object.entries(initialValues).map(([key, value], index) => {
       if (!neededKeys.includes(key) || !value) return null;
       return (
-        <div className={styles.clientInfoItem} key={index}>
+        <div className={styles.userInfoItem} key={index}>
           <h4 className='heading heading-4'>{t(`forms.${key}`)}</h4>
           <p className='paragraph'>{value}</p>
         </div>
@@ -54,27 +55,27 @@ const ViewClient: React.FC = observer(() => {
   }, [initialValues, t]);
 
   return (
-    <div className={styles.viewClient}>
+    <div className={styles.viewUser}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
         {`${initialValues?.firstName || ''} ${initialValues?.lastName || ''}`}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
-          { label: t('clients.clients'), url: '/clients' },
+          { label: t('clients.clients'), url: '/users' },
           {
             label: `${initialValues?.id}`,
-            url: `/clients/${initialValues?.id}`,
+            url: `/users/${initialValues?.id}`,
           },
         ]}
       />
-      <div className={styles.client}>
+      <div className={styles.user}>
         <a
           className={classNames(
             'heading heading-4 heading-primary',
             styles.back
           )}
-          onClick={() => navigate('/clients')}
+          onClick={() => navigate('/users')}
         >
           <ChevronLeft />
           {t('actions.goBack')}
@@ -82,11 +83,11 @@ const ViewClient: React.FC = observer(() => {
         {isLoading ? (
           <ProgressSpinner />
         ) : (
-          <div className={styles.clientInfo}>
+          <div className={styles.userInfo}>
             <h4
               className={classNames(
                 'heading heading-4 heading-primary',
-                styles.clientInfoHeading
+                styles.userInfoHeading
               )}
             >
               {t('forms.overallInfo')}

@@ -11,6 +11,7 @@ export interface IAccount {
   status: UserStatus;
   created_at: Date;
   updated_at: Date;
+  user: IUser | null;
 }
 
 export interface IUserDTO {

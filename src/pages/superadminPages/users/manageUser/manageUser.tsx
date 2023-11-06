@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import styles from './addClient.module.scss';
+import styles from './manageUser.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import AddClientForm from '@/components/forms/addClientForm';
+import ManageUserForm from '@/components/forms/manageUserForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import clientsStore from '@/store/ClientsStore';
+import usersStore from '@/store/UsersStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { PlainClientInfo } from '@/types/user';
+import { PlainUserInfo } from '@/types/user';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 
-const AddClient: React.FC = observer(() => {
+const ManageUser: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
@@ -22,11 +22,11 @@ const AddClient: React.FC = observer(() => {
     data: initialValues,
     isLoading,
     errorMsg,
-  } = useFetch<PlainClientInfo>(
+  } = useFetch<PlainUserInfo>(
     () =>
       id
-        ? clientsStore.getPlainClientInfo(parseInt(id)) // if id is defined, get client info (Update mode)
-        : Promise.resolve({ data: {} as PlainClientInfo, error: '' }), // else, return empty object (Add mode)
+        ? usersStore.getPlainUserInfo(parseInt(id)) // if id is defined, get user info (Update mode)
+        : Promise.resolve({ data: {} as PlainUserInfo, error: '' }), // else, return empty object (Add mode)
     [id]
   );
 
@@ -35,20 +35,20 @@ const AddClient: React.FC = observer(() => {
   }
 
   return (
-    <div className={styles.addClient}>
+    <div className={styles.manageUser}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
         {id && initialValues ? t('actions.editClient') : t('actions.addClient')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
-          { label: t('clients.clients'), url: '/clients' },
+          { label: t('clients.clients'), url: '/users' },
           {
             label:
               id && initialValues
                 ? `${initialValues.id}`
                 : t('actions.addClient'),
-            url: '/clients/add',
+            url: '/users/add',
           },
         ]}
       />
@@ -56,7 +56,7 @@ const AddClient: React.FC = observer(() => {
         {isLoading ? (
           <ProgressSpinner />
         ) : (
-          <AddClientForm
+          <ManageUserForm
             initialValues={id ? initialValues ?? undefined : undefined}
           />
         )}
@@ -65,4 +65,4 @@ const AddClient: React.FC = observer(() => {
   );
 });
 
-export default AddClient;
+export default ManageUser;

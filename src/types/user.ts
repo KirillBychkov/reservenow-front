@@ -1,4 +1,4 @@
-export interface PlainClientInfo {
+export interface PlainUserInfo {
   id?: number;
   firstName: string;
   lastName: string;

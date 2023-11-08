@@ -25,10 +25,7 @@ const FAQPage: React.FC = () => {
               styles.headerText
             )}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            {t('faq.hosToUseAnswer')}
           </p>
         </Flex>
 
@@ -55,12 +52,12 @@ const FAQPage: React.FC = () => {
           />
         }
       >
-        {questions.map(({ question, answer }) => (
+        {questions.map(({ localizationQuestionKey, localizationAnswerKey }) => (
           <AccordionTab
-            key={question}
-            header={<h3 className="heading heading-4">{question}</h3>}
+            key={localizationQuestionKey}
+            header={<h3 className="heading heading-4">{t(localizationQuestionKey)}</h3>}
           >
-            <p className="paragraph paragraph--normal">{answer}</p>
+            <p className="paragraph paragraph--normal">{t(localizationAnswerKey)}</p>
           </AccordionTab>
         ))}
       </Accordion>

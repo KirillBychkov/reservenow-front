@@ -164,6 +164,29 @@
     "entries": "записів"
   },
   "faq": {
-    "howToUse": "Як використовувати ReservNow"
+    "howToUse": "Як використовувати ReservNow",
+    "hosToUseAnswer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "questions": {
+      "first": {
+        "question": "Lorem Ipsum є псевдо- латинський текст використовується у веб - дизайні.",
+        "answer": "Lorem Ipsum є псевдо- латинський текст використовується у веб - дизай. ні, типографіка, верстка, і друку замість англійської підкреслити елементи дизайну над змістом. Це також називається заповнювач ( або наповнювач) текст. Lorem Ipsum є псевдо- латинський текст використовується у веб - дизайні, типографіка, верстка, і друку замість англійської підкреслити елементи дизайну над змістом. Це тLorem Ipsum є псевдо- латинський текст використовується у веб - дизайні, типографіка, верстка, і друку замість англійської підкреслити елементи дизайну над змістом. Це також називається заповнювач ( або наповнювач) текст.акож називається заповнювач ( або наповнювач) текст. "
+      },
+      "second": {
+        "question": "Second question",
+        "answer": "Second answer"
+      },
+      "third": {
+        "question": "Third question",
+        "answer": "Third answer"
+      },
+      "fourth": {
+        "question": "Fourth question",
+        "answer": "Fourth answer"
+      },
+      "fifth": {
+        "question": "Fifth question",
+        "answer": "Fifth answer"
+      }
+    }
   }
 }

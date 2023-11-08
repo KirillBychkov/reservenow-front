@@ -65,7 +65,9 @@
     "enterStatus": "Оберіть статус",
     "clientDescription": "Опис",
     "resultDescription": "Опис",
-    "areYouSure": "Ви впевнені?"
+    "areYouSure": "Ви впевнені?",
+    "enterMessage": "Повідомлення:",
+    "chooseFile": "Файли:"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -144,6 +146,7 @@
     "save": "Зберегти",
     "cancel": "Скасувати",
     "submit": "Підтвердити",
+    "send": "Відправити",
     "close": "Закрити",
     "search": "Пошук",
     "clear": "Очистити",
@@ -162,5 +165,8 @@
     "showed": "Показано",
     "of": "з",
     "entries": "записів"
+  },
+  "contact-us": {
+    "heading": "Зв'яжіться з нами"
   }
 }

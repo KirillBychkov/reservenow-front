@@ -8,11 +8,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-
-    .HeadingButton {
-      margin-top: 4px;
-      gap: 12px;
-    }
+    align-items: center;
   }
 
   .OrganizationsContent {

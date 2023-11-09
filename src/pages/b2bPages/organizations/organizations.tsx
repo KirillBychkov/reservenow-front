@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import styles from './organizations.module.scss';
 import { Plus } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -8,17 +8,25 @@ import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import organizationStore from '@/store/OrganizationsStore';
 import OrganizationList from '@/components/b2bclient/organizations/organizationList';
+import useFetch from '@/hooks/useFetch';
+import { IOrganization } from '@/models/IOrganization';
+import ToastContext from '@/context/toast';
 
 const Organizations: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const isLoading = organizationStore.isLoading;
+  const { showError } = useContext(ToastContext);
 
-  useEffect(() => {
-    organizationStore.getOrganizations();
-  }, []);
+  const {
+    data: organizations,
+    isLoading,
+    errorMsg,
+  } = useFetch<IOrganization[]>(organizationStore.getOrganizations);
+  console.log('organizations', organizations);
 
-  const organizations = organizationStore.organizations;
+  if (errorMsg) {
+    showError(errorMsg);
+  }
 
   return (
     <div className={styles.Organizations}>
@@ -26,11 +34,9 @@ const Organizations: React.FC = observer(() => {
         <h3 className='heading heading-3'>
           {t('organizations.organizations')}
         </h3>
-        <div className={styles.HeadingButton}>
-          <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
-            {t('organizations.add')}
-          </Button>
-        </div>
+        <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
+          {t('organizations.add')}
+        </Button>
       </div>
       {isLoading ? (
         <div
@@ -41,7 +47,7 @@ const Organizations: React.FC = observer(() => {
         >
           <ProgressSpinner />
         </div>
-      ) : organizations && organizations.length ? (
+      ) : organizations?.length ? (
         <div className={styles.OrganizationsContent}>
           <OrganizationList />
         </div>

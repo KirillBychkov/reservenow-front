@@ -69,15 +69,15 @@ $panelFooterPadding: 0.5rem 1rem;
 
 /// Spacing between to accordion panels
 /// @group panel
-$accordionSpacing: 0;
+$accordionSpacing: 15px;
 
 /// Border of an accordion panel header
 /// @group panel
-$accordionHeaderBorder: $panelHeaderBorder;
+$accordionHeaderBorder: 1px solid var(--light-gray-1);
 
 /// Background of an accordion panel header
 /// @group panel
-$accordionHeaderBg: $panelHeaderBg;
+$accordionHeaderBg: var(--surface-a);
 
 /// Text color of an accordion panel header
 /// @group panel
@@ -89,15 +89,15 @@ $accordionHeaderFontWeight: $panelHeaderFontWeight;
 
 /// Padding of an accordion panel header
 /// @group panel
-$accordionHeaderPadding: $panelHeaderPadding;
+$accordionHeaderPadding: 26px 56px 26px 26px;
 
 /// Background of an accordion panel header in hover state
 /// @group panel
-$accordionHeaderHoverBg: #e9ecef;
+$accordionHeaderHoverBg: var(--surface-a);
 
 /// Border of an accordion panel header in hover state
 /// @group panel
-$accordionHeaderHoverBorderColor: $panelHeaderBorder;
+$accordionHeaderHoverBorderColor: var(--indigo-4);
 
 /// Text color of an accordion panel header in hover state
 /// @group panel
@@ -105,11 +105,11 @@ $accordionHeaderTextHoverColor: $textColor;
 
 /// Background of an accordion panel header in expanded state
 /// @group panel
-$accordionHeaderActiveBg: $panelHeaderBg;
+$accordionHeaderActiveBg: var(--surface-a);
 
 /// Border of an accordion panel header in expanded state
 /// @group panel
-$accordionHeaderActiveBorderColor: #dee2e6;
+$accordionHeaderActiveBorderColor: var(--indigo-4);
 
 /// Text color of an accordion panel header in expanded state
 /// @group panel
@@ -117,11 +117,11 @@ $accordionHeaderTextActiveColor: $textColor;
 
 /// Hover background of an accordion panel header in expanded state
 /// @group panel
-$accordionHeaderActiveHoverBg: #e9ecef;
+$accordionHeaderActiveHoverBg: var(--surface-a);
 
 /// Hover border of an accordion panel header in expanded state
 /// @group panel
-$accordionHeaderActiveHoverBorderColor: #dee2e6;
+$accordionHeaderActiveHoverBorderColor: var(--indigo-4);
 
 /// Text color of an accordion panel header in expanded state
 /// @group panel
@@ -129,7 +129,7 @@ $accordionHeaderTextActiveHoverColor: $textColor;
 
 /// Border for a content section of an accordion panel
 /// @group panel
-$accordionContentBorder: $panelContentBorder;
+$accordionContentBorder: 2px solid var(--indigo-4);
 
 /// Background for a content section of an accordion panel
 /// @group panel
@@ -141,7 +141,7 @@ $accordionContentTextColor: $panelContentTextColor;
 
 /// Padding for a content section of an accordion panel
 /// @group panel
-$accordionContentPadding: $panelContentPadding;
+$accordionContentPadding: 0 104px 22px 26px;
 
 /// Border for a parent element containing all the headers of a tabview
 /// @group panel

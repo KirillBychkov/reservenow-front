@@ -1,0 +1,36 @@
+.container {
+  padding-top: 25px;
+  max-width: 56rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.header {
+  padding: 20px;
+  border: 2px solid var(--light-gray-1);
+  background-color: var(--surface-a);
+  border-radius: 15px;
+}
+
+.headerText {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.playerContainer {
+  width: 396px;
+  height: 209px;
+}
+
+.player {
+  width: auto;
+  height: 100%;
+}
+
+.collapseIcon {
+  background-color: var(--primary-color);
+}
+
+.expandIcon {
+  background-color: var(--light-gray-1);
+}

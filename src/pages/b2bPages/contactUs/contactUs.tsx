@@ -1,42 +1,88 @@
 import Flex from "@/components/UI/layout/flex";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FileUpload } from "primereact/fileupload";
+import { FileUpload as PrFileUpload } from "primereact/fileupload";
 import styles from "./contactUs.module.scss";
 import Button from "@/components/UI/buttons/button";
 import { useTranslation } from "react-i18next";
-import { RefObject, useRef, useState } from "react";
+import { FileUpload } from "@/components/UI/fileUpload/FileUpload";
+import { useRef, useState } from "react";
+import { useFormik } from "formik";
+import { ICreateSupportDTO } from "@/models/requests/SupportRequests";
+import { Cross } from "@blueprintjs/icons";
 
 const ContactUs = () => {
   const { t } = useTranslation();
-  const fileUploadRef = useRef<FileUpload>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const fileUploadRef = useRef<PrFileUpload>(null);
+  const formik = useFormik<ICreateSupportDTO>({
+    initialValues: {
+      client_description: "",
+    },
+    onSubmit: (values) => {
+      const { client_description } = values;
+      const file = fileUploadRef.current?.getFiles()[0];
+
+      // TODO Logic to create support record and image for it
+
+      clearForm();
+    },
+  });
+
+  const handlerClearFile = () => {
+    fileUploadRef.current?.clear();
+    setFileName(null);
+  };
+
+  const clearForm = () => {
+    formik.resetForm();
+    handlerClearFile();
+  };
+
+  const handleFileSelect = (file: File) => {
+    setFileName(file.name);
+  };
 
   return (
     <Flex className={styles.page} options={{ direction: "column", gap: 2.375 }}>
-      {/* TODO: localization */}
       <h3 className="heading heading-3">{t("contact-us.heading")}</h3>
 
-      <form
-        className={styles.formContainer}
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          console.log(fileUploadRef.current?.getFiles()[0]);
-        }}
-      >
+      <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
         <div className={styles.formBody}>
           <h4 className="heading heading-4 heading-primary">
             {t("forms.overallInfo")}
           </h4>
 
-          <Flex options={{ direction: "column", gap: 0.25 }}>
-            <h6 className="heading heading-6">{t("forms.enterMessage")}</h6>
-            <InputTextarea
-              autoResize
-              pt={{ root: { className: styles.message } }}
-              placeholder="Введіть опис"
-            />
-            
-            <CustomFileUpload fileUploadRef={fileUploadRef} />
+          <Flex options={{ direction: "column", gap: 1 }}>
+            <Flex options={{ direction: "column", gap: 0.25 }}>
+              <h6 className="heading heading-6">{t("forms.enterMessage")}</h6>
+              <InputTextarea
+                name="client_description"
+                value={formik.values.client_description}
+                onChange={formik.handleChange}
+                autoResize
+                rows={8}
+                placeholder={t('forms.enterDescription')}
+              />
+            </Flex>
+
+            <Flex options={{ direction: "column", gap: 0.25 }}>
+              <h6 className="heading heading-6">{t("forms.chooseFile")}</h6>
+              <FileUpload
+                fileUploadRef={fileUploadRef}
+                buttonText={t("actions.addImage")}
+                onSelect={handleFileSelect}
+              />
+              <div className={styles.fileContainer}>
+                <p className="paragraph paragraph--normal">
+                  {fileName || t("actions.addImage")}
+                </p>
+                <Cross
+                  color="#7961db"
+                  className={styles.cross}
+                  onClick={handlerClearFile}
+                />
+              </div>
+            </Flex>
           </Flex>
         </div>
 
@@ -46,74 +92,6 @@ const ContactUs = () => {
           </Button>
         </div>
       </form>
-    </Flex>
-  );
-};
-
-type Props = {
-  fileUploadRef: RefObject<FileUpload>;
-};
-
-const CustomFileUpload = ({ fileUploadRef }: Props) => {
-  const [fileName, setFileName] = useState<string | null>(null);
-
-  const fileClear = () => {
-    fileUploadRef.current?.clear();
-    setFileName(null);
-  };
-
-  const headerTemplate = () => null;
-
-  const emptyTemplate = () => {
-    return (
-      <Flex
-        options={{
-          justify: "center",
-          direction: "column",
-          align: "center",
-          gap: 1,
-        }}
-      >
-        <p>Перетягніть файл сюди або натисніть «Додати файл».</p>
-        <Button outlined>
-          <input
-            id="file"
-            type="file"
-            onChange={(e) => {
-              const file = e.target.files![0];
-              fileUploadRef.current?.setFiles([file]);
-              setFileName(file.name);
-            }}
-            hidden
-          />
-          <label style={{ height: "100%" }} htmlFor="file">
-            Choose File
-          </label>
-        </Button>
-      </Flex>
-    );
-  };
-
-  return (
-    <Flex options={{ direction: "column", gap: 0.25 }}>
-      <h6 className="heading heading-6">Виберіть файл</h6>
-      <FileUpload
-        headerTemplate={headerTemplate}
-        emptyTemplate={emptyTemplate}
-        itemTemplate={emptyTemplate}
-        ref={fileUploadRef}
-      />
-
-      <div
-        style={{
-          width: "286px",
-          height: "40px",
-          backgroundColor: "#F9F9FC",
-        }}
-      >
-        {fileName ? fileName : "Виберіть файл"}
-        <Button onClick={fileClear}>Close</Button>
-      </div>
     </Flex>
   );
 };

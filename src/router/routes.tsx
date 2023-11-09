@@ -14,6 +14,7 @@ import OpenRequest from '@/pages/superadminPages/requests/openRequest/openReques
 import Personnel from '@/pages/b2bPages/personnel/personnel';
 import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
 import ContactUs from '@/pages/b2bPages/contactUs/contactUs';
+import FAQ from '@/pages/b2bPages/faq/faq';
 
 interface IRoute {
   path: string;
@@ -116,5 +117,11 @@ export const routes: IRoute[] = [
     element: <ContactUs />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
-  }
+  },
+  {
+    path: '/faq',
+    element: <FAQ />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
 ];

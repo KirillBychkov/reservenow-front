@@ -69,7 +69,6 @@ const ContactUs = () => {
               <h6 className="heading heading-6">{t("forms.chooseFile")}</h6>
               <FileUpload
                 fileUploadRef={fileUploadRef}
-                buttonText={t("actions.addImage")}
                 onSelect={handleFileSelect}
               />
               <div className={styles.fileContainer}>

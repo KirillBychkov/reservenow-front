@@ -3,7 +3,6 @@ import {
   FileUpload as PrFileUpload,
 } from "primereact/fileupload";
 import { ChangeEvent, ReactNode, RefObject } from "react";
-import Flex from "../layout/flex";
 import Button from "../buttons/button";
 import styles from "./FileUpload.module.scss";
 import { useTranslation } from "react-i18next";
@@ -25,7 +24,7 @@ export const FileUpload = ({
   buttonText,
   onSelect,
 }: Props) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleFileSelectByButton = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
@@ -48,20 +47,13 @@ export const FileUpload = ({
         />
         <label className={styles.label} htmlFor="file">
           {emptyTemplate || (
-            <Flex
-              options={{
-                justify: "center",
-                direction: "column",
-                align: "center",
-                gap: 1,
-              }}
-            >
+            <>
               <div className={styles.clip}></div>
-              <p>{t('contact-us.howToAddFile')}</p>
+              <p>{t("contact-us.howToAddFile")}</p>
               <Button type="button" className={styles.btn} outlined>
-                {buttonText || t('contact-us.addFile')}
+                {buttonText || t("contact-us.addFile")}
               </Button>
-            </Flex>
+            </>
           )}
         </label>
       </>

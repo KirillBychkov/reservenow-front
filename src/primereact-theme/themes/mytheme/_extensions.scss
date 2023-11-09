@@ -108,3 +108,37 @@
 .p-datatable .p-sortable-column .p-sortable-column-icon {
   margin-left: 0;
 }
+
+// Accordion custom styles
+.p-accordion .p-accordion-tab .p-accordion-header .p-accordion-header-link{
+  border-radius: 14px;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  right: 26px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  transition: background-color 0.2s
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link:hover .p-accordion-toggle-icon {
+  background-color: var(--primary-color);
+}
+
+.p-accordion .p-accordion-tab-active .p-accordion-header .p-accordion-header-link {
+  border-width: 2px;
+  border-bottom: none;
+}
+
+.p-accordion .p-accordion-content {
+  border-top: none;
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+  box-shadow: none;
+}

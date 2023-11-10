@@ -1,4 +1,4 @@
-import $api, { BASE_API_URL } from '@/http';
+import $api from '@/http';
 import { IAuthResponse } from '@/models/response/AuthResponse';
 import { AxiosResponse } from 'axios';
 
@@ -11,18 +11,18 @@ export default class AuthService {
   static async login(
     user: SigninUserData
   ): Promise<AxiosResponse<IAuthResponse>> {
-    return $api.post(`${BASE_API_URL}/auth/login`, user);
+    return $api.post('/auth/login', user);
   }
 
   static async getUser(): Promise<AxiosResponse> {
-    return $api.get(`${BASE_API_URL}/auth/user`);
+    return $api.get('/auth/user');
   }
 
   static async verify(): Promise<AxiosResponse> {
-    return $api.get(`${BASE_API_URL}/auth/verify`);
+    return $api.get('/auth/verify');
   }
 
   static async logout(): Promise<void> {
-    return $api.delete(`${BASE_API_URL}/auth/logout`);
+    return $api.delete('/auth/logout');
   }
 }

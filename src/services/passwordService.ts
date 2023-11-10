@@ -1,4 +1,4 @@
-import $api, { BASE_API_URL } from '@/http';
+import $api from '@/http';
 import { AxiosResponse } from 'axios';
 
 export default class PasswordService {
@@ -16,7 +16,7 @@ export default class PasswordService {
     };
 
     return $api.patch(
-      `${BASE_API_URL}/password/confirm`,
+      '/password/confirm',
       {
         new_password,
       },
@@ -28,14 +28,14 @@ export default class PasswordService {
     oldPassword: string,
     newPassword: string
   ): Promise<AxiosResponse> {
-    return $api.put(`${BASE_API_URL}/password/change`, {
+    return $api.put('/password/change', {
       oldPassword,
       newPassword,
     });
   }
 
   static async resetPassword(email: string): Promise<AxiosResponse> {
-    return $api.post(`${BASE_API_URL}/password/reset`, {
+    return $api.post('/password/reset', {
       email,
     });
   }

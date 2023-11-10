@@ -14,6 +14,7 @@ import OpenRequest from '@/pages/superadminPages/requests/openRequest/openReques
 import Personnel from '@/pages/b2bPages/personnel/personnel';
 import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
 import FAQ from '@/pages/b2bPages/faq/faq';
+import AddObject from '@/pages/b2bPages/objects/addObject/addObject';
 
 interface IRoute {
   path: string;
@@ -97,6 +98,20 @@ export const routes: IRoute[] = [
     element: <EditOrganization />,
     isProtected: true,
     params: { id: 'id' },
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/organizations/:id/objects/add',
+    element: <AddObject />,
+    isProtected: true,
+    params: { id: 'id' },
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/organizations/:id/objects/:objectId/edit',
+    element: <></>,
+    isProtected: true,
+    params: { id: 'id', objectId: 'objectId' },
     allowedRoles: [UserRole.UserFull],
   },
   {

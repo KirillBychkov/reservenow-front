@@ -168,14 +168,13 @@ const AddOrganizationForm: React.FC<Props> = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.Form}>
-        <MainInfo t={t} formik={formik} />
-        <SecondaryInfo t={t} formik={formik} />
+        <MainInfo formik={formik} />
+        <SecondaryInfo formik={formik} />
         {/* FileUpload */}
         <div className={styles['Form-UploadFile']}>
           <FormFileUpload />
         </div>
         <WorkingHours
-          t={t}
           workingHours={workingHours}
           handleAllHoursChange={handleAllHoursChange}
           handleDaySwitchChange={handleDaySwitchChange}

@@ -30,7 +30,10 @@ const RightSideComponent: React.FC<RightSideComponentProps> = ({
       <div className={styles.BottomTable}>
         <div className={styles.TableHeader}>
           <h4 className='heading heading-4'>{heading}</h4>
-          <Button onClick={() => navigate('add')} icon={<Plus color='white' />}>
+          <Button
+            onClick={() => navigate('objects/add')}
+            icon={<Plus color='white' />}
+          >
             {buttonText}
           </Button>
         </div>

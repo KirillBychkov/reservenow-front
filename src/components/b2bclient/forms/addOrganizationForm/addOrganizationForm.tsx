@@ -42,13 +42,12 @@ export interface IAddOrganizationInfo {
 }
 
 interface Props {}
+const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
 
 const AddOrganizationForm: React.FC<Props> = () => {
   const { t } = useTranslation();
 
   const [allHoursEnabled, setAllHoursEnabled] = useState<boolean>(false);
-
-  const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
 
   const [workingHours, setWorkingHours] = useState(initialWorkingHours);
 
@@ -81,6 +80,8 @@ const AddOrganizationForm: React.FC<Props> = () => {
   };
 
   const handleDaySwitchChange = (e: InputSwitchChangeEvent, index: number) => {
+    console.log('e', e);
+
     const updatedWorkingHours = [...workingHours];
     updatedWorkingHours[index] = {
       ...updatedWorkingHours[index],
@@ -154,12 +155,16 @@ const AddOrganizationForm: React.FC<Props> = () => {
     initialValues: formData,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      console.log('values', values);
+
       const { workingHours, ...otherValues } = values;
 
       const formattedValues = {
         ...otherValues,
         ...workingHours,
       };
+      console.log('formattedValues', formattedValues);
+
       await organizationStore.addOrganization(formattedValues);
       formik.resetForm();
     },

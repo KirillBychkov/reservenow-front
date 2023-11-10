@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styles from './viewOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import organisationStore from '@/store/OrganizationsStore';
 import organizationStore from '@/store/OrganizationsStore';
 import Button from '@/components/UI/buttons/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -19,6 +18,7 @@ import { IObjects } from '@/models/response/GetObjectsResponse';
 import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
 import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
 import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
+import { IOrganization } from '@/models/IOrganization';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -30,11 +30,9 @@ const ViewOrganization: React.FC = observer(() => {
     objectsStore.filters
   );
 
-  useEffect(() => {
-    organisationStore.getOrganizations();
-  }, []);
-  const organization = organizationStore.organizations?.find(
-    (org) => org.id === (id ? parseInt(id, 10) : undefined)
+  const { data: organization } = useFetch<IOrganization>(
+    () => organizationStore.getOrganizationById(parseInt(id || '0')),
+    [id]
   );
 
   const {
@@ -45,6 +43,9 @@ const ViewOrganization: React.FC = observer(() => {
     () => objectsStore.fetchObjects({ limit, skip }),
     [limit, skip]
   );
+
+  console.log('objects', objects);
+  console.log('organization', organization);
 
   if (!organization || !objects) {
     return <ProgressSpinner />;

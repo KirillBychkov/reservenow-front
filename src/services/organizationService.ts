@@ -11,7 +11,7 @@ export default class OrganizationService {
 
   static async addOrganization(
     organization: ICreateOrganizationDTO
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<IOrganization>> {
     const response = await $api.post(
       `${BASE_API_URL}/organization`,
       organization
@@ -19,12 +19,13 @@ export default class OrganizationService {
     return response.data;
   }
 
-  static async getOrganizationById(id: number): Promise<any> {
-    const response = await $api.get(`${BASE_API_URL}/organization/${id}`);
-    return response.data;
+  static async getOrganizationById(
+    id: number
+  ): Promise<AxiosResponse<IOrganization>> {
+    return $api.get(`${BASE_API_URL}/organization/${id}`);
   }
 
-  static async uploadImage(id: number, file: any): Promise<any> {
+  static async uploadImage(id: number, file: any): Promise<AxiosResponse> {
     const formData = new FormData();
     formData.append('image', file);
     const reponse = await $api.post(
@@ -42,11 +43,7 @@ export default class OrganizationService {
   static async editOrganization(
     id: number,
     organization: ICreateOrganizationDTO
-  ): Promise<any> {
-    const response = await $api.patch(
-      `${BASE_API_URL}/organization/${id}`,
-      organization
-    );
-    return response.data;
+  ): Promise<AxiosResponse<IOrganization>> {
+    return $api.patch(`${BASE_API_URL}/organization/${id}`, organization);
   }
 }

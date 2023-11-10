@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import styles from './organizationCard.module.scss';
 import Button from '@/components/UI/buttons/button';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IOrganization } from '@/models/IOrganization';
 import Logo from '@/assets/footballField.png';
 
@@ -13,6 +13,7 @@ interface OrganizationCardProps {
 
 const OrganizationCard: React.FC<OrganizationCardProps> = observer(
   ({ organization }) => {
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const { name, description, photo } = organization;
     return (
@@ -28,15 +29,13 @@ const OrganizationCard: React.FC<OrganizationCardProps> = observer(
             <div className={styles.CardDescription}>
               <p>{description}</p>
             </div>
-            <Link to={`/organizations/${organization.id}`}>
-              <Button
-                className={styles.CardButton}
-                type='button'
-                outlined={true}
-              >
-                {t('actions.open')}
-              </Button>
-            </Link>
+            <Button
+              type='button'
+              outlined={true}
+              onClick={() => navigate(`/organizations/${organization.id}`)}
+            >
+              {t('actions.open')}
+            </Button>
           </div>
         </div>
       </div>

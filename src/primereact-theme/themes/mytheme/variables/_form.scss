@@ -4,7 +4,7 @@ $inputPadding: 1rem 1rem;
 
 /// Background of an input field
 /// @group form
-$inputBg: white;
+$inputBg: var(--neutral-gray);
 
 /// Font size of an input field
 /// @group form
@@ -20,7 +20,7 @@ $inputIconColor: $textColor;
 
 /// Border of an input field
 /// @group form
-$inputBorder: 1px solid #ABB3BF;
+$inputBorder: 1px solid #E0E2E7;
 
 /// Border of an input field in hover state
 /// @group form

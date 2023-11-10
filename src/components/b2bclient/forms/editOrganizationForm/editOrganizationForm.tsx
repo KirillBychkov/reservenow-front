@@ -51,6 +51,8 @@ interface Props {
 }
 
 const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
+  console.log('initialValues', initialValues);
+
   const { t } = useTranslation();
   const idParam = useParams().id;
   const id = parseInt(idParam!, 10);

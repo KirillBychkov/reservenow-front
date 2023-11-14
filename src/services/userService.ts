@@ -1,4 +1,4 @@
-import $api, { BASE_API_URL } from '@/http';
+import $api from '@/http';
 import { IFilters } from '@/models/IFilters';
 import { IUser } from '@/models/IUser';
 import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
@@ -10,14 +10,14 @@ export default class UserService {
     filters: Omit<IFilters, 'total'>
   ): Promise<AxiosResponse<IUsers>> {
     return $api.get(
-      `${BASE_API_URL}/users?limit=${filters.limit}&skip=${filters.skip}${
+      `/users?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
       }${filters.sort ? `&sort=${filters.sort}` : ''}`
     );
   }
 
   static async createUser(user: ICreateUserDTO): Promise<AxiosResponse> {
-    return $api.post(`${BASE_API_URL}/users`, user);
+    return $api.post('/users', user);
   }
 
   static async exportUsers(
@@ -26,22 +26,22 @@ export default class UserService {
     search?: string
   ): Promise<AxiosResponse> {
     return $api.get(
-      `${BASE_API_URL}/users/export?limit=${limit}&skip=${skip}&search=${search}`
+      `/users/export?limit=${limit}&skip=${skip}&search=${search}`
     );
   }
 
   static async getUserById(id: number): Promise<AxiosResponse<IUser>> {
-    return $api.get(`${BASE_API_URL}/users/${id}`);
+    return $api.get(`/users/${id}`);
   }
 
   static async updateUser(
     id: number,
     user: IUpdateUserDTO
   ): Promise<AxiosResponse> {
-    return $api.patch(`${BASE_API_URL}/users/${id}`, user);
+    return $api.patch(`/users/${id}`, user);
   }
 
   static async deleteUser(id: number): Promise<AxiosResponse> {
-    return $api.delete(`${BASE_API_URL}/users/${id}`);
+    return $api.delete(`/users/${id}`);
   }
 }

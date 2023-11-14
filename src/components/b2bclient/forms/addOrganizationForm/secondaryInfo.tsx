@@ -13,7 +13,7 @@ export const SecondaryInfo: React.FC<
   const { t } = useTranslation();
 
   return (
-    <div className={styles['Form-SecondaryInfo']}>
+    <div className={styles.section}>
       <h4 className='heading heading-4 '>{t('forms.info')}</h4>
 
       <div>

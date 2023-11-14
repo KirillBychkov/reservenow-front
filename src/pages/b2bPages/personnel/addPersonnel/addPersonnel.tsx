@@ -33,17 +33,14 @@ const AddPersonnel: React.FC = () => {
   return (
     <div className={styles.addPersonnel}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {/*id && initialValues ? t('actions.editClient') :*/ t('personnel.add')}
+        {t('personnel.add')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
           { label: t('personnel.personnel'), url: '/personnel' },
           {
-            label:
-              /*id && initialValues
-                ? `${initialValues.id}`
-                :*/ t('personnel.add'),
+            label: t('personnel.add'),
             url: '/personnel/add',
           },
         ]}

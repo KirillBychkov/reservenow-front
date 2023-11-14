@@ -11,7 +11,7 @@ export const MainInfo: React.FC<CustomFormikProps<IAddOrganizationInfo>> = ({
   const { t } = useTranslation();
 
   return (
-    <div className={styles['Form-MainInfo']}>
+    <div className={styles.section}>
       <h4 className='heading heading-4 heading-primary'>
         {t('forms.overallInfo')}
       </h4>

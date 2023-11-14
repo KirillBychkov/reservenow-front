@@ -31,6 +31,7 @@
     "clients": "Клієнти",
     "search": "Пошук",
     "add": "Додати клієнта",
+    "edit": "Редагувати клієнта",
     "clear": "Очистити",
     "export": "Експорт",
     "null": "Наразі немає клієнтів"
@@ -67,7 +68,11 @@
     "resultDescription": "Опис",
     "areYouSure": "Ви впевнені?",
     "enterMessage": "Повідомлення:",
-    "chooseFile": "Файли:"
+    "chooseFile": "Файли:",
+    "price": "Ціна",
+    "enterPrice": "Введіть ціну",
+    "name": "Назва",
+    "enterName": "Введіть назву"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -84,9 +89,16 @@
   "objects": {
     "objects": "Об'єкти",
     "id": "Номер",
-    "name": "Назва об'єкту",
     "sportType": "Вид спорту",
-    "add": "Додати об'єкт"
+    "add": "Додати об'єкт",
+    "name": "Назва об'єкту",
+    "enterName": "Введіть назву об'єкту",
+    "description": "Опис",
+    "enterDescription": "Введіть опис об'єкту",
+    "price": "Ціна",
+    "enterPrice": "Введіть ціну",
+    "image": "Зображення об'єкту",
+    "null": "Наразі немає об'єктів"
   },
   "addOrganizationForm": {
     "enterName": "Введіть тут назву організації. . .",
@@ -156,8 +168,6 @@
     "signout": "Вийти",
     "back": "Назад",
     "goBack": "Повернутися назад",
-    "addClient": "Додати клієнта",
-    "editClient": "Редагувати клієнта",
     "addImage": "Додати зображення",
     "chooseOption": "Виберіть варіант"
   },

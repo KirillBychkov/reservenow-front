@@ -41,17 +41,37 @@ export interface IAddOrganizationInfo {
   };
 }
 
-interface Props {}
 const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
+const dropdownOptions = generateDropdownOptions();
+const formData: IAddOrganizationInfo = {
+  name: '',
+  description: '',
+  phone: '',
+  address: '',
+  workingHours: {
+    monday_start_hours: 0,
+    monday_end_hours: 0,
+    tuesday_start_hours: 0,
+    tuesday_end_hours: 0,
+    wednesday_start_hours: 0,
+    wednesday_end_hours: 0,
+    thursday_start_hours: 0,
+    thursday_end_hours: 0,
+    friday_start_hours: 0,
+    friday_end_hours: 0,
+    saturday_start_hours: 0,
+    saturday_end_hours: 0,
+    sunday_start_hours: 0,
+    sunday_end_hours: 0,
+  },
+};
 
-const AddOrganizationForm: React.FC<Props> = () => {
+const AddOrganizationForm: React.FC = () => {
   const { t } = useTranslation();
 
   const [allHoursEnabled, setAllHoursEnabled] = useState<boolean>(false);
 
   const [workingHours, setWorkingHours] = useState(initialWorkingHours);
-
-  const dropdownOptions = generateDropdownOptions();
 
   const handleClearForm = () => {
     formik.resetForm();
@@ -128,29 +148,6 @@ const AddOrganizationForm: React.FC<Props> = () => {
 
   const validationSchema = Yup.object({});
 
-  const formData: IAddOrganizationInfo = {
-    name: '',
-    description: '',
-    phone: '',
-    address: '',
-    workingHours: {
-      monday_start_hours: 0,
-      monday_end_hours: 0,
-      tuesday_start_hours: 0,
-      tuesday_end_hours: 0,
-      wednesday_start_hours: 0,
-      wednesday_end_hours: 0,
-      thursday_start_hours: 0,
-      thursday_end_hours: 0,
-      friday_start_hours: 0,
-      friday_end_hours: 0,
-      saturday_start_hours: 0,
-      saturday_end_hours: 0,
-      sunday_start_hours: 0,
-      sunday_end_hours: 0,
-    },
-  };
-
   const formik = useFormik({
     initialValues: formData,
     validationSchema: validationSchema,
@@ -171,38 +168,36 @@ const AddOrganizationForm: React.FC<Props> = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className={styles.Form}>
-        <MainInfo formik={formik} />
-        <SecondaryInfo formik={formik} />
-        {/* FileUpload */}
-        <div className={styles['Form-UploadFile']}>
-          <FormFileUpload />
-        </div>
-        <WorkingHours
-          workingHours={workingHours}
-          handleAllHoursChange={handleAllHoursChange}
-          handleDaySwitchChange={handleDaySwitchChange}
-          handleDropdown1Change={handleDropdown1Change}
-          handleDropdown2Change={handleDropdown2Change}
-          allHoursEnabled={allHoursEnabled}
-          dropdownOptions={dropdownOptions}
-        />
+    <form onSubmit={formik.handleSubmit} className={styles.Form}>
+      <MainInfo formik={formik} />
+      <SecondaryInfo formik={formik} />
+      {/* FileUpload */}
+      <div className={styles['Form-UploadFile']}>
+        <FormFileUpload />
+      </div>
+      <WorkingHours
+        workingHours={workingHours}
+        handleAllHoursChange={handleAllHoursChange}
+        handleDaySwitchChange={handleDaySwitchChange}
+        handleDropdown1Change={handleDropdown1Change}
+        handleDropdown2Change={handleDropdown2Change}
+        allHoursEnabled={allHoursEnabled}
+        dropdownOptions={dropdownOptions}
+      />
 
-        {/* Buttons */}
-        <div className={styles.Controls}>
-          <Button
-            severity='danger'
-            fill
-            className={styles.Button}
-            onClick={handleClearForm}
-          >
-            {t('actions.cancel')}
-          </Button>
-          <Button type='submit' fill className={styles.Button}>
-            {t('organizations.add')}
-          </Button>
-        </div>
+      {/* Buttons */}
+      <div className={styles.Controls}>
+        <Button
+          severity='danger'
+          fill
+          className={styles.Button}
+          onClick={handleClearForm}
+        >
+          {t('actions.cancel')}
+        </Button>
+        <Button type='submit' fill className={styles.Button}>
+          {t('organizations.add')}
+        </Button>
       </div>
     </form>
   );

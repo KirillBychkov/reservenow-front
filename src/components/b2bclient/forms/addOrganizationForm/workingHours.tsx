@@ -1,6 +1,7 @@
 import styles from './addOrganizationForm.module.scss';
 import CustomDropdown from '@/components/UI/dropdown/customDropdown';
 import { getDayLabel } from '@/utils/formHelpers/formHelpers';
+import classNames from 'classnames';
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
 import { useTranslation } from 'react-i18next';
 
@@ -41,7 +42,7 @@ export const WorkingHours: React.FC<WorkingHoursProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className={styles['Form-WorkingHours']}>
+    <div className={classNames(styles.section, styles['Form-WorkingHours'])}>
       <div className={styles['WorkingHours-Row']}>
         <div className={styles['InputSwitch-Container']}>
           <h4 className='heading heading-4'>{t('organizations.workHours')}</h4>

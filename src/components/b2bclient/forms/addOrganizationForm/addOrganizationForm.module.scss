@@ -24,21 +24,11 @@ $common-box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
   box-shadow: $common-box-shadow;
 }
 
-.Form-MainInfo {
-  @include form-section;
-}
-
-.Form-SecondaryInfo {
-  @include form-section;
-}
-
-.Form-UploadFile {
+.section {
   @include form-section;
 }
 
 .Form-WorkingHours {
-  @include form-section;
-
   & .InputSwitch-Label {
     display: flex;
     flex: 1 0 0;

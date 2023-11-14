@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import { useParams } from 'react-router-dom';
+import AddObjectForm from '@/components/b2bclient/forms/addObjectForm/addObjectForm';
 
 const AddObject: React.FC = () => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const AddObject: React.FC = () => {
         ]}
       />
       <div className={styles.formContainer}>
-        <h1>addObject</h1>
+        <AddObjectForm />
       </div>
     </div>
   );

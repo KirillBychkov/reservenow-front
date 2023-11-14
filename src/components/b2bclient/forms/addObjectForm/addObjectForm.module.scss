@@ -1,0 +1,8 @@
+@use '../addOrganizationForm/addOrganizationForm.module.scss' as
+  addOrganizationForm;
+
+.form {
+  &Section {
+    @include addOrganizationForm.form-section;
+  }
+}

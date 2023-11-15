@@ -30,11 +30,6 @@ const ManageEquipment = observer(() => {
   );
   const isEditingMode = id && initialValues;
 
-  const { data } = useFetch<IEquipment[]>(() => equipmentStore.getEquipment());
-
-  console.log(data);
-  
-
   if (errorMsg) {
     showError(errorMsg);
   }

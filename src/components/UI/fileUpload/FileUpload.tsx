@@ -6,6 +6,7 @@ import { ChangeEvent, ReactNode, RefObject } from "react";
 import Button from "../buttons/button";
 import styles from "./FileUpload.module.scss";
 import { useTranslation } from "react-i18next";
+import { Media } from "@blueprintjs/icons";
 
 type Props = {
   fileUploadRef: RefObject<PrFileUpload>;
@@ -48,7 +49,9 @@ export const FileUpload = ({
         <label className={styles.label} htmlFor="file">
           {emptyTemplate || (
             <>
-              <div className={styles.clip}></div>
+              <div className={styles.icon}>
+                <Media color='white' size={22}/>
+              </div>
               <p>{t("contact-us.howToAddFile")}</p>
               <Button type="button" className={styles.btn} outlined>
                 {buttonText || t("contact-us.addFile")}

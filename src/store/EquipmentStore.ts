@@ -14,7 +14,7 @@ class EquipmentStore {
     makeAutoObservable(this);
   }
 
-  seqEquipment(equipment: IEquipment[]) {
+  setEquipment(equipment: IEquipment[]) {
     this.equipment = equipment;
   }
 
@@ -40,7 +40,7 @@ class EquipmentStore {
         return { data: [], error: "No equipment found" };
       }
 
-      this.seqEquipment(equipment);
+      this.setEquipment(equipment);
       return { data: equipment, error: "" };
     } catch {
       return { data: [], error: "An error occurred while fetching equipment" };

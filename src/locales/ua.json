@@ -67,7 +67,10 @@
     "resultDescription": "Опис",
     "areYouSure": "Ви впевнені?",
     "enterMessage": "Повідомлення:",
-    "chooseFile": "Файли:"
+    "chooseFile": "Файли:",
+    "equipmentName": "Назва товару",
+    "enterEquipmentName": "Введіть назву товару",
+    "equipmentPrice": "Ціна"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -108,7 +111,8 @@
     "email": "Невірний формат електронної пошти",
     "passwordLength": "Пароль повинен містити не менше 6 символів",
     "passwordMatch": "Невірний пароль",
-    "phone": "Невірний формат номеру телефону"
+    "phone": "Невірний формат номеру телефону",
+    "positiveOnly": "Лише додаткові значення"
   },
   "dates": {
     "date": "Дата",
@@ -158,6 +162,8 @@
     "goBack": "Повернутися назад",
     "addClient": "Додати клієнта",
     "editClient": "Редагувати клієнта",
+    "editEquipment": "Редагувати товар",
+    "addEquipment": "Додати товар",
     "addImage": "Додати зображення",
     "chooseOption": "Виберіть варіант"
   },
@@ -196,5 +202,9 @@
         "answer": "Fifth answer"
       }
     }
+  },
+  "equipment": {
+    "equipment": "Товари",
+    "empty": "Нажаль ви ще не створили жодного товара"
   }
 }

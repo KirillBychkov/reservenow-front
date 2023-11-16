@@ -63,7 +63,7 @@ const useRoleBasedMenu = () => {
         text: 'sidebar.b2bsidebar.organizations',
       },
       {
-        page: '/products',
+        page: '/equipment',
         icon: <Compressed />,
         text: 'sidebar.b2bsidebar.products',
       },

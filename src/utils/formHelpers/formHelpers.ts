@@ -33,18 +33,17 @@ export const getDayKey = (index: number, timing: 'start' | 'end') => {
   const timingKey = timing === 'start' ? 'start_hours' : 'end_hours';
   return `${day}_${timingKey}`;
 };
+const numDaysInWeek = 7;
 
-export const initializeWorkingHours = (numDays: number) => {
+export const initializeWorkingHours = () => {
   const defaultHours = {
     enabled: false,
     dropdown1Value: 0,
     dropdown2Value: 0,
   };
 
-  return Array.from({ length: numDays }, () => ({ ...defaultHours }));
+  return Array.from({ length: numDaysInWeek }, () => ({ ...defaultHours }));
 };
-
-export const numDaysInWeek = 7;
 
 export const getDayLabel = (index: number) => {
   const dayIndex = index % 7;

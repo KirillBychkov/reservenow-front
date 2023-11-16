@@ -10,7 +10,6 @@ import {
   getDayKey,
   getUpdatedWorkingHoursForAllDays,
   initializeWorkingHours,
-  numDaysInWeek,
 } from '@/utils/formHelpers/formHelpers';
 import organizationStore from '@/store/OrganizationsStore';
 import { MainInfo } from './mainInfo';
@@ -41,7 +40,7 @@ export interface IAddOrganizationInfo {
   };
 }
 
-const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
+const initialWorkingHours = initializeWorkingHours();
 const dropdownOptions = generateDropdownOptions();
 const formData: IAddOrganizationInfo = {
   name: '',
@@ -78,6 +77,7 @@ const AddOrganizationForm: React.FC = () => {
     setWorkingHours(initialWorkingHours);
     setAllHoursEnabled(false);
   };
+
   const handleAllHoursChange = (e: InputSwitchChangeEvent) => {
     const updatedWorkingHours = workingHours.map((day) => ({
       ...day,
@@ -85,6 +85,8 @@ const AddOrganizationForm: React.FC = () => {
       dropdown1Value: e.value ? 0 : day.dropdown1Value,
       dropdown2Value: e.value ? 23 : day.dropdown2Value,
     }));
+
+    console.log('updatedWorkingHours', updatedWorkingHours);
 
     const updatedFormValues = {
       ...formik.values,

@@ -13,7 +13,6 @@ import {
   getDayKey,
   getUpdatedWorkingHoursForAllDays,
   initializeWorkingHours,
-  numDaysInWeek,
 } from '@/utils/formHelpers/formHelpers';
 import organizationStore from '@/store/OrganizationsStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -56,7 +55,7 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
   const idParam = useParams().id;
   const id = parseInt(idParam!, 10);
-  const initialWorkingHours = initializeWorkingHours(numDaysInWeek);
+  const initialWorkingHours = initializeWorkingHours();
 
   const [allHoursEnabled, setAllHoursEnabled] = useState<boolean>(false);
 
@@ -71,7 +70,7 @@ const EditOrganizationForm: React.FC<Props> = ({ initialValues }) => {
   };
   const handleAllHoursChange = (e: InputSwitchChangeEvent) => {
     const updatedWorkingHours = workingHours.map((day) => ({
-      ...day,
+      // ...day,
       enabled: !!e.value,
       dropdown1Value: e.value ? 0 : day.dropdown1Value,
       dropdown2Value: e.value ? 23 : day.dropdown2Value,

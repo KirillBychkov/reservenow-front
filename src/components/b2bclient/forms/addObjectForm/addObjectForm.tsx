@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import styles from './addObjectForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
@@ -7,39 +7,131 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormField from '@/components/UI/fields/formField';
 import { InputNumber } from 'primereact/inputnumber';
-import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
-import { FileUpload as PrFileUpload } from 'primereact/fileupload';
-import { Button } from 'primereact/button';
-import { WorkingHours } from '../addOrganizationForm/workingHours';
+import { WeekWorkingHours } from '@/types/weekWorkingHours';
+import { WorkingHours } from './workingHours';
+import { IObject } from '@/models/IObject';
 
-const AddObjectForm: React.FC = () => {
+export interface Week {
+  monday: Day;
+  tuesday: Day;
+  wednesday: Day;
+  thursday: Day;
+  friday: Day;
+  saturday: Day;
+  sunday: Day;
+}
+
+export interface Day {
+  enabled: boolean;
+  start: number | null;
+  end: number | null;
+}
+
+const initializeWorkingHours = (initialWorkingHours?: WeekWorkingHours) => {
+  const workingHours: Week = {
+    monday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    tuesday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    wednesday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    thursday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    friday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    saturday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    sunday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+  };
+
+  if (!initialWorkingHours) {
+    return workingHours;
+  }
+
+  for (const key in initialWorkingHours) {
+    const day = key.split('_')[0];
+    const time = key.split('_')[1];
+    const value = initialWorkingHours[key as keyof WeekWorkingHours];
+    if (!value) continue;
+    workingHours[day as keyof Week].enabled = true;
+    if (time === 'start') {
+      workingHours[day as keyof Week].start = value;
+    } else {
+      workingHours[day as keyof Week].end = value;
+    }
+  }
+
+  return workingHours;
+};
+
+export interface ObjectFormData {
+  name: string;
+  description: string;
+  price: number;
+  workingHours: Week;
+}
+
+const extractWorkingHours = <T extends WeekWorkingHours>(initialValues?: T) => {
+  if (!initialValues) return initializeWorkingHours();
+  const initialWorkingHours = {} as T;
+
+  Object.entries(initialValues).forEach(([key, value]) => {
+    if (key.includes('hours')) {
+      initialWorkingHours[key as keyof T] = value;
+    }
+  });
+
+  return initializeWorkingHours(initialWorkingHours);
+};
+
+interface Props {
+  initialValues?: IObject;
+}
+
+const AddObjectForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
-  const [fileName, setFileName] = useState<string | null>(null);
-  const fileUploadRef = useRef<PrFileUpload>(null);
-  console.log(fileName);
-
-  const handlerClearFile = () => {
-    fileUploadRef.current?.clear();
-    setFileName(null);
-  };
-
-  const handleFileSelect = (file: File) => {
-    setFileName(file.name);
-  };
-
   const validationSchema = Yup.object({});
 
+  const workingHours = extractWorkingHours<IObject>(initialValues);
+
+  const formData: ObjectFormData = {
+    name: initialValues?.name || '',
+    description: initialValues?.description || '',
+    price: initialValues?.price_per_hour || 0,
+    workingHours,
+  };
+
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      description: '',
-      price: 0,
-    },
+    initialValues: formData,
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
     },
   });
+
+  console.log(formik.values);
 
   return (
     <form className={styles.form}>
@@ -75,22 +167,23 @@ const AddObjectForm: React.FC = () => {
         <FormField label={t('forms.price')}>
           <InputNumber
             style={{ width: '100%' }}
+            type='text'
             name='price'
             mode='currency'
             currency='UAH'
             locale='uk-UA'
             placeholder={t('forms.enterPrice')}
             value={formik.values.price}
-            onChange={formik.handleChange}
+            onChange={(e) => formik.setFieldValue('price', e.value)}
             onBlur={formik.handleBlur}
           />
         </FormField>
       </div>
-      <div className={styles.formSection}>
+      {/* <div className={styles.formSection}>
         <FileUpload fileUploadRef={fileUploadRef} onSelect={handleFileSelect} />
-      </div>
+      </div> */}
       <div className={styles.section}>
-        <WorkingHours />
+        <WorkingHours week={formik.values.workingHours} formik={formik} />
       </div>
     </form>
   );

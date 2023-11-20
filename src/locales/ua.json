@@ -51,6 +51,8 @@
     "enterPassword": "Введіть пароль",
     "b2benterPassword": "Ваш пароль",
     "b2bconfirmPassword": "Підтвердити пароль*",
+    "oldPassword": "Старий пароль",
+    "newPassword": "Новий пароль",
     "firstName": "Ім'я",
     "enterFirstName": "Введіть ім'я",
     "lastName": "Прізвище",
@@ -111,6 +113,7 @@
     "email": "Невірний формат електронної пошти",
     "passwordLength": "Пароль повинен містити не менше 6 символів",
     "passwordMatch": "Невірний пароль",
+    "confirmPasswordMustMatch": "Паролі повинні співпадати",
     "phone": "Невірний формат номеру телефону",
     "positiveOnly": "Лише додаткові значення"
   },
@@ -206,5 +209,10 @@
   "equipment": {
     "equipment": "Товари",
     "empty": "Нажаль ви ще не створили жодного товара"
+  },
+  "profile": {
+    "heading": "Профіль",
+    "changePassword": "Змінити пароль",
+    "changeEmail": "Електронна пошта (Для зміни зв'яжіться з нами)"
   }
 }

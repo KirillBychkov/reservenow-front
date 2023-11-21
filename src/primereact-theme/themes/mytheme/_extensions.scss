@@ -153,3 +153,11 @@
 .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
   box-shadow: none;
 }
+
+.p-menu .p-menuitem-link {
+  justify-content: space-between;
+}
+
+.p-menu .p-menuitem-link .p-menuitem-text {
+  color: var(--text-body-color)
+}

@@ -2,10 +2,11 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import styles from './addOrganizationForm.module.scss';
 import { useTranslation } from 'react-i18next';
-import { IAddOrganizationInfo } from './addOrganizationForm';
 import { CustomFormikProps } from '@/types/formik';
+import FormField from '@/components/UI/fields/formField';
+import { OrganizationFormData } from '@/types/organization';
 
-export const MainInfo: React.FC<CustomFormikProps<IAddOrganizationInfo>> = ({
+export const MainInfo: React.FC<CustomFormikProps<OrganizationFormData>> = ({
   formik,
 }) => {
   const { t } = useTranslation();
@@ -15,9 +16,7 @@ export const MainInfo: React.FC<CustomFormikProps<IAddOrganizationInfo>> = ({
       <h4 className='heading heading-4 heading-primary'>
         {t('forms.overallInfo')}
       </h4>
-      <div>
-        <h6 className='heading-6'>{t('organizations.name')}</h6>
-        {/* margin-bottom: 0.3rem; */}
+      <FormField label={t('organizations.name')}>
         <InputText
           name='name'
           value={formik.values.name}
@@ -25,11 +24,8 @@ export const MainInfo: React.FC<CustomFormikProps<IAddOrganizationInfo>> = ({
           onBlur={formik.handleBlur}
           placeholder={t('addOrganizationForm.enterName')}
         />
-      </div>
-
-      <div>
-        <h6 className='heading-6'>{t('forms.description')}</h6>
-
+      </FormField>
+      <FormField label={t('forms.description')}>
         <InputTextarea
           autoResize
           name='description'
@@ -38,7 +34,7 @@ export const MainInfo: React.FC<CustomFormikProps<IAddOrganizationInfo>> = ({
           placeholder={t('addOrganizationForm.enterDescription')}
           rows={6}
         />
-      </div>
+      </FormField>
     </div>
   );
 };

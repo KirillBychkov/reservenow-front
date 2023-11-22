@@ -14,3 +14,19 @@ export interface WeekWorkingHours {
   sunday_start_hours: number | null;
   sunday_end_hours: number | null;
 }
+
+export interface Day {
+  enabled: boolean;
+  start: number | null;
+  end: number | null;
+}
+
+export interface Week {
+  monday: Day;
+  tuesday: Day;
+  wednesday: Day;
+  thursday: Day;
+  friday: Day;
+  saturday: Day;
+  sunday: Day;
+}

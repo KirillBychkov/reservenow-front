@@ -7,7 +7,7 @@ import Users from '@/pages/superadminPages/users/users';
 import ManageUser from '@/pages/superadminPages/users/manageUser/manageUser';
 import ViewClient from '@/pages/superadminPages/users/viewUser/viewUser';
 import Requests from '@/pages/superadminPages/requests/requests';
-import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/editOrganization';
+// import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/editOrganization';
 import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
 import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
@@ -94,13 +94,13 @@ export const routes: IRoute[] = [
     params: { id: 'id' },
     allowedRoles: [UserRole.UserFull],
   },
-  {
-    path: '/organizations/:id/edit',
-    element: <EditOrganization />,
-    isProtected: true,
-    params: { id: 'id' },
-    allowedRoles: [UserRole.UserFull],
-  },
+  // {
+  //   path: '/organizations/:id/edit',
+  //   element: <EditOrganization />,
+  //   isProtected: true,
+  //   params: { id: 'id' },
+  //   allowedRoles: [UserRole.UserFull],
+  // },
   {
     path: '/organizations/:id/objects/add',
     element: <AddObject />,

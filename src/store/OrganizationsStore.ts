@@ -26,9 +26,8 @@ class OrganizationStore {
     organization: ICreateOrganizationDTO
   ): Promise<SuccessOrError> => {
     try {
-      // const res = await OrganizationService.addOrganization(organization);
-      // this.organizations?.push(res.data);
-      console.log(organization);
+      const res = await OrganizationService.addOrganization(organization);
+      this.organizations?.push(res.data);
 
       return { successMsg: 'Organization added', errorMsg: '' };
     } catch (e) {
@@ -41,7 +40,6 @@ class OrganizationStore {
   ): Promise<ResponseOrError<IOrganization>> => {
     try {
       const res = await OrganizationService.getOrganizationById(id);
-      console.log(res);
 
       return { data: res.data, error: '' };
     } catch (e) {

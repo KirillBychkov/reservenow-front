@@ -1,28 +1,27 @@
 import { useTranslation } from 'react-i18next';
 import styles from '../addOrganizationForm/addOrganizationForm.module.scss';
 import classNames from 'classnames';
+import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
 import {
-  InputSwitch,
-  InputSwitchChangeEvent,
-  InputSwitchProps,
-} from 'primereact/inputswitch';
-import {
-  generateDropdownOptions,
+  defaultDay,
+  dropdownOptions,
+  fullDay,
   getDayLabel,
 } from '@/utils/formHelpers/formHelpers';
-import { Day, ObjectFormData, Week } from './addObjectForm';
+
 import FormField from '@/components/UI/fields/formField';
 import { CustomFormikProps } from '@/types/formik';
 import CustomDropdown from '@/components/UI/dropdown/customDropdown';
 import { useEffect, useState } from 'react';
+import { Day, Week } from '@/types/weekWorkingHours';
 
-interface Props extends CustomFormikProps<ObjectFormData> {
-  week: Week;
-}
+interface Props<T extends { workingHours: Week }>
+  extends CustomFormikProps<T> {}
 
-const dropdownOptions = generateDropdownOptions();
-
-export const WorkingHours: React.FC<Props> = ({ week, formik }) => {
+export const WorkingHours = <T extends { workingHours: Week }>({
+  formik,
+}: Props<T>) => {
+  const week = formik.values.workingHours;
   const { t } = useTranslation();
 
   const [is24HoursChecked, setIs24HoursChecked] = useState<boolean>(false);
@@ -32,16 +31,51 @@ export const WorkingHours: React.FC<Props> = ({ week, formik }) => {
     const newWeek = { ...week };
     Object.values(newWeek).forEach((day) => {
       day.enabled = !!e.target.value;
+      if (!e.target.value) {
+        day.start = null;
+        day.end = null;
+        return;
+      }
+      day.start = fullDay.start;
+      day.end = fullDay.end;
     });
     formik.setFieldValue('workingHours', newWeek);
   };
 
-  useEffect(() => {
-    Object.values(week).some((day) => day.enabled !== is24HoursChecked) &&
-      setIs24HoursChecked(false);
+  const handleDaySwitchChange = (e: InputSwitchChangeEvent, index: number) => {
+    formik.setFieldValue(
+      `workingHours.${getDayLabel(index)}.enabled`,
+      e.target.value
+    );
+    if (!e.target.value) {
+      formik.setFieldValue(`workingHours.${getDayLabel(index)}.start`, null);
+      formik.setFieldValue(`workingHours.${getDayLabel(index)}.end`, null);
+      return;
+    }
+    formik.setFieldValue(
+      `workingHours.${getDayLabel(index)}.start`,
+      defaultDay.start
+    );
+    formik.setFieldValue(
+      `workingHours.${getDayLabel(index)}.end`,
+      defaultDay.end
+    );
+  };
 
-    Object.values(week).every((day) => day.enabled === true) &&
-      setIs24HoursChecked(true);
+  useEffect(() => {
+    Object.values(week).some(
+      (day: Day) =>
+        day.enabled !== is24HoursChecked ||
+        day.start !== fullDay.start ||
+        day.end !== fullDay.end
+    ) && setIs24HoursChecked(false);
+
+    Object.values(week).every(
+      (day: Day) =>
+        day.enabled === true &&
+        day.start === fullDay.start &&
+        day.end === fullDay.end
+    ) && setIs24HoursChecked(true);
   }, [is24HoursChecked, week]);
 
   return (
@@ -72,7 +106,7 @@ export const WorkingHours: React.FC<Props> = ({ week, formik }) => {
                 <InputSwitch
                   name={`workingHours.${getDayLabel(index)}.enabled`}
                   checked={day.enabled}
-                  onChange={formik.handleChange}
+                  onChange={(e) => handleDaySwitchChange(e, index)}
                   className={styles['InputSwitch']}
                 />
               </FormField>

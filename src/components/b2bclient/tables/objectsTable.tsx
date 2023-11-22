@@ -29,6 +29,10 @@ const ObjectsTable: React.FC<Props> = observer(
       navigate(`objects/${object.id}`);
     };
 
+    const handleEditObject = (object: IObject) => {
+      navigate(`objects/${object.id}/edit`);
+    };
+
     return (
       <div>
         <DataTable
@@ -67,11 +71,11 @@ const ObjectsTable: React.FC<Props> = observer(
             body={(rowData: IObject) => (
               <Button
                 style={{ maxHeight: '1.5rem' }}
-                label={t('actions.open')}
+                label={t('actions.edit')}
                 size='small'
                 rounded
                 severity='secondary'
-                onClick={() => handleViewObject(rowData)}
+                onClick={() => handleEditObject(rowData)}
               />
             )}
           />

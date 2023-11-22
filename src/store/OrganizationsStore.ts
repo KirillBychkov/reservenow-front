@@ -50,14 +50,14 @@ class OrganizationStore {
   editOrganization = async (
     id: number,
     organization: ICreateOrganizationDTO
-  ): Promise<ResponseOrError<IOrganization>> => {
+  ): Promise<SuccessOrError> => {
     try {
-      const res = await OrganizationService.editOrganization(id, organization);
-      return { data: res.data, error: '' };
+      await OrganizationService.editOrganization(id, organization);
+      return { successMsg: 'Updated organization succesfully', errorMsg: '' };
     } catch (e) {
       return {
-        data: {} as IOrganization,
-        error: 'Error while updating Organization',
+        successMsg: '',
+        errorMsg: 'Error while updating Organization',
       };
     }
   };

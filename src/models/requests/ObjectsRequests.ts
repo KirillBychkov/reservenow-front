@@ -6,7 +6,7 @@ export interface CreateRentalObjectDTO extends WeekWorkingHours {
   description?: string;
   phone: string;
   address: string;
-  organizationId: number;
+  organization_id: number;
 }
 
 export interface UpdateRentalObjectDTO extends Partial<CreateRentalObjectDTO> {

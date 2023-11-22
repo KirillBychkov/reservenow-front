@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styles from './addObjectForm.module.scss';
+import styles from './manageObjectForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -9,28 +9,25 @@ import FormField from '@/components/UI/fields/formField';
 import { InputNumber } from 'primereact/inputnumber';
 import { WorkingHours } from './workingHours';
 import { IObject } from '@/models/IObject';
-import { CreateRentalObjectDTO } from '@/models/requests/ObjectsRequests';
 import { InputMask } from 'primereact/inputmask';
 import Button from '@/components/UI/buttons/button';
 import { useParams } from 'react-router-dom';
-import {
-  finalizeWorkingHours,
-  transformWorkingHours,
-} from '@/utils/formHelpers/formHelpers';
+import { transformWorkingHours } from '@/utils/formHelpers/formHelpers';
 import { ObjectFormData } from '@/types/objects';
 import { observer } from 'mobx-react-lite';
-import objectsStore from '@/store/ObjectsStore';
 import ToastContext from '@/context/toast';
+import { createObject, updateObject } from './submitHandlers';
 
 interface Props {
   initialValues?: IObject;
 }
 
-const AddObjectForm: React.FC<Props> = observer(({ initialValues }) => {
+const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
-  const { id: organizationId } = useParams();
+  const { id: organizationId, objectId } = useParams();
   const validationSchema = Yup.object({});
+  console.log(initialValues, objectId);
 
   const workingHours = transformWorkingHours<IObject>(initialValues);
 
@@ -51,25 +48,15 @@ const AddObjectForm: React.FC<Props> = observer(({ initialValues }) => {
     initialValues: formData,
     validationSchema,
     onSubmit: async (values) => {
-      const workingHours = finalizeWorkingHours(values.workingHours);
-      const object: CreateRentalObjectDTO = {
-        organizationId: parseInt(organizationId || '0'),
-        address: values.address,
-        phone: values.phone,
-        name: values.name,
-        description: values.description,
-        price_per_hour: values.price,
-        ...workingHours,
-      };
-      const { successMsg, errorMsg } = await objectsStore.addRentalObject(
-        object
-      );
-      if (errorMsg) {
-        showError(errorMsg);
+      const res = objectId
+        ? await updateObject(values, parseInt(objectId))
+        : await createObject(values, organizationId, handleClearForm);
+
+      if (res.errorMsg) {
+        showError(res.errorMsg);
         return;
       }
-      showSuccess(successMsg);
-      formik.resetForm();
+      showSuccess(res.successMsg);
     },
   });
 
@@ -150,11 +137,11 @@ const AddObjectForm: React.FC<Props> = observer(({ initialValues }) => {
           {t('actions.cancel')}
         </Button>
         <Button type='submit' fill className={styles.Button}>
-          {t('organizations.add')}
+          {t('objects.add')}
         </Button>
       </div>
     </form>
   );
 });
 
-export default AddObjectForm;
+export default ManageObjectForm;

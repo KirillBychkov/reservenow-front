@@ -1,6 +1,9 @@
 import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
-import { CreateRentalObjectDTO } from '@/models/requests/ObjectsRequests';
+import {
+  CreateRentalObjectDTO,
+  UpdateRentalObjectDTO,
+} from '@/models/requests/ObjectsRequests';
 import { IObjects } from '@/models/response/GetObjectsResponse';
 import ObjectService from '@/services/objectService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
@@ -30,6 +33,22 @@ class ObjectsStore {
     }
   };
 
+  getRentalObject = async (id: number): Promise<ResponseOrError<IObject>> => {
+    const object = this.objects.find((obj) => obj.id === id);
+    if (object) {
+      return { data: object, error: '' };
+    }
+    try {
+      const response = await ObjectService.getObjectById(id);
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return {
+        data: {} as IObject,
+        error: 'An error occurred while fetching object.',
+      };
+    }
+  };
+
   addRentalObject = async (
     object: CreateRentalObjectDTO
   ): Promise<SuccessOrError> => {
@@ -39,6 +58,20 @@ class ObjectsStore {
       return { successMsg: 'Object added', errorMsg: '' };
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error while adding object' };
+    }
+  };
+
+  editRentalObject = async (
+    id: number,
+    object: UpdateRentalObjectDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      const response = await ObjectService.editObject(id, object);
+      const index = this.objects.findIndex((obj) => obj.id === id);
+      this.objects[index] = response.data;
+      return { successMsg: 'Object edited', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error while editing object' };
     }
   };
 
@@ -54,9 +87,9 @@ class ObjectsStore {
     this.filters = filters;
   }
 
-  get getObjects() {
-    return this.objects;
-  }
+  // get getObjects() {
+  //   return this.objects;
+  // }
 
   setObjects(objects: IObject[]) {
     this.objects = objects;

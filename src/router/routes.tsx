@@ -1,13 +1,12 @@
 import Home from '@/pages/home/home';
 import Signin from '@/pages/signin/signin';
 import Organizations from '@/pages/b2bPages/organizations/organizations';
-import AddOrganization from '@/pages/b2bPages/organizations/addOrganisation/addOrganization';
+import ManageOrganisation from '@/pages/b2bPages/organizations/manageOrganization/manageOrganization';
 import ViewOrganization from '@/pages/b2bPages/organizations/viewOrganisation/viewOrganization';
 import Users from '@/pages/superadminPages/users/users';
 import ManageUser from '@/pages/superadminPages/users/manageUser/manageUser';
 import ViewClient from '@/pages/superadminPages/users/viewUser/viewUser';
 import Requests from '@/pages/superadminPages/requests/requests';
-// import EditOrganization from '@/pages/b2bPages/organizations/editOrganization/editOrganization';
 import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
 import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
@@ -15,7 +14,7 @@ import Personnel from '@/pages/b2bPages/personnel/personnel';
 import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
 import ContactUs from '@/pages/b2bPages/contactUs/contactUs';
 import FAQ from '@/pages/b2bPages/faq/faq';
-import AddObject from '@/pages/b2bPages/objects/addObject/addObject';
+import ManageObject from '@/pages/b2bPages/objects/manageObject/manageObject';
 
 interface IRoute {
   path: string;
@@ -83,7 +82,7 @@ export const routes: IRoute[] = [
   },
   {
     path: '/organizations/add',
-    element: <AddOrganization />,
+    element: <ManageOrganisation />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },
@@ -94,23 +93,23 @@ export const routes: IRoute[] = [
     params: { id: 'id' },
     allowedRoles: [UserRole.UserFull],
   },
-  // {
-  //   path: '/organizations/:id/edit',
-  //   element: <EditOrganization />,
-  //   isProtected: true,
-  //   params: { id: 'id' },
-  //   allowedRoles: [UserRole.UserFull],
-  // },
+  {
+    path: '/organizations/:id/edit',
+    element: <ManageOrganisation />,
+    isProtected: true,
+    params: { id: 'id' },
+    allowedRoles: [UserRole.UserFull],
+  },
   {
     path: '/organizations/:id/objects/add',
-    element: <AddObject />,
+    element: <ManageObject />,
     isProtected: true,
     params: { id: 'id' },
     allowedRoles: [UserRole.UserFull],
   },
   {
     path: '/organizations/:id/objects/:objectId/edit',
-    element: <></>,
+    element: <ManageObject />,
     isProtected: true,
     params: { id: 'id', objectId: 'objectId' },
     allowedRoles: [UserRole.UserFull],

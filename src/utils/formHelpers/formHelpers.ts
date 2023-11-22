@@ -111,7 +111,7 @@ export const finalizeWorkingHours = (week: Week): WeekWorkingHours => {
 
 export const transformWorkingHours = <T extends WeekWorkingHours>(
   initialValues?: T
-) => {
+): Week => {
   if (!initialValues) return initializeWorkingHours();
   const initialWorkingHours = {} as T;
 

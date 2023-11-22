@@ -2,7 +2,7 @@ import isValidClassname from '@/utils/isValidClassname';
 import classNames from 'classnames';
 import { InputMask } from 'primereact/inputmask';
 import { InputText } from 'primereact/inputtext';
-import styles from './addOrganizationForm.module.scss';
+import styles from './manageOrganizationForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { CustomFormikProps } from '@/types/formik';
 import FormField from '@/components/UI/fields/formField';

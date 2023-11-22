@@ -6,7 +6,7 @@ import { ISupportRecords } from '@/models/response/GetSupportRecordsResponse';
 import { AxiosResponse } from 'axios';
 
 export default class SupportService {
-  static async createSupportRecord(client_description: string) {
+  static async createSupportRecord(client_description: string): Promise<AxiosResponse<ISupport[]>>{
     return $api.post('/support', { client_description });
   }
 
@@ -35,5 +35,20 @@ export default class SupportService {
 
   static async deleteSupportRecordById(id: number) {
     return $api.delete(`/support/${id}`);
+  }
+
+  static async uploadImageForRecord(id: number, file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = $api.put(
+      `/support/upload/image/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
   }
 }

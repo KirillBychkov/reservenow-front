@@ -95,21 +95,17 @@ class SupportRecordsStore {
     return { data: plainSupportRecordInfo, error: '' };
   };
 
-  createSupportRecord = async (client_description: string): Promise<ResponseOrError<ISupport>> => {
+  createSupportRecord = async (client_description: string, file?: File): Promise<SuccessOrError> => {
     try {
-      const { data: createdRecord } = await SupportService.createSupportRecord(client_description);      
-      return {data: createdRecord[0], error: ''}
-    } catch {
-      return {data: {} as ISupport, error: "Error creating support record"}
-    }
-  }
+      const { data: createdRecord } = await SupportService.createSupportRecord(client_description)
 
-  uploadRecordImage = async (id: number, file: File): Promise<SuccessOrError> => {
-    try {
-      await SupportService.uploadImageForRecord(id, file);
-      return { successMsg: 'Image uploaded', errorMsg: '' };
-    } catch {
-      return { successMsg: '', errorMsg: 'Error uploading image' };
+      if (file) {
+        await SupportService.uploadImageForRecord(createdRecord[0].id, file)
+      }
+
+      return { successMsg: 'Record created successfully', errorMsg: '' }
+    } catch { 
+      return { successMsg: '', errorMsg: 'Error creating support record' };
     }
   }
 }

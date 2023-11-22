@@ -25,33 +25,16 @@ const ContactUs = observer(() => {
     onSubmit: async (values) => {
       const { client_description } = values;
       const file = fileUploadRef.current?.getFiles()[0];
-      let fileSuccessMessage = "";
-      let fileErrorMessage = "";
 
-      const { data, error } = await supportRecordsStore.createSupportRecord(
-        client_description
-      );
+      const { successMsg, errorMsg } =
+        await supportRecordsStore.createSupportRecord(client_description, file);
 
-      if (error) {
-        showError(error);
-      } else {
-        showSuccess("Record created successfully");
+      if (successMsg) {
+        showSuccess(successMsg);
       }
 
-      if (data.id && file) {
-        const { successMsg, errorMsg } =
-          await supportRecordsStore.uploadRecordImage(data.id, file);
-
-        fileSuccessMessage = successMsg;
-        fileErrorMessage = errorMsg;
-      }
-
-      if (fileSuccessMessage) {
-        showSuccess(fileSuccessMessage);
-      }
-
-      if (fileErrorMessage) {
-        showSuccess(fileErrorMessage);
+      if (errorMsg) {
+        showError(errorMsg);
       }
 
       clearForm();

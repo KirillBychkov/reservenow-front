@@ -22,7 +22,6 @@ const Organizations: React.FC = observer(() => {
     isLoading,
     errorMsg,
   } = useFetch<IOrganization[]>(organizationStore.getOrganizations);
-  console.log('organizations', organizations);
 
   if (errorMsg) {
     showError(errorMsg);

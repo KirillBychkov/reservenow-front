@@ -95,6 +95,7 @@
 // Objects Table custom styles
 .customObjectTable .p-datatable-table .p-datatable-thead > tr > th {
   border-radius: 0px;
+  border-top: none;
 }
 
 .p-input-icon-left > .p-inputtext {
@@ -110,7 +111,7 @@
 }
 
 .p-inputtextarea {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .p-fileupload .p-fileupload-content {
@@ -121,7 +122,10 @@
 }
 
 // Accordion custom styles
-.p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+.p-accordion
+  .p-accordion-header
+  .p-accordion-header-link
+  .p-accordion-toggle-icon {
   position: absolute;
   width: 30px;
   height: 30px;
@@ -130,14 +134,19 @@
   display: flex;
   justify-content: center;
   margin: 0;
-  transition: background-color 0.2s
+  transition: background-color 0.2s;
 }
 
-.p-accordion .p-accordion-header .p-accordion-header-link:hover .p-accordion-toggle-icon {
+.p-accordion
+  .p-accordion-header
+  .p-accordion-header-link:hover
+  .p-accordion-toggle-icon {
   background-color: var(--primary-color);
 }
 
-.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+.p-accordion
+  .p-accordion-header:not(.p-disabled)
+  .p-accordion-header-link:focus {
   box-shadow: none;
 }
 
@@ -146,7 +155,7 @@
     border: 1px solid var(--light-gray-1);
     border-radius: 14px;
     transition: border-color 0.2s;
-  
+
     &:hover {
       border-color: var(--primary-color);
     }

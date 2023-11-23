@@ -1,32 +1,32 @@
 import React, { useContext } from 'react';
-import styles from './manageUser.module.scss';
+import styles from './manageOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import ManageUserForm from '@/components/forms/manageUserForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import usersStore from '@/store/UsersStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { PlainUserInfo } from '@/types/user';
 import useFetch from '@/hooks/useFetch';
+import organizationStore from '@/store/OrganizationsStore';
 import ToastContext from '@/context/toast';
+import ManageOrganizationForm from '@/components/b2bclient/forms/manageOrganizationForm/manageOrganizationForm';
+import { IOrganization } from '@/models/IOrganization';
 
-const ManageUser: React.FC = observer(() => {
+const ManageOrganisation: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
   const {
-    data: initialValues,
+    data: organization,
     isLoading,
     errorMsg,
-  } = useFetch<PlainUserInfo>(
+  } = useFetch(
     () =>
       id
-        ? usersStore.getPlainUserInfo(parseInt(id)) // if id is defined, get user info (Update mode)
-        : Promise.resolve({ data: {} as PlainUserInfo, error: '' }), // else, return empty object (Add mode)
+        ? organizationStore.getOrganizationById(parseInt(id || '0'))
+        : Promise.resolve({ data: {} as IOrganization, error: '' }),
     [id]
   );
 
@@ -35,18 +35,17 @@ const ManageUser: React.FC = observer(() => {
   }
 
   return (
-    <div className={styles.manageUser}>
+    <div className={styles.AddOrganization}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {id && initialValues ? t('clients.edit') : t('clients.add')}
+        {t('organizations.add')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
-          { label: t('clients.clients'), url: '/users' },
+          { label: t('organizations.organizations'), url: '/organizations' },
           {
-            label:
-              id && initialValues ? `${initialValues.id}` : t('clients.add'),
-            url: '/users/add',
+            label: t('organizations.add'),
+            url: '/organizations/add',
           },
         ]}
       />
@@ -54,8 +53,8 @@ const ManageUser: React.FC = observer(() => {
         {isLoading ? (
           <ProgressSpinner />
         ) : (
-          <ManageUserForm
-            initialValues={id ? initialValues ?? undefined : undefined}
+          <ManageOrganizationForm
+            initialValues={id ? organization ?? undefined : undefined}
           />
         )}
       </div>
@@ -63,4 +62,4 @@ const ManageUser: React.FC = observer(() => {
   );
 });
 
-export default ManageUser;
+export default ManageOrganisation;

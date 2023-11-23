@@ -1,56 +1,125 @@
-import { daysOfWeek } from '../organizationHelpers';
+import { Day, Week, WeekWorkingHours } from '@/types/weekWorkingHours';
 
-export const generateDropdownOptions = () => {
+export const daysOfWeek = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+];
+
+const generateDropdownOptions = () => {
   const options = [];
-  for (let i = 0; i < 24; i++) {
+  for (let i = 0; i <= 24; i++) {
     options.push({ label: `${i.toString().padStart(2, '0')}:00`, value: i });
   }
-  // options.unshift({ label: 'test', value: 0 });
   return options;
 };
 
-export const getUpdatedWorkingHoursForAllDays = (
-  allHoursEnabled: boolean,
-  workingHours: any[] // Adjust type
-) => {
-  const updatedHours: { [key: string]: number } = {};
+export const dropdownOptions = generateDropdownOptions();
 
-  if (allHoursEnabled) {
-    for (let i = 0; i < workingHours.length; i++) {
-      const day = getDayKey(i, 'start');
-      updatedHours[day] = 0;
-
-      const endDay = getDayKey(i, 'end');
-      updatedHours[endDay] = 23;
-    }
-  }
-
-  return updatedHours;
+export const defaultDay: Omit<Day, 'enabled'> = {
+  start: 9,
+  end: 18,
 };
 
-export const getDayKey = (index: number, timing: 'start' | 'end') => {
-  const day = daysOfWeek[index];
-  const timingKey = timing === 'start' ? 'start_hours' : 'end_hours';
-  return `${day}_${timingKey}`;
+export const fullDay: Omit<Day, 'enabled'> = {
+  start: 0,
+  end: 24,
 };
-
-export const initializeWorkingHours = (numDays: number) => {
-  const defaultHours = {
-    enabled: false,
-    dropdown1Value: 0,
-    dropdown2Value: 0,
-  };
-  // console.error(
-  //   '---initializeWorkingHours',
-  //   Array.from({ length: numDays }, () => ({ ...defaultHours }))
-  // );
-
-  return Array.from({ length: numDays }, () => ({ ...defaultHours }));
-};
-
-export const numDaysInWeek = 7;
 
 export const getDayLabel = (index: number) => {
   const dayIndex = index % 7;
   return daysOfWeek[dayIndex];
+};
+
+const initializeWorkingHours = (
+  initialWorkingHours?: WeekWorkingHours
+): Week => {
+  const workingHours: Week = {
+    monday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    tuesday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    wednesday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    thursday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    friday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    saturday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+    sunday: {
+      enabled: false,
+      start: null,
+      end: null,
+    },
+  };
+
+  if (!initialWorkingHours) {
+    return workingHours;
+  }
+
+  for (const key in initialWorkingHours) {
+    const day = key.split('_')[0];
+    const time = key.split('_')[1];
+    const value = initialWorkingHours[key as keyof WeekWorkingHours];
+    if (!value) continue;
+    workingHours[day as keyof Week].enabled = true;
+    if (time === 'start') {
+      workingHours[day as keyof Week].start = value;
+    } else {
+      workingHours[day as keyof Week].end = value;
+    }
+  }
+
+  return workingHours;
+};
+
+export const finalizeWorkingHours = (week: Week): WeekWorkingHours => {
+  const workingHours: WeekWorkingHours = {} as WeekWorkingHours;
+
+  for (const day in week) {
+    workingHours[`${day}_start_hours` as keyof WeekWorkingHours] =
+      week[day as keyof Week].start;
+    workingHours[`${day}_end_hours` as keyof WeekWorkingHours] =
+      week[day as keyof Week].end;
+  }
+
+  return workingHours;
+};
+
+export const transformWorkingHours = <T extends WeekWorkingHours>(
+  initialValues?: T
+): Week => {
+  if (!initialValues) return initializeWorkingHours();
+  const initialWorkingHours = {} as T;
+
+  Object.entries(initialValues).forEach(([key, value]) => {
+    if (key.includes('hours')) {
+      initialWorkingHours[key as keyof T] = value;
+    }
+  });
+
+  return initializeWorkingHours(initialWorkingHours);
 };

@@ -15,13 +15,3 @@ export const formatHour = (hour: number): string => {
     return String(hour);
   }
 };
-
-export const daysOfWeek = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
-];

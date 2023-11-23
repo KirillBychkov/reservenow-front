@@ -10,6 +10,6 @@ export interface IObject extends WeekWorkingHours {
   photo?: string;
   phone: string;
   address: string;
-  created_at: string;
-  updated_at: string;
+  created_at: Date | string;
+  updated_at: Date | string;
 }

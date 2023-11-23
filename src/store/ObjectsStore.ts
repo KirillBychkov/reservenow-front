@@ -1,15 +1,15 @@
 import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
+import {
+  CreateRentalObjectDTO,
+  UpdateRentalObjectDTO,
+} from '@/models/requests/ObjectsRequests';
 import { IObjects } from '@/models/response/GetObjectsResponse';
 import ObjectService from '@/services/objectService';
-import { ResponseOrError } from '@/types/store';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
 class ObjectsStore {
-  isLoading: boolean = false;
-  isSuccess: boolean = false;
-  isError: boolean = false;
-  errorMessage: string = '';
   objects: IObject[] = [];
   filters: IFilters = { total: 0, limit: 4 };
 
@@ -17,7 +17,7 @@ class ObjectsStore {
     makeAutoObservable(this);
   }
 
-  fetchObjects = async (
+  getRentalObjects = async (
     filters: Omit<IFilters, 'total'>
   ): Promise<ResponseOrError<IObjects[]>> => {
     try {
@@ -29,64 +29,55 @@ class ObjectsStore {
       this.setObjects(response.data.data);
       return { data: response.data.data, error: '' };
     } catch (e) {
-      if (e instanceof Error) {
-        return { data: [], error: 'An error occurred while fetching objects.' };
-      }
+      return { data: [], error: 'An error occurred while fetching objects.' };
     }
-    return { data: [], error: 'Unknown error' };
   };
 
-  //   async addObject(object: ICreateObjectDTO) {
-  //     try {
-  //       await ObjectService.addObject(object);
-  //     } catch (e) {
-  //       if (e instanceof Error) {
-  //         this.setError(true, e.message as CatchError);
-  //       }
-  //     }
-  //   }
+  getRentalObject = async (id: number): Promise<ResponseOrError<IObject>> => {
+    const object = this.objects.find((obj) => obj.id === id);
+    if (object) {
+      return { data: object, error: '' };
+    }
+    try {
+      const response = await ObjectService.getObjectById(id);
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return {
+        data: {} as IObject,
+        error: 'An error occurred while fetching object.',
+      };
+    }
+  };
 
-  //   getObjectById = async (
-  //     id: number
-  //   ): Promise<ResponseOrError<IObject>> => {
-  //     const objects = this.objects?.find(
-  //       (objects) => objects?.id === id
-  //     );
+  addRentalObject = async (
+    object: CreateRentalObjectDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      const response = await ObjectService.addObject(object);
+      this.objects.push(response.data);
+      return { successMsg: 'Object added', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error while adding object' };
+    }
+  };
 
-  //     if (objects) return { data: objects, error: '' };
-
-  //     try {
-  //       const objectData = await ObjectService.getObjectById(
-  //         id
-  //       );
-  //       this.objects?.push(objectData);
-  //       return { data: objectData, error: '' };
-  //     } catch (e) {
-  //       return { data: {} as IObject, error: 'Object not found' };
-  //     }
-  //   };
+  editRentalObject = async (
+    id: number,
+    object: UpdateRentalObjectDTO
+  ): Promise<SuccessOrError> => {
+    try {
+      const response = await ObjectService.editObject(id, object);
+      const index = this.objects.findIndex((obj) => obj.id === id);
+      this.objects[index] = response.data;
+      return { successMsg: 'Object edited', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error while editing object' };
+    }
+  };
 
   /*
     UTILS 
   */
-
-  setSuccess(bool: boolean) {
-    this.isSuccess = bool;
-    this.resetError();
-  }
-
-  setError(bool: boolean, message: string) {
-    this.isError = bool;
-    this.errorMessage = message;
-  }
-  setLoading(bool: boolean) {
-    this.isLoading = bool;
-  }
-
-  resetError() {
-    this.isError = false;
-    this.errorMessage = '';
-  }
 
   get getFilters() {
     return this.filters;
@@ -95,12 +86,13 @@ class ObjectsStore {
   setFilters(filters: IFilters) {
     this.filters = filters;
   }
+
+  // get getObjects() {
+  //   return this.objects;
+  // }
+
   setObjects(objects: IObject[]) {
     this.objects = objects;
-  }
-
-  get getObjects() {
-    return this.objects;
   }
 }
 

@@ -14,10 +14,9 @@
   cursor: pointer;
 }
 
-.clip {
-  background-image: url("src/assets/clip.svg");
-  background-position: center;
-  background-repeat: no-repeat;
+.icon {
+  display: flex;
+  justify-content: center;
   border-radius: 100px;
   padding: 8px;
   height: 42px;

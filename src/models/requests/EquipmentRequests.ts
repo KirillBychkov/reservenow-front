@@ -1,6 +1,6 @@
 export interface ICreateEquipmentDTO {
   name: string;
-  description: string;
+  description?: string;
   price_per_hour: number;
 }
 

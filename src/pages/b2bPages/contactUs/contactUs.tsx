@@ -5,24 +5,37 @@ import styles from "./contactUs.module.scss";
 import Button from "@/components/UI/buttons/button";
 import { useTranslation } from "react-i18next";
 import { FileUpload } from "@/components/UI/fileUpload/FileUpload";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { ICreateSupportDTO } from "@/models/requests/SupportRequests";
 import { Cross } from "@blueprintjs/icons";
+import { observer } from "mobx-react-lite";
+import supportRecordsStore from "@/store/SupportRecordsStore";
+import ToastContext from "@/context/toast";
 
-const ContactUs = () => {
+const ContactUs = observer(() => {
   const { t } = useTranslation();
   const [fileName, setFileName] = useState<string | null>(null);
+  const { showSuccess, showError } = useContext(ToastContext);
   const fileUploadRef = useRef<PrFileUpload>(null);
   const formik = useFormik<ICreateSupportDTO>({
     initialValues: {
       client_description: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { client_description } = values;
       const file = fileUploadRef.current?.getFiles()[0];
 
-      // TODO Logic to create support record and image for it
+      const { successMsg, errorMsg } =
+        await supportRecordsStore.createSupportRecord(client_description, file);
+
+      if (successMsg) {
+        showSuccess(successMsg);
+      }
+
+      if (errorMsg) {
+        showError(errorMsg);
+      }
 
       clearForm();
     },
@@ -61,7 +74,7 @@ const ContactUs = () => {
                 onChange={formik.handleChange}
                 autoResize
                 rows={8}
-                placeholder={t('forms.enterDescription')}
+                placeholder={t("forms.enterDescription")}
               />
             </Flex>
 
@@ -93,6 +106,6 @@ const ContactUs = () => {
       </form>
     </Flex>
   );
-};
+});
 
 export default ContactUs;

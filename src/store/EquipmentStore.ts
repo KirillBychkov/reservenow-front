@@ -1,4 +1,5 @@
 import { IEquipment } from "@/models/IEquipment";
+import { IFilters } from "@/models/IFilters";
 import {
   ICreateEquipmentDTO,
   IUpdateEquipmentDTO,
@@ -9,12 +10,21 @@ import { makeAutoObservable } from "mobx";
 
 class EquipmentStore {
   equipment: IEquipment[] = [];
+  filters: IFilters = { total: 0, limit: 4 };
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  seqEquipment(equipment: IEquipment[]) {
+  getFilters() {
+    return this.filters;
+  }
+
+  setFilters(filters: IFilters) {
+    this.filters = filters;
+  }
+
+  setEquipment(equipment: IEquipment[]) {
     this.equipment = equipment;
   }
 
@@ -32,16 +42,17 @@ class EquipmentStore {
     }
   };
 
-  getEquipment = async (): Promise<ResponseOrError<IEquipment[]>> => {
+  getEquipment = async (filters: Omit<IFilters, 'total'>): Promise<ResponseOrError<IEquipment[]>> => {
     try {
-      const { data: equipment } = await EquipmentService.getEquipment();
+      const { data } = await EquipmentService.getEquipment(filters);
 
-      if (!equipment.length) {
+      if (!data.data.length) {
         return { data: [], error: "No equipment found" };
       }
 
-      this.seqEquipment(equipment);
-      return { data: equipment, error: "" };
+      this.setEquipment(data.data);
+      this.setFilters(data.filters);
+      return { data: data.data, error: "" };
     } catch {
       return { data: [], error: "An error occurred while fetching equipment" };
     }

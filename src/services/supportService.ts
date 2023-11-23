@@ -6,7 +6,7 @@ import { ISupportRecords } from '@/models/response/GetSupportRecordsResponse';
 import { AxiosResponse } from 'axios';
 
 export default class SupportService {
-  static async createSupportRecord(client_description: string): Promise<AxiosResponse<ISupport[]>>{
+  static async createSupportRecord(client_description: string): Promise<AxiosResponse<ISupport>>{
     return $api.post('/support', { client_description });
   }
 

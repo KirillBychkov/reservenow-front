@@ -74,7 +74,10 @@
     "name": "Назва",
     "enterName": "Введіть назву",
     "address": "Адреса",
-    "enterAddress": "Введіть адресу"
+    "enterAddress": "Введіть адресу",
+    "equipmentName": "Назва товару",
+    "equipmentPrice": "Ціна",
+    "enterEquipmentName": "Введіть назву товару"
   },
   "organizations": {
     "organizationId": "ID організації",

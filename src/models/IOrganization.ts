@@ -7,8 +7,9 @@ export interface IOrganization extends WeekWorkingHours {
   name: string;
   user: IUser;
   rental_objects: IObject[];
-  description: string;
-  photo: string;
+  // TODO: add reservations like reservations: IReservation[];
+  description?: string;
+  photo?: string;
   phone: string;
   address: string;
   created_at: string;

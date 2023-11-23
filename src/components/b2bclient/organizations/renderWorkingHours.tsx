@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { formatHour } from '@/utils/organizationHelpers';
 
-export const renderWorkingHours = (
-  organization: IOrganization,
-  day: string
-) => {
+interface Props {
+  organization: IOrganization;
+  day: string;
+}
+
+export const RenderWorkingHours: React.FC<Props> = ({ organization, day }) => {
   const { t } = useTranslation();
 
   const startHourKey = `${day}_start_hours` as keyof IOrganization;

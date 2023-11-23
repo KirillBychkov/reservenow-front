@@ -17,66 +17,72 @@ type Props = {
   first: number;
 };
 
-const ObjectsTable: React.FC<Props> = ({ objects, onPageChange, first }) => {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-  const [selectedObject, setSelectedObject] = useState<IObject | null>(null);
-  const filters = objectsStore.getFilters;
+const ObjectsTable: React.FC<Props> = observer(
+  ({ objects, onPageChange, first }) => {
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+    const [selectedObject, setSelectedObject] = useState<IObject | null>(null);
+    const filters = objectsStore.getFilters;
 
-  const handleViewObject = (object: IObject) => {
-    setSelectedObject(object);
-    navigate(`object/${object.id}`);
-  };
+    const handleViewObject = (object: IObject) => {
+      setSelectedObject(object);
+      navigate(`objects/${object.id}`);
+    };
 
-  return (
-    <div>
-      <DataTable
-        className='customObjectTable'
-        removableSort
-        value={objects}
-        selectionMode='single'
-        selection={selectedObject}
-        onSelectionChange={(e) => {
-          handleViewObject(e.value as IObject);
-        }}
-        footer={
-          <Paginator
-            template={{
-              layout:
-                'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-            }}
-            currentPageReportTemplate={`${t(
-              'states.showed'
-            )} {first} - {last} ${t('states.of')} {totalRecords}`}
-            style={{ justifyContent: 'flex-end' }}
-            first={first}
-            rows={objectsStore.filters.limit}
-            totalRecords={filters.total}
-            onPageChange={onPageChange}
-          />
-        }
-      >
-        <Column field='id' header={t('objects.id')} />
-        <Column field='name' header={t('objects.name')} />
-        <Column field='type' header={t('objects.sportType')} sortable />
-        <Column field='created_at' header={t('dates.date')} sortable />
+    const handleEditObject = (object: IObject) => {
+      navigate(`objects/${object.id}/edit`);
+    };
 
-        <Column
-          header={t('actions.action')}
-          body={(rowData: IObject) => (
-            <Button
-              style={{ maxHeight: '1.5rem' }}
-              label={t('actions.open')}
-              size='small'
-              rounded
-              severity='secondary'
-              onClick={() => handleViewObject(rowData)}
+    return (
+      <div>
+        <DataTable
+          className='customObjectTable'
+          removableSort
+          value={objects}
+          selectionMode='single'
+          selection={selectedObject}
+          onSelectionChange={(e) => {
+            handleViewObject(e.value as IObject);
+          }}
+          footer={
+            <Paginator
+              template={{
+                layout:
+                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+              }}
+              currentPageReportTemplate={`${t(
+                'states.showed'
+              )} {first} - {last} ${t('states.of')} {totalRecords}`}
+              style={{ justifyContent: 'flex-end' }}
+              first={first}
+              rows={objectsStore.filters.limit}
+              totalRecords={filters.total}
+              onPageChange={onPageChange}
             />
-          )}
-        />
-      </DataTable>
-    </div>
-  );
-};
+          }
+        >
+          <Column field='id' header={t('objects.id')} />
+          <Column field='name' header={t('objects.name')} />
+          <Column field='type' header={t('objects.sportType')} sortable />
+          <Column field='created_at' header={t('dates.date')} sortable />
 
-export default observer(ObjectsTable);
+          <Column
+            header={t('actions.action')}
+            body={(rowData: IObject) => (
+              <Button
+                style={{ maxHeight: '1.5rem' }}
+                label={t('actions.edit')}
+                size='small'
+                rounded
+                severity='secondary'
+                onClick={() => handleEditObject(rowData)}
+              />
+            )}
+          />
+        </DataTable>
+      </div>
+    );
+  }
+);
+
+export default ObjectsTable;

@@ -1,25 +1,36 @@
 import $api from '@/http';
 import { IFilters } from '@/models/IFilters';
 import { IObject } from '@/models/IObject';
+import {
+  CreateRentalObjectDTO,
+  UpdateRentalObjectDTO,
+} from '@/models/requests/ObjectsRequests';
 import { AxiosResponse } from 'axios';
 
 export default class ObjectService {
   static async getObjects(filters: Omit<IFilters, 'total'>) {
-    const response = await $api.get(
-      `/rental_object?limit=${filters.limit}&skip=${
-        filters.skip
-      }${filters.search ? `&search=${filters.search}` : ''}`
+    return $api.get(
+      `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
+        filters.search ? `&search=${filters.search}` : ''
+      }`
     );
-    return response;
   }
 
-  static async addObject(object: IObject): Promise<AxiosResponse> {
-    const response = await $api.post('/rental_object', object);
-    return response.data;
+  static async addObject(
+    object: CreateRentalObjectDTO
+  ): Promise<AxiosResponse<IObject>> {
+    return $api.post('/rental_object', object);
   }
 
   static async getObjectById(id: number): Promise<AxiosResponse> {
-    const response = await $api.get(`/rental_object/${id}`);
-    return response.data;
+    return $api.get(`/rental_object/${id}`);
+  }
+
+  static async editObject(id: number, object: UpdateRentalObjectDTO) {
+    return $api.patch(`/rental_object/${id}`, object);
+  }
+
+  static async deleteObject(id: number) {
+    return $api.delete(`/rental_object/${id}`);
   }
 }

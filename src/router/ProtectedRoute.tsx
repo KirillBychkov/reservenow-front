@@ -16,37 +16,34 @@ interface ProtectedRoute {
  * A HOC that handles route protection.
  **/
 
-const ProtectedRoute: React.FC<ProtectedRoute> = ({
-  redirectPath,
-  children,
-  isProtected,
-  allowedRoles,
-}) => {
-  const token = localStorage.getItem('token');
-  const refreshToken = localStorage.getItem('refreshToken');
-  const userRole = authStore.getUserRole;
+const ProtectedRoute: React.FC<ProtectedRoute> = observer(
+  ({ redirectPath, children, isProtected, allowedRoles }) => {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const userRole = authStore.getUserRole;
 
-  // If the route is protected and the user is not authenticated, redirect
-  if (isProtected && (!token || !refreshToken)) {
-    return <Navigate to={redirectPath} replace />;
+    // If the route is protected and the user is not authenticated, redirect
+    if (isProtected && (!token || !refreshToken)) {
+      return <Navigate to={redirectPath} replace />;
+    }
+    // If the role is not in the list of allowed roles, redirect
+    if (allowedRoles && userRole && !allowedRoles.includes(userRole)) {
+      return <Navigate to='/' replace />;
+    }
+
+    // Render the protected route with Header and Sidebar if applicable
+    return isProtected ? (
+      <>
+        <Header />
+        <Flex>
+          <Sidebar />
+          {children}
+        </Flex>
+      </>
+    ) : (
+      <>{children}</>
+    );
   }
-  // If the role is not in the list of allowed roles, redirect
-  if (allowedRoles && userRole && !allowedRoles.includes(userRole)) {
-    return <Navigate to='/' replace />;
-  }
+);
 
-  // Render the protected route with Header and Sidebar if applicable
-  return isProtected ? (
-    <>
-      <Header />
-      <Flex>
-        <Sidebar />
-        {children}
-      </Flex>
-    </>
-  ) : (
-    <>{children}</>
-  );
-};
-
-export default observer(ProtectedRoute);
+export default ProtectedRoute;

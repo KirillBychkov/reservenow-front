@@ -31,6 +31,7 @@
     "clients": "Клієнти",
     "search": "Пошук",
     "add": "Додати клієнта",
+    "edit": "Редагувати клієнта",
     "clear": "Очистити",
     "export": "Експорт",
     "null": "Наразі немає клієнтів"
@@ -70,9 +71,15 @@
     "areYouSure": "Ви впевнені?",
     "enterMessage": "Повідомлення:",
     "chooseFile": "Файли:",
+    "price": "Ціна",
+    "enterPrice": "Введіть ціну",
+    "name": "Назва",
+    "enterName": "Введіть назву",
+    "address": "Адреса",
+    "enterAddress": "Введіть адресу",
     "equipmentName": "Назва товару",
-    "enterEquipmentName": "Введіть назву товару",
-    "equipmentPrice": "Ціна"
+    "equipmentPrice": "Ціна",
+    "enterEquipmentName": "Введіть назву товару"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -89,9 +96,17 @@
   "objects": {
     "objects": "Об'єкти",
     "id": "Номер",
-    "name": "Назва об'єкту",
     "sportType": "Вид спорту",
-    "add": "Додати об'єкт"
+    "add": "Додати об'єкт",
+    "edit": "Редагувати об'єкт",
+    "name": "Назва об'єкту",
+    "enterName": "Введіть назву об'єкту",
+    "description": "Опис",
+    "enterDescription": "Введіть опис об'єкту",
+    "price": "Ціна",
+    "enterPrice": "Введіть ціну",
+    "image": "Зображення об'єкту",
+    "null": "Наразі немає об'єктів"
   },
   "addOrganizationForm": {
     "enterName": "Введіть тут назву організації. . .",
@@ -208,7 +223,9 @@
   },
   "equipment": {
     "equipment": "Товари",
-    "empty": "Нажаль ви ще не створили жодного товара"
+    "empty": "Нажаль ви ще не створили жодного товара",
+    "nameColumn": "Найменування товара",
+    "priceColumn": "Ціна"
   },
   "profile": {
     "heading": "Профіль",

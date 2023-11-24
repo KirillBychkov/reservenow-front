@@ -40,12 +40,9 @@ const ViewOrganization: React.FC = observer(() => {
     errorMsg,
     isLoading,
   } = useFetch<IObjects[]>(
-    () => objectsStore.fetchObjects({ limit, skip }),
+    () => objectsStore.getRentalObjects({ limit, skip }),
     [limit, skip]
   );
-
-  console.log('objects', objects);
-  console.log('organization', organization);
 
   if (!organization || !objects) {
     return <ProgressSpinner />;

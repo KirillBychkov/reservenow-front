@@ -3,7 +3,7 @@ import styles from './manageUser.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import ManageUserForm from '@/components/forms/manageUserForm';
+import ManageUserForm from '@/components/forms/manageUserForm/manageUserForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -37,7 +37,7 @@ const ManageUser: React.FC = observer(() => {
   return (
     <div className={styles.manageUser}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {id && initialValues ? t('actions.editClient') : t('actions.addClient')}
+        {id && initialValues ? t('clients.edit') : t('clients.add')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
@@ -45,9 +45,7 @@ const ManageUser: React.FC = observer(() => {
           { label: t('clients.clients'), url: '/users' },
           {
             label:
-              id && initialValues
-                ? `${initialValues.id}`
-                : t('actions.addClient'),
+              id && initialValues ? `${initialValues.id}` : t('clients.add'),
             url: '/users/add',
           },
         ]}

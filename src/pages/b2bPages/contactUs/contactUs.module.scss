@@ -21,22 +21,6 @@
   box-shadow: 0px 1.5px 2px 0px #1018281a;
 }
 
-.fileContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 14px;
-  width: 286px;
-  padding: 12px;
-  border: 1px solid var(--neutral-gray-100);
-  background-color: var(--neutral-gray);
-  border-radius: 8px;
-}
-
-.cross {
-  cursor: pointer;
-}
-
 .formFooter {
   display: flex;
   justify-content: flex-end;

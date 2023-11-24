@@ -71,12 +71,12 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         <Column
           style={{ width: '70%' }}
           field='name'
-          header={t('forms.equipmentName')}
+          header={t('equipment.nameColumn')}
           sortable
         />
         <Column
           field='price_per_hour'
-          header={t('forms.equipmentPrice')}
+          header={t('equipment.priceColumn')}
           body={(rowData: Equipment) => (
             <p className='text-medium'>UAH {rowData.price_per_hour}</p>
           )}

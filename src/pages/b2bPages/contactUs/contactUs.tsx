@@ -1,30 +1,29 @@
 import Flex from '@/components/UI/layout/flex';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { FileUpload as PrFileUpload } from 'primereact/fileupload';
 import styles from './contactUs.module.scss';
 import Button from '@/components/UI/buttons/button';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
-import { useContext, useRef, useState } from 'react';
+import { useContext } from 'react';
 import { useFormik } from 'formik';
 import { CreateSupportDTO } from '@/models/requests/SupportRequests';
-import { Cross } from '@blueprintjs/icons';
 import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
 import ToastContext from '@/context/toast';
+import { useFileUpload } from '@/hooks/useFileUpload';
 
 const ContactUs = observer(() => {
   const { t } = useTranslation();
-  const [fileName, setFileName] = useState<string | null>(null);
   const { showSuccess, showError } = useContext(ToastContext);
-  const fileUploadRef = useRef<PrFileUpload>(null);
+  const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+
   const formik = useFormik<CreateSupportDTO>({
     initialValues: {
       client_description: '',
     },
     onSubmit: async (values) => {
       const { client_description } = values;
-      const file = fileUploadRef.current?.getFiles()[0];
+      const file = ref.current?.getFiles()[0];
 
       const { successMsg, errorMsg } =
         await supportRecordsStore.createSupportRecord(client_description, file);
@@ -41,18 +40,9 @@ const ContactUs = observer(() => {
     },
   });
 
-  const handlerClearFile = () => {
-    fileUploadRef.current?.clear();
-    setFileName(null);
-  };
-
   const clearForm = () => {
     formik.resetForm();
-    handlerClearFile();
-  };
-
-  const handleFileSelect = (file: File) => {
-    setFileName(file.name);
+    handleClearFile();
   };
 
   return (
@@ -81,19 +71,11 @@ const ContactUs = observer(() => {
             <Flex options={{ direction: 'column', gap: 0.25 }}>
               <h6 className='heading heading-6'>{t('forms.chooseFile')}</h6>
               <FileUpload
-                fileUploadRef={fileUploadRef}
-                onSelect={handleFileSelect}
+                fileUploadRef={ref}
+                onChange={handleSelect}
+                onClear={handleClearFile}
+                fileName={fileName}
               />
-              <div className={styles.fileContainer}>
-                <p className='paragraph paragraph--normal'>
-                  {fileName || t('actions.addImage')}
-                </p>
-                <Cross
-                  color='#7961db'
-                  className={styles.cross}
-                  onClick={handlerClearFile}
-                />
-              </div>
             </Flex>
           </Flex>
         </div>

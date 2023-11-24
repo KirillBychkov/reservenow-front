@@ -1,10 +1,10 @@
-import FormField from '../UI/fields/formField';
+import FormField from '../../../UI/fields/formField';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import * as yup from 'yup';
 import styles from './manageEquipmentForm.module.scss';
-import Flex from '../UI/layout/flex';
-import Button from '../UI/buttons/button';
+import Flex from '../../../UI/layout/flex';
+import Button from '../../../UI/buttons/button';
 import { InputNumber } from 'primereact/inputnumber';
 import { observer } from 'mobx-react-lite';
 import { Equipment } from '@/models/Equipment';
@@ -16,6 +16,9 @@ import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import equipmentStore from '@/store/EquipmentStore';
 import ToastContext from '@/context/toast';
+import { EquipmentFormData } from '@/types/equipment';
+import { createEquipment, updateEquipment } from './submitHandlers';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   initialValues?: Equipment;
@@ -24,6 +27,7 @@ type Props = {
 export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
   const { t } = useTranslation();
   const { showModal } = useContext(ModalContext);
+  const navigate = useNavigate();
   const { showError, showSuccess } = useContext(ToastContext);
 
   const handleShowModalAndSubmit = async () => {
@@ -35,12 +39,24 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
 
   const handleShowModalAndDelete = async () => {
     const res = await showModal(t('forms.areYouSure'));
-    if (res && initialValues) {
-      equipmentStore.deleteEquipment(initialValues.id);
+    if (!res || !initialValues) {
+      return;
     }
+
+    const { successMsg, errorMsg } = await equipmentStore.deleteEquipment(
+      initialValues.id
+    );
+
+    if (errorMsg) {
+      showError(errorMsg);
+      return;
+    }
+
+    showSuccess(successMsg);
+    navigate('/equipment');
   };
 
-  const formData: Pick<Equipment, 'name' | 'description' | 'price_per_hour'> = {
+  const formData: EquipmentFormData = {
     name: initialValues?.name || '',
     description: initialValues?.description || '',
     price_per_hour: initialValues?.price_per_hour || 0,
@@ -58,33 +74,16 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
     initialValues: formData,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      let successMessage = '';
-      let errorMessage = '';
+      const { successMsg, errorMsg } = initialValues?.id
+        ? await updateEquipment(values, initialValues.id)
+        : await createEquipment(values, resetForm);
 
-      if (initialValues?.id) {
-        const { successMsg, errorMsg } = await equipmentStore.updateEquipment(
-          initialValues.id,
-          {
-            ...values,
-          }
-        );
-        successMessage = successMsg;
-        errorMessage = errorMsg;
-      } else {
-        const { successMsg, errorMsg } = await equipmentStore.addEquipment({
-          ...values,
-        });
-        successMessage = successMsg;
-        errorMessage = errorMsg;
-
-        resetForm();
+      if (errorMsg) {
+        showError(errorMsg);
+        return;
       }
 
-      if (errorMessage) {
-        showError(errorMessage);
-      } else {
-        showSuccess(successMessage);
-      }
+      showSuccess(successMsg);
     },
   });
 
@@ -140,8 +139,10 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
               onBlur={formik.handleBlur}
               className={classNames(isValidClassname(formik, 'price_per_hour'))}
               size={100}
-              prefix='₴'
-              placeholder='₴'
+              type='text'
+              mode='currency'
+              currency='UAH'
+              locale='uk-UA'
             />
           </FormField>
         </div>

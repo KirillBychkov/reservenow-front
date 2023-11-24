@@ -104,9 +104,11 @@ class SupportRecordsStore {
         client_description
       );
 
-      if (file) {
-        await SupportService.uploadImageForRecord(createdRecord[0].id, file);
+      if (!file) {
+        return { successMsg: 'Record created successfully', errorMsg: '' };
       }
+
+      await SupportService.uploadImageForRecord(createdRecord.id, file);
 
       return { successMsg: 'Record created successfully', errorMsg: '' };
     } catch {

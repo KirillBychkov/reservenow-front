@@ -8,7 +8,7 @@ import { AxiosResponse } from 'axios';
 export default class SupportService {
   static async createSupportRecord(
     client_description: string
-  ): Promise<AxiosResponse<Support[]>> {
+  ): Promise<AxiosResponse<Support>> {
     return $api.post('/support', { client_description });
   }
 

@@ -74,7 +74,10 @@
     "name": "Назва",
     "enterName": "Введіть назву",
     "address": "Адреса",
-    "enterAddress": "Введіть адресу"
+    "enterAddress": "Введіть адресу",
+    "equipmentName": "Назва товару",
+    "equipmentPrice": "Ціна",
+    "enterEquipmentName": "Введіть назву товару"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -217,6 +220,8 @@
   },
   "equipment": {
     "equipment": "Товари",
-    "empty": "Нажаль ви ще не створили жодного товара"
+    "empty": "Нажаль ви ще не створили жодного товара",
+    "nameColumn": "Найменування товара",
+    "priceColumn": "Ціна"
   }
 }

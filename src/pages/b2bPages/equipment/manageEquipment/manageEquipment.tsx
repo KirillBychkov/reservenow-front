@@ -4,7 +4,7 @@ import { BreadCrumb } from "primereact/breadcrumb";
 import { useParams } from "react-router-dom";
 import { Home } from "@blueprintjs/icons";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { ManageEquipmentForm } from "@/components/forms/manageEquipmentForm";
+import { ManageEquipmentForm } from "@/components/b2bclient/forms/manageEquipmentForm/manageEquipmentForm";
 import useFetch from "@/hooks/useFetch";
 import { observer } from "mobx-react-lite";
 import { IEquipment } from "@/models/IEquipment";

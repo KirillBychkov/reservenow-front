@@ -27,7 +27,6 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const { id: organizationId, objectId } = useParams();
   const validationSchema = Yup.object({});
-  console.log(initialValues, objectId);
 
   const workingHours = transformWorkingHours<IObject>(initialValues);
 

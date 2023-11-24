@@ -6,7 +6,7 @@ import { ChangeEvent, ReactNode, RefObject } from "react";
 import Button from "../buttons/button";
 import styles from "./FileUpload.module.scss";
 import { useTranslation } from "react-i18next";
-import { Media } from "@blueprintjs/icons";
+import { Cross, Media } from "@blueprintjs/icons";
 
 type Props = {
   fileUploadRef: RefObject<PrFileUpload>;
@@ -15,7 +15,9 @@ type Props = {
   itemTemplate?:
     | ReactNode
     | ((file: object, options: ItemTemplateOptions) => ReactNode);
-  onSelect?: (file: File) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClear: () => void;
+  fileName: string,
 };
 
 export const FileUpload = ({
@@ -23,19 +25,11 @@ export const FileUpload = ({
   emptyTemplate,
   itemTemplate,
   buttonText,
-  onSelect,
+  onChange,
+  onClear,
+  fileName
 }: Props) => {
   const { t } = useTranslation();
-
-  const handleFileSelectByButton = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
-
-    if (onSelect) {
-      onSelect(file);
-    }
-
-    fileUploadRef.current?.setFiles([file]);
-  };
 
   const template = () => {
     return (
@@ -43,7 +37,7 @@ export const FileUpload = ({
         <input
           id="file"
           type="file"
-          onChange={handleFileSelectByButton}
+          onChange={onChange}
           hidden
         />
         <label className={styles.label} htmlFor="file">
@@ -64,11 +58,23 @@ export const FileUpload = ({
   };
 
   return (
-    <PrFileUpload
-      headerTemplate={() => null}
-      emptyTemplate={template}
-      itemTemplate={template || itemTemplate}
-      ref={fileUploadRef}
-    />
+    <div>
+      <PrFileUpload
+        headerTemplate={() => null}
+        emptyTemplate={template}
+        itemTemplate={template || itemTemplate}
+        ref={fileUploadRef}
+      />
+      <div className={styles.fileContainer}>
+        <p className="paragraph paragraph--normal">
+          {fileName || t("actions.addImage")}
+        </p>
+        <Cross
+          color="#7961db"
+          className={styles.cross}
+          onClick={onClear}
+        />
+      </div>
+    </div>
   );
 };

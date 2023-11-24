@@ -1,12 +1,12 @@
 import { UserRole } from '@/types/enums/user';
-import { IAccount, IUser } from '@/models/IUser';
+import { Account, User } from '@/models/User';
 import AuthService from '@/services/authService';
 import { computed, makeAutoObservable } from 'mobx';
-import { ISignInDTO } from '@/models/requests/AuthRequests';
+import { SignInDTO } from '@/models/requests/AuthRequests';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 
 class AuthStore {
-  user = {} as IAccount;
+  user = {} as Account;
   isAuth: boolean = false;
   userRole: string = '';
   userName: string = '';
@@ -18,7 +18,7 @@ class AuthStore {
     this.initAuth();
   }
 
-  async login(user: ISignInDTO): Promise<SuccessOrError> {
+  async login(user: SignInDTO): Promise<SuccessOrError> {
     try {
       const response = await AuthService.login(user);
       localStorage.setItem('token', response.data.access_token);
@@ -39,14 +39,14 @@ class AuthStore {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       this.setAuth(false);
-      this.setUser({} as IAccount);
+      this.setUser({} as Account);
       return { successMsg: 'Logged out succesfully', errorMsg: '' };
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error logging out' };
     }
   }
 
-  async getUser(): Promise<ResponseOrError<IAccount>> {
+  async getUser(): Promise<ResponseOrError<Account>> {
     try {
       const response = await AuthService.getUser();
       this.setAuth(true);
@@ -55,7 +55,7 @@ class AuthStore {
       this.setUserNameFromResponse(response.data);
       return { data: response.data, error: '' };
     } catch (e) {
-      return { data: {} as IAccount, error: 'Error getting user' };
+      return { data: {} as Account, error: 'Error getting user' };
     }
   }
 
@@ -66,7 +66,7 @@ class AuthStore {
     this.isAuth = bool;
   }
 
-  setUser(user: IAccount): void {
+  setUser(user: Account): void {
     this.user = user;
   }
 
@@ -79,7 +79,7 @@ class AuthStore {
     }
   }
 
-  setUserRoleFromResponse(responseData: IUser | IAccount): void {
+  setUserRoleFromResponse(responseData: User | Account): void {
     if ('account' in responseData) {
       this.userRole = responseData.account.role.name;
     } else {
@@ -87,7 +87,7 @@ class AuthStore {
     }
   }
 
-  setUserNameFromResponse(responseData: IAccount) {
+  setUserNameFromResponse(responseData: Account) {
     const firstName = responseData.user?.first_name;
     const lastName = responseData.user?.last_name;
     this.userName = `${firstName || ''} ${lastName || ''}`.trim();

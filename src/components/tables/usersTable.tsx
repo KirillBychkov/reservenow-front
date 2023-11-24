@@ -1,21 +1,21 @@
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { IAccount } from '@/models/IUser';
+import { Account } from '@/models/User';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import classNames from 'classnames';
-import { IUser } from '@/models/IUser';
+import { User } from '@/models/User';
 import { useMemo, useState } from 'react';
-import { getFormattedDate } from '@/utils/parseFormattedDate';
+import { getFormattedDate } from '@/utils/getFormattedDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import usersStore from '@/store/UsersStore';
 import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {
-  users: IUser[];
+  users: User[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -27,10 +27,10 @@ const UsersTable: React.FC<Props> = observer(
   ({ users, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
-    const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const filters = usersStore.getFilters();
 
-    const handleViewUser = (user: IUser) => {
+    const handleViewUser = (user: User) => {
       setSelectedUser(user);
       navigate(`${user.id}`);
     };
@@ -39,7 +39,7 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: IUser[] = useMemo(() => {
+    const formattedUsers: User[] = useMemo(() => {
       return users.map((user) => {
         const formattedDate = getFormattedDate(user.created_at, i18n.language);
 
@@ -86,7 +86,7 @@ const UsersTable: React.FC<Props> = observer(
           <Column field='account.email' header={t('forms.email')} />
           <Column
             header={t('forms.status')}
-            body={(rowData: IUser) => (
+            body={(rowData: User) => (
               <div
                 className={classNames(
                   styles.status,
@@ -100,7 +100,7 @@ const UsersTable: React.FC<Props> = observer(
           <Column field='created_at' header={t('dates.createdAt')} sortable />
           <Column
             header={t('actions.actions')}
-            body={(rowData: IAccount) => (
+            body={(rowData: Account) => (
               <Button
                 style={{ maxHeight: '1.5rem' }}
                 label={t('actions.edit')}

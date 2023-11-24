@@ -1,7 +1,7 @@
-export interface ICreateEquipmentDTO {
+export interface CreateEquipmentDTO {
   name: string;
   description?: string;
   price_per_hour: number;
 }
 
-export interface IUpdateEquipmentDTO extends Partial<ICreateEquipmentDTO> {}
+export interface UpdateEquipmentDTO extends Partial<CreateEquipmentDTO> {}

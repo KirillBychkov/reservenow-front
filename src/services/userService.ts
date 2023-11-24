@@ -1,14 +1,14 @@
 import $api from '@/http';
-import { IFilters } from '@/models/IFilters';
-import { IUser } from '@/models/IUser';
-import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IUsers } from '@/models/response/GetUsersResponse';
+import { Filters } from '@/models/Filters';
+import { User } from '@/models/User';
+import { CreateUserDTO, UpdateUserDTO } from '@/models/requests/UserRequests';
+import { Users } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
   static async getUsers(
-    filters: Omit<IFilters, 'total'>
-  ): Promise<AxiosResponse<IUsers>> {
+    filters: Omit<Filters, 'total'>
+  ): Promise<AxiosResponse<Users>> {
     return $api.get(
       `/users?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
@@ -16,7 +16,7 @@ export default class UserService {
     );
   }
 
-  static async createUser(user: ICreateUserDTO): Promise<AxiosResponse> {
+  static async createUser(user: CreateUserDTO): Promise<AxiosResponse> {
     return $api.post('/users', user);
   }
 
@@ -30,13 +30,13 @@ export default class UserService {
     );
   }
 
-  static async getUserById(id: number): Promise<AxiosResponse<IUser>> {
+  static async getUserById(id: number): Promise<AxiosResponse<User>> {
     return $api.get(`/users/${id}`);
   }
 
   static async updateUser(
     id: number,
-    user: IUpdateUserDTO
+    user: UpdateUserDTO
   ): Promise<AxiosResponse> {
     return $api.patch(`/users/${id}`, user);
   }

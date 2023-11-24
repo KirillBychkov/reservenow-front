@@ -1,21 +1,22 @@
-import { IOrganization } from '@/models/IOrganization';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { formatHour } from '@/utils/organizationHelpers';
+import { WeekWorkingHours } from '@/types/weekWorkingHours';
+import { ViewPageData } from './leftSideComponent';
 
 interface Props {
-  organization: IOrganization;
+  data: ViewPageData;
   day: string;
 }
 
-export const RenderWorkingHours: React.FC<Props> = ({ organization, day }) => {
+export const RenderWorkingHours: React.FC<Props> = ({ data, day }) => {
   const { t } = useTranslation();
 
-  const startHourKey = `${day}_start_hours` as keyof IOrganization;
-  const endHourKey = `${day}_end_hours` as keyof IOrganization;
+  const startHourKey = `${day}_start_hours` as keyof WeekWorkingHours;
+  const endHourKey = `${day}_end_hours` as keyof WeekWorkingHours;
 
-  const startHour = organization[startHourKey];
-  const endHour = organization[endHourKey];
+  const startHour = data[startHourKey];
+  const endHour = data[endHourKey];
 
   // Check if both startHour and endHour are 0
   const isDayOff = startHour === null && endHour === null;

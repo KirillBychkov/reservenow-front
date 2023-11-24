@@ -1,25 +1,32 @@
-import { IOrganization } from '@/models/IOrganization';
 import styles from './leftSideComponent.module.scss';
 import OrganizationDetailsLeft from './organizationDetailsLeft';
 import FootballField from '@/assets/footballField.png';
-interface LeftSideComponentProps {
-  organization: IOrganization;
+import { WeekWorkingHours } from '@/types/weekWorkingHours';
+
+export interface ViewPageData extends WeekWorkingHours {
+  name: string;
+  id: number;
+  address: string;
+  photo?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // any other data
+}
+interface Props {
+  data: ViewPageData;
 }
 
-const LeftSideComponent: React.FC<LeftSideComponentProps> = ({
-  organization,
-}) => {
+const LeftSideComponent: React.FC<Props> = ({ data }) => {
   return (
     <div className={styles.OrganizationDetails}>
       <div className={styles.OrganizationImageDiv}>
         <img
           className={styles.OrganizationImage}
-          src={organization.photo || FootballField}
-          alt={organization.name}
+          src={data.photo || FootballField}
+          alt={data.name}
         />
       </div>
       <div className={styles.OrganizationDetailsBottom}>
-        <OrganizationDetailsLeft organization={organization} />
+        <OrganizationDetailsLeft data={data} />
       </div>
     </div>
   );

@@ -1,19 +1,19 @@
-import { SortField, SortOrder } from "@/hooks/useSort";
-import { IEquipment } from "@/models/IEquipment";
-import equipmentStore from "@/store/EquipmentStore";
-import { observer } from "mobx-react-lite";
-import { Button } from "primereact/button";
-import { Column } from "primereact/column";
-import { DataTable, DataTableStateEvent } from "primereact/datatable";
-import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
-import { useTranslation } from "react-i18next";
-import Flex from "../UI/layout/flex";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import ToastContext from "@/context/toast";
+import { SortField, SortOrder } from '@/hooks/useSort';
+import { Equipment } from '@/models/Equipment';
+import equipmentStore from '@/store/EquipmentStore';
+import { observer } from 'mobx-react-lite';
+import { Button } from 'primereact/button';
+import { Column } from 'primereact/column';
+import { DataTable, DataTableStateEvent } from 'primereact/datatable';
+import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { useTranslation } from 'react-i18next';
+import Flex from '../UI/layout/flex';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import ToastContext from '@/context/toast';
 
 type TableProps = {
-  equipment: IEquipment[];
+  equipment: Equipment[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -55,12 +55,12 @@ export const EquipmentTable: React.FC<TableProps> = observer(
           <Paginator
             template={{
               layout:
-                "CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink",
+                'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
             }}
             currentPageReportTemplate={`${t(
-              "states.showed"
-            )} {first} - {last} ${t("states.of")} {totalRecords}`}
-            style={{ justifyContent: "flex-end" }}
+              'states.showed'
+            )} {first} - {last} ${t('states.of')} {totalRecords}`}
+            style={{ justifyContent: 'flex-end' }}
             first={first}
             rows={filters.limit}
             totalRecords={filters.total}
@@ -69,38 +69,38 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         }
       >
         <Column
-          style={{ width: "70%" }}
-          field="name"
-          header={t("forms.equipmentName")}
+          style={{ width: '70%' }}
+          field='name'
+          header={t('forms.equipmentName')}
           sortable
         />
         <Column
-          field="price_per_hour"
-          header={t("forms.equipmentPrice")}
-          body={(rowData: IEquipment) => (
-            <p className="text-medium">UAH {rowData.price_per_hour}</p>
+          field='price_per_hour'
+          header={t('forms.equipmentPrice')}
+          body={(rowData: Equipment) => (
+            <p className='text-medium'>UAH {rowData.price_per_hour}</p>
           )}
           sortable
         />
         <Column
-          header={t("actions.actions")}
-          body={({ id }: IEquipment) => (
+          header={t('actions.actions')}
+          body={({ id }: Equipment) => (
             <Flex options={{ gap: 0.5 }}>
               <Button
-                label={t("actions.edit")}
-                style={{ maxHeight: "1.5rem" }}
-                size="small"
+                label={t('actions.edit')}
+                style={{ maxHeight: '1.5rem' }}
+                size='small'
                 rounded
-                severity="secondary"
+                severity='secondary'
                 onClick={() => handleEditEquipment(id)}
               />
 
               <Button
-                label={t("actions.delete")}
-                style={{ maxHeight: "1.5rem" }}
-                size="small"
+                label={t('actions.delete')}
+                style={{ maxHeight: '1.5rem' }}
+                size='small'
                 rounded
-                severity="secondary"
+                severity='secondary'
                 onClick={() => handleDeleteEquipment(id)}
               />
             </Flex>

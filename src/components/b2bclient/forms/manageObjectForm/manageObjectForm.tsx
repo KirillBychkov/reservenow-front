@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import FormField from '@/components/UI/fields/formField';
 import { InputNumber } from 'primereact/inputnumber';
 import { WorkingHours } from './workingHours';
-import { IObject } from '@/models/IObject';
+import { RentalObject } from '@/models/RentalObject';
 import { InputMask } from 'primereact/inputmask';
 import Button from '@/components/UI/buttons/button';
 import { useParams } from 'react-router-dom';
@@ -19,7 +19,7 @@ import ToastContext from '@/context/toast';
 import { createObject, updateObject } from './submitHandlers';
 
 interface Props {
-  initialValues?: IObject;
+  initialValues?: RentalObject;
 }
 
 const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
@@ -27,9 +27,8 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const { id: organizationId, objectId } = useParams();
   const validationSchema = Yup.object({});
-  console.log(initialValues, objectId);
 
-  const workingHours = transformWorkingHours<IObject>(initialValues);
+  const workingHours = transformWorkingHours<RentalObject>(initialValues);
 
   const formData: ObjectFormData = {
     name: initialValues?.name || '',

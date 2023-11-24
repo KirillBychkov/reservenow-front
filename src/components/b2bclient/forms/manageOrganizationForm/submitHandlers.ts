@@ -1,4 +1,4 @@
-import { ICreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
+import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import organizationStore from '@/store/OrganizationsStore';
 import { OrganizationFormData } from '@/types/organization';
 import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
@@ -8,7 +8,7 @@ export const createOrganization = async (
   clearForm?: () => void
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
-  const organization: ICreateOrganizationDTO = {
+  const organization: CreateOrganizationDTO = {
     name: values.name,
     description: values.description,
     phone: values.phone,
@@ -27,7 +27,7 @@ export const updateOrganization = async (
   organizationId: number
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
-  const organization: ICreateOrganizationDTO = {
+  const organization: CreateOrganizationDTO = {
     name: values.name,
     description: values.description,
     phone: values.phone,

@@ -1,20 +1,20 @@
 import { UserStatus } from '@/types/enums/user';
-import { IRole } from './IRole';
+import { Role } from './Role';
 
-export interface IAccount {
+export interface Account {
   id: number;
   email: string;
   password?: string;
-  manager?: IUser;
-  trainer?: IUser;
-  role: IRole;
+  manager?: User;
+  trainer?: User;
+  role: Role;
   status: UserStatus;
   created_at: Date;
   updated_at: Date;
-  user: IUser | null;
+  user: User | null;
 }
 
-export interface IUserDTO {
+export interface UserDTO {
   first_name: string;
   last_name: string;
   phone: string;
@@ -23,9 +23,9 @@ export interface IUserDTO {
   description?: string;
 }
 
-export interface IUser extends IUserDTO {
+export interface User extends UserDTO {
   id: number;
   created_at: Date | string;
   updated_at: Date | string;
-  account: IAccount;
+  account: Account;
 }

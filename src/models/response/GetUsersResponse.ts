@@ -1,7 +1,7 @@
-import { IFilters } from '../IFilters';
-import { IUser } from '../IUser';
+import { Filters } from '../Filters';
+import { User } from '../User';
 
-export interface IUsers {
-  filters: IFilters;
-  data: IUser[];
+export interface Users {
+  filters: Filters;
+  data: User[];
 }

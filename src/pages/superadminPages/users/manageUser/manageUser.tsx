@@ -3,7 +3,7 @@ import styles from './manageUser.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
-import ManageUserForm from '@/components/forms/manageUserForm';
+import ManageUserForm from '@/components/forms/manageUserForm/manageUserForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import styles from '../manageOrganizationForm/manageOrganizationForm.module.scss';
+import styles from './workingHours.module.scss';
 import classNames from 'classnames';
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
 import {

@@ -6,7 +6,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import { Button } from 'primereact/button';
-import { getFormattedDate } from '@/utils/getFormattedDate';
+import { formatDate } from '@/utils/formatters/formatDate';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
@@ -41,7 +41,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
 
     const supportRecordsData = supportRecords.map((supportRecord) => ({
       ...supportRecord,
-      created_at: getFormattedDate(supportRecord.created_at, i18n.language),
+      created_at: formatDate(supportRecord.created_at, i18n.language),
     }));
 
     return (

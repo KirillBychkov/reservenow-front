@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
 import { RentalObject } from '@/models/RentalObject';
-import { getFormattedDate } from '@/utils/getFormattedDate';
+import { formatDate } from '@/utils/formatters/formatDate';
 import objectsStore from '@/store/ObjectsStore';
 
 type Props = {
@@ -35,7 +35,7 @@ const ObjectsTable: React.FC<Props> = observer(
 
     const formattedObjects = objects.map((object) => ({
       ...object,
-      created_at: getFormattedDate(object.created_at, i18n.language),
+      created_at: formatDate(object.created_at, i18n.language),
     }));
 
     return (

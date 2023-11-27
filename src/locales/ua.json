@@ -79,7 +79,8 @@
     "enterAddress": "Введіть адресу",
     "equipmentName": "Назва товару",
     "equipmentPrice": "Ціна",
-    "enterEquipmentName": "Введіть назву товару"
+    "enterEquipmentName": "Введіть назву товару",
+    "profilePhoto": "Фото профiля"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -230,6 +231,10 @@
   "profile": {
     "heading": "Профіль",
     "changePassword": "Змінити пароль",
-    "changeEmail": "Електронна пошта (Для зміни зв'яжіться з нами)"
+    "changeEmail": "Електронна пошта (Для зміни зв'яжіться з нами)",
+    "addPhoto": "Додати фото профiля",
+    "updatePhoto": "Змінити фото профiля",
+    "chooseFile": "Виберіть файл",
+    "photoNull": "Ви ще не маєте фото"
   }
 }

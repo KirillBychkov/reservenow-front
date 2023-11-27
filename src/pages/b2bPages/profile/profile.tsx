@@ -6,7 +6,7 @@ import Button from "@/components/UI/buttons/button";
 import { useNavigate } from "react-router-dom";
 import { IAccount } from "@/models/IUser";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { EditProfileForm } from "@/components/forms/editProfileForm";
+import { EditProfileForm } from "@/components/b2bclient/forms/editProfileForm/editProfileForm";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 

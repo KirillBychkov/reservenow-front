@@ -65,16 +65,14 @@ export const FileUpload = ({
         itemTemplate={template || itemTemplate}
         ref={fileUploadRef}
       />
-      <div className={styles.fileContainer}>
-        <p className="paragraph paragraph--normal">
-          {fileName || t("actions.addImage")}
-        </p>
-        <Cross
-          color="#7961db"
-          className={styles.cross}
-          onClick={onClear}
-        />
-      </div>
+      {fileName && (
+        <div className={styles.fileContainer}>
+          <p className="paragraph paragraph--normal">
+            {t("actions.addImage")}
+          </p>
+          <Cross color="#7961db" className={styles.cross} onClick={onClear} />
+        </div>
+      )}
     </div>
   );
 };

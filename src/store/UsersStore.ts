@@ -1,10 +1,10 @@
-import { IUser } from '@/models/IUser';
-import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IFilters } from '@/models/IFilters';
-import UserService from '@/services/userService';
-import { ResponseOrError, SuccessOrError } from '@/types/store';
-import { PlainUserInfo } from '@/types/user';
-import { makeAutoObservable } from 'mobx';
+import { IUser } from "@/models/IUser";
+import { ICreateUserDTO, IUpdateUserDTO } from "@/models/requests/UserRequests";
+import { IFilters } from "@/models/IFilters";
+import UserService from "@/services/userService";
+import { ResponseOrError, SuccessOrError } from "@/types/store";
+import { PlainUserInfo } from "@/types/user";
+import { makeAutoObservable } from "mobx";
 
 class UsersStore {
   users: IUser[] = [];
@@ -29,9 +29,9 @@ class UsersStore {
   addUser = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
     try {
       await UserService.createUser(data);
-      return { successMsg: 'Created client', errorMsg: '' };
+      return { successMsg: "Created client", errorMsg: "" };
     } catch (e) {
-      return { successMsg: '', errorMsg: 'Error creating client' };
+      return { successMsg: "", errorMsg: "Error creating client" };
     }
   };
 
@@ -41,23 +41,39 @@ class UsersStore {
   ): Promise<SuccessOrError> => {
     try {
       await UserService.updateUser(id, data);
-      return { successMsg: 'Updated client', errorMsg: '' };
+      return { successMsg: "Updated client", errorMsg: "" };
     } catch (e) {
-      return { successMsg: '', errorMsg: 'Error updating client' };
+      return { successMsg: "", errorMsg: "Error updating client" };
+    }
+  };
+
+  updateUserFull = async (id: number, data: IUpdateUserDTO, file?: File): Promise<SuccessOrError> => {
+    try {
+      const { data: updatedUser } = await UserService.updateUser(id, data);
+
+      if (!file) {
+        return { successMsg: "User updated successfully", errorMsg: "" };
+      }
+
+      await UserService.uploadImageForUser(updatedUser.id, file);
+
+      return { successMsg: "User updated successfully", errorMsg: "" };
+    } catch {
+      return { successMsg: "", errorMsg: "Error updating user" };
     }
   };
 
   getUserById = async (id: number): Promise<ResponseOrError<IUser>> => {
     const user = this.users.find((user) => user.id === id);
     if (user) {
-      return { data: user, error: '' };
+      return { data: user, error: "" };
     }
     try {
       const fetchedClient = await UserService.getUserById(id);
       this.users.push(fetchedClient.data);
-      return { data: fetchedClient.data, error: '' };
+      return { data: fetchedClient.data, error: "" };
     } catch (error) {
-      return { data: {} as IUser, error: 'Client not found' };
+      return { data: {} as IUser, error: "Client not found" };
     }
   };
 
@@ -65,9 +81,9 @@ class UsersStore {
     try {
       await UserService.deleteUser(id);
       this.users = this.users.filter((user) => user.id !== id);
-      return { successMsg: 'Deleted client succesfully', errorMsg: '' };
+      return { successMsg: "Deleted client succesfully", errorMsg: "" };
     } catch (e) {
-      return { successMsg: '', errorMsg: 'Error deleting client' };
+      return { successMsg: "", errorMsg: "Error deleting client" };
     }
   };
 
@@ -80,30 +96,30 @@ class UsersStore {
     }
     const plainUserInfo: PlainUserInfo = {
       id: user.id,
-      email: user?.account?.email || '',
+      email: user?.account?.email || "",
       status: user?.account?.status,
       firstName: user.first_name,
       lastName: user.last_name,
       phone: user.phone,
       companyName: user.domain_url,
-      description: user.description || '',
+      description: user.description || "",
     };
-    return { data: plainUserInfo, error: '' };
+    return { data: plainUserInfo, error: "" };
   };
 
   getUsers = async (
-    filters: Omit<IFilters, 'total'>
+    filters: Omit<IFilters, "total">
   ): Promise<ResponseOrError<IUser[]>> => {
     try {
       const response = await UserService.getUsers(filters);
       if (response.data.data.length === 0) {
-        return { data: [], error: 'No clients found' };
+        return { data: [], error: "No clients found" };
       }
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
-      return { data: response.data.data, error: '' };
+      return { data: response.data.data, error: "" };
     } catch (e) {
-      return { data: [], error: 'An error occurred while fetching clients.' };
+      return { data: [], error: "An error occurred while fetching clients." };
     }
   };
 }

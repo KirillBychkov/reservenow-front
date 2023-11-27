@@ -69,7 +69,7 @@ const UsersTable: React.FC<Props> = observer(
                   'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
               }}
               currentPageReportTemplate={`${t(
-                'states.showed'
+                'states.showed',
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
@@ -90,7 +90,7 @@ const UsersTable: React.FC<Props> = observer(
               <div
                 className={classNames(
                   styles.status,
-                  styles[rowData?.account?.status]
+                  styles[rowData?.account?.status],
                 )}
               >
                 {t(`status.${rowData?.account?.status}`)}
@@ -114,7 +114,7 @@ const UsersTable: React.FC<Props> = observer(
         </DataTable>
       </div>
     );
-  }
+  },
 );
 
 export default UsersTable;

@@ -26,7 +26,7 @@ const ManageEquipment = observer(() => {
       id
         ? equipmentStore.getEquipmentById(parseInt(id))
         : Promise.resolve({ data: {} as Equipment, error: '' }),
-    [id]
+    [id],
   );
   const isEditingMode = id && initialValues;
 

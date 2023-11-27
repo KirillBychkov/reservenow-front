@@ -9,7 +9,7 @@ import { AxiosResponse } from 'axios';
 
 export default class ManagerService {
   static async createManager(
-    manager: CreateManagerDTO
+    manager: CreateManagerDTO,
   ): Promise<AxiosResponse<Manager>> {
     return $api.post('/manager', manager);
   }
@@ -24,7 +24,7 @@ export default class ManagerService {
 
   static async updateManager(
     id: number,
-    manager: UpdateManagerDTO
+    manager: UpdateManagerDTO,
   ): Promise<AxiosResponse<Manager>> {
     return $api.patch(`/manager/${id}`, manager);
   }

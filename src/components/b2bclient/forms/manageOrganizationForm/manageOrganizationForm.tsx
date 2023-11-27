@@ -75,7 +75,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         </div>
       </form>
     );
-  }
+  },
 );
 
 export default ManageOrganizationForm;

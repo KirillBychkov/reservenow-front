@@ -27,7 +27,7 @@ const ViewObject: React.FC = () => {
     errorMsg,
   } = useFetch<RentalObject>(
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
-    [objectId]
+    [objectId],
   );
 
   if (errorMsg) {

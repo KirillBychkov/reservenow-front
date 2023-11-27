@@ -14,7 +14,7 @@ interface UseFetchResult<T> {
 
 function useFetch<T>(
   fetchFunction: FetchFunction<T>,
-  dependencies?: any[]
+  dependencies?: any[],
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);

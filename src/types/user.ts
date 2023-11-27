@@ -23,4 +23,4 @@ export const StatusOptions: UserStatus[] = [
   UserStatus.DELETED,
 ];
 
-export type UserFormData = Omit<PlainUserInfo, 'status'>
+export type UserFormData = Omit<PlainUserInfo, 'status'>;

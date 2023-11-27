@@ -40,7 +40,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = observer(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default OrganizationCard;

@@ -18,7 +18,7 @@ const Requests: React.FC = observer(() => {
   const [search, setSearch] = React.useState('');
 
   const { limit, skip, first, onPageChange } = usePaginate(
-    supportRecordsStore.filters
+    supportRecordsStore.filters,
   );
 
   const { sortField, sortOrder, handleSort, sort } = useSort();
@@ -29,7 +29,7 @@ const Requests: React.FC = observer(() => {
     errorMsg,
   } = useFetch<Support[]>(
     () => supportRecordsStore.getSupportRecords({ limit, skip, search, sort }),
-    [limit, skip, search, sort]
+    [limit, skip, search, sort],
   );
 
   if (errorMsg) {

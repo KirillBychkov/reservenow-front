@@ -23,7 +23,7 @@ class OrganizationStore {
   };
 
   addOrganization = async (
-    organization: CreateOrganizationDTO
+    organization: CreateOrganizationDTO,
   ): Promise<SuccessOrError> => {
     try {
       const res = await OrganizationService.addOrganization(organization);
@@ -36,7 +36,7 @@ class OrganizationStore {
   };
 
   getOrganizationById = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<Organization>> => {
     try {
       const res = await OrganizationService.getOrganizationById(id);
@@ -49,7 +49,7 @@ class OrganizationStore {
 
   editOrganization = async (
     id: number,
-    organization: CreateOrganizationDTO
+    organization: CreateOrganizationDTO,
   ): Promise<SuccessOrError> => {
     try {
       await OrganizationService.editOrganization(id, organization);
@@ -64,7 +64,7 @@ class OrganizationStore {
 
   uploadOrgImage = async (
     id: number,
-    file: any
+    file: any,
   ): Promise<ResponseOrError<Organization>> => {
     try {
       const organizationData = await OrganizationService.uploadImage(id, file);

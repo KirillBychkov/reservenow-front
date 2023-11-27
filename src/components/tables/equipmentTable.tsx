@@ -58,7 +58,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
                 'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
             }}
             currentPageReportTemplate={`${t(
-              'states.showed'
+              'states.showed',
             )} {first} - {last} ${t('states.of')} {totalRecords}`}
             style={{ justifyContent: 'flex-end' }}
             first={first}
@@ -108,5 +108,5 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         />
       </DataTable>
     );
-  }
+  },
 );

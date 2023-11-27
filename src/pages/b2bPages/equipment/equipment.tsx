@@ -22,7 +22,7 @@ const Equipment: React.FC = observer(() => {
   const [search, setSearch] = useState('');
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(
-    equipmentStore.filters
+    equipmentStore.filters,
   );
   const {
     data: equipment,
@@ -30,7 +30,7 @@ const Equipment: React.FC = observer(() => {
     errorMsg,
   } = useFetch<Equipment[]>(
     () => equipmentStore.getEquipment({ limit, skip, search, sort }),
-    [limit, skip, search, sort]
+    [limit, skip, search, sort],
   );
   const isEquipmentEmpty = equipment && equipment.length === 0 && !isLoading;
 

@@ -1,10 +1,10 @@
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
-// import { IOrganization } from './IOrganization';
+// import { Organization } from './Organization';
 
-export interface IObject extends WeekWorkingHours {
+export interface RentalObject extends WeekWorkingHours {
   id: number;
   price_per_hour: number;
-  // organization: IOrganization;
+  // organization: Organization;
   name: string;
   description?: string;
   photo?: string;

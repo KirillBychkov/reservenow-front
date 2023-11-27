@@ -1,5 +1,5 @@
 import $api from '@/http';
-import { ITrainer } from '@/models/ITrainer';
+import { Trainer } from '@/models/Trainer';
 import {
   CreateTrainerDTO,
   UpdateTrainerDTO,
@@ -7,24 +7,24 @@ import {
 import { AxiosResponse } from 'axios';
 
 export default class TrainerService {
-  static async getTrainers(): Promise<AxiosResponse<ITrainer[]>> {
+  static async getTrainers(): Promise<AxiosResponse<Trainer[]>> {
     return $api.get('/trainer');
   }
 
-  static async getTrainer(id: number): Promise<AxiosResponse<ITrainer>> {
+  static async getTrainer(id: number): Promise<AxiosResponse<Trainer>> {
     return $api.get(`/trainer/${id}`);
   }
 
   static async createTrainer(
     trainer: CreateTrainerDTO
-  ): Promise<AxiosResponse<ITrainer>> {
+  ): Promise<AxiosResponse<Trainer>> {
     return $api.post('/trainer', trainer);
   }
 
   static async updateTrainer(
     id: number,
     trainer: UpdateTrainerDTO
-  ): Promise<AxiosResponse<ITrainer>> {
+  ): Promise<AxiosResponse<Trainer>> {
     return $api.patch(`/trainer/${id}`, trainer);
   }
 

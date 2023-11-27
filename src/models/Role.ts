@@ -1,9 +1,9 @@
-export interface IRoleDTO {
+export interface RoleDTO {
   name: string;
   permissions?: string[];
 }
 
-export interface IRole extends IRoleDTO {
+export interface Role extends RoleDTO {
   id: number;
   created_at: Date;
   updated_at: Date;

@@ -1,12 +1,12 @@
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
-import { IUser } from './IUser';
-import { IObject } from './IObject';
+import { User } from './User';
+import { RentalObject } from './RentalObject';
 
-export interface IOrganization extends WeekWorkingHours {
+export interface Organization extends WeekWorkingHours {
   id: number;
   name: string;
-  user: IUser;
-  rental_objects: IObject[];
+  user: User;
+  rental_objects: RentalObject[];
   // TODO: add reservations like reservations: IReservation[];
   description?: string;
   photo?: string;

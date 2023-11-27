@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './requests.module.scss';
 import Searchbar from '@/components/searchbar/searchbar';
 import SupportRecordsTable from '@/components/tables/supportRecordsTable';
-import { ISupport } from '@/models/ISupport';
+import { Support } from '@/models/Support';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
 import supportRecordsStore from '@/store/SupportRecordsStore';
@@ -27,7 +27,7 @@ const Requests: React.FC = observer(() => {
     data: supportRecords,
     isLoading,
     errorMsg,
-  } = useFetch<ISupport[]>(
+  } = useFetch<Support[]>(
     () => supportRecordsStore.getSupportRecords({ limit, skip, search, sort }),
     [limit, skip, search, sort]
   );

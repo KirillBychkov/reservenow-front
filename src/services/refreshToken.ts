@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { BASE_API_URL } from '@/http';
-import { AuthDTO } from '@/models/IAuth';
+import { AuthDTO } from '@/models/Auth';
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');

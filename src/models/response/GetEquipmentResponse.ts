@@ -1,7 +1,7 @@
-import { IEquipment } from "../IEquipment";
-import { IFilters } from "../IFilters";
+import { Equipment } from '../Equipment';
+import { Filters } from '../Filters';
 
-export interface IEquipments {
-  filters: IFilters;
-  data: IEquipment[];
+export interface Equipments {
+  filters: Filters;
+  data: Equipment[];
 }

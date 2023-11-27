@@ -1,7 +1,7 @@
-import { IFilters } from '../IFilters';
-import { IObject } from '../IObject';
+import { Filters } from '../Filters';
+import { RentalObject } from '../RentalObject';
 
-export interface IObjects {
-  filters: IFilters;
-  data: IObject[];
+export interface RentalObjects {
+  filters: Filters;
+  data: RentalObject[];
 }

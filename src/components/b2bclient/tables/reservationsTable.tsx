@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
-import objectsStore from '@/store/ObjectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { getFormattedDate } from '@/utils/getFormattedDate';
+import objectsStore from '@/store/ObjectsStore';
 
 type Props = {
   objects: RentalObject[];
@@ -21,19 +21,17 @@ const ObjectsTable: React.FC<Props> = observer(
   ({ objects, onPageChange, first }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
-    const [selectedObject, setSelectedObject] = useState<RentalObject | null>(
-      null
-    );
-    const filters = objectsStore.getFilters;
+    // const [selectedObject, setSelectedObject] = useState<RentalObject | null>(null);
+    // const filters = objectsStore.getFilters;
 
-    const handleViewObject = (object: RentalObject) => {
-      setSelectedObject(object);
-      navigate(`objects/${object.id}`);
-    };
+    // const handleViewObject = (object: RentalObject) => {
+    //   setSelectedObject(object);
+    //   navigate(`objects/${object.id}`);
+    // };
 
-    const handleEditObject = (object: RentalObject) => {
-      navigate(`objects/${object.id}/edit`);
-    };
+    // const handleEditObject = (object: RentalObject) => {
+    //   navigate(`objects/${object.id}/edit`);
+    // };
 
     const formattedObjects = objects.map((object) => ({
       ...object,

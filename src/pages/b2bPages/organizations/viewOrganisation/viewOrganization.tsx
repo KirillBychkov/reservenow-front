@@ -14,11 +14,11 @@ import objectsStore from '@/store/ObjectsStore';
 import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
-import { IObjects } from '@/models/response/GetObjectsResponse';
 import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
 import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
 import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
-import { IOrganization } from '@/models/IOrganization';
+import { Organization } from '@/models/Organization';
+import { RentalObject } from '@/models/RentalObject';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const ViewOrganization: React.FC = observer(() => {
     objectsStore.filters
   );
 
-  const { data: organization } = useFetch<IOrganization>(
+  const { data: organization } = useFetch<Organization>(
     () => organizationStore.getOrganizationById(parseInt(id || '0')),
     [id]
   );
@@ -39,7 +39,7 @@ const ViewOrganization: React.FC = observer(() => {
     data: objects,
     errorMsg,
     isLoading,
-  } = useFetch<IObjects[]>(
+  } = useFetch<RentalObject[]>(
     () => objectsStore.getRentalObjects({ limit, skip }),
     [limit, skip]
   );
@@ -82,9 +82,7 @@ const ViewOrganization: React.FC = observer(() => {
       ) : (
         <>
           <ViewStatsLayout
-            LeftSideComponent={
-              <LeftSideComponent organization={organization} />
-            }
+            LeftSideComponent={<LeftSideComponent data={organization} />}
             RightSideComponent={
               <RightSideComponent
                 heading={t('objects.objects')}

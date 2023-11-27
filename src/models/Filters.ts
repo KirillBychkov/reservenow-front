@@ -1,4 +1,4 @@
-export interface IFilters {
+export interface Filters {
   skip?: number;
   limit?: number;
   search?: string;

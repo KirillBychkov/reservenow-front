@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite';
 import objectsStore from '@/store/ObjectsStore';
 import ToastContext from '@/context/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { IObject } from '@/models/IObject';
+import { RentalObject } from '@/models/RentalObject';
 
 const ManageObject: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -26,11 +26,9 @@ const ManageObject: React.FC = observer(() => {
     () =>
       objectId
         ? objectsStore.getRentalObject(parseInt(objectId || '0'))
-        : Promise.resolve({ data: {} as IObject, error: '' }),
+        : Promise.resolve({ data: {} as RentalObject, error: '' }),
     [objectId]
   );
-
-  console.log(object);
 
   if (errorMsg) {
     showError(errorMsg);

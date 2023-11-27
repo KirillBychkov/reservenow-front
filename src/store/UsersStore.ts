@@ -47,7 +47,7 @@ class UsersStore {
     }
   };
 
-  updateUserFull = async (id: number, data: IUpdateUserDTO, file?: File): Promise<SuccessOrError> => {
+  updateUserFull = async (id: number, data: UpdateUserDTO, file?: File): Promise<SuccessOrError> => {
     try {
       const { data: updatedUser } = await UserService.updateUser(id, data);
 

@@ -6,10 +6,12 @@ import PasswordChangeForm from "@/components/forms/passwordChangeForm";
 import { useState } from "react";
 import Button from "@/components/UI/buttons/button";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const PasswordPage = () => {
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const handlePasswordChange = () => {
     setIsPasswordChanged(true);
@@ -21,13 +23,13 @@ const PasswordPage = () => {
       className={styles.passwordPage}
     >
       <article>
-        <h3 className="heading heading-3">Змінити пароль</h3>
+        <h3 className="heading heading-3">{t('profile.heading')}</h3>
         <BreadCrumb
           home={{ icon: <Home color="gray" />, url: "/" }}
           model={[
-            { label: "Профіль", url: "/profile" },
+            { label: t('profile.heading'), url: "/profile" },
             {
-              label: "Змінити пароль",
+              label: t('profile.changePassword'),
               url: "/profile/password",
               disabled: true,
             },
@@ -39,9 +41,9 @@ const PasswordPage = () => {
         {isPasswordChanged ? (
           <Flex options={{direction: 'column', gap: 1}} className={styles.success}>
             <TickCircle size={80} color='#62D96B' />
-            <h1 className="heading heading-1 heading-primary">Пароль змінений</h1>
-            <p>Lorem Ipsum є псевдо- латинський текст використовується у веб - дизайні, типографіка, верстка, і друку замість англійської </p>
-            <Button onClick={() => navigate('/')} fill className={styles.btn}>На головну</Button>
+            <h1 className="heading heading-1 heading-primary">{t('profile.passwordChanged')}</h1>
+            <p>{t('profile.passwordChangedMessage')}</p>
+            <Button onClick={() => navigate('/')} fill className={styles.btn}>{t('profile.goBack')}</Button>
           </Flex>
         ) : (
           <PasswordChangeForm onSubmit={handlePasswordChange} />

@@ -1,5 +1,4 @@
 import ModalContext from "@/context/modal";
-import { IAccount, IUser } from "@/models/IUser";
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,12 +14,13 @@ import * as Yup from "yup";
 import usersStore from "@/store/UsersStore";
 import ToastContext from "@/context/toast";
 import { imageStringToFile } from "@/utils/cropImage";
+import { Account, User } from "@/models/User";
 
 type Props = {
-  initialValues: IAccount;
+  initialValues: Account;
 };
 
-type FormType = IUser & {
+type FormType = User & {
   email: string;
 };
 
@@ -67,7 +67,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
   const formik = useFormik<FormType>({
     initialValues: {
       email: initialValues.email,
-      ...(initialValues.user as IUser),
+      ...(initialValues.user as User),
     },
     validationSchema,
     onSubmit: async (values) => {

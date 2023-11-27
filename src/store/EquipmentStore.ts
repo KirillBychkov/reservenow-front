@@ -1,16 +1,16 @@
-import { IEquipment } from "@/models/IEquipment";
-import { IFilters } from "@/models/IFilters";
+import { Equipment } from '@/models/Equipment';
+import { Filters } from '@/models/Filters';
 import {
-  ICreateEquipmentDTO,
-  IUpdateEquipmentDTO,
-} from "@/models/requests/EquipmentRequests";
-import EquipmentService from "@/services/equipmentService";
-import { ResponseOrError, SuccessOrError } from "@/types/store";
-import { makeAutoObservable } from "mobx";
+  CreateEquipmentDTO,
+  UpdateEquipmentDTO,
+} from '@/models/requests/EquipmentRequests';
+import EquipmentService from '@/services/equipmentService';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { makeAutoObservable } from 'mobx';
 
 class EquipmentStore {
-  equipment: IEquipment[] = [];
-  filters: IFilters = { total: 0, limit: 4 };
+  equipment: Equipment[] = [];
+  filters: Filters = { total: 0, limit: 4 };
 
   constructor() {
     makeAutoObservable(this);
@@ -20,51 +20,53 @@ class EquipmentStore {
     return this.filters;
   }
 
-  setFilters(filters: IFilters) {
+  setFilters(filters: Filters) {
     this.filters = filters;
   }
 
-  setEquipment(equipment: IEquipment[]) {
+  setEquipment(equipment: Equipment[]) {
     this.equipment = equipment;
   }
 
   addEquipment = async (
-    equipment: ICreateEquipmentDTO
+    equipment: CreateEquipmentDTO
   ): Promise<SuccessOrError> => {
     try {
       const { data: createdEquipment } = await EquipmentService.createEquipment(
         equipment
       );
       this.equipment.push(createdEquipment);
-      return { successMsg: "Equipment was created", errorMsg: "" };
+      return { successMsg: 'Equipment was created', errorMsg: '' };
     } catch {
-      return { successMsg: "", errorMsg: "Error creating equipment" };
+      return { successMsg: '', errorMsg: 'Error creating equipment' };
     }
   };
 
-  getEquipment = async (filters: Omit<IFilters, 'total'>): Promise<ResponseOrError<IEquipment[]>> => {
+  getEquipment = async (
+    filters: Omit<Filters, 'total'>
+  ): Promise<ResponseOrError<Equipment[]>> => {
     try {
       const { data } = await EquipmentService.getEquipment(filters);
 
       if (!data.data.length) {
-        return { data: [], error: "No equipment found" };
+        return { data: [], error: 'No equipment found' };
       }
 
       this.setEquipment(data.data);
       this.setFilters(data.filters);
-      return { data: data.data, error: "" };
+      return { data: data.data, error: '' };
     } catch {
-      return { data: [], error: "An error occurred while fetching equipment" };
+      return { data: [], error: 'An error occurred while fetching equipment' };
     }
   };
 
   getEquipmentById = async (
     id: number
-  ): Promise<ResponseOrError<IEquipment>> => {
+  ): Promise<ResponseOrError<Equipment>> => {
     const equipment = this.equipment.find((eq) => eq.id === id);
 
     if (equipment) {
-      return { data: equipment, error: "" };
+      return { data: equipment, error: '' };
     }
 
     try {
@@ -72,15 +74,15 @@ class EquipmentStore {
         await EquipmentService.getEquipmentById(id);
 
       this.equipment.push(fetchedEquipment);
-      return { data: fetchedEquipment, error: "" };
+      return { data: fetchedEquipment, error: '' };
     } catch {
-      return { data: {} as IEquipment, error: "Equipment not found" };
+      return { data: {} as Equipment, error: 'Equipment not found' };
     }
   };
 
   updateEquipment = async (
     id: number,
-    equipment: IUpdateEquipmentDTO
+    equipment: UpdateEquipmentDTO
   ): Promise<SuccessOrError> => {
     try {
       const { data: updatedEquipment } = await EquipmentService.updateEquipment(
@@ -96,9 +98,9 @@ class EquipmentStore {
         return eq;
       });
 
-      return { successMsg: "Updated equipment", errorMsg: "" };
+      return { successMsg: 'Updated equipment', errorMsg: '' };
     } catch {
-      return { successMsg: "", errorMsg: "Error updating equipment" };
+      return { successMsg: '', errorMsg: 'Error updating equipment' };
     }
   };
 
@@ -107,9 +109,9 @@ class EquipmentStore {
       await EquipmentService.deleteEquipment(id);
       this.equipment = this.equipment.filter((eq) => eq.id !== id);
 
-      return { successMsg: "Deleted equipment successfully", errorMsg: "" };
+      return { successMsg: 'Deleted equipment successfully', errorMsg: '' };
     } catch {
-      return { successMsg: "", errorMsg: "Error deleting equipment" };
+      return { successMsg: '', errorMsg: 'Error deleting equipment' };
     }
   };
 }

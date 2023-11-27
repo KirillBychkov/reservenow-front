@@ -1,18 +1,18 @@
-import { IOrganization } from '@/models/IOrganization';
-import { ICreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
+import { Organization } from '@/models/Organization';
+import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
 class OrganizationStore {
   errorMessage: string = '';
-  organizations: IOrganization[] | null = null;
+  organizations: Organization[] | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getOrganizations = async (): Promise<ResponseOrError<IOrganization[]>> => {
+  getOrganizations = async (): Promise<ResponseOrError<Organization[]>> => {
     try {
       const organizationsData = await OrganizationService.getOrganizations();
       this.setOrganizations(organizationsData);
@@ -23,7 +23,7 @@ class OrganizationStore {
   };
 
   addOrganization = async (
-    organization: ICreateOrganizationDTO
+    organization: CreateOrganizationDTO
   ): Promise<SuccessOrError> => {
     try {
       const res = await OrganizationService.addOrganization(organization);
@@ -37,19 +37,19 @@ class OrganizationStore {
 
   getOrganizationById = async (
     id: number
-  ): Promise<ResponseOrError<IOrganization>> => {
+  ): Promise<ResponseOrError<Organization>> => {
     try {
       const res = await OrganizationService.getOrganizationById(id);
 
       return { data: res.data, error: '' };
     } catch (e) {
-      return { data: {} as IOrganization, error: 'Error getting organization' };
+      return { data: {} as Organization, error: 'Error getting organization' };
     }
   };
 
   editOrganization = async (
     id: number,
-    organization: ICreateOrganizationDTO
+    organization: CreateOrganizationDTO
   ): Promise<SuccessOrError> => {
     try {
       await OrganizationService.editOrganization(id, organization);
@@ -65,13 +65,13 @@ class OrganizationStore {
   uploadOrgImage = async (
     id: number,
     file: any
-  ): Promise<ResponseOrError<IOrganization>> => {
+  ): Promise<ResponseOrError<Organization>> => {
     try {
       const organizationData = await OrganizationService.uploadImage(id, file);
       return { data: organizationData, error: '' };
     } catch (e) {
       return {
-        data: {} as IOrganization,
+        data: {} as Organization,
         error: 'Error while uploading image',
       };
     }
@@ -81,7 +81,7 @@ class OrganizationStore {
     UTILS 
   */
 
-  setOrganizations(organizations: IOrganization[]) {
+  setOrganizations(organizations: Organization[]) {
     this.organizations = organizations;
   }
 }

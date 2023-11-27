@@ -1,6 +1,6 @@
 import $api from '@/http';
-import { IFilters } from '@/models/IFilters';
-import { IObject } from '@/models/IObject';
+import { Filters } from '@/models/Filters';
+import { RentalObject } from '@/models/RentalObject';
 import {
   CreateRentalObjectDTO,
   UpdateRentalObjectDTO,
@@ -8,7 +8,7 @@ import {
 import { AxiosResponse } from 'axios';
 
 export default class ObjectService {
-  static async getObjects(filters: Omit<IFilters, 'total'>) {
+  static async getObjects(filters: Omit<Filters, 'total'>) {
     return $api.get(
       `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
@@ -18,7 +18,7 @@ export default class ObjectService {
 
   static async addObject(
     object: CreateRentalObjectDTO
-  ): Promise<AxiosResponse<IObject>> {
+  ): Promise<AxiosResponse<RentalObject>> {
     return $api.post('/rental_object', object);
   }
 

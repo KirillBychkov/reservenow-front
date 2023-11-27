@@ -1,3 +1,3 @@
-import { AuthDTO } from '../IAuth';
+import { AuthDTO } from '../Auth';
 
-export interface IAuthResponse extends AuthDTO {}
+export interface AuthResponse extends AuthDTO {}

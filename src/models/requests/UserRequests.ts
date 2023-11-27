@@ -1,8 +1,8 @@
-import { IUserDTO } from '../IUser';
+import { UserDTO } from '../User';
 
-export interface ICreateUserDTO {
+export interface CreateUserDTO {
   email: string;
-  user: IUserDTO;
+  user: UserDTO;
 }
 
-export interface IUpdateUserDTO extends Partial<IUserDTO> {}
+export interface UpdateUserDTO extends Partial<UserDTO> {}

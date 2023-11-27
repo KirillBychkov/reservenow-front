@@ -1,14 +1,14 @@
-import { IUser } from '@/models/IUser';
-import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import { IFilters } from '@/models/IFilters';
+import { User } from '@/models/User';
+import { CreateUserDTO, UpdateUserDTO } from '@/models/requests/UserRequests';
+import { Filters } from '@/models/Filters';
 import UserService from '@/services/userService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainUserInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
 
 class UsersStore {
-  users: IUser[] = [];
-  filters: IFilters = { total: 0, limit: 8 };
+  users: User[] = [];
+  filters: Filters = { total: 0, limit: 8 };
 
   constructor() {
     makeAutoObservable(this);
@@ -18,15 +18,15 @@ class UsersStore {
     return this.filters;
   }
 
-  setClients(users: IUser[]) {
+  setClients(users: User[]) {
     this.users = users;
   }
 
-  setFilters(filters: IFilters) {
+  setFilters(filters: Filters) {
     this.filters = filters;
   }
 
-  addUser = async (data: ICreateUserDTO): Promise<SuccessOrError> => {
+  addUser = async (data: CreateUserDTO): Promise<SuccessOrError> => {
     try {
       await UserService.createUser(data);
       return { successMsg: 'Created client', errorMsg: '' };
@@ -37,7 +37,7 @@ class UsersStore {
 
   updateUser = async (
     id: number,
-    data: IUpdateUserDTO
+    data: UpdateUserDTO
   ): Promise<SuccessOrError> => {
     try {
       await UserService.updateUser(id, data);
@@ -47,7 +47,7 @@ class UsersStore {
     }
   };
 
-  getUserById = async (id: number): Promise<ResponseOrError<IUser>> => {
+  getUserById = async (id: number): Promise<ResponseOrError<User>> => {
     const user = this.users.find((user) => user.id === id);
     if (user) {
       return { data: user, error: '' };
@@ -57,7 +57,7 @@ class UsersStore {
       this.users.push(fetchedClient.data);
       return { data: fetchedClient.data, error: '' };
     } catch (error) {
-      return { data: {} as IUser, error: 'Client not found' };
+      return { data: {} as User, error: 'Client not found' };
     }
   };
 
@@ -92,8 +92,8 @@ class UsersStore {
   };
 
   getUsers = async (
-    filters: Omit<IFilters, 'total'>
-  ): Promise<ResponseOrError<IUser[]>> => {
+    filters: Omit<Filters, 'total'>
+  ): Promise<ResponseOrError<User[]>> => {
     try {
       const response = await UserService.getUsers(filters);
       if (response.data.data.length === 0) {

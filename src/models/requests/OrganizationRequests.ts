@@ -1,11 +1,10 @@
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
 
-export interface ICreateOrganizationDTO extends WeekWorkingHours {
+export interface CreateOrganizationDTO extends WeekWorkingHours {
   name: string;
   description?: string;
   phone: string;
   address: string;
 }
 
-export interface IUpdateOrganizationDTO
-  extends Partial<ICreateOrganizationDTO> {}
+export interface UpdateOrganizationDTO extends Partial<CreateOrganizationDTO> {}

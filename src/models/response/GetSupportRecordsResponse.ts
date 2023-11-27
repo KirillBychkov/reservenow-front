@@ -1,7 +1,7 @@
-import { IFilters } from '../IFilters';
-import { ISupport } from '../ISupport';
+import { Filters } from '../Filters';
+import { Support } from '../Support';
 
-export interface ISupportRecords {
-  filters: IFilters;
-  data: ISupport[];
+export interface SupportRecords {
+  filters: Filters;
+  data: Support[];
 }

@@ -1,8 +1,8 @@
-import { IUser } from './IUser';
+import { User } from './User';
 
-export interface ISupport {
+export interface Support {
   id: number;
-  user: IUser;
+  user: User;
   file?: string;
   client_description: string;
   result_description?: string;

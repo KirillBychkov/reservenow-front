@@ -1,12 +1,12 @@
-import Flex from "@/components/UI/layout/flex";
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./userProfile.module.scss";
-import { LogOut, Person } from "@blueprintjs/icons";
-import authStore from "@/store/AuthStore";
-import { observer } from "mobx-react-lite";
-import { Menu } from "primereact/menu";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import Flex from '@/components/UI/layout/flex';
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './userProfile.module.scss';
+import { LogOut, Person } from '@blueprintjs/icons';
+import authStore from '@/store/AuthStore';
+import { observer } from 'mobx-react-lite';
+import { Menu } from 'primereact/menu';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const UserProfile: React.FC = observer(() => {
   const [userName, setUserName] = useState<string | undefined>(undefined);
@@ -16,23 +16,23 @@ const UserProfile: React.FC = observer(() => {
 
   const items = [
     {
-      label: t("profile.heading"),
+      label: t('profile.heading'),
       command: () => {
-        navigate("/profile");
+        navigate('/profile');
       },
     },
     {
-      label: t("contact-us.heading"),
+      label: t('contact-us.heading'),
       command: () => {
-        navigate("/contact-us");
+        navigate('/contact-us');
       },
     },
     {
       template: () => {
         return (
-          <div className="p-menuitem-link">
-            <p className="p-menuitem-text">{t("actions.signout")}</p>
-            <LogOut color="#7961DB" />
+          <div className='p-menuitem-link'>
+            <p className='p-menuitem-text'>{t('actions.signout')}</p>
+            <LogOut color='#7961DB' />
           </div>
         );
       },
@@ -43,9 +43,9 @@ const UserProfile: React.FC = observer(() => {
     (async () => {
       try {
         await authStore.getUser();
-        setUserName(authStore.getUserName || "");
+        setUserName(authStore.getUserName || '');
       } catch (e) {
-        setUserName("");
+        setUserName('');
       }
     })();
   }, []);
@@ -55,13 +55,13 @@ const UserProfile: React.FC = observer(() => {
       className={styles.profile}
       onClick={(event) => menuLeft?.current?.toggle(event)}
     >
-      <Flex options={{ gap: 0.62, align: "center" }}>
+      <Flex options={{ gap: 0.62, align: 'center' }}>
         <div className={styles.username}>{userName}</div>
-        <div className={styles["avatar-placeholder"]}>
-          <Person color="white" />
+        <div className={styles['avatar-placeholder']}>
+          <Person color='white' />
         </div>
         <Menu
-          style={{ width: "242px" }}
+          style={{ width: '242px' }}
           className={styles.menu}
           model={items}
           ref={menuLeft}

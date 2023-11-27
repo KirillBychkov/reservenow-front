@@ -12,12 +12,12 @@ export default class ObjectService {
     return $api.get(
       `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }`
+      }`,
     );
   }
 
   static async addObject(
-    object: CreateRentalObjectDTO
+    object: CreateRentalObjectDTO,
   ): Promise<AxiosResponse<RentalObject>> {
     return $api.post('/rental_object', object);
   }

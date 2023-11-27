@@ -16,14 +16,14 @@ export default class TrainerService {
   }
 
   static async createTrainer(
-    trainer: CreateTrainerDTO
+    trainer: CreateTrainerDTO,
   ): Promise<AxiosResponse<Trainer>> {
     return $api.post('/trainer', trainer);
   }
 
   static async updateTrainer(
     id: number,
-    trainer: UpdateTrainerDTO
+    trainer: UpdateTrainerDTO,
   ): Promise<AxiosResponse<Trainer>> {
     return $api.patch(`/trainer/${id}`, trainer);
   }

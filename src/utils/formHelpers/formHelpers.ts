@@ -36,7 +36,7 @@ export const getDayLabel = (index: number) => {
 };
 
 const initializeWorkingHours = (
-  initialWorkingHours?: WeekWorkingHours
+  initialWorkingHours?: WeekWorkingHours,
 ): Week => {
   const workingHours: Week = {
     monday: {
@@ -110,7 +110,7 @@ export const finalizeWorkingHours = (week: Week): WeekWorkingHours => {
 };
 
 export const transformWorkingHours = <T extends WeekWorkingHours>(
-  initialValues?: T
+  initialValues?: T,
 ): Week => {
   if (!initialValues) return initializeWorkingHours();
   const initialWorkingHours = {} as T;

@@ -37,7 +37,7 @@ class UsersStore {
 
   updateUser = async (
     id: number,
-    data: UpdateUserDTO
+    data: UpdateUserDTO,
   ): Promise<SuccessOrError> => {
     try {
       await UserService.updateUser(id, data);
@@ -72,7 +72,7 @@ class UsersStore {
   };
 
   getPlainUserInfo = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<PlainUserInfo>> => {
     const { data: user, error } = await this.getUserById(id);
     if (error) {
@@ -92,7 +92,7 @@ class UsersStore {
   };
 
   getUsers = async (
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<User[]>> => {
     try {
       const response = await UserService.getUsers(filters);

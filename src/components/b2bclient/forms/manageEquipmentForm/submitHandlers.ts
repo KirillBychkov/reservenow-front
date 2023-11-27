@@ -1,23 +1,26 @@
-import { ICreateEquipmentDTO, IUpdateEquipmentDTO } from "@/models/requests/EquipmentRequests";
-import equipmentStore from "@/store/EquipmentStore";
-import { EquipmentFormData } from "@/types/equipment";
+import {
+  ICreateEquipmentDTO,
+  IUpdateEquipmentDTO,
+} from '@/models/requests/EquipmentRequests';
+import equipmentStore from '@/store/EquipmentStore';
+import { EquipmentFormData } from '@/types/equipment';
 
 export const createEquipment = async (
   values: EquipmentFormData,
-  clearForm?: () => void
+  clearForm?: () => void,
 ) => {
   const equipment: ICreateEquipmentDTO = {
     ...values,
-  }
+  };
 
-  const response = await equipmentStore.addEquipment(equipment)
+  const response = await equipmentStore.addEquipment(equipment);
 
   if (response.successMsg && clearForm) {
-    clearForm()
+    clearForm();
   }
 
-  return response
-}
+  return response;
+};
 
 export const updateEquipment = async (
   values: EquipmentFormData,
@@ -25,8 +28,8 @@ export const updateEquipment = async (
 ) => {
   const equipment: IUpdateEquipmentDTO = {
     ...values,
-  }
-  const response = await equipmentStore.updateEquipment(equipmentId, equipment)
+  };
+  const response = await equipmentStore.updateEquipment(equipmentId, equipment);
 
-  return response
-}
+  return response;
+};

@@ -1,21 +1,21 @@
-import React, { useContext } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import FormField from "@/components/UI/fields/formField";
-import Button from "@/components/UI/buttons/button";
-import { InputText } from "primereact/inputtext";
-import { InputMask } from "primereact/inputmask";
-import { InputTextarea } from "primereact/inputtextarea";
-import classNames from "classnames";
-import isValidClassname from "@/utils/isValidClassname";
-import styles from "./manageUserForm.module.scss";
-import { useTranslation } from "react-i18next";
-import { observer } from "mobx-react-lite";
-import usersStore from "@/store/UsersStore";
-import { PlainUserInfo, UserFormData } from "@/types/user";
-import ToastContext from "@/context/toast";
-import ModalContext from "@/context/modal";
-import { createUser, updateUser } from "./submitHandlers";
+import React, { useContext } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import FormField from '@/components/UI/fields/formField';
+import Button from '@/components/UI/buttons/button';
+import { InputText } from 'primereact/inputtext';
+import { InputMask } from 'primereact/inputmask';
+import { InputTextarea } from 'primereact/inputtextarea';
+import classNames from 'classnames';
+import isValidClassname from '@/utils/isValidClassname';
+import styles from './manageUserForm.module.scss';
+import { useTranslation } from 'react-i18next';
+import { observer } from 'mobx-react-lite';
+import usersStore from '@/store/UsersStore';
+import { PlainUserInfo, UserFormData } from '@/types/user';
+import ToastContext from '@/context/toast';
+import ModalContext from '@/context/modal';
+import { createUser, updateUser } from './submitHandlers';
 
 interface Props {
   initialValues?: PlainUserInfo;
@@ -27,7 +27,7 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   const { showModal } = useContext(ModalContext);
 
   const handleShowModalAndSubmit = async () => {
-    const res = await showModal(t("forms.areYouSure"));
+    const res = await showModal(t('forms.areYouSure'));
     if (res) {
       await formik.handleSubmit();
     }
@@ -35,29 +35,29 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
 
   const validationSchema = Yup.object({
     id: Yup.number(),
-    firstName: Yup.string().required(t("invalid.required")),
-    lastName: Yup.string().required(t("invalid.required")),
+    firstName: Yup.string().required(t('invalid.required')),
+    lastName: Yup.string().required(t('invalid.required')),
     phone: Yup.string()
-      .required(t("invalid.required"))
-      .test("phone", t("invalid.phone"), (value) => {
+      .required(t('invalid.required'))
+      .test('phone', t('invalid.phone'), (value) => {
         if (value) {
-          return !value.includes("_");
+          return !value.includes('_');
         }
         return false;
       }),
     email: Yup.string()
-      .email(t("invalid.email"))
-      .required(t("invalid.required")),
-    companyName: Yup.string().required(t("invalid.required")),
+      .email(t('invalid.email'))
+      .required(t('invalid.required')),
+    companyName: Yup.string().required(t('invalid.required')),
   });
 
   const formData: UserFormData = initialValues || {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    companyName: "",
-    description: "",
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    companyName: '',
+    description: '',
   };
 
   const formik = useFormik({
@@ -89,118 +89,118 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className={styles.form}>
-        <h4 className="heading heading-4 heading-primary">
-          {t("forms.overallInfo")}
+        <h4 className='heading heading-4 heading-primary'>
+          {t('forms.overallInfo')}
         </h4>
         <FormField
-          label={t("forms.firstName")}
+          label={t('forms.firstName')}
           isValid={!(formik.touched.firstName && formik.errors.firstName)}
           invalidMessage={formik.errors.firstName}
         >
           <InputText
-            name="firstName"
+            name='firstName'
             value={formik.values.firstName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder={t("forms.enterFirstName")}
-            className={classNames(isValidClassname(formik, "firstName"))}
+            placeholder={t('forms.enterFirstName')}
+            className={classNames(isValidClassname(formik, 'firstName'))}
           />
         </FormField>
         <FormField
-          label={t("forms.lastName")}
+          label={t('forms.lastName')}
           isValid={!(formik.touched.lastName && formik.errors.lastName)}
           invalidMessage={formik.errors.lastName}
         >
           <InputText
-            name="lastName"
+            name='lastName'
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder={t("forms.enterLastName")}
-            className={classNames(isValidClassname(formik, "lastName"))}
+            placeholder={t('forms.enterLastName')}
+            className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
         <FormField
-          label={t("forms.phone")}
+          label={t('forms.phone')}
           isValid={!(formik.touched.phone && formik.errors.phone)}
           invalidMessage={formik.errors.phone}
         >
           <InputMask
-            name="phone"
-            mask="+38 (999) 999-9999"
-            placeholder="+38 (___) ___-____"
+            name='phone'
+            mask='+38 (999) 999-9999'
+            placeholder='+38 (___) ___-____'
             value={formik.values.phone}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classNames(isValidClassname(formik, "phone"))}
+            className={classNames(isValidClassname(formik, 'phone'))}
           />
         </FormField>
         {!initialValues && (
           <FormField
-            label={t("forms.email")}
+            label={t('forms.email')}
             isValid={!(formik.touched.email && formik.errors.email)}
             invalidMessage={formik.errors.email}
           >
             <InputText
-              name="email"
+              name='email'
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              placeholder={t("forms.enterEmail")}
-              className={classNames(isValidClassname(formik, "email"))}
+              placeholder={t('forms.enterEmail')}
+              className={classNames(isValidClassname(formik, 'email'))}
             />
           </FormField>
         )}
         <FormField
-          label={t("forms.companyName")}
+          label={t('forms.companyName')}
           isValid={!(formik.touched.companyName && formik.errors.companyName)}
           invalidMessage={formik.errors.companyName}
         >
           <InputText
-            name="companyName"
+            name='companyName'
             value={formik.values.companyName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder={t("forms.enterCompanyName")}
-            className={classNames(isValidClassname(formik, "companyName"))}
+            placeholder={t('forms.enterCompanyName')}
+            className={classNames(isValidClassname(formik, 'companyName'))}
           />
         </FormField>
-        <FormField label={t("forms.description")}>
+        <FormField label={t('forms.description')}>
           <InputTextarea
             autoResize
-            name="description"
+            name='description'
             value={formik.values.description}
             onChange={formik.handleChange}
-            placeholder={t("forms.enterDescription")}
+            placeholder={t('forms.enterDescription')}
           />
         </FormField>
       </div>
       <div className={styles.controls}>
         {initialValues && (
           <Button
-            severity="secondary"
+            severity='secondary'
             fill
             className={styles.button}
             outlined
             onClick={handleDeleteUser}
           >
-            {t("actions.delete")}
+            {t('actions.delete')}
           </Button>
         )}
         <Button
-          severity="danger"
+          severity='danger'
           fill
           className={styles.button}
           onClick={handleClearForm}
         >
-          {t("actions.clear")}
+          {t('actions.clear')}
         </Button>
         <Button
           onClick={handleShowModalAndSubmit}
           fill
           className={styles.button}
         >
-          {t("actions.submit")}
+          {t('actions.submit')}
         </Button>
       </div>
     </form>

@@ -19,7 +19,7 @@ class PersonnelStore {
   }
 
   createManager = async (
-    manager: CreateManagerDTO
+    manager: CreateManagerDTO,
   ): Promise<ResponseOrError<Manager>> => {
     try {
       const res = await ManagerService.createManager(manager);

@@ -44,7 +44,7 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
     }
 
     const { successMsg, errorMsg } = await equipmentStore.deleteEquipment(
-      initialValues.id
+      initialValues.id,
     );
 
     if (errorMsg) {

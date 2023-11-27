@@ -45,7 +45,7 @@ export const WorkingHours = <T extends { workingHours: Week }>({
   const handleDaySwitchChange = (e: InputSwitchChangeEvent, index: number) => {
     formik.setFieldValue(
       `workingHours.${getDayLabel(index)}.enabled`,
-      e.target.value
+      e.target.value,
     );
     if (!e.target.value) {
       formik.setFieldValue(`workingHours.${getDayLabel(index)}.start`, null);
@@ -54,11 +54,11 @@ export const WorkingHours = <T extends { workingHours: Week }>({
     }
     formik.setFieldValue(
       `workingHours.${getDayLabel(index)}.start`,
-      defaultDay.start
+      defaultDay.start,
     );
     formik.setFieldValue(
       `workingHours.${getDayLabel(index)}.end`,
-      defaultDay.end
+      defaultDay.end,
     );
   };
 
@@ -67,14 +67,14 @@ export const WorkingHours = <T extends { workingHours: Week }>({
       (day: Day) =>
         day.enabled !== is24HoursChecked ||
         day.start !== fullDay.start ||
-        day.end !== fullDay.end
+        day.end !== fullDay.end,
     ) && setIs24HoursChecked(false);
 
     Object.values(week).every(
       (day: Day) =>
         day.enabled === true &&
         day.start === fullDay.start &&
-        day.end === fullDay.end
+        day.end === fullDay.end,
     ) && setIs24HoursChecked(true);
   }, [is24HoursChecked, week]);
 

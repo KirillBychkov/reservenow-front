@@ -10,17 +10,17 @@ import { AxiosResponse } from 'axios';
 
 export default class EquipmentService {
   static getEquipment(
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<AxiosResponse<Equipments>> {
     return $api.get(
       `/equipment?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
     );
   }
 
   static createEquipment(
-    equipment: CreateEquipmentDTO
+    equipment: CreateEquipmentDTO,
   ): Promise<AxiosResponse<Equipment>> {
     return $api.post('/equipment', equipment);
   }
@@ -31,7 +31,7 @@ export default class EquipmentService {
 
   static updateEquipment(
     id: number,
-    equipment: UpdateEquipmentDTO
+    equipment: UpdateEquipmentDTO,
   ): Promise<AxiosResponse<Equipment>> {
     return $api.patch(`/equipment/${id}`, equipment);
   }

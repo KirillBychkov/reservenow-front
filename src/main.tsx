@@ -12,5 +12,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ModalProvider>
       <App />
     </ModalProvider>
-  </ToastProvider>
+  </ToastProvider>,
 );

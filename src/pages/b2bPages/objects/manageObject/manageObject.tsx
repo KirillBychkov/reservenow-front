@@ -27,7 +27,7 @@ const ManageObject: React.FC = observer(() => {
       objectId
         ? objectsStore.getRentalObject(parseInt(objectId || '0'))
         : Promise.resolve({ data: {} as RentalObject, error: '' }),
-    [objectId]
+    [objectId],
   );
 
   if (errorMsg) {

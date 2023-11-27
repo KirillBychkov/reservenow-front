@@ -7,30 +7,30 @@ import { AxiosResponse } from 'axios';
 
 export default class SupportService {
   static async createSupportRecord(
-    client_description: string
+    client_description: string,
   ): Promise<AxiosResponse<Support>> {
     return $api.post('/support', { client_description });
   }
 
   static async getAllSupportRecords(
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<AxiosResponse<SupportRecords>> {
     return $api.get(
       `/support?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
     );
   }
 
   static async getSupportRecordById(
-    id: number
+    id: number,
   ): Promise<AxiosResponse<Support>> {
     return $api.get(`/support/${id}`);
   }
 
   static async updateSupportRecordById(
     id: number,
-    updateDTO: UpdateSupportDTO
+    updateDTO: UpdateSupportDTO,
   ) {
     return $api.patch(`/support/${id}`, updateDTO);
   }

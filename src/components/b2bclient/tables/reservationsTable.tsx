@@ -56,7 +56,7 @@ const ObjectsTable: React.FC<Props> = observer(
                   'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
               }}
               currentPageReportTemplate={`${t(
-                'states.showed'
+                'states.showed',
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
@@ -87,7 +87,7 @@ const ObjectsTable: React.FC<Props> = observer(
         </DataTable>
       </div>
     );
-  }
+  },
 );
 
 export default ObjectsTable;

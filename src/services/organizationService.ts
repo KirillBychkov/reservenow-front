@@ -10,14 +10,14 @@ export default class OrganizationService {
   }
 
   static async addOrganization(
-    organization: CreateOrganizationDTO
+    organization: CreateOrganizationDTO,
   ): Promise<AxiosResponse<Organization>> {
     const response = await $api.post('/organization', organization);
     return response.data;
   }
 
   static async getOrganizationById(
-    id: number
+    id: number,
   ): Promise<AxiosResponse<Organization>> {
     return $api.get(`/organization/${id}`);
   }
@@ -32,14 +32,14 @@ export default class OrganizationService {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      }
+      },
     );
     return reponse.data;
   }
 
   static async editOrganization(
     id: number,
-    organization: CreateOrganizationDTO
+    organization: CreateOrganizationDTO,
   ): Promise<AxiosResponse<Organization>> {
     return $api.patch(`/organization/${id}`, organization);
   }

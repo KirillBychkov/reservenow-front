@@ -4,16 +4,14 @@ import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import { AxiosResponse } from 'axios';
 
 export default class OrganizationService {
-  static async getOrganizations(): Promise<Organization[]> {
-    const response = await $api.get('/organization');
-    return response.data;
+  static async getOrganizations(): Promise<AxiosResponse<Organization[]>> {
+    return $api.get('/organization');
   }
 
   static async addOrganization(
     organization: CreateOrganizationDTO,
   ): Promise<AxiosResponse<Organization>> {
-    const response = await $api.post('/organization', organization);
-    return response.data;
+    return $api.post('/organization', organization);
   }
 
   static async getOrganizationById(
@@ -22,19 +20,15 @@ export default class OrganizationService {
     return $api.get(`/organization/${id}`);
   }
 
-  static async uploadImage(id: number, file: any): Promise<AxiosResponse> {
+  static async uploadImage(id: number, file: File): Promise<AxiosResponse> {
     const formData = new FormData();
-    formData.append('image', file);
-    const reponse = await $api.post(
-      `/organization/upload/image/${id}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    formData.append('file', file);
+    const reponse = $api.put(`/organization/upload/image/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
-    return reponse.data;
+    });
+    return reponse;
   }
 
   static async editOrganization(

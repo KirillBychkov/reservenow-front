@@ -14,9 +14,9 @@ class OrganizationStore {
 
   getOrganizations = async (): Promise<ResponseOrError<Organization[]>> => {
     try {
-      const organizationsData = await OrganizationService.getOrganizations();
-      this.setOrganizations(organizationsData);
-      return { data: organizationsData, error: '' };
+      const response = await OrganizationService.getOrganizations();
+      this.setOrganizations(response.data);
+      return { data: response.data, error: '' };
     } catch (e) {
       return { data: [], error: 'Error getting organizations' };
     }
@@ -24,12 +24,16 @@ class OrganizationStore {
 
   addOrganization = async (
     organization: CreateOrganizationDTO,
+    file?: File,
   ): Promise<SuccessOrError> => {
     try {
       const res = await OrganizationService.addOrganization(organization);
       this.organizations?.push(res.data);
-
-      return { successMsg: 'Organization added', errorMsg: '' };
+      if (!file) {
+        return { successMsg: 'Organization added', errorMsg: '' };
+      }
+      const uploadRes = await this.uploadOrgImage(res.data.id, file);
+      return uploadRes;
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error while adding organization' };
     }
@@ -50,10 +54,15 @@ class OrganizationStore {
   editOrganization = async (
     id: number,
     organization: CreateOrganizationDTO,
+    file?: File,
   ): Promise<SuccessOrError> => {
     try {
       await OrganizationService.editOrganization(id, organization);
-      return { successMsg: 'Updated organization succesfully', errorMsg: '' };
+      if (!file) {
+        return { successMsg: 'Updated organization succesfully', errorMsg: '' };
+      }
+      const uploadRes = await this.uploadOrgImage(id, file);
+      return uploadRes;
     } catch (e) {
       return {
         successMsg: '',
@@ -62,17 +71,15 @@ class OrganizationStore {
     }
   };
 
-  uploadOrgImage = async (
-    id: number,
-    file: any,
-  ): Promise<ResponseOrError<Organization>> => {
+  uploadOrgImage = async (id: number, file: File): Promise<SuccessOrError> => {
     try {
-      const organizationData = await OrganizationService.uploadImage(id, file);
-      return { data: organizationData, error: '' };
+      await OrganizationService.uploadImage(id, file);
+
+      return { successMsg: '', errorMsg: '' };
     } catch (e) {
       return {
-        data: {} as Organization,
-        error: 'Error while uploading image',
+        successMsg: '',
+        errorMsg: 'Error while uploading image',
       };
     }
   };

@@ -17,6 +17,8 @@ import { ObjectFormData } from '@/types/objects';
 import { observer } from 'mobx-react-lite';
 import ToastContext from '@/context/toast';
 import { createObject, updateObject } from './submitHandlers';
+import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
+import { useFileUpload } from '@/hooks/useFileUpload';
 
 interface Props {
   initialValues?: RentalObject;
@@ -27,6 +29,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const { id: organizationId, objectId } = useParams();
   const validationSchema = Yup.object({});
+  const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
 
   const workingHours = transformWorkingHours<RentalObject>(initialValues);
 
@@ -47,9 +50,10 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
     initialValues: formData,
     validationSchema,
     onSubmit: async (values) => {
+      const file = ref.current?.getFiles()[0];
       const res = objectId
-        ? await updateObject(values, parseInt(objectId))
-        : await createObject(values, organizationId, handleClearForm);
+        ? await updateObject(values, parseInt(objectId), file)
+        : await createObject(values, file, organizationId, handleClearForm);
 
       if (res.errorMsg) {
         showError(res.errorMsg);
@@ -120,9 +124,14 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
           />
         </FormField>
       </div>
-      {/* <div className={styles.formSection}>
-        <FileUpload fileUploadRef={fileUploadRef} onSelect={handleFileSelect} />
-      </div> */}
+      <div className={styles.formSection}>
+        <FileUpload
+          fileUploadRef={ref}
+          onChange={handleSelect}
+          onClear={handleClearFile}
+          fileName={fileName}
+        />
+      </div>
       <div className={styles.section}>
         <WorkingHours<ObjectFormData> formik={formik} />
       </div>

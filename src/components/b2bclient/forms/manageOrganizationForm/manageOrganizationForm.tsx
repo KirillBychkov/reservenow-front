@@ -13,6 +13,8 @@ import ToastContext from '@/context/toast';
 import { OrganizationFormData } from '@/types/organization';
 import { Organization } from '@/models/Organization';
 import { createOrganization, updateOrganization } from './submitHandlers';
+import { useFileUpload } from '@/hooks/useFileUpload';
+import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
 
 interface Props {
   initialValues?: Organization;
@@ -23,7 +25,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
     const { t } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
     const validationSchema = Yup.object({});
-
+    const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
     const workingHours = transformWorkingHours(initialValues);
 
     const formData: OrganizationFormData = {
@@ -38,10 +40,13 @@ const ManageOrganizationForm: React.FC<Props> = observer(
       initialValues: formData,
       validationSchema: validationSchema,
       onSubmit: async (values) => {
-        const res = initialValues
-          ? await updateOrganization(values, initialValues.id)
-          : await createOrganization(values);
+        const file = ref.current?.getFiles()[0];
 
+        const res = initialValues
+          ? await updateOrganization(initialValues.id, values, file)
+          : await createOrganization(values, file, handleClearForm);
+
+        handleClearFile();
         if (res.errorMsg) {
           showError(res.errorMsg);
           return;
@@ -58,7 +63,14 @@ const ManageOrganizationForm: React.FC<Props> = observer(
       <form onSubmit={formik.handleSubmit} className={styles.Form}>
         <MainInfo formik={formik} />
         <SecondaryInfo formik={formik} />
-
+        <div className={styles.section}>
+          <FileUpload
+            fileUploadRef={ref}
+            onChange={handleSelect}
+            onClear={handleClearFile}
+            fileName={fileName}
+          />
+        </div>
         <WorkingHours<OrganizationFormData> formik={formik} />
         <div className={styles.Controls}>
           <Button

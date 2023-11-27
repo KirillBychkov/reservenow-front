@@ -1,4 +1,5 @@
 import $api from '@/http';
+import { IChangePasswordDTO } from '@/models/requests/PasswordRequests';
 import { AxiosResponse } from 'axios';
 
 export default class PasswordService {
@@ -24,13 +25,13 @@ export default class PasswordService {
     );
   }
 
-  static async passwordChange(
-    oldPassword: string,
-    newPassword: string,
-  ): Promise<AxiosResponse> {
-    return $api.put('/password/change', {
-      oldPassword,
-      newPassword,
+  static async passwordChange({
+    old_password,
+    new_password,
+  }: IChangePasswordDTO): Promise<AxiosResponse> {
+    return $api.put("/password/change", {
+      old_password,
+      new_password,
     });
   }
 

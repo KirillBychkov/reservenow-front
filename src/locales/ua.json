@@ -52,6 +52,8 @@
     "enterPassword": "Введіть пароль",
     "b2benterPassword": "Ваш пароль",
     "b2bconfirmPassword": "Підтвердити пароль*",
+    "oldPassword": "Старий пароль",
+    "newPassword": "Новий пароль",
     "firstName": "Ім'я",
     "enterFirstName": "Введіть ім'я",
     "lastName": "Прізвище",
@@ -77,7 +79,8 @@
     "enterAddress": "Введіть адресу",
     "equipmentName": "Назва товару",
     "equipmentPrice": "Ціна",
-    "enterEquipmentName": "Введіть назву товару"
+    "enterEquipmentName": "Введіть назву товару",
+    "profilePhoto": "Фото профiля"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -126,6 +129,7 @@
     "email": "Невірний формат електронної пошти",
     "passwordLength": "Пароль повинен містити не менше 6 символів",
     "passwordMatch": "Невірний пароль",
+    "confirmPasswordMustMatch": "Паролі повинні співпадати",
     "phone": "Невірний формат номеру телефону",
     "positiveOnly": "Лише додаткові значення"
   },
@@ -228,5 +232,17 @@
     "empty": "Нажаль ви ще не створили жодного товара",
     "nameColumn": "Найменування товара",
     "priceColumn": "Ціна"
+  },
+  "profile": {
+    "heading": "Профіль",
+    "changePassword": "Змінити пароль",
+    "changeEmail": "Електронна пошта (Для зміни зв'яжіться з нами)",
+    "passwordChanged": "Пароль змінений",
+    "passwordChangedMessage": "Lorem Ipsum є псевдо- латинський текст використовується у веб - дизайні, типографіка, верстка, і друку замість англійської",
+    "addPhoto": "Додати фото профiля",
+    "updatePhoto": "Змінити фото профiля",
+    "chooseFile": "Виберіть файл",
+    "photoNull": "Ви ще не маєте фото",
+    "goBack": "На головну"
   }
 }

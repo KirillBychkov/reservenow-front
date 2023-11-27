@@ -150,6 +150,14 @@
   box-shadow: none;
 }
 
+.p-menu .p-menuitem-link {
+  justify-content: space-between;
+}
+
+.p-menu .p-menuitem-link .p-menuitem-text {
+  color: var(--text-body-color)
+}
+
 .p-accordion {
   & .p-accordion-tab {
     border: 1px solid var(--light-gray-1);

@@ -1,10 +1,10 @@
-import { User } from '@/models/User';
 import { CreateUserDTO, UpdateUserDTO } from '@/models/requests/UserRequests';
-import { Filters } from '@/models/Filters';
 import UserService from '@/services/userService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { PlainUserInfo } from '@/types/user';
 import { makeAutoObservable } from 'mobx';
+import { User } from '@/models/User';
+import { Filters } from '@/models/Filters';
 
 class UsersStore {
   users: User[] = [];
@@ -44,6 +44,26 @@ class UsersStore {
       return { successMsg: 'Updated client', errorMsg: '' };
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error updating client' };
+    }
+  };
+
+  updateUserFull = async (
+    id: number,
+    data: UpdateUserDTO,
+    file?: File,
+  ): Promise<SuccessOrError> => {
+    try {
+      const { data: updatedUser } = await UserService.updateUser(id, data);
+
+      if (!file) {
+        return { successMsg: 'User updated successfully', errorMsg: '' };
+      }
+
+      await UserService.uploadImageForUser(updatedUser.id, file);
+
+      return { successMsg: 'User updated successfully', errorMsg: '' };
+    } catch {
+      return { successMsg: '', errorMsg: 'Error updating user' };
     }
   };
 

@@ -8,7 +8,7 @@ import styles from './status.module.scss';
 import classNames from 'classnames';
 import { User } from '@/models/User';
 import { useMemo, useState } from 'react';
-import { getFormattedDate } from '@/utils/getFormattedDate';
+import { formatDate } from '@/utils/formatters/formatDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import usersStore from '@/store/UsersStore';
 import { observer } from 'mobx-react-lite';
@@ -41,7 +41,7 @@ const UsersTable: React.FC<Props> = observer(
 
     const formattedUsers: User[] = useMemo(() => {
       return users.map((user) => {
-        const formattedDate = getFormattedDate(user.created_at, i18n.language);
+        const formattedDate = formatDate(user.created_at, i18n.language);
 
         return {
           ...user,

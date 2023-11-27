@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { MainInfo } from './mainInfo';
 import { SecondaryInfo } from './secondaryInfo';
 import { transformWorkingHours } from '@/utils/formHelpers/formHelpers';
-import { WorkingHours } from '../manageObjectForm/workingHours';
+import { WorkingHours } from '../../../UI/workingHours/workingHours';
 import { observer } from 'mobx-react-lite';
 import ToastContext from '@/context/toast';
 import { OrganizationFormData } from '@/types/organization';
@@ -24,8 +24,15 @@ const ManageOrganizationForm: React.FC<Props> = observer(
   ({ initialValues }) => {
     const { t } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
-    const validationSchema = Yup.object({});
     const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+
+    const validationSchema = Yup.object({
+      name: Yup.string().required(t('invalid.required')),
+      description: Yup.string(),
+      phone: Yup.string().required(t('invalid.required')),
+      address: Yup.string().required(t('invalid.required')),
+    });
+
     const workingHours = transformWorkingHours(initialValues);
 
     const formData: OrganizationFormData = {
@@ -82,7 +89,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
             {t('actions.cancel')}
           </Button>
           <Button type='submit' fill className={styles.Button}>
-            {t('organizations.add')}
+            {initialValues ? t('organizations.edit') : t('organizations.add')}
           </Button>
         </div>
       </form>

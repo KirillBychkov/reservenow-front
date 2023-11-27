@@ -1,39 +1,16 @@
 import { Button as PrButton } from 'primereact/button';
-
-interface ButtonProps {
-  children: React.ReactNode;
-  icon?: React.ReactNode;
-  severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help';
-  outlined?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+import { ButtonProps } from 'primereact/button';
+interface Props extends ButtonProps {
   fill?: boolean;
-  onClick?: () => void;
-  className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  icon,
-  severity,
-  outlined,
-  type = 'button',
-  fill,
-  onClick,
-  className,
-}) => {
+const Button: React.FC<Props> = ({ fill, ...rest }) => {
   return (
     <PrButton
-      style={{ width: fill ? '100%' : 'auto' }}
-      type={type}
-      icon={icon}
-      outlined={outlined}
-      severity={severity}
-      iconPos='left'
-      onClick={onClick}
-      className={className}
-    >
-      {children}
-    </PrButton>
+      {...rest}
+      style={{ width: fill ? '100%' : 'auto', ...rest.style }}
+      iconPos={rest?.iconPos || 'left'}
+    />
   );
 };
 

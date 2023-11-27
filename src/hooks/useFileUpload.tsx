@@ -1,5 +1,5 @@
-import { FileUpload } from "primereact/fileupload";
-import { ChangeEvent, useRef, useState } from "react";
+import { FileUpload } from 'primereact/fileupload';
+import { ChangeEvent, useRef, useState } from 'react';
 
 export const useFileUpload = () => {
   const ref = useRef<FileUpload>(null);
@@ -12,19 +12,19 @@ export const useFileUpload = () => {
       return;
     }
 
-    ref.current?.setFiles([file])
-    setFileName(file.name)
-  }
+    ref.current?.setFiles([file]);
+    setFileName(file.name);
+  };
 
   const handleClearFile = () => {
     ref.current?.clear();
-    setFileName('')
-  }
+    setFileName('');
+  };
 
   return {
     ref,
     handleSelect,
     handleClearFile,
     fileName,
-  }
-}
+  };
+};

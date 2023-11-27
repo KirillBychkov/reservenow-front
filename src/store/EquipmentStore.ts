@@ -29,12 +29,11 @@ class EquipmentStore {
   }
 
   addEquipment = async (
-    equipment: CreateEquipmentDTO
+    equipment: CreateEquipmentDTO,
   ): Promise<SuccessOrError> => {
     try {
-      const { data: createdEquipment } = await EquipmentService.createEquipment(
-        equipment
-      );
+      const { data: createdEquipment } =
+        await EquipmentService.createEquipment(equipment);
       this.equipment.push(createdEquipment);
       return { successMsg: 'Equipment was created', errorMsg: '' };
     } catch {
@@ -43,7 +42,7 @@ class EquipmentStore {
   };
 
   getEquipment = async (
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<Equipment[]>> => {
     try {
       const { data } = await EquipmentService.getEquipment(filters);
@@ -61,7 +60,7 @@ class EquipmentStore {
   };
 
   getEquipmentById = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<Equipment>> => {
     const equipment = this.equipment.find((eq) => eq.id === id);
 
@@ -82,12 +81,12 @@ class EquipmentStore {
 
   updateEquipment = async (
     id: number,
-    equipment: UpdateEquipmentDTO
+    equipment: UpdateEquipmentDTO,
   ): Promise<SuccessOrError> => {
     try {
       const { data: updatedEquipment } = await EquipmentService.updateEquipment(
         id,
-        equipment
+        equipment,
       );
 
       this.equipment = this.equipment.map((eq) => {

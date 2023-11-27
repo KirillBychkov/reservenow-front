@@ -17,7 +17,7 @@ class ObjectsStore {
   }
 
   getRentalObjects = async (
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<RentalObject[]>> => {
     try {
       const response = await ObjectService.getObjects(filters);
@@ -33,7 +33,7 @@ class ObjectsStore {
   };
 
   getRentalObject = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<RentalObject>> => {
     const object = this.objects.find((obj) => obj.id === id);
     if (object) {
@@ -52,7 +52,7 @@ class ObjectsStore {
   };
 
   addRentalObject = async (
-    object: CreateRentalObjectDTO
+    object: CreateRentalObjectDTO,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.addObject(object);
@@ -65,7 +65,7 @@ class ObjectsStore {
 
   editRentalObject = async (
     id: number,
-    object: UpdateRentalObjectDTO
+    object: UpdateRentalObjectDTO,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.editObject(id, object);

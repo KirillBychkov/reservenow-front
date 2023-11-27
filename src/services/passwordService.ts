@@ -20,13 +20,13 @@ export default class PasswordService {
       {
         new_password,
       },
-      { headers }
+      { headers },
     );
   }
 
   static async passwordChange(
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<AxiosResponse> {
     return $api.put('/password/change', {
       oldPassword,

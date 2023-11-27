@@ -27,7 +27,7 @@ const ManageOrganisation: React.FC = observer(() => {
       id
         ? organizationStore.getOrganizationById(parseInt(id || '0'))
         : Promise.resolve({ data: {} as Organization, error: '' }),
-    [id]
+    [id],
   );
 
   if (errorMsg) {

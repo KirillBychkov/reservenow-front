@@ -22,7 +22,7 @@ const ObjectsTable: React.FC<Props> = observer(
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const [selectedObject, setSelectedObject] = useState<RentalObject | null>(
-      null
+      null,
     );
     const filters = objectsStore.getFilters;
 
@@ -58,7 +58,7 @@ const ObjectsTable: React.FC<Props> = observer(
                   'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
               }}
               currentPageReportTemplate={`${t(
-                'states.showed'
+                'states.showed',
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
@@ -89,7 +89,7 @@ const ObjectsTable: React.FC<Props> = observer(
         </DataTable>
       </div>
     );
-  }
+  },
 );
 
 export default ObjectsTable;

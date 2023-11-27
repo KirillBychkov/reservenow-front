@@ -9,7 +9,7 @@ export interface SigninUserData {
 
 export default class AuthService {
   static async login(
-    user: SigninUserData
+    user: SigninUserData,
   ): Promise<AxiosResponse<AuthResponse>> {
     return $api.post('/auth/login', user);
   }

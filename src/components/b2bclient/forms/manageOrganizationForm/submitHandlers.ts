@@ -5,7 +5,7 @@ import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
 
 export const createOrganization = async (
   values: OrganizationFormData,
-  clearForm?: () => void
+  clearForm?: () => void,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const organization: CreateOrganizationDTO = {
@@ -24,7 +24,7 @@ export const createOrganization = async (
 
 export const updateOrganization = async (
   values: OrganizationFormData,
-  organizationId: number
+  organizationId: number,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const organization: CreateOrganizationDTO = {
@@ -36,7 +36,7 @@ export const updateOrganization = async (
   };
   const response = await organizationStore.editOrganization(
     organizationId,
-    organization
+    organization,
   );
   return response;
 };

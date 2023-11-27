@@ -27,12 +27,12 @@ const ViewOrganization: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
 
   const { limit, skip, first, onPageChange } = usePaginate(
-    objectsStore.filters
+    objectsStore.filters,
   );
 
   const { data: organization } = useFetch<Organization>(
     () => organizationStore.getOrganizationById(parseInt(id || '0')),
-    [id]
+    [id],
   );
 
   const {
@@ -41,7 +41,7 @@ const ViewOrganization: React.FC = observer(() => {
     isLoading,
   } = useFetch<RentalObject[]>(
     () => objectsStore.getRentalObjects({ limit, skip }),
-    [limit, skip]
+    [limit, skip],
   );
 
   if (!organization || !objects) {

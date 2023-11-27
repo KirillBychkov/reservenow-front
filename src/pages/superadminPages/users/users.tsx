@@ -38,7 +38,7 @@ const Users: React.FC = observer(() => {
         search,
         sort,
       }),
-    [limit, skip, search, sort]
+    [limit, skip, search, sort],
   );
 
   if (errorMsg) {

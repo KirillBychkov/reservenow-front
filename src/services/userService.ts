@@ -7,12 +7,12 @@ import { AxiosResponse } from 'axios';
 
 export default class UserService {
   static async getUsers(
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<AxiosResponse<Users>> {
     return $api.get(
       `/users?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
     );
   }
 
@@ -23,10 +23,10 @@ export default class UserService {
   static async exportUsers(
     limit = 10,
     skip = 0,
-    search?: string
+    search?: string,
   ): Promise<AxiosResponse> {
     return $api.get(
-      `/users/export?limit=${limit}&skip=${skip}&search=${search}`
+      `/users/export?limit=${limit}&skip=${skip}&search=${search}`,
     );
   }
 
@@ -36,7 +36,7 @@ export default class UserService {
 
   static async updateUser(
     id: number,
-    user: UpdateUserDTO
+    user: UpdateUserDTO,
   ): Promise<AxiosResponse> {
     return $api.patch(`/users/${id}`, user);
   }

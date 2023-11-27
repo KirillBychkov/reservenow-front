@@ -35,7 +35,7 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
   const requestData = useMemo(() => {
     return {
       status: formattedSupportStatusOptions.find(
-        (el) => el.value === initialValues?.status
+        (el) => el.value === initialValues?.status,
       ),
       description: initialValues?.resultDescription || '',
     };
@@ -72,7 +72,7 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
     <form className={styles.form} onSubmit={formik.handleSubmit}>
       <div className={styles.response}>
         <h3 className='heading heading-3 heading-primary'>{`${t(
-          'requests.response'
+          'requests.response',
         )} #${initialValues?.id}`}</h3>
         <FormField label={t('forms.status')}>
           <Dropdown

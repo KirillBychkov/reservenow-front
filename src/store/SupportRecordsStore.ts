@@ -28,7 +28,7 @@ class SupportRecordsStore {
   }
 
   getSupportRecords = async (
-    filters: Omit<Filters, 'total'>
+    filters: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<Support[]>> => {
     try {
       const response = await SupportService.getAllSupportRecords(filters);
@@ -45,7 +45,7 @@ class SupportRecordsStore {
 
   updateSupportRecord = async (
     id: number,
-    data: UpdateSupportDTO
+    data: UpdateSupportDTO,
   ): Promise<SuccessOrError> => {
     try {
       const res = await SupportService.updateSupportRecordById(id, data);
@@ -58,11 +58,11 @@ class SupportRecordsStore {
   };
 
   getSupportRecordById = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<Support>> => {
     try {
       const existedRecord = this.supportRecords.find(
-        (record) => record.id === id
+        (record) => record.id === id,
       );
       if (existedRecord) return { data: existedRecord, error: '' };
       const { data } = await SupportService.getSupportRecordById(id);
@@ -73,7 +73,7 @@ class SupportRecordsStore {
   };
 
   getPlainSupportRecordInfo = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<PlainSupportRecordInfo>> => {
     const { data: supportRecord, error } = await this.getSupportRecordById(id);
     if (error) {
@@ -97,12 +97,11 @@ class SupportRecordsStore {
 
   createSupportRecord = async (
     client_description: string,
-    file?: File
+    file?: File,
   ): Promise<SuccessOrError> => {
     try {
-      const { data: createdRecord } = await SupportService.createSupportRecord(
-        client_description
-      );
+      const { data: createdRecord } =
+        await SupportService.createSupportRecord(client_description);
 
       if (!file) {
         return { successMsg: 'Record created successfully', errorMsg: '' };

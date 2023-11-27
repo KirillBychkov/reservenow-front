@@ -36,9 +36,24 @@ export default class UserService {
 
   static async updateUser(
     id: number,
-    user: UpdateUserDTO,
-  ): Promise<AxiosResponse> {
+    user: UpdateUserDTO
+  ): Promise<AxiosResponse<User>> {
     return $api.patch(`/users/${id}`, user);
+  }
+
+  static async uploadImageForUser(id: number, file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = $api.put(
+      `/users/upload/image/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
   }
 
   static async deleteUser(id: number): Promise<AxiosResponse> {

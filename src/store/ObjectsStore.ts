@@ -53,27 +53,46 @@ class ObjectsStore {
 
   addRentalObject = async (
     object: CreateRentalObjectDTO,
+    file?: File,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.addObject(object);
       this.objects.push(response.data);
-      return { successMsg: 'Object added', errorMsg: '' };
+      if (!file) {
+        return { successMsg: 'Object added', errorMsg: '' };
+      }
+      const uploadRes = await this.uploadImage(response.data.id, file);
+      return uploadRes;
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error while adding object' };
     }
   };
 
   editRentalObject = async (
-    id: number,
     object: UpdateRentalObjectDTO,
+    id: number,
+    file?: File,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.editObject(id, object);
       const index = this.objects.findIndex((obj) => obj.id === id);
       this.objects[index] = response.data;
-      return { successMsg: 'Object edited', errorMsg: '' };
+      if (!file) {
+        return { successMsg: 'Object edited', errorMsg: '' };
+      }
+      const uploadRes = await this.uploadImage(id, file);
+      return uploadRes;
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error while editing object' };
+    }
+  };
+
+  uploadImage = async (id: number, file: File): Promise<SuccessOrError> => {
+    try {
+      await ObjectService.uploadImage(id, file);
+      return { successMsg: 'Image uploaded', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error while uploading image' };
     }
   };
 

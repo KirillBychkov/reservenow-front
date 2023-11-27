@@ -5,6 +5,7 @@ import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
 
 export const createOrganization = async (
   values: OrganizationFormData,
+  file?: File,
   clearForm?: () => void,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
@@ -15,7 +16,7 @@ export const createOrganization = async (
     address: values.address,
     ...workingHours,
   };
-  const response = await organizationStore.addOrganization(organization);
+  const response = await organizationStore.addOrganization(organization, file);
   if (response.successMsg && clearForm) {
     clearForm();
   }
@@ -23,8 +24,9 @@ export const createOrganization = async (
 };
 
 export const updateOrganization = async (
-  values: OrganizationFormData,
   organizationId: number,
+  values: OrganizationFormData,
+  file?: File,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const organization: CreateOrganizationDTO = {
@@ -37,6 +39,7 @@ export const updateOrganization = async (
   const response = await organizationStore.editOrganization(
     organizationId,
     organization,
+    file,
   );
   return response;
 };

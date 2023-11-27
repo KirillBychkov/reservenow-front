@@ -1,0 +1,29 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
+.formSection {
+  @include mixins.formSection
+}
+
+.btn {
+  max-width: 174px;
+}
+
+.photo {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color)
+}
+
+.photoContainer {
+  width: 210px; 
+}
+
+.photoBg {
+  height: 180px; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--light-gray-4);
+}

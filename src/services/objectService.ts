@@ -33,4 +33,15 @@ export default class ObjectService {
   static async deleteObject(id: number) {
     return $api.delete(`/rental_object/${id}`);
   }
+
+  static async uploadImage(id: number, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = $api.put(`/rental_object/upload/image/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  }
 }

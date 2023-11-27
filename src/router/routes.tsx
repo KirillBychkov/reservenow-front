@@ -17,6 +17,8 @@ import FAQ from '@/pages/b2bPages/faq/faq';
 import ManageObject from '@/pages/b2bPages/objects/manageObject/manageObject';
 import Equipment from '@/pages/b2bPages/equipment/equipment';
 import ManageEquipment from '@/pages/b2bPages/equipment/manageEquipment/manageEquipment';
+import Profile from '@/pages/b2bPages/profile/profile';
+import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
 
 interface IRoute {
@@ -166,5 +168,17 @@ export const routes: IRoute[] = [
     params: { id: ':id' },
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull]
+  },
+  {
+    path: '/profile/password',
+    element: <PasswordPage />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull]
   },
 ];

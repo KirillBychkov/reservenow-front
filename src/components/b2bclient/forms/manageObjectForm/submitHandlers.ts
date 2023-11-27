@@ -8,6 +8,7 @@ import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
 
 export const createObject = async (
   values: ObjectFormData,
+  file?: File,
   organizationId?: string,
   clearForm?: () => void,
 ) => {
@@ -21,7 +22,7 @@ export const createObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
-  const response = await objectsStore.addRentalObject(object);
+  const response = await objectsStore.addRentalObject(object, file);
   if (response.successMsg && clearForm) {
     clearForm();
   }
@@ -31,6 +32,7 @@ export const createObject = async (
 export const updateObject = async (
   values: ObjectFormData,
   objectId: number,
+  file?: File,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const object: UpdateRentalObjectDTO = {
@@ -41,6 +43,7 @@ export const updateObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
-  const response = await objectsStore.editRentalObject(objectId, object);
+
+  const response = await objectsStore.editRentalObject(object, objectId, file);
   return response;
 };

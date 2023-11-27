@@ -13,3 +13,15 @@
   border-radius: 50%;
   background-color: var(--primary-color);
 }
+
+.menu {
+  margin: 20px 0 0 15px;
+}
+
+.profile {
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}

@@ -8,6 +8,12 @@ import styles from './FileUpload.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Cross, Media } from '@blueprintjs/icons';
 
+// TODO:
+// refactor Props to extend FileUploadProps from primereact
+// check ./dropdown/customDropdown or ./buttons/button for example
+// show initialValues url as attached file too
+// check ./links/viewImage.tsx for example
+
 type Props = {
   fileUploadRef: RefObject<PrFileUpload>;
   buttonText?: string;

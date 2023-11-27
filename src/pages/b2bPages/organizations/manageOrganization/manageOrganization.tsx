@@ -37,15 +37,15 @@ const ManageOrganisation: React.FC = observer(() => {
   return (
     <div className={styles.AddOrganization}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {t('organizations.add')}
+        {id ? t('organizations.edit') : t('organizations.add')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
           { label: t('organizations.organizations'), url: '/organizations' },
           {
-            label: t('organizations.add'),
-            url: '/organizations/add',
+            label: id ? `${organization?.name || id}` : t('organizations.add'),
+            url: id ? `edit` : 'add',
           },
         ]}
       />

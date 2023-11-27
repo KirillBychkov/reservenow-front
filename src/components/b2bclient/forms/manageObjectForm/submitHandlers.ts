@@ -5,6 +5,7 @@ import {
 import objectsStore from '@/store/ObjectsStore';
 import { ObjectFormData } from '@/types/objects';
 import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
+import { formatObjectPriceToLowerUnit } from '@/utils/formatters/formatPrice';
 
 export const createObject = async (
   values: ObjectFormData,
@@ -22,7 +23,9 @@ export const createObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
-  const response = await objectsStore.addRentalObject(object, file);
+  const formattedObject = formatObjectPriceToLowerUnit(object);
+
+  const response = await objectsStore.addRentalObject(formattedObject, file);
   if (response.successMsg && clearForm) {
     clearForm();
   }
@@ -43,7 +46,12 @@ export const updateObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
+  const formattedObject = formatObjectPriceToLowerUnit(object);
 
-  const response = await objectsStore.editRentalObject(object, objectId, file);
+  const response = await objectsStore.editRentalObject(
+    formattedObject,
+    objectId,
+    file,
+  );
   return response;
 };

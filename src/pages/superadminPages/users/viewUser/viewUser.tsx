@@ -34,7 +34,7 @@ const ViewClient: React.FC = observer(() => {
     errorMsg,
   } = useFetch<PlainUserInfo>(
     () => usersStore.getPlainUserInfo(parseInt(id || '0')),
-    [id]
+    [id],
   );
 
   if (errorMsg) {
@@ -73,7 +73,7 @@ const ViewClient: React.FC = observer(() => {
         <a
           className={classNames(
             'heading heading-4 heading-primary',
-            styles.back
+            styles.back,
           )}
           onClick={() => navigate('/users')}
         >
@@ -87,7 +87,7 @@ const ViewClient: React.FC = observer(() => {
             <h4
               className={classNames(
                 'heading heading-4 heading-primary',
-                styles.userInfoHeading
+                styles.userInfoHeading,
               )}
             >
               {t('forms.overallInfo')}
@@ -96,7 +96,7 @@ const ViewClient: React.FC = observer(() => {
                   'heading heading-4',
                   styles.status,
                   statusStyles.status,
-                  statusStyles[initialValues?.status || '']
+                  statusStyles[initialValues?.status || ''],
                 )}
               >
                 {t(`status.${initialValues?.status}`)}

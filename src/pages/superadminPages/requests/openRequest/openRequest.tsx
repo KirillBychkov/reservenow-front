@@ -79,7 +79,7 @@ const OpenRequest: React.FC = observer(() => {
         <>
           <div className={styles.request}>
             <h3 className='heading heading-3 heading-primary'>{`${t(
-              'requests.request'
+              'requests.request',
             )} #${initialValues?.id}`}</h3>
             {requestInfoList}
           </div>

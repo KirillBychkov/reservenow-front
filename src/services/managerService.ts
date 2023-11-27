@@ -1,5 +1,5 @@
 import $api from '@/http';
-import { IManager } from '@/models/IManager';
+import { Manager } from '@/models/Manager';
 import {
   CreateManagerDTO,
   UpdateManagerDTO,
@@ -9,23 +9,23 @@ import { AxiosResponse } from 'axios';
 
 export default class ManagerService {
   static async createManager(
-    manager: CreateManagerDTO
-  ): Promise<AxiosResponse<IManager>> {
+    manager: CreateManagerDTO,
+  ): Promise<AxiosResponse<Manager>> {
     return $api.post('/manager', manager);
   }
 
-  static async getManagers(): Promise<AxiosResponse<IManager[]>> {
+  static async getManagers(): Promise<AxiosResponse<Manager[]>> {
     return $api.get('/manager');
   }
 
-  static async getManager(id: number): Promise<AxiosResponse<IManager>> {
+  static async getManager(id: number): Promise<AxiosResponse<Manager>> {
     return $api.get(`/manager/${id}`);
   }
 
   static async updateManager(
     id: number,
-    manager: UpdateManagerDTO
-  ): Promise<AxiosResponse<IManager>> {
+    manager: UpdateManagerDTO,
+  ): Promise<AxiosResponse<Manager>> {
     return $api.patch(`/manager/${id}`, manager);
   }
 

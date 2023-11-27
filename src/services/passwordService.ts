@@ -21,7 +21,7 @@ export default class PasswordService {
       {
         new_password,
       },
-      { headers }
+      { headers },
     );
   }
 

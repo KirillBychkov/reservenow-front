@@ -9,7 +9,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import organizationStore from '@/store/OrganizationsStore';
 import OrganizationList from '@/components/b2bclient/organizations/organizationList';
 import useFetch from '@/hooks/useFetch';
-import { IOrganization } from '@/models/IOrganization';
+import { Organization } from '@/models/Organization';
 import ToastContext from '@/context/toast';
 
 const Organizations: React.FC = observer(() => {
@@ -21,7 +21,7 @@ const Organizations: React.FC = observer(() => {
     data: organizations,
     isLoading,
     errorMsg,
-  } = useFetch<IOrganization[]>(organizationStore.getOrganizations);
+  } = useFetch<Organization[]>(organizationStore.getOrganizations);
 
   if (errorMsg) {
     showError(errorMsg);

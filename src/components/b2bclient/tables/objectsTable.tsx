@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
-import { IObjects } from '@/models/response/GetObjectsResponse';
 import objectsStore from '@/store/ObjectsStore';
-import { IObject } from '@/models/IObject';
+import { RentalObject } from '@/models/RentalObject';
+import { getFormattedDate } from '@/utils/getFormattedDate';
 
 type Props = {
-  objects: IObjects[];
+  objects: RentalObject[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
 };
@@ -20,29 +20,36 @@ type Props = {
 const ObjectsTable: React.FC<Props> = observer(
   ({ objects, onPageChange, first }) => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
-    const [selectedObject, setSelectedObject] = useState<IObject | null>(null);
+    const { t, i18n } = useTranslation();
+    const [selectedObject, setSelectedObject] = useState<RentalObject | null>(
+      null,
+    );
     const filters = objectsStore.getFilters;
 
-    const handleViewObject = (object: IObject) => {
+    const handleViewObject = (object: RentalObject) => {
       setSelectedObject(object);
       navigate(`objects/${object.id}`);
     };
 
-    const handleEditObject = (object: IObject) => {
+    const handleEditObject = (object: RentalObject) => {
       navigate(`objects/${object.id}/edit`);
     };
+
+    const formattedObjects = objects.map((object) => ({
+      ...object,
+      created_at: getFormattedDate(object.created_at, i18n.language),
+    }));
 
     return (
       <div>
         <DataTable
           className='customObjectTable'
           removableSort
-          value={objects}
+          value={formattedObjects}
           selectionMode='single'
           selection={selectedObject}
           onSelectionChange={(e) => {
-            handleViewObject(e.value as IObject);
+            handleViewObject(e.value as RentalObject);
           }}
           footer={
             <Paginator
@@ -51,7 +58,7 @@ const ObjectsTable: React.FC<Props> = observer(
                   'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
               }}
               currentPageReportTemplate={`${t(
-                'states.showed'
+                'states.showed',
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
@@ -68,7 +75,7 @@ const ObjectsTable: React.FC<Props> = observer(
 
           <Column
             header={t('actions.action')}
-            body={(rowData: IObject) => (
+            body={(rowData: RentalObject) => (
               <Button
                 style={{ maxHeight: '1.5rem' }}
                 label={t('actions.edit')}
@@ -82,7 +89,7 @@ const ObjectsTable: React.FC<Props> = observer(
         </DataTable>
       </div>
     );
-  }
+  },
 );
 
 export default ObjectsTable;

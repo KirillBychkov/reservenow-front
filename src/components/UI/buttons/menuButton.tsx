@@ -16,7 +16,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ children, icon, page }) => {
       className={({ isActive }) =>
         classNames(
           styles['menu-button'],
-          isActive && styles['menu-button--selected']
+          isActive && styles['menu-button--selected'],
         )
       }
     >

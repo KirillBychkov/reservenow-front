@@ -11,11 +11,11 @@ import { WorkingHours } from '../manageObjectForm/workingHours';
 import { observer } from 'mobx-react-lite';
 import ToastContext from '@/context/toast';
 import { OrganizationFormData } from '@/types/organization';
-import { IOrganization } from '@/models/IOrganization';
+import { Organization } from '@/models/Organization';
 import { createOrganization, updateOrganization } from './submitHandlers';
 
 interface Props {
-  initialValues?: IOrganization;
+  initialValues?: Organization;
 }
 
 const ManageOrganizationForm: React.FC<Props> = observer(
@@ -75,7 +75,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         </div>
       </form>
     );
-  }
+  },
 );
 
 export default ManageOrganizationForm;

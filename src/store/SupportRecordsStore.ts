@@ -1,6 +1,6 @@
-import { IFilters } from '@/models/IFilters';
-import { ISupport } from '@/models/ISupport';
-import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
+import { Filters } from '@/models/Filters';
+import { Support } from '@/models/Support';
+import { UpdateSupportDTO } from '@/models/requests/SupportRequests';
 import SupportService from '@/services/supportService';
 import { SupportStatus } from '@/types/enums/support';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
@@ -8,14 +8,14 @@ import { PlainSupportRecordInfo } from '@/types/support';
 import { makeAutoObservable } from 'mobx';
 
 class SupportRecordsStore {
-  supportRecords: ISupport[] = [];
-  filters: IFilters = { total: 0, limit: 1 };
+  supportRecords: Support[] = [];
+  filters: Filters = { total: 0, limit: 1 };
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setSupportRecords(supportRecords: ISupport[]) {
+  setSupportRecords(supportRecords: Support[]) {
     this.supportRecords = supportRecords;
   }
 
@@ -23,13 +23,13 @@ class SupportRecordsStore {
     return this.filters;
   }
 
-  setFilters(filters: IFilters) {
+  setFilters(filters: Filters) {
     this.filters = filters;
   }
 
   getSupportRecords = async (
-    filters: Omit<IFilters, 'total'>
-  ): Promise<ResponseOrError<ISupport[]>> => {
+    filters: Omit<Filters, 'total'>,
+  ): Promise<ResponseOrError<Support[]>> => {
     try {
       const response = await SupportService.getAllSupportRecords(filters);
       if (response.data.data.length === 0) {
@@ -45,7 +45,7 @@ class SupportRecordsStore {
 
   updateSupportRecord = async (
     id: number,
-    data: IUpdateSupportDTO
+    data: UpdateSupportDTO,
   ): Promise<SuccessOrError> => {
     try {
       const res = await SupportService.updateSupportRecordById(id, data);
@@ -58,22 +58,22 @@ class SupportRecordsStore {
   };
 
   getSupportRecordById = async (
-    id: number
-  ): Promise<ResponseOrError<ISupport>> => {
+    id: number,
+  ): Promise<ResponseOrError<Support>> => {
     try {
       const existedRecord = this.supportRecords.find(
-        (record) => record.id === id
+        (record) => record.id === id,
       );
       if (existedRecord) return { data: existedRecord, error: '' };
       const { data } = await SupportService.getSupportRecordById(id);
       return { data, error: '' };
     } catch (e) {
-      return { data: {} as ISupport, error: 'Support record not found' };
+      return { data: {} as Support, error: 'Support record not found' };
     }
   };
 
   getPlainSupportRecordInfo = async (
-    id: number
+    id: number,
   ): Promise<ResponseOrError<PlainSupportRecordInfo>> => {
     const { data: supportRecord, error } = await this.getSupportRecordById(id);
     if (error) {
@@ -95,21 +95,25 @@ class SupportRecordsStore {
     return { data: plainSupportRecordInfo, error: '' };
   };
 
-  createSupportRecord = async (client_description: string, file?: File): Promise<SuccessOrError> => {
+  createSupportRecord = async (
+    client_description: string,
+    file?: File,
+  ): Promise<SuccessOrError> => {
     try {
-      const { data: createdRecord } = await SupportService.createSupportRecord(client_description)
+      const { data: createdRecord } =
+        await SupportService.createSupportRecord(client_description);
 
       if (!file) {
-        return { successMsg: 'Record created successfully', errorMsg: '' }
+        return { successMsg: 'Record created successfully', errorMsg: '' };
       }
 
-      await SupportService.uploadImageForRecord(createdRecord.id, file)
+      await SupportService.uploadImageForRecord(createdRecord.id, file);
 
-      return { successMsg: 'Record created successfully', errorMsg: '' }
-    } catch { 
+      return { successMsg: 'Record created successfully', errorMsg: '' };
+    } catch {
       return { successMsg: '', errorMsg: 'Error creating support record' };
     }
-  }
+  };
 }
 
 const supportRecordsStore = new SupportRecordsStore();

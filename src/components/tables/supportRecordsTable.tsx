@@ -1,4 +1,4 @@
-import { ISupport } from '@/models/ISupport';
+import { Support } from '@/models/Support';
 import classNames from 'classnames';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
@@ -6,7 +6,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import { Button } from 'primereact/button';
-import { getFormattedDate } from '@/utils/parseFormattedDate';
+import { getFormattedDate } from '@/utils/getFormattedDate';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
@@ -14,7 +14,7 @@ import supportRecordsStore from '@/store/SupportRecordsStore';
 import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {
-  supportRecords: ISupport[];
+  supportRecords: Support[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -60,7 +60,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
                   'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
               }}
               currentPageReportTemplate={`${t(
-                'states.showed'
+                'states.showed',
               )} {first} - {last} ${t('states.of')} {totalRecords}`}
               style={{ justifyContent: 'flex-end' }}
               first={first}
@@ -76,7 +76,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
           <Column field='user.account.email' header={t('forms.email')} />
           <Column
             header={t('forms.status')}
-            body={(rowData: ISupport) => (
+            body={(rowData: Support) => (
               <div
                 className={classNames(styles.status, styles[rowData.status])}
               >
@@ -87,7 +87,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
           <Column field='created_at' header={t('dates.createdAt')} sortable />
           <Column
             header={t('actions.actions')}
-            body={(rowData: ISupport) => (
+            body={(rowData: Support) => (
               <Button
                 style={{ maxHeight: '1.5rem' }}
                 label={t('actions.open')}
@@ -101,7 +101,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
         </DataTable>
       </div>
     );
-  }
+  },
 );
 
 export default SupportRecordsTable;

@@ -27,7 +27,7 @@ const ManageUser: React.FC = observer(() => {
       id
         ? usersStore.getPlainUserInfo(parseInt(id)) // if id is defined, get user info (Update mode)
         : Promise.resolve({ data: {} as PlainUserInfo, error: '' }), // else, return empty object (Add mode)
-    [id]
+    [id],
   );
 
   if (errorMsg) {

@@ -1,7 +1,7 @@
 @use 'src/primereact-theme/theme-base/mixins.scss';
 
 .formSection {
-  @include mixins.formSection
+  @include mixins.formSection;
 }
 
 .btn {

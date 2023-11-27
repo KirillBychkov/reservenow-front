@@ -1,10 +1,10 @@
-import { ICreateUserDTO, IUpdateUserDTO } from "@/models/requests/UserRequests";
-import usersStore from "@/store/UsersStore";
-import { UserFormData } from "@/types/user";
+import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
+import usersStore from '@/store/UsersStore';
+import { UserFormData } from '@/types/user';
 
 export const createUser = async (
   values: UserFormData,
-  clearForm?: () => void
+  clearForm?: () => void,
 ) => {
   const user: ICreateUserDTO = {
     email: values.email,
@@ -37,5 +37,5 @@ export const updateUser = async (values: UserFormData, userId: number) => {
 
   const response = await usersStore.updateUser(userId, user);
 
-  return response
+  return response;
 };

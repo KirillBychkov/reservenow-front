@@ -1,32 +1,42 @@
-import $api from "@/http";
-import { IEquipment } from "@/models/IEquipment";
-import { IFilters } from "@/models/IFilters";
-import { ICreateEquipmentDTO, IUpdateEquipmentDTO } from "@/models/requests/EquipmentRequests";
-import { IEquipments } from "@/models/response/GetEquipmentResponse";
-import { AxiosResponse } from "axios";
+import $api from '@/http';
+import { Equipment } from '@/models/Equipment';
+import { Filters } from '@/models/Filters';
+import {
+  CreateEquipmentDTO,
+  UpdateEquipmentDTO,
+} from '@/models/requests/EquipmentRequests';
+import { Equipments } from '@/models/response/GetEquipmentResponse';
+import { AxiosResponse } from 'axios';
 
 export default class EquipmentService {
-  static getEquipment(filters: Omit<IFilters, 'total'>): Promise<AxiosResponse<IEquipments>> {
+  static getEquipment(
+    filters: Omit<Filters, 'total'>,
+  ): Promise<AxiosResponse<Equipments>> {
     return $api.get(
       `/equipment?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
     );
   }
 
-  static createEquipment(equipment: ICreateEquipmentDTO): Promise<AxiosResponse<IEquipment>> {
-    return $api.post('/equipment', equipment)
+  static createEquipment(
+    equipment: CreateEquipmentDTO,
+  ): Promise<AxiosResponse<Equipment>> {
+    return $api.post('/equipment', equipment);
   }
 
-  static getEquipmentById(id: number): Promise<AxiosResponse<IEquipment>> {
-    return $api.get(`/equipment/${id}`)
+  static getEquipmentById(id: number): Promise<AxiosResponse<Equipment>> {
+    return $api.get(`/equipment/${id}`);
   }
 
-  static updateEquipment(id: number, equipment: IUpdateEquipmentDTO): Promise<AxiosResponse<IEquipment>>{
-    return $api.patch(`/equipment/${id}`, equipment)
+  static updateEquipment(
+    id: number,
+    equipment: UpdateEquipmentDTO,
+  ): Promise<AxiosResponse<Equipment>> {
+    return $api.patch(`/equipment/${id}`, equipment);
   }
 
-  static deleteEquipment(id: number): Promise<AxiosResponse>{
-    return $api.delete(`/equipment/${id}`)
+  static deleteEquipment(id: number): Promise<AxiosResponse> {
+    return $api.delete(`/equipment/${id}`);
   }
 }

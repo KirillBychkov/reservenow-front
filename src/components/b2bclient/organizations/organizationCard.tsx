@@ -4,11 +4,11 @@ import styles from './organizationCard.module.scss';
 import Button from '@/components/UI/buttons/button';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { IOrganization } from '@/models/IOrganization';
+import { Organization } from '@/models/Organization';
 import Logo from '@/assets/footballField.png';
 
 interface OrganizationCardProps {
-  organization: IOrganization;
+  organization: Organization;
 }
 
 const OrganizationCard: React.FC<OrganizationCardProps> = observer(
@@ -40,7 +40,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = observer(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default OrganizationCard;

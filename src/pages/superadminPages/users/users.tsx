@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import UsersTable from '@/components/tables/usersTable';
 import { observer } from 'mobx-react-lite';
 import usersStore from '@/store/UsersStore';
-import { IUser } from '@/models/IUser';
+import { User } from '@/models/User';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';
 import useFetch from '@/hooks/useFetch';
@@ -30,7 +30,7 @@ const Users: React.FC = observer(() => {
     data: users,
     errorMsg,
     isLoading,
-  } = useFetch<IUser[]>(
+  } = useFetch<User[]>(
     () =>
       usersStore.getUsers({
         limit,
@@ -38,7 +38,7 @@ const Users: React.FC = observer(() => {
         search,
         sort,
       }),
-    [limit, skip, search, sort]
+    [limit, skip, search, sort],
   );
 
   if (errorMsg) {

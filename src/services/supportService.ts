@@ -1,34 +1,36 @@
 import $api from '@/http';
-import { IFilters } from '@/models/IFilters';
-import { ISupport } from '@/models/ISupport';
-import { IUpdateSupportDTO } from '@/models/requests/SupportRequests';
-import { ISupportRecords } from '@/models/response/GetSupportRecordsResponse';
+import { Filters } from '@/models/Filters';
+import { Support } from '@/models/Support';
+import { UpdateSupportDTO } from '@/models/requests/SupportRequests';
+import { SupportRecords } from '@/models/response/GetSupportRecordsResponse';
 import { AxiosResponse } from 'axios';
 
 export default class SupportService {
-  static async createSupportRecord(client_description: string): Promise<AxiosResponse<ISupport>>{
+  static async createSupportRecord(
+    client_description: string,
+  ): Promise<AxiosResponse<Support>> {
     return $api.post('/support', { client_description });
   }
 
   static async getAllSupportRecords(
-    filters: Omit<IFilters, 'total'>
-  ): Promise<AxiosResponse<ISupportRecords>> {
+    filters: Omit<Filters, 'total'>,
+  ): Promise<AxiosResponse<SupportRecords>> {
     return $api.get(
       `/support?limit=${filters.limit}&skip=${filters.skip}${
         filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`
+      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
     );
   }
 
   static async getSupportRecordById(
-    id: number
-  ): Promise<AxiosResponse<ISupport>> {
+    id: number,
+  ): Promise<AxiosResponse<Support>> {
     return $api.get(`/support/${id}`);
   }
 
   static async updateSupportRecordById(
     id: number,
-    updateDTO: IUpdateSupportDTO
+    updateDTO: UpdateSupportDTO,
   ) {
     return $api.patch(`/support/${id}`, updateDTO);
   }
@@ -39,16 +41,12 @@ export default class SupportService {
 
   static async uploadImageForRecord(id: number, file: File) {
     const formData = new FormData();
-    formData.append("file", file);
-    const response = $api.put(
-      `/support/upload/image/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    formData.append('file', file);
+    const response = $api.put(`/support/upload/image/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response;
   }
 }

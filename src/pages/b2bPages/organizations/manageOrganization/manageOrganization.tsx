@@ -11,7 +11,7 @@ import useFetch from '@/hooks/useFetch';
 import organizationStore from '@/store/OrganizationsStore';
 import ToastContext from '@/context/toast';
 import ManageOrganizationForm from '@/components/b2bclient/forms/manageOrganizationForm/manageOrganizationForm';
-import { IOrganization } from '@/models/IOrganization';
+import { Organization } from '@/models/Organization';
 
 const ManageOrganisation: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -26,8 +26,8 @@ const ManageOrganisation: React.FC = observer(() => {
     () =>
       id
         ? organizationStore.getOrganizationById(parseInt(id || '0'))
-        : Promise.resolve({ data: {} as IOrganization, error: '' }),
-    [id]
+        : Promise.resolve({ data: {} as Organization, error: '' }),
+    [id],
   );
 
   if (errorMsg) {

@@ -9,7 +9,7 @@ import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
 export const createObject = async (
   values: ObjectFormData,
   organizationId?: string,
-  clearForm?: () => void
+  clearForm?: () => void,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const object: CreateRentalObjectDTO = {
@@ -30,7 +30,7 @@ export const createObject = async (
 
 export const updateObject = async (
   values: ObjectFormData,
-  objectId: number
+  objectId: number,
 ) => {
   const workingHours = finalizeWorkingHours(values.workingHours);
   const object: UpdateRentalObjectDTO = {

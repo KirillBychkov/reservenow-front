@@ -1,5 +1,5 @@
 import $api from '@/http';
-import { IAuthResponse } from '@/models/response/AuthResponse';
+import { AuthResponse } from '@/models/response/AuthResponse';
 import { AxiosResponse } from 'axios';
 
 export interface SigninUserData {
@@ -9,8 +9,8 @@ export interface SigninUserData {
 
 export default class AuthService {
   static async login(
-    user: SigninUserData
-  ): Promise<AxiosResponse<IAuthResponse>> {
+    user: SigninUserData,
+  ): Promise<AxiosResponse<AuthResponse>> {
     return $api.post('/auth/login', user);
   }
 

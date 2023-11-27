@@ -1,15 +1,15 @@
-import { IOrganization } from '@/models/IOrganization';
 import styles from './organizationDetailsLeft.module.scss';
 import { daysOfWeek } from '@/utils/formHelpers/formHelpers';
 import { RenderWorkingHours } from './renderWorkingHours';
 import { useTranslation } from 'react-i18next';
+import { ViewPageData } from './leftSideComponent';
 
 interface Props {
-  organization: IOrganization;
+  data: ViewPageData;
 }
 
-const OrganizationDetailsLeft: React.FC<Props> = ({ organization }) => {
-  const { name, id, address } = organization;
+const OrganizationDetailsLeft: React.FC<Props> = ({ data }) => {
+  const { name, id, address } = data;
   const { t } = useTranslation();
 
   return (
@@ -33,7 +33,7 @@ const OrganizationDetailsLeft: React.FC<Props> = ({ organization }) => {
       <div className={styles.OrganizationWorkingHours}>
         <h6 className={'heading heading-6'}>{t('organizations.workHours')}</h6>
         {daysOfWeek.map((day, i) => (
-          <RenderWorkingHours organization={organization} day={day} key={i} />
+          <RenderWorkingHours data={data} day={day} key={i} />
         ))}
       </div>
     </>

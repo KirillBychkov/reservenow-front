@@ -1,25 +1,24 @@
-import { IFilters } from '@/models/IFilters';
-import { IObject } from '@/models/IObject';
+import { Filters } from '@/models/Filters';
+import { RentalObject } from '@/models/RentalObject';
 import {
   CreateRentalObjectDTO,
   UpdateRentalObjectDTO,
 } from '@/models/requests/ObjectsRequests';
-import { IObjects } from '@/models/response/GetObjectsResponse';
 import ObjectService from '@/services/objectService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
 class ObjectsStore {
-  objects: IObject[] = [];
-  filters: IFilters = { total: 0, limit: 4 };
+  objects: RentalObject[] = [];
+  filters: Filters = { total: 0, limit: 4 };
 
   constructor() {
     makeAutoObservable(this);
   }
 
   getRentalObjects = async (
-    filters: Omit<IFilters, 'total'>
-  ): Promise<ResponseOrError<IObjects[]>> => {
+    filters: Omit<Filters, 'total'>,
+  ): Promise<ResponseOrError<RentalObject[]>> => {
     try {
       const response = await ObjectService.getObjects(filters);
       if (response.data.length === 0) {
@@ -33,24 +32,27 @@ class ObjectsStore {
     }
   };
 
-  getRentalObject = async (id: number): Promise<ResponseOrError<IObject>> => {
+  getRentalObject = async (
+    id: number,
+  ): Promise<ResponseOrError<RentalObject>> => {
     const object = this.objects.find((obj) => obj.id === id);
     if (object) {
       return { data: object, error: '' };
     }
     try {
       const response = await ObjectService.getObjectById(id);
+
       return { data: response.data, error: '' };
     } catch (e) {
       return {
-        data: {} as IObject,
+        data: {} as RentalObject,
         error: 'An error occurred while fetching object.',
       };
     }
   };
 
   addRentalObject = async (
-    object: CreateRentalObjectDTO
+    object: CreateRentalObjectDTO,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.addObject(object);
@@ -63,7 +65,7 @@ class ObjectsStore {
 
   editRentalObject = async (
     id: number,
-    object: UpdateRentalObjectDTO
+    object: UpdateRentalObjectDTO,
   ): Promise<SuccessOrError> => {
     try {
       const response = await ObjectService.editObject(id, object);
@@ -83,7 +85,7 @@ class ObjectsStore {
     return this.filters;
   }
 
-  setFilters(filters: IFilters) {
+  setFilters(filters: Filters) {
     this.filters = filters;
   }
 
@@ -91,7 +93,7 @@ class ObjectsStore {
   //   return this.objects;
   // }
 
-  setObjects(objects: IObject[]) {
+  setObjects(objects: RentalObject[]) {
     this.objects = objects;
   }
 }

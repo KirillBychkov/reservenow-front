@@ -10,7 +10,7 @@ import isValidClassname from '@/utils/isValidClassname';
 import FormField from '@/components/UI/fields/formField';
 import { InputText } from 'primereact/inputtext';
 import { InputMask } from 'primereact/inputmask';
-import { IManager } from '@/models/IManager';
+import { Manager } from '@/models/Manager';
 import Button from '@/components/UI/buttons/button';
 import { InputTextarea } from 'primereact/inputtextarea';
 import {

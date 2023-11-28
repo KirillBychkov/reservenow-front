@@ -69,7 +69,7 @@ export const FileUpload = ({
       {fileName && (
         <div className={styles.fileContainer}>
           <p className="paragraph paragraph--normal">
-            {t("actions.addImage")}
+            {fileName}
           </p>
           <Cross color="#7961db" className={styles.cross} onClick={onClear} />
         </div>

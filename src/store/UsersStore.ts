@@ -53,13 +53,13 @@ class UsersStore {
     file?: File,
   ): Promise<SuccessOrError> => {
     try {
-      const { data: updatedUser } = await UserService.updateUser(id, data);
+      await UserService.updateUser(id, data);
 
       if (!file) {
         return { successMsg: 'User updated successfully', errorMsg: '' };
       }
 
-      await UserService.uploadImageForUser(updatedUser.id, file);
+      await UserService.uploadImageForUser(id, file);
 
       return { successMsg: 'User updated successfully', errorMsg: '' };
     } catch {

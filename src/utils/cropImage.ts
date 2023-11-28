@@ -1,16 +1,16 @@
-import { Area } from "react-easy-crop";
+import { Area } from 'react-easy-crop';
 
 const createImage = (url: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.addEventListener("load", () => resolve(image));
-    image.addEventListener("error", (error) => reject(error));
+    image.addEventListener('load', () => resolve(image));
+    image.addEventListener('error', (error) => reject(error));
     image.src = url;
   });
 };
 const getRadianAngle = (degreeValue: number) => {
   return (degreeValue * Math.PI) / 180;
-}
+};
 
 /**
  * Returns the new bounding area of a rotated rectangle.
@@ -24,17 +24,17 @@ const rotateSize = (width: number, height: number, rotation: number) => {
     height:
       Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
   };
-}
+};
 
 export default async function getCroppedImg(
   imageSrc: string,
   pixelCrop: Area,
   rotation = 0,
-  flip = { horizontal: false, vertical: false }
+  flip = { horizontal: false, vertical: false },
 ) {
   const image = await createImage(imageSrc);
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
   if (!ctx) {
     return null;
@@ -46,7 +46,7 @@ export default async function getCroppedImg(
   const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
     image.width,
     image.height,
-    rotation
+    rotation,
   );
 
   // set canvas size to match the bounding box
@@ -62,9 +62,9 @@ export default async function getCroppedImg(
   // draw rotated image
   ctx.drawImage(image, 0, 0);
 
-  const croppedCanvas = document.createElement("canvas");
+  const croppedCanvas = document.createElement('canvas');
 
-  const croppedCtx = croppedCanvas.getContext("2d");
+  const croppedCtx = croppedCanvas.getContext('2d');
 
   if (!croppedCtx) {
     return null;
@@ -84,10 +84,10 @@ export default async function getCroppedImg(
     0,
     0,
     pixelCrop.width,
-    pixelCrop.height
+    pixelCrop.height,
   );
 
-  return croppedCanvas.toDataURL('image/jpeg');
+  return croppedCanvas.toDataURL();
 }
 
 export const imageStringToFile = async (image: string | null) => {
@@ -97,7 +97,7 @@ export const imageStringToFile = async (image: string | null) => {
 
   const base64Response = await fetch(image);
   const blob = await base64Response.blob();
-  const file = new File([blob], "image.jpg");
+  const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
 
-  return file
-}
+  return file;
+};

@@ -189,10 +189,10 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         </Button>
       </Flex>
 
+      {/* Fix cors */}
       <CroppImageModal
         visible={visible}
         onHide={handleClose}
-        image={image || undefined}
         onCropComplete={setImage}
       />
     </form>

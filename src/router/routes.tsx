@@ -20,6 +20,9 @@ import ManageEquipment from '@/pages/b2bPages/equipment/manageEquipment/manageEq
 import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
+import Clients from '@/pages/b2bPages/clients/clients';
+import AddClient from '@/pages/b2bPages/clients/manageClient/addClient';
+import EditClient from '@/pages/b2bPages/clients/manageClient/editClient';
 
 interface IRoute {
   path: string;
@@ -173,12 +176,31 @@ export const routes: IRoute[] = [
     path: '/profile',
     element: <Profile />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
   },
   {
     path: '/profile/password',
     element: <PasswordPage />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients',
+    element: <Clients />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/add',
+    element: <AddClient />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: 'clients/:id/edit',
+    element: <EditClient />,
+    params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
   },
 ];

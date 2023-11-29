@@ -90,7 +90,7 @@ export const CroppImageModal = ({
         ) : (
           <Flex options={{ direction: "column", align: "center" }}>
             <h2 className="heading heading-2 heading-primary text-center">
-              {t('profile.photoNull')}
+              {t('profile.chooseProfilePhoto')}
             </h2>
           </Flex>
         )}

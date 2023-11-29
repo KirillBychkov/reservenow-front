@@ -20,6 +20,8 @@ import ManageEquipment from '@/pages/b2bPages/equipment/manageEquipment/manageEq
 import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
+import Schedule from '@/pages/b2bPages/schedule/schedule';
+import AddReservation from '@/pages/b2bPages/schedule/manageReservation/addReservation';
 
 interface IRoute {
   path: string;
@@ -181,4 +183,16 @@ export const routes: IRoute[] = [
     isProtected: true,
     allowedRoles: [UserRole.UserFull]
   },
+  {
+    path: '/schedule/add',
+    element: <AddReservation />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/schedule',
+    element: <Schedule />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  }
 ];

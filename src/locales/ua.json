@@ -185,7 +185,8 @@
     "editEquipment": "Редагувати товар",
     "addEquipment": "Додати товар",
     "addImage": "Додати зображення",
-    "chooseOption": "Виберіть варіант"
+    "chooseOption": "Виберіть варіант",
+    "create": "Створити"
   },
   "states": {
     "showed": "Показано",

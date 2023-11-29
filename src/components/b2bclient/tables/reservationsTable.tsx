@@ -39,8 +39,6 @@ const OrdersTable: React.FC<Props> = observer(({ orders }) => {
     }),
   }));
 
-  console.log('formattedObjects', formattedObjects);
-
   return (
     <DataTable
       className='customObjectTable'

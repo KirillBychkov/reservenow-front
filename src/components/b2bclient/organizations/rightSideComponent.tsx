@@ -3,15 +3,18 @@ import styles from './rightSideComponent.module.scss';
 import OrganizationStatsCard, { cardData } from './organizationStatsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';
+import Searchbar from '@/components/searchbar/searchbar';
 
 interface RightSideComponentProps {
   heading: string;
-  buttonText: string;
+  buttonText?: string;
+  setSearch?: (search: string) => void;
 }
 
 const RightSideComponent: React.FC<RightSideComponentProps> = ({
   heading,
   buttonText,
+  setSearch,
 }) => {
   const navigate = useNavigate();
 
@@ -30,12 +33,15 @@ const RightSideComponent: React.FC<RightSideComponentProps> = ({
       <div className={styles.BottomTable}>
         <div className={styles.TableHeader}>
           <h4 className='heading heading-4'>{heading}</h4>
-          <Button
-            onClick={() => navigate('objects/add')}
-            icon={<Plus color='white' />}
-          >
-            {buttonText}
-          </Button>
+          {buttonText && (
+            <Button
+              onClick={() => navigate('objects/add')}
+              icon={<Plus color='white' />}
+            >
+              {buttonText}
+            </Button>
+          )}
+          {setSearch && <Searchbar setSearch={setSearch} />}
         </div>
       </div>
     </div>

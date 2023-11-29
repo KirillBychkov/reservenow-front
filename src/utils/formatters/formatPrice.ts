@@ -1,11 +1,13 @@
-const formatToLowerUnit = (upperUnit: number): number => {
-  const centsValue = Math.floor(upperUnit * 100);
-  return centsValue;
-};
-
-const formatToUpperUnit = (lowerUnit: number): number => {
+// format price incoming from server
+export const formatToUpperUnit = (lowerUnit: number): number => {
   const dollarValue = lowerUnit / 100;
   return dollarValue;
+};
+
+// format price outgoing to server
+export const formatToLowerUnit = (upperUnit: number): number => {
+  const centsValue = Math.floor(upperUnit * 100);
+  return centsValue;
 };
 
 export const formatObjectPriceToUpperUnit = <

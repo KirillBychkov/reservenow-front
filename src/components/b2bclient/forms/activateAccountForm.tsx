@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 import { useNavigate } from 'react-router-dom';
-import passwordStore from '@/store/PasswordStore';
+import passwordStore from '@/store/passwordStore';
 
 const ActivateAccountForm: React.FC = observer(() => {
   const { t } = useTranslation();

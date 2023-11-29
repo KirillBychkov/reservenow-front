@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import authStore from '@/store/AuthStore';
+import authStore from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 const SigninForm: React.FC = observer(() => {

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UsersTable from '@/components/tables/usersTable';
 import { observer } from 'mobx-react-lite';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import { User } from '@/models/User';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Searchbar from '@/components/searchbar/searchbar';

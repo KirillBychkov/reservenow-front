@@ -6,7 +6,7 @@ import { Home, ChevronLeft } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { PlainUserInfo } from '@/types/user';

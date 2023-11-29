@@ -8,7 +8,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewObject.module.scss';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
@@ -29,6 +29,10 @@ const ViewObject: React.FC = () => {
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
   );
+
+  if (!object) {
+    return <ProgressSpinner />;
+  }
 
   if (errorMsg) {
     showError(errorMsg);

@@ -9,7 +9,7 @@ import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
 import { RentalObject } from '@/models/RentalObject';
 import { formatDate } from '@/utils/formatters/formatDate';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 
 type Props = {
   objects: RentalObject[];

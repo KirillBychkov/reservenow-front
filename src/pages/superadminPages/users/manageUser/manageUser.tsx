@@ -7,7 +7,7 @@ import ManageUserForm from '@/components/forms/manageUserForm/manageUserForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { PlainUserInfo } from '@/types/user';
 import useFetch from '@/hooks/useFetch';

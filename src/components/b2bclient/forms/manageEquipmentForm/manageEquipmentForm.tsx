@@ -14,7 +14,7 @@ import ModalContext from '@/context/modal';
 import { useContext } from 'react';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import ToastContext from '@/context/toast';
 import { EquipmentFormData } from '@/types/equipment';
 import { createEquipment, updateEquipment } from './submitHandlers';

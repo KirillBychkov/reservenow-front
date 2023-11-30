@@ -3,23 +3,27 @@ import { formatToLowerUnit, formatToUpperUnit } from './formatPrice';
 
 interface FormatterObj {
   price_per_hour: (price: number) => number;
+  price: (price: number) => number;
   phone: (phone: string) => string;
 }
 
 // Define input and output types for each formatter
 const formatterObjIn: FormatterObj = {
   price_per_hour: formatToUpperUnit,
+  price: formatToUpperUnit,
   phone: formatPhoneIn,
 };
 
 const formatterObjOut: FormatterObj = {
   price_per_hour: formatToLowerUnit,
+  price: formatToLowerUnit,
   phone: formatPhoneOut,
 };
 
 // Define the object type to format
 interface ObjectToFormat {
   price_per_hour?: number;
+  price?: number;
   phone?: string;
 }
 

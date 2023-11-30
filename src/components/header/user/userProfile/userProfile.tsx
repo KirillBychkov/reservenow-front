@@ -2,7 +2,7 @@ import Flex from '@/components/UI/layout/flex';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './userProfile.module.scss';
 import { LogOut, Person } from '@blueprintjs/icons';
-import authStore from '@/store/AuthStore';
+import authStore from '@/store/authStore';
 import { observer } from 'mobx-react-lite';
 import { Menu } from 'primereact/menu';
 import { useNavigate } from 'react-router-dom';

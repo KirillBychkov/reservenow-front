@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import useFetch from '@/hooks/useFetch';
-import organizationStore from '@/store/OrganizationsStore';
+import organizationStore from '@/store/organizationsStore';
 import ToastContext from '@/context/toast';
 import ManageOrganizationForm from '@/components/b2bclient/forms/manageOrganizationForm/manageOrganizationForm';
 import { Organization } from '@/models/Organization';

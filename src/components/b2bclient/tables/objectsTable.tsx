@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { formatDate } from '@/utils/formatters/formatDate';
 

@@ -1,6 +1,6 @@
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { Equipment } from '@/models/Equipment';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import { observer } from 'mobx-react-lite';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';

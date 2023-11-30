@@ -5,7 +5,7 @@ import React, { useContext, useMemo } from 'react';
 import styles from './openRequest.module.scss';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import supportRecordsStore from '@/store/SupportRecordsStore';
+import supportRecordsStore from '@/store/supportRecordsStore';
 import { useTranslation } from 'react-i18next';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { PlainSupportRecordInfo } from '@/types/support';

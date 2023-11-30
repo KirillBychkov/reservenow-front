@@ -8,12 +8,15 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewObject.module.scss';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
 import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
+import { Order } from '@/models/Order';
+import ordersStore from '@/store/ordersStore';
+import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 
 const ViewObject: React.FC = () => {
   const navigate = useNavigate();
@@ -30,8 +33,20 @@ const ViewObject: React.FC = () => {
     [objectId],
   );
 
+  const {
+    data: orders,
+    isLoading: ordersIsLoading,
+    errorMsg: ordersErrorMsg,
+  } = useFetch<Order[]>(ordersStore.getOrders);
+
+  if (!object || !orders) {
+    return <ProgressSpinner />;
+  }
+
   if (errorMsg) {
     showError(errorMsg);
+  } else if (ordersErrorMsg) {
+    showError(ordersErrorMsg);
   }
 
   return (
@@ -68,11 +83,11 @@ const ViewObject: React.FC = () => {
             LeftSideComponent={<LeftSideComponent data={object} />}
             RightSideComponent={
               <RightSideComponent
-                heading={t('objects.objects')}
-                buttonText={t('objects.add')}
+                heading={t('orders.reservationHistory')}
+                setSearch={() => {}}
               />
             }
-            Table={<div>Table</div>}
+            Table={<OrdersTable orders={orders} />}
           />
         </>
       )}

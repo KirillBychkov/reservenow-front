@@ -18,9 +18,10 @@ class ObjectsStore {
 
   getRentalObjects = async (
     filters: Omit<Filters, 'total'>,
+    organizationId?: number,
   ): Promise<ResponseOrError<RentalObject[]>> => {
     try {
-      const response = await ObjectService.getObjects(filters);
+      const response = await ObjectService.getObjects(filters, organizationId);
       if (response.data.length === 0) {
         return { data: [], error: 'No objects found' };
       }

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import organizationStore from '@/store/OrganizationsStore';
+import organizationStore from '@/store/organizationsStore';
 import OrganizationList from '@/components/b2bclient/organizations/organizationList';
 import useFetch from '@/hooks/useFetch';
 import { Organization } from '@/models/Organization';

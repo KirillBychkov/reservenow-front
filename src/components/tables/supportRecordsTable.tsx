@@ -10,7 +10,7 @@ import { formatDate } from '@/utils/formatters/formatDate';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
-import supportRecordsStore from '@/store/SupportRecordsStore';
+import supportRecordsStore from '@/store/supportRecordsStore';
 import { SortField, SortOrder } from '@/hooks/useSort';
 
 interface Props {

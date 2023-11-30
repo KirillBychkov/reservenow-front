@@ -29,11 +29,8 @@
   },
   "clients": {
     "clients": "Клієнти",
-    "search": "Пошук",
     "add": "Додати клієнта",
     "edit": "Редагувати клієнта",
-    "clear": "Очистити",
-    "export": "Експорт",
     "null": "Наразі немає клієнтів"
   },
   "requests": {
@@ -245,5 +242,11 @@
     "chooseFile": "Виберіть файл",
     "chooseProfilePhoto": "Виберіть бажане фото профілю",
     "goBack": "На головну"
+  },
+  "orders": {
+    "reservationHistory": "Історія бронювань",
+    "orderHistory": "Історія замовлень",
+    "totalReservations": "Всього бронювань",
+    "totalClients": "Всього клієнтів"
   }
 }

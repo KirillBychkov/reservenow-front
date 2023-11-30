@@ -6,11 +6,11 @@ import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import organizationStore from '@/store/OrganizationsStore';
+import organizationStore from '@/store/organizationsStore';
 import Button from '@/components/UI/buttons/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
@@ -40,8 +40,8 @@ const ViewOrganization: React.FC = observer(() => {
     errorMsg,
     isLoading,
   } = useFetch<RentalObject[]>(
-    () => objectsStore.getRentalObjects({ limit, skip }),
-    [limit, skip],
+    () => objectsStore.getRentalObjects({ limit, skip }, parseInt(id || '0')),
+    [limit, skip, id],
   );
 
   if (!organization || !objects) {

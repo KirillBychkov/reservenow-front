@@ -2,10 +2,10 @@ import {
   CreateRentalObjectDTO,
   UpdateRentalObjectDTO,
 } from '@/models/requests/ObjectsRequests';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import { ObjectFormData } from '@/types/objects';
 import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
-import { formatObjectPriceToLowerUnit } from '@/utils/formatters/formatPrice';
+import { formatObjectOut } from '@/utils/formatters/formatObject';
 
 export const createObject = async (
   values: ObjectFormData,
@@ -23,7 +23,7 @@ export const createObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
-  const formattedObject = formatObjectPriceToLowerUnit(object);
+  const formattedObject = formatObjectOut(object);
 
   const response = await objectsStore.addRentalObject(formattedObject, file);
   if (response.successMsg && clearForm) {
@@ -46,7 +46,7 @@ export const updateObject = async (
     price_per_hour: values.price,
     ...workingHours,
   };
-  const formattedObject = formatObjectPriceToLowerUnit(object);
+  const formattedObject = formatObjectOut(object);
 
   const response = await objectsStore.editRentalObject(
     formattedObject,

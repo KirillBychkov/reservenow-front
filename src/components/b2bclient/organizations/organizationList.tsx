@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import organizationStore from '@/store/OrganizationsStore';
+import organizationStore from '@/store/organizationsStore';
 import OrganizationCard from './organizationCard';
 import styles from './organizationList.module.scss';
 import { Organization } from '@/models/Organization';

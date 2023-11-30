@@ -1,7 +1,7 @@
 import Flex from '@/components/UI/layout/flex';
 import styles from './profile.module.scss';
 import useFetch from '@/hooks/useFetch';
-import authStore from '@/store/AuthStore';
+import authStore from '@/store/authStore';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { ProgressSpinner } from 'primereact/progressspinner';

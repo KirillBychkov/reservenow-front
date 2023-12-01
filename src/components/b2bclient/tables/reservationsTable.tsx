@@ -61,6 +61,7 @@ const OrdersTable: React.FC<Props> = observer(
         // }}
         sortField={sortField}
         sortOrder={sortOrder}
+        onSort={onSortChange}
         footer={
           <Paginator
             template={{

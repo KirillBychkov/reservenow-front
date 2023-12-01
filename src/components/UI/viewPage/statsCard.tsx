@@ -9,11 +9,7 @@ interface CardProps {
   subheading: string;
 }
 
-const OrganizationStatsCard: React.FC<CardProps> = ({
-  icon,
-  heading,
-  subheading,
-}) => {
+const StatsCard: React.FC<CardProps> = ({ icon, heading, subheading }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.Card}>
@@ -31,4 +27,4 @@ const OrganizationStatsCard: React.FC<CardProps> = ({
   );
 };
 
-export default OrganizationStatsCard;
+export default StatsCard;

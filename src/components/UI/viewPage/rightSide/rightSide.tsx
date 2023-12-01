@@ -1,6 +1,6 @@
 import Button from '@/components/UI/buttons/button';
-import styles from './rightSideComponent.module.scss';
-import OrganizationStatsCard from '../statsCard';
+import styles from './rightSide.module.scss';
+import StatsCard from '../statsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';
 import Searchbar from '@/components/searchbar/searchbar';
@@ -37,7 +37,7 @@ interface Props {
   statCardsData?: StatsCardsData[];
 }
 
-const RightSideComponent: React.FC<Props> = ({
+const RightSide: React.FC<Props> = ({
   heading,
   buttonText,
   setSearch,
@@ -51,7 +51,7 @@ const RightSideComponent: React.FC<Props> = ({
     <div className={styles.RightSide}>
       <div className={styles.TopCards}>
         {cardsData.map((card, index) => (
-          <OrganizationStatsCard
+          <StatsCard
             key={index}
             icon={card.icon}
             heading={card.heading}
@@ -77,4 +77,4 @@ const RightSideComponent: React.FC<Props> = ({
   );
 };
 
-export default RightSideComponent;
+export default RightSide;

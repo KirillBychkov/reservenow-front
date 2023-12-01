@@ -1,5 +1,5 @@
 import styles from './leftSideComponent.module.scss';
-import OrganizationDetailsLeft from './organizationDetailsLeft';
+import OrganizationDetailsLeft from './details';
 import FootballField from '@/assets/footballField.png';
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
 

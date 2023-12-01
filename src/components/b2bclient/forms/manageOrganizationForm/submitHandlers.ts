@@ -18,7 +18,6 @@ export const createOrganization = async (
     ...workingHours,
   };
   const formattedOrganization = formatObjectOut(organization);
-  console.log(formattedOrganization);
 
   const response = await organizationStore.addOrganization(
     formattedOrganization,

@@ -1,14 +1,31 @@
 import $api from '@/http';
+import { Filters } from '@/models/Filters';
 import { Order } from '@/models/Order';
 import {
   CreateOrderDTO,
   UpdateOrderDTO,
 } from '@/models/requests/OrderRequests';
+import { Orders } from '@/models/response/OrderResponse';
 import { AxiosResponse } from 'axios';
 export class OrderService {
-  // TODO: add query params when api is ready
-  static async getOrders(): Promise<AxiosResponse<Order[]>> {
-    return $api.get('/order');
+  static async getOrders(
+    filters: Omit<Filters, 'total'>,
+    rentalObjectId?: number,
+    equipmentId?: number,
+    trainerId?: number,
+  ): Promise<AxiosResponse<Orders>> {
+    let path = `/order?limit=${filters.limit}&skip=${filters.skip}${
+      filters.sort ? `&sort=${filters.sort}` : ''
+    }`;
+    // only one of these params can be used at a time
+    if (rentalObjectId) {
+      path += `&rental_object_id=${rentalObjectId}`;
+    } else if (equipmentId) {
+      path += `&equipment_id=${equipmentId}`;
+    } else if (trainerId) {
+      path += `&trainer_id=${trainerId}`;
+    }
+    return $api.get(path);
   }
 
   static async getOrderById(id: number): Promise<AxiosResponse<Order>> {

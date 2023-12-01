@@ -67,6 +67,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
 
     const handleClearForm = () => {
       formik.resetForm();
+      formik.setFieldValue('workingHours', workingHours);
     };
 
     return (

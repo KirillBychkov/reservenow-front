@@ -1,14 +1,14 @@
-import styles from './organizationDetailsLeft.module.scss';
+import styles from './details.module.scss';
 import { daysOfWeek } from '@/utils/formHelpers/formHelpers';
 import { RenderWorkingHours } from './renderWorkingHours';
 import { useTranslation } from 'react-i18next';
-import { ViewPageData } from './leftSideComponent';
+import { ViewPageData } from './leftSide';
 
 interface Props {
   data: ViewPageData;
 }
 
-const OrganizationDetailsLeft: React.FC<Props> = ({ data }) => {
+const LeftSideDetails: React.FC<Props> = ({ data }) => {
   const { name, id, address } = data;
   const { t } = useTranslation();
 
@@ -40,4 +40,4 @@ const OrganizationDetailsLeft: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default OrganizationDetailsLeft;
+export default LeftSideDetails;

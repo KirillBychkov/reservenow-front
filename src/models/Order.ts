@@ -9,6 +9,7 @@ export interface Order {
   user: User;
   status: OrderStatus;
   payment_method: PaymentMethod;
+  order_sum: number;
   reservations: Reservation[];
   client: Client;
   created_at: Date | string;

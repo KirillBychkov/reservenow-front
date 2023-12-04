@@ -14,17 +14,19 @@ import objectsStore from '@/store/objectsStore';
 import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
-import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
-import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
+import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
+import RightSideComponent from '@/components/UI/viewPage/rightSide/rightSide';
 import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
 import { Organization } from '@/models/Organization';
 import { RentalObject } from '@/models/RentalObject';
+import { useSort } from '@/hooks/useSort';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
+  const { sortOrder, sortField, handleSort, sort } = useSort();
 
   const { limit, skip, first, onPageChange } = usePaginate(
     objectsStore.filters,
@@ -40,8 +42,9 @@ const ViewOrganization: React.FC = observer(() => {
     errorMsg,
     isLoading,
   } = useFetch<RentalObject[]>(
-    () => objectsStore.getRentalObjects({ limit, skip }, parseInt(id || '0')),
-    [limit, skip, id],
+    () =>
+      objectsStore.getRentalObjects({ limit, skip, sort }, parseInt(id || '0')),
+    [limit, skip, id, sort],
   );
 
   if (!organization || !objects) {
@@ -94,6 +97,9 @@ const ViewOrganization: React.FC = observer(() => {
                 objects={objects}
                 first={first}
                 onPageChange={onPageChange}
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSortChange={handleSort}
               />
             }
           />

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { formatHour } from '@/utils/organizationHelpers';
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
-import { ViewPageData } from './leftSideComponent';
+import { ViewPageData } from './leftSide';
 
 interface Props {
   data: ViewPageData;

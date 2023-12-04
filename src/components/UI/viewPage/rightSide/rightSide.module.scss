@@ -1,14 +1,10 @@
 .RightSide {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 10%;
-
+  width: 100%;
   .TopCards {
+    width: 100%;
     display: flex;
-    gap: 24px;
+    gap: 1.5rem;
     margin-bottom: 24px;
-    align-items: center;
-    justify-content: flex-start;
   }
 
   .BottomTable {

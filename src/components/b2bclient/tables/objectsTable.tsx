@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTable } from 'primereact/datatable';
+import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
@@ -10,15 +10,19 @@ import { observer } from 'mobx-react-lite';
 import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { formatDate } from '@/utils/formatters/formatDate';
+import { SortField, SortOrder } from '@/hooks/useSort';
 
 type Props = {
   objects: RentalObject[];
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
+  sortField: SortField;
+  sortOrder: SortOrder;
+  onSortChange: (e: DataTableStateEvent) => void;
 };
 
 const ObjectsTable: React.FC<Props> = observer(
-  ({ objects, onPageChange, first }) => {
+  ({ objects, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const [selectedObject, setSelectedObject] = useState<RentalObject | null>(
@@ -51,6 +55,9 @@ const ObjectsTable: React.FC<Props> = observer(
           onSelectionChange={(e) => {
             handleViewObject(e.value as RentalObject);
           }}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSort={onSortChange}
           footer={
             <Paginator
               template={{
@@ -68,9 +75,9 @@ const ObjectsTable: React.FC<Props> = observer(
             />
           }
         >
-          <Column field='id' header={t('objects.id')} />
-          <Column field='name' header={t('objects.name')} />
-          <Column field='type' header={t('objects.sportType')} sortable />
+          <Column field='id' header={t('objects.id')} sortable />
+          <Column field='name' header={t('objects.name')} sortable />
+          <Column field='type' header={t('objects.sportType')} />
           <Column field='created_at' header={t('dates.date')} sortable />
 
           <Column

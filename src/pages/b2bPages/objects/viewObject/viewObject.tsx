@@ -12,17 +12,24 @@ import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
-import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
-import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
+import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
+import RightSideComponent from '@/components/UI/viewPage/rightSide/rightSide';
 import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
 import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
+import usePaginate from '@/hooks/usePaginate';
+import { observer } from 'mobx-react-lite';
+import { useSort } from '@/hooks/useSort';
 
-const ViewObject: React.FC = () => {
+const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
+  const { sortField, sortOrder, handleSort, sort } = useSort();
+  const { limit, skip, first, onPageChange } = usePaginate(
+    objectsStore.filters,
+  );
 
   const {
     data: object,
@@ -33,11 +40,11 @@ const ViewObject: React.FC = () => {
     [objectId],
   );
 
-  const {
-    data: orders,
-    isLoading: ordersIsLoading,
-    errorMsg: ordersErrorMsg,
-  } = useFetch<Order[]>(ordersStore.getOrders);
+  const { data: orders, errorMsg: ordersErrorMsg } = useFetch<Order[]>(
+    () =>
+      ordersStore.getOrders({ limit, skip, sort }, parseInt(objectId || '')),
+    [limit, skip, objectId, sort],
+  );
 
   if (!object || !orders) {
     return <ProgressSpinner />;
@@ -87,12 +94,21 @@ const ViewObject: React.FC = () => {
                 setSearch={() => {}}
               />
             }
-            Table={<OrdersTable orders={orders} />}
+            Table={
+              <OrdersTable
+                orders={orders}
+                first={first}
+                onPageChange={onPageChange}
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSortChange={handleSort}
+              />
+            }
           />
         </>
       )}
     </div>
   );
-};
+});
 
 export default ViewObject;

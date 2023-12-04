@@ -1,28 +1,57 @@
 import Button from '@/components/UI/buttons/button';
-import styles from './rightSideComponent.module.scss';
-import OrganizationStatsCard, { cardData } from './organizationStatsCard';
+import styles from './rightSide.module.scss';
+import StatsCard from '../statsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';
 import Searchbar from '@/components/searchbar/searchbar';
+import { BankAccount, Endorsed, ShoppingCart } from '@blueprintjs/icons';
 
-interface RightSideComponentProps {
+export interface StatsCardsData {
+  icon: React.ReactNode;
+  heading: string;
+  subheading: string;
+}
+
+const mockCardData = [
+  {
+    icon: <BankAccount />,
+    heading: `UAH 26 124,12`,
+    subheading: 'organizations.totalSales',
+  },
+  {
+    icon: <ShoppingCart />,
+    heading: `135`,
+    subheading: 'organizations.totalBookings',
+  },
+  {
+    icon: <Endorsed />,
+    heading: `235`,
+    subheading: 'organizations.totalClients',
+  },
+];
+
+interface Props {
   heading: string;
   buttonText?: string;
   setSearch?: (search: string) => void;
+  statCardsData?: StatsCardsData[];
 }
 
-const RightSideComponent: React.FC<RightSideComponentProps> = ({
+const RightSide: React.FC<Props> = ({
   heading,
   buttonText,
   setSearch,
+  statCardsData,
 }) => {
   const navigate = useNavigate();
+
+  const cardsData = statCardsData || mockCardData;
 
   return (
     <div className={styles.RightSide}>
       <div className={styles.TopCards}>
-        {cardData.map((card, index) => (
-          <OrganizationStatsCard
+        {cardsData.map((card, index) => (
+          <StatsCard
             key={index}
             icon={card.icon}
             heading={card.heading}
@@ -48,4 +77,4 @@ const RightSideComponent: React.FC<RightSideComponentProps> = ({
   );
 };
 
-export default RightSideComponent;
+export default RightSide;

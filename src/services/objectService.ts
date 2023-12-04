@@ -14,8 +14,10 @@ export default class ObjectService {
   ) {
     return $api.get(
       `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
-        filters.search ? `&search=${filters.search}` : ''
-      }${organizationId ? `&organizationId=${organizationId}` : ''}`,
+        filters.sort ? `&sort=${filters.sort}` : ''
+      }${filters.search ? `&search=${filters.search}` : ''}${
+        organizationId ? `&organizationId=${organizationId}` : ''
+      }`,
     );
   }
 

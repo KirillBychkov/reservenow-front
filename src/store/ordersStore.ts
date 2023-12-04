@@ -20,11 +20,23 @@ class OrdersStore {
     this.filters = filters;
   }
 
-  getOrders = async (): Promise<ResponseOrError<Order[]>> => {
+  getOrders = async (
+    filters: Omit<Filters, 'total'>,
+    rentalObjectId?: number,
+    equipmentId?: number,
+    trainerId?: number,
+  ): Promise<ResponseOrError<Order[]>> => {
     try {
-      const response = await OrderService.getOrders();
-      this.setOrders(response.data);
-      return { data: response.data, error: '' };
+      const response = await OrderService.getOrders(
+        filters,
+        rentalObjectId,
+        equipmentId,
+        trainerId,
+      );
+      console.log(response.data.data);
+      this.setOrders(response.data.data);
+      this.setFilters(response.data.filters);
+      return { data: response.data.data, error: '' };
     } catch (e) {
       return { data: [], error: 'An error occurred while fetching orders.' };
     }

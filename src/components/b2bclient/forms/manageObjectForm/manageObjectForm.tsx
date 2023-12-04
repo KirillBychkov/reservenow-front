@@ -58,6 +58,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
 
   const handleClearForm = () => {
     formik.resetForm();
+    formik.setFieldValue('workingHours', workingHours);
   };
 
   const formik = useFormik({

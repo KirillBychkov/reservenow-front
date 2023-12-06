@@ -1,7 +1,8 @@
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
-import organizationStore from '@/store/OrganizationsStore';
+import organizationStore from '@/store/organizationsStore';
 import { OrganizationFormData } from '@/types/organization';
 import { finalizeWorkingHours } from '@/utils/formHelpers/formHelpers';
+import { formatObjectOut } from '@/utils/formatters/formatObject';
 
 export const createOrganization = async (
   values: OrganizationFormData,
@@ -16,7 +17,12 @@ export const createOrganization = async (
     address: values.address,
     ...workingHours,
   };
-  const response = await organizationStore.addOrganization(organization, file);
+  const formattedOrganization = formatObjectOut(organization);
+
+  const response = await organizationStore.addOrganization(
+    formattedOrganization,
+    file,
+  );
   if (response.successMsg && clearForm) {
     clearForm();
   }
@@ -36,9 +42,10 @@ export const updateOrganization = async (
     address: values.address,
     ...workingHours,
   };
+  const formattedOrganization = formatObjectOut(organization);
   const response = await organizationStore.editOrganization(
     organizationId,
-    organization,
+    formattedOrganization,
     file,
   );
   return response;

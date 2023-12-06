@@ -15,6 +15,7 @@ import { Organization } from '@/models/Organization';
 import { createOrganization, updateOrganization } from './submitHandlers';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 interface Props {
   initialValues?: Organization;
@@ -25,6 +26,8 @@ const ManageOrganizationForm: React.FC<Props> = observer(
     const { t } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
     const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+
+    if (initialValues) initialValues = formatObjectIn(initialValues);
 
     const validationSchema = Yup.object({
       name: Yup.string().required(t('invalid.required')),
@@ -64,6 +67,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
 
     const handleClearForm = () => {
       formik.resetForm();
+      formik.setFieldValue('workingHours', workingHours);
     };
 
     return (

@@ -10,7 +10,7 @@ import { User } from '@/models/User';
 import { useMemo, useState } from 'react';
 import { formatDate } from '@/utils/formatters/formatDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 

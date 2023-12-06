@@ -1,5 +1,5 @@
-import styles from './leftSideComponent.module.scss';
-import OrganizationDetailsLeft from './organizationDetailsLeft';
+import styles from './leftSide.module.scss';
+import LeftSideDetails from './details';
 import FootballField from '@/assets/footballField.png';
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
 
@@ -15,7 +15,7 @@ interface Props {
   data: ViewPageData;
 }
 
-const LeftSideComponent: React.FC<Props> = ({ data }) => {
+const LeftSide: React.FC<Props> = ({ data }) => {
   return (
     <div className={styles.OrganizationDetails}>
       <div className={styles.OrganizationImageDiv}>
@@ -26,10 +26,10 @@ const LeftSideComponent: React.FC<Props> = ({ data }) => {
         />
       </div>
       <div className={styles.OrganizationDetailsBottom}>
-        <OrganizationDetailsLeft data={data} />
+        <LeftSideDetails data={data} />
       </div>
     </div>
   );
 };
 
-export default LeftSideComponent;
+export default LeftSide;

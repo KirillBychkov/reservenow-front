@@ -11,7 +11,7 @@ import {
   LayoutGrid,
 } from '@blueprintjs/icons';
 import { useTranslation } from 'react-i18next';
-import authStore from '@/store/AuthStore';
+import authStore from '@/store/authStore';
 import { UserRole } from '@/types/enums/user';
 
 const useRoleBasedMenu = () => {

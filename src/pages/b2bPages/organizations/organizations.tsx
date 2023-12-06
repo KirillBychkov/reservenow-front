@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import organizationStore from '@/store/OrganizationsStore';
-import OrganizationList from '@/components/b2bclient/organizations/organizationList';
+import organizationStore from '@/store/organizationsStore';
 import useFetch from '@/hooks/useFetch';
 import { Organization } from '@/models/Organization';
 import ToastContext from '@/context/toast';
+import OrganizationCard from '@/components/UI/cards/organizationCard';
 
 const Organizations: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -26,6 +26,10 @@ const Organizations: React.FC = observer(() => {
   if (errorMsg) {
     showError(errorMsg);
   }
+
+  const organizationList = organizations?.map((org: Organization) => (
+    <OrganizationCard organization={org} key={org.id} />
+  ));
 
   return (
     <div className={styles.Organizations}>
@@ -47,9 +51,7 @@ const Organizations: React.FC = observer(() => {
           <ProgressSpinner />
         </div>
       ) : organizations?.length ? (
-        <div className={styles.OrganizationsContent}>
-          <OrganizationList />
-        </div>
+        <div className={styles.OrganizationsContent}>{organizationList}</div>
       ) : (
         <div className={styles.OrganizationsContentNull}>
           <h2 className='heading heading-2 heading-primary'>

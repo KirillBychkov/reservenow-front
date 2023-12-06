@@ -26,7 +26,7 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
           <Search color='gray'></Search>
         </i>
         <InputText
-          placeholder='Search'
+          placeholder={t('actions.search')}
           className={styles.input}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -34,7 +34,7 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
         />
       </span>
       <div className={styles.buttonGroup}>
-        <Button onClick={() => setSearch(value)}>{t('clients.search')}</Button>
+        <Button onClick={() => setSearch(value)}>{t('actions.search')}</Button>
         <Button
           disabled={!value}
           severity='secondary'
@@ -43,7 +43,7 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
             setSearch('');
           }}
         >
-          {t('clients.clear')}
+          {t('actions.clear')}
         </Button>
       </div>
     </div>

@@ -1,15 +1,16 @@
-import { OrderStatus, PaymentMethod } from '@/types/enums/order';
+import { OrderStatus } from '@/types/enums/order';
 import { User } from './User';
 import { Client } from './Client';
-import { Reservation } from './Reservations';
+import { PaymentMethod } from '@/types/enums/payment';
+import { Reservation } from './Reservation';
 
 export interface Order {
   id: number;
   user: User;
   status: OrderStatus;
-  payment_method: PaymentMethod
   orders_sum: number;
-  reservations: Reservation[]
+  payment_method: PaymentMethod;
+  reservations: Reservation[];
   client: Client;
   created_at: Date | string;
   updated_at: Date | string;

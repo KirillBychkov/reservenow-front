@@ -4,22 +4,31 @@ import useFetch from '@/hooks/useFetch';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewObject.module.scss';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
-import LeftSideComponent from '@/components/b2bclient/organizations/leftSideComponent';
-import RightSideComponent from '@/components/b2bclient/organizations/rightSideComponent';
+import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
+import RightSideComponent from '@/components/UI/viewPage/rightSide/rightSide';
+import { Order } from '@/models/Order';
+import ordersStore from '@/store/ordersStore';
+import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
+import usePaginate from '@/hooks/usePaginate';
+import { observer } from 'mobx-react-lite';
+import { useSort } from '@/hooks/useSort';
 
-const ViewObject: React.FC = () => {
+const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
+  const [search, setSearch] = useState('');
+  const { sortField, sortOrder, handleSort, sort } = useSort();
+  const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
 
   const {
     data: object,
@@ -29,6 +38,19 @@ const ViewObject: React.FC = () => {
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
   );
+
+  const { data: orders } = useFetch<Order[]>(
+    () =>
+      ordersStore.getOrders(
+        { limit, skip, sort, search },
+        parseInt(objectId || ''),
+      ),
+    [limit, skip, objectId, sort, search],
+  );
+
+  if (!object || !orders) {
+    return <ProgressSpinner />;
+  }
 
   if (errorMsg) {
     showError(errorMsg);
@@ -68,16 +90,25 @@ const ViewObject: React.FC = () => {
             LeftSideComponent={<LeftSideComponent data={object} />}
             RightSideComponent={
               <RightSideComponent
-                heading={t('objects.objects')}
-                buttonText={t('objects.add')}
+                heading={t('orders.reservationHistory')}
+                setSearch={setSearch}
               />
             }
-            Table={<div>Table</div>}
+            Table={
+              <OrdersTable
+                orders={orders}
+                first={first}
+                onPageChange={onPageChange}
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSortChange={handleSort}
+              />
+            }
           />
         </>
       )}
     </div>
   );
-};
+});
 
 export default ViewObject;

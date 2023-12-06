@@ -2,7 +2,7 @@ import {
   CreateEquipmentDTO,
   UpdateEquipmentDTO,
 } from '@/models/requests/EquipmentRequests';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import { EquipmentFormData } from '@/types/equipment';
 
 export const createEquipment = async (

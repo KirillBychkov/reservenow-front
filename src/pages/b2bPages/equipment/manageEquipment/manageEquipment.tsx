@@ -8,7 +8,7 @@ import { ManageEquipmentForm } from '@/components/b2bclient/forms/manageEquipmen
 import useFetch from '@/hooks/useFetch';
 import { observer } from 'mobx-react-lite';
 import { Equipment } from '@/models/Equipment';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import { useContext } from 'react';
 import ToastContext from '@/context/toast';
 import { useTranslation } from 'react-i18next';

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import ManageObjectForm from '@/components/b2bclient/forms/manageObjectForm/manageObjectForm';
 import useFetch from '@/hooks/useFetch';
 import { observer } from 'mobx-react-lite';
-import objectsStore from '@/store/ObjectsStore';
+import objectsStore from '@/store/objectsStore';
 import ToastContext from '@/context/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { RentalObject } from '@/models/RentalObject';

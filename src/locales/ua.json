@@ -29,11 +29,8 @@
   },
   "clients": {
     "clients": "Клієнти",
-    "search": "Пошук",
     "add": "Додати клієнта",
     "edit": "Редагувати клієнта",
-    "clear": "Очистити",
-    "export": "Експорт",
     "null": "Наразі немає клієнтів",
     "idColumn": "ID",
     "nameColumn": "Ім'я клієнта",
@@ -51,14 +48,6 @@
     "total_reservation_amount": "Всього бронюваннь",
     "ordersHistory": "Історія бронювання",
     "ordersNull": "Нажаль ще не має iсторіi бронюваннь клієнта"
-  },
-  "orders": {
-    "id": "Рез. ID",
-    "objectNames": "Об'єкт",
-    "clientPhone": "Номер телефону",
-    "create_at": "Дата",
-    "totalOrderSum": "Разом ₴",
-    "status": "Cтатус"
   },
   "requests": {
     "requests": "Запити",
@@ -97,6 +86,8 @@
     "chooseFile": "Файли:",
     "price": "Ціна",
     "enterPrice": "Введіть ціну",
+    "sum": "Сума",
+    "total": "Разом",
     "name": "Назва",
     "enterName": "Введіть назву",
     "address": "Адреса",
@@ -272,5 +263,17 @@
     "chooseFile": "Виберіть файл",
     "chooseProfilePhoto": "Виберіть бажане фото профілю",
     "goBack": "На головну"
+  },
+  "orders": {
+    "reservationHistory": "Історія бронювань",
+    "orderHistory": "Історія замовлень",
+    "totalReservations": "Всього бронювань",
+    "totalClients": "Всього клієнтів",
+    "id": "Рез. ID",
+    "objectNames": "Об'єкт",
+    "clientPhone": "Номер телефону",
+    "create_at": "Дата",
+    "totalOrderSum": "Разом ₴",
+    "status": "Cтатус"
   }
 }

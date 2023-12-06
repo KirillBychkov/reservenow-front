@@ -34,7 +34,31 @@
     "edit": "Редагувати клієнта",
     "clear": "Очистити",
     "export": "Експорт",
-    "null": "Наразі немає клієнтів"
+    "null": "Наразі немає клієнтів",
+    "idColumn": "ID",
+    "nameColumn": "Ім'я клієнта",
+    "phoneColumn": "Телефон",
+    "createdColumn": "Створено",
+    "reservationColumn": "Бронювання",
+    "moneyColumn": "Витрачені гроші",
+    "status": "Статус",
+    "id": "ID клієнта",
+    "first_name": "Ім'я",
+    "last_name": "Прізвище",
+    "phone": "Номер",
+    "createdAt": "Створено",
+    "total_reservation_sum": "Витрачені гроші",
+    "total_reservation_amount": "Всього бронюваннь",
+    "ordersHistory": "Історія бронювання",
+    "ordersNull": "Нажаль ще не має iсторіi бронюваннь клієнта"
+  },
+  "orders": {
+    "id": "Рез. ID",
+    "objectNames": "Об'єкт",
+    "clientPhone": "Номер телефону",
+    "create_at": "Дата",
+    "totalOrderSum": "Разом ₴",
+    "status": "Cтатус"
   },
   "requests": {
     "requests": "Запити",
@@ -158,7 +182,10 @@
     "in_progress": "Обробляється",
     "fixed": "Виконано",
     "rejected": "Відхилено",
-    "undefined": "Невідомий"
+    "undefined": "Невідомий",
+    "inactive": "Неактивний",
+    "not_paid": "Не сплачено",
+    "paid": "Сплачено"
   },
   "actions": {
     "action": "Дія",

@@ -21,8 +21,8 @@ import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
 import Clients from '@/pages/b2bPages/clients/clients';
-import AddClient from '@/pages/b2bPages/clients/manageClient/addClient';
-import EditClient from '@/pages/b2bPages/clients/manageClient/editClient';
+import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
+import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 
 interface IRoute {
   path: string;
@@ -192,13 +192,20 @@ export const routes: IRoute[] = [
   },
   {
     path: '/clients/add',
-    element: <AddClient />,
+    element: <ManageClient />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },
   {
-    path: 'clients/:id/edit',
-    element: <EditClient />,
+    path: '/clients/:id',
+    element: <ClientPage />,
+    params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/:id/edit',
+    element: <ManageClient />,
     params: { id: ':id' },
     isProtected: true,
     allowedRoles: [UserRole.UserFull],

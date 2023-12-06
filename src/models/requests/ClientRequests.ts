@@ -1,3 +1,5 @@
+import { ClientStatus } from "@/types/enums/client"
+
 export interface CreateClientDTO {
   first_name: string,
   last_name: string,
@@ -5,4 +7,6 @@ export interface CreateClientDTO {
   description: string
 }
 
-export interface UpdateClientDTO extends Partial<CreateClientDTO> {}
+export type UpdateClientDTO = Partial<CreateClientDTO> & {
+  status: ClientStatus
+}

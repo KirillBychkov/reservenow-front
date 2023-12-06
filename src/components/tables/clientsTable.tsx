@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from './status.module.scss';
 import classNames from 'classnames';
 import Button from '../UI/buttons/button';
-import { formatDate } from '@/utils/formatters/formatDate';
+import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 type Props = {
   clients: Client[];
@@ -31,7 +32,7 @@ const ClientsTable = observer(
     first,
     onPageChange,
   }: Props) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const filters = clientStore.getFilters();
 
@@ -40,15 +41,8 @@ const ClientsTable = observer(
     };
 
     const formattedClients: Client[] = useMemo(() => {
-      return clients.map((client) => {
-        const formattedDate = formatDate(client.created_at, i18n.language);
-
-        return {
-          ...client,
-          created_at: formattedDate,
-        };
-      });
-    }, [clients, i18n.language]);
+      return clients.map((client) => formatObjectIn(client));
+    }, [clients]);
 
     return (
       <DataTable
@@ -76,7 +70,14 @@ const ClientsTable = observer(
         }
       >
         <Column field='id' header={t('clients.idColumn')} sortable />
-        <Column field='first_name' header={t('clients.nameColumn')} sortable />
+        <Column
+          field='first_name'
+          header={t('clients.nameColumn')}
+          body={({ first_name, last_name }: Client) =>
+            `${first_name} ${last_name}`
+          }
+          sortable
+        />
         <Column field='phone' header={t('clients.phoneColumn')} />
         <Column
           field='total_reservation_amount'
@@ -85,6 +86,10 @@ const ClientsTable = observer(
         <Column
           field='total_reservation_sum'
           header={t('clients.moneyColumn')}
+          sortable
+          body={({ total_reservation_sum }: Client) =>
+            `UAH ${formatToUpperUnit(total_reservation_sum || 0)}`
+          }
         />
 
         <Column

@@ -10,7 +10,9 @@ import Button from '../UI/buttons/button';
 import { useMemo } from 'react';
 import { formatDate } from '@/utils/formatters/formatDate';
 import classNames from 'classnames';
-import styles from './status.module.scss'
+import styles from './status.module.scss';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
+import { formatPhoneIn } from '@/utils/formatters/formatPhone';
 
 type Props = {
   orders: Order[];
@@ -40,23 +42,17 @@ const ClientOrdersTable = ({
   onSortChange,
 }: Props) => {
   const filters = clientStore.getOrdersFilters();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const handleNavigateToOrder = (id: number) => {
     //Todo add link to reservation history page
     // navigate(`/reservations/${id}`);
   };
 
-  const formattedOrders: Order[] = useMemo(() => {
-    return orders.map((order) => {
-      const formattedDate = formatDate(order.created_at, i18n.language);
-
-      return {
-        ...order,
-        created_at: formattedDate,
-      };
-    });
-  }, [orders, i18n.language]);
+  const formattedOrders: Order[] = useMemo(
+    () => orders.map((order) => formatObjectIn(order)),
+    [orders],
+  );
 
   return (
     <DataTable
@@ -90,7 +86,11 @@ const ClientOrdersTable = ({
         body={(order: Order) => getAllObjectsNamesInOrder(order)}
       />
 
-      <Column header={t('orders.clientPhone')} field='client.phone' />
+      <Column
+        header={t('orders.clientPhone')}
+        field='client.phone'
+        body={({ client }: Order) => formatPhoneIn(client.phone)}
+      />
       <Column header={t('orders.create_at')} field='created_at' sortable />
       <Column header={t('orders.totalOrderSum')} field='order_sum' />
       <Column

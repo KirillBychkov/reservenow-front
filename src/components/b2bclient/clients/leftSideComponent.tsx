@@ -3,14 +3,13 @@ import { Client } from '@/models/Client';
 import styles from './leftSideComponent.module.scss';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { formatDate } from '@/utils/formatters/formatDate';
 
 type Props = {
   client: Client;
 };
 
 const LeftSideComponent = ({ client }: Props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { first_name, status, id, last_name, created_at, phone } = client;
   const clientProperties = Object.entries({ id, first_name, last_name, phone })
 
@@ -49,7 +48,7 @@ const LeftSideComponent = ({ client }: Props) => {
       <Flex options={{ direction: 'column', gap: 0.25 }}>
         <p className='heading heading-6'>{t('clients.createdAt')}</p>
         <p className='heading heading-6 heading-muted'>
-          {formatDate(created_at, i18n.language)}
+          {created_at as string}
         </p>
       </Flex>
     </Flex>

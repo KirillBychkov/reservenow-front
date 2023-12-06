@@ -2,6 +2,7 @@ import { CreateClientDTO, UpdateClientDTO } from "@/models/requests/ClientReques
 import clientStore from "@/store/ClientStore";
 import { ClientFormData } from "@/types/client";
 import { ClientStatus } from "@/types/enums/client";
+import { formatObjectOut } from "@/utils/formatters/formatObject";
 
 export const createClient = async (
   values: ClientFormData,
@@ -14,7 +15,7 @@ export const createClient = async (
     description: values.description
   };
 
-  const response = await clientStore.addClient(client);
+  const response = await clientStore.addClient(formatObjectOut(client));
 
   if (response.successMsg && clearForm) {
     clearForm();
@@ -34,7 +35,7 @@ export const updateClient = async (
     description: values.description,
     status: values.status?.value as ClientStatus
   };
-  const response = await clientStore.updateClient(clientId, client);
+  const response = await clientStore.updateClient(clientId, formatObjectOut(client));
 
   return response;
 };

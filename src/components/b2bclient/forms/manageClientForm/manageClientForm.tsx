@@ -108,7 +108,7 @@ const ManageClientForm = observer(({ initValues }: Props) => {
   });
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <Flex options={{ direction: 'column', gap: 1.5 }}>
         <Flex
           className={styles.formSection}
@@ -177,6 +177,10 @@ const ManageClientForm = observer(({ initValues }: Props) => {
 
           <FormField label={t('forms.description')}>
             <InputTextarea
+              name='description'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
               autoResize
               rows={7}
               placeholder={t('forms.enterDescription')}
@@ -204,7 +208,7 @@ const ManageClientForm = observer(({ initValues }: Props) => {
           >
             {t('actions.cancel')}
           </Button>
-          <Button fill className={styles.btn}>
+          <Button type='submit' fill className={styles.btn}>
             {t('actions.save')}
           </Button>
         </Flex>

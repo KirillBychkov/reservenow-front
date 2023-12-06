@@ -17,9 +17,11 @@ import RightSideComponent from '@/components/b2bclient/clients/rightSideComponen
 import { useSort } from '@/hooks/useSort';
 import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
-import ClientReservationsTable from '@/components/tables/clientOrdersTable';
+import ClientOrdersTable from '@/components/tables/clientOrdersTable';
 import { Order } from '@/models/Order';
 import Searchbar from '@/components/searchbar/searchbar';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
+import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
 
 const ClientPage = observer(() => {
   const { id } = useParams();
@@ -81,11 +83,11 @@ const ClientPage = observer(() => {
       </Flex>
 
       <ClientPageLayout
-        leftSideComponent={<LeftSideComponent client={client} />}
+        leftSideComponent={<LeftSideComponent client={formatObjectIn(client)} />}
         rightSideComponent={
           <RightSideComponent
             totalReservationAmount={client.total_reservation_amount}
-            totalReservationSum={client.total_reservation_sum}
+            totalReservationSum={formatToUpperUnit(client.total_reservation_sum || 0)}
           />
         }
         table={
@@ -98,7 +100,7 @@ const ClientPage = observer(() => {
               <Searchbar setSearch={setSearch} />
             </Flex>
             {orders ? (
-              <ClientReservationsTable
+              <ClientOrdersTable
                 sortField={sortField}
                 first={first}
                 sortOrder={sortOrder}

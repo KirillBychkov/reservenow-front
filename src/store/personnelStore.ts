@@ -2,12 +2,18 @@ import { Manager } from '@/models/Manager';
 import { Trainer } from '@/models/Trainer';
 import { CreateManagerDTO } from '@/models/requests/ManagerRequests';
 import ManagerService from '@/services/managerService';
-import { ResponseOrError } from '@/types/store';
+import { SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
+export interface Personnel {
+  managers: Manager[];
+  trainers: Trainer[];
+}
 class PersonnelStore {
-  managers: Manager[] = [];
-  trainers: Trainer[] = [];
+  personnel: Personnel = {
+    managers: [],
+    trainers: [],
+  };
 
   constructor() {
     makeAutoObservable(this);
@@ -15,17 +21,17 @@ class PersonnelStore {
 
   // Managers
   setManagers(managers: Manager[]) {
-    this.managers = managers;
+    this.personnel.managers = managers;
   }
 
   createManager = async (
     manager: CreateManagerDTO,
-  ): Promise<ResponseOrError<Manager>> => {
+  ): Promise<SuccessOrError> => {
     try {
-      const res = await ManagerService.createManager(manager);
-      return { data: res.data, error: '' };
+      await ManagerService.createManager(manager);
+      return { successMsg: 'Created manager succesfully', errorMsg: '' };
     } catch (error) {
-      return { data: {} as Manager, error: 'Error creating manager' };
+      return { successMsg: '', errorMsg: 'Error creating manager' };
     }
   };
 }

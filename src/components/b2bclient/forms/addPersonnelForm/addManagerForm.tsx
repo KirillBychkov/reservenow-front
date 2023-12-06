@@ -1,5 +1,3 @@
-import ModalContext from '@/context/modal';
-import ToastContext from '@/context/toast';
 import { useFormik } from 'formik';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,55 +17,135 @@ import {
 } from '@/models/requests/ManagerRequests';
 import { observer } from 'mobx-react-lite';
 import personnelStore from '@/store/personnelStore';
-import authStore from '@/store/authStore';
+import { ManagerFormData } from '@/types/manager';
+import { createManager } from './submitHandlers';
+import ToastContext from '@/context/toast';
 
 const AddManagerForm: React.FC = observer(() => {
   const { t } = useTranslation();
-  // const { showSuccess, showError } = useContext(ToastContext);
-  const { showModal } = useContext(ModalContext);
-  const user = authStore.user;
-  // const handleShowModalAndSubmit = async () => {
-  //   const res = await showModal(t('forms.areYouSure'));
-  //   if (res) {
-  //     await formik.handleSubmit();
-  //   }
-  // };
+  const { showError, showSuccess } = useContext(ToastContext);
 
   const validationSchema = Yup.object({
-    first_name: Yup.string().required(t('invalid.required')),
-    last_name: Yup.string().required(t('invalid.required')),
+    firstName: Yup.string().required(t('invalid.required')),
+    lastName: Yup.string().required(t('invalid.required')),
+    email: Yup.string()
+      .email(t('invalid.email'))
+      .required(t('invalid.required')),
+    phone: Yup.string().required(t('invalid.required')),
     description: Yup.string(),
   });
 
-  const formData = {
-    first_name: '',
-    last_name: '',
+  const formData: ManagerFormData = {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
     description: '',
+  };
+
+  const handleClearForm = () => formik.resetForm();
+
+  const onSubmit = async (values: ManagerFormData) => {
+    const res = await createManager(values, handleClearForm);
+    if (res.errorMsg) {
+      showError(res.errorMsg);
+      return;
+    }
+    showSuccess(res.successMsg);
   };
 
   const formik = useFormik({
     initialValues: formData,
-    validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      const { data, error } = await personnelStore.createManager(values);
-    },
+    validationSchema,
+    onSubmit,
   });
 
-  // const handleDeleteUser = async () => {
-  //   if (!initialValues) {
-  //     return;
-  //   }
-  //   return await clientsStore.deleteClient(initialValues.id!);
-  // };
-
-  const handleClearForm = () => formik.resetForm();
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className={styles.form}>
+    <form className={styles.form} onSubmit={formik.handleSubmit}>
+      <div className={styles.formSection}>
         <h4 className='heading heading-4 heading-primary'>
           {t('forms.overallInfo')}
         </h4>
+        <FormField
+          label={t('forms.firstName')}
+          isValid={!(formik.touched.firstName && formik.errors.firstName)}
+          invalidMessage={formik.errors.firstName}
+        >
+          <InputText
+            name='firstName'
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder={t('forms.enterName')}
+            className={classNames(isValidClassname(formik, 'firstName'))}
+          />
+        </FormField>
+        <FormField
+          label={t('forms.lastName')}
+          isValid={!(formik.touched.lastName && formik.errors.lastName)}
+          invalidMessage={formik.errors.lastName}
+        >
+          <InputText
+            name='lastName'
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder={t('forms.enterName')}
+            className={classNames(isValidClassname(formik, 'lastName'))}
+          />
+        </FormField>
+        <FormField
+          label={t('forms.email')}
+          isValid={!(formik.touched.email && formik.errors.email)}
+          invalidMessage={formik.errors.email}
+        >
+          <InputText
+            name='email'
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder={t('forms.enterEmail')}
+            className={classNames(isValidClassname(formik, 'email'))}
+          />
+        </FormField>
+        <FormField
+          label={t('forms.phone')}
+          isValid={!(formik.touched.phone && formik.errors.phone)}
+          invalidMessage={formik.errors.phone}
+        >
+          <InputMask
+            name='phone'
+            mask='+38 (999) 999-9999'
+            placeholder='+38 (___) ___-____'
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={classNames(isValidClassname(formik, 'phone'))}
+          />
+        </FormField>
+        <FormField label={t('objects.description')}>
+          <InputTextarea
+            autoResize
+            name='description'
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            placeholder={t('forms.enterDescription')}
+            rows={6}
+          />
+        </FormField>
+      </div>
+      <div className={styles.Controls}>
+        <Button
+          severity='danger'
+          fill
+          className={styles.Button}
+          onClick={handleClearForm}
+        >
+          {t('actions.cancel')}
+        </Button>
+        <Button type='submit' fill className={styles.Button}>
+          {t('personnel.add')}
+        </Button>
       </div>
     </form>
   );

@@ -4,9 +4,7 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { formatDate } from '@/utils/formatters/formatDate';
 import { Order } from '@/models/Order';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import styles from '@/components/tables/status.module.scss';
@@ -39,15 +37,8 @@ const OrdersTable: React.FC<Props> = observer(
     // const handleEditObject = (object: RentalObject) => {
     //   navigate(`objects/${object.id}/edit`);
     // };
-    console.log(orders);
 
-    const formattedObjects = orders.map((order) => ({
-      ...order,
-      created_at: formatDate(order.created_at, i18n.language),
-      reservations: order.reservations.map((reservation) => {
-        return formatObjectIn(reservation);
-      }),
-    }));
+    const formattedObjects = orders.map((order) => formatObjectIn(order));
 
     return (
       <DataTable
@@ -62,6 +53,7 @@ const OrdersTable: React.FC<Props> = observer(
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSortChange}
+        lazy={true}
         footer={
           <Paginator
             template={{
@@ -87,6 +79,7 @@ const OrdersTable: React.FC<Props> = observer(
           )}
         />
         <Column field='client.phone' header={t('forms.phone')} />
+        <Column field='order_sum' header={t('forms.total')} sortable />
         <Column
           header={t('forms.status')}
           body={(rowData: Order) => (

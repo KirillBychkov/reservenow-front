@@ -4,7 +4,7 @@ import useFetch from '@/hooks/useFetch';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewObject.module.scss';
@@ -26,10 +26,9 @@ const ViewObject: React.FC = observer(() => {
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
+  const [search, setSearch] = useState('');
   const { sortField, sortOrder, handleSort, sort } = useSort();
-  const { limit, skip, first, onPageChange } = usePaginate(
-    objectsStore.filters,
-  );
+  const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
 
   const {
     data: object,
@@ -40,10 +39,13 @@ const ViewObject: React.FC = observer(() => {
     [objectId],
   );
 
-  const { data: orders, errorMsg: ordersErrorMsg } = useFetch<Order[]>(
+  const { data: orders } = useFetch<Order[]>(
     () =>
-      ordersStore.getOrders({ limit, skip, sort }, parseInt(objectId || '')),
-    [limit, skip, objectId, sort],
+      ordersStore.getOrders(
+        { limit, skip, sort, search },
+        parseInt(objectId || ''),
+      ),
+    [limit, skip, objectId, sort, search],
   );
 
   if (!object || !orders) {
@@ -52,8 +54,6 @@ const ViewObject: React.FC = observer(() => {
 
   if (errorMsg) {
     showError(errorMsg);
-  } else if (ordersErrorMsg) {
-    showError(ordersErrorMsg);
   }
 
   return (
@@ -91,7 +91,7 @@ const ViewObject: React.FC = observer(() => {
             RightSideComponent={
               <RightSideComponent
                 heading={t('orders.reservationHistory')}
-                setSearch={() => {}}
+                setSearch={setSearch}
               />
             }
             Table={

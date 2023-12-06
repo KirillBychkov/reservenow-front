@@ -16,7 +16,7 @@ export class OrderService {
   ): Promise<AxiosResponse<Orders>> {
     let path = `/order?limit=${filters.limit}&skip=${filters.skip}${
       filters.sort ? `&sort=${filters.sort}` : ''
-    }`;
+    }${filters.search ? `&search=${filters.search}` : ''}`;
     // only one of these params can be used at a time
     if (rentalObjectId) {
       path += `&rental_object_id=${rentalObjectId}`;

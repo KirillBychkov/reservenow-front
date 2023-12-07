@@ -1,4 +1,4 @@
-import { Organization } from '@/models/Organization';
+import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
@@ -19,6 +19,26 @@ class OrganizationStore {
       return { data: response.data, error: '' };
     } catch (e) {
       return { data: [], error: 'Error getting organizations' };
+    }
+  };
+
+  getOrganizationStatistics = async (
+    id: number,
+    start_date?: string,
+    end_date?: string,
+  ): Promise<ResponseOrError<OrganizationStatistics[]>> => {
+    try {
+      const response = await OrganizationService.getOrganizationStatistics(
+        id,
+        start_date,
+        end_date,
+      );
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return {
+        data: [],
+        error: 'Error getting organization statistics',
+      };
     }
   };
 

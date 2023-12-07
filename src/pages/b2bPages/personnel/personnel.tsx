@@ -12,7 +12,7 @@ const Personnel: React.FC = () => {
   return (
     <div className={styles.personnel}>
       <div className={styles.controls}>
-        <h3 className='heading heading-3'>{t('clients.clients')}</h3>
+        <h3 className='heading heading-3'>{t('personnel.personnel')}</h3>
         <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
           {t('personnel.add')}
         </Button>

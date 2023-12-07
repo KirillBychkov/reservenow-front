@@ -1,0 +1,9 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
+.formSection {
+  @include mixins.formSection;
+}
+
+.btn {
+  max-width: 174px;
+}

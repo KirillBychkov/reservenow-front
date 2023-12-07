@@ -37,4 +37,12 @@ export default class OrganizationService {
   ): Promise<AxiosResponse<Organization>> {
     return $api.patch(`/organization/${id}`, organization);
   }
+
+  static async getOrganizationStatistics(
+    id: number,
+    start_date?: string,
+    end_date?: string,
+  ): Promise<AxiosResponse> {
+    return $api.get(`/organization/${id}/statistics`);
+  }
 }

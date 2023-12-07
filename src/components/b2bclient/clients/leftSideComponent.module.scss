@@ -1,3 +1,26 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
+.clientCard {
+  @include mixins.bg;
+  display: flex;
+  width: 360px;
+  height: fit-content;
+  flex-direction: column;
+  gap: 18px;
+  border-radius: 10px;
+  padding: 20px 24px 24px 24px;
+}
+
+.cardTitle {
+  align-self: center;
+}
+
+.statusContainer {
+  width: 100%;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--neutral-gray-gray-100, #E0E2E7);;
+}
+
 .status {
   display: flex;
   height: 1.25rem;
@@ -8,6 +31,12 @@
   border-radius: 1.875rem;
   max-width: 10rem;
   width: 100%;
+  font-size: 14px;
+
+  &--small {
+    width: 76px;
+  }
+
   &.active {
     background: rgba(35, 133, 81, 0.15);
     color: #165a36;
@@ -19,18 +48,6 @@
   &.pending {
     background: rgba(255, 193, 7, 0.15);
     color: #b58c2a;
-  }
-  &.paid {
-    background: rgba(35, 133, 81, 0.15);
-    color: #165a36;
-  }
-  &.not_paid {
-    background: rgba(255, 193, 7, 0.15);
-    color: #b58c2a;
-  }
-  &.rejected {
-    background: rgba(205, 66, 70, 0.15);
-    color: #8e292c;
   }
   &.in_progress {
     background: rgba(255, 193, 7, 0.15);

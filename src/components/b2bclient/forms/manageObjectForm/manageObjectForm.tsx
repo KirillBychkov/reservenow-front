@@ -21,7 +21,7 @@ import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
-import { formatObjectPriceToUpperUnit } from '@/utils/formatters/formatPrice';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 interface Props {
   initialValues?: RentalObject;
@@ -34,7 +34,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
 
   if (initialValues) {
-    initialValues = formatObjectPriceToUpperUnit(initialValues);
+    initialValues = formatObjectIn(initialValues);
   }
 
   const validationSchema = Yup.object({
@@ -58,6 +58,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
 
   const handleClearForm = () => {
     formik.resetForm();
+    formik.setFieldValue('workingHours', workingHours);
   };
 
   const formik = useFormik({

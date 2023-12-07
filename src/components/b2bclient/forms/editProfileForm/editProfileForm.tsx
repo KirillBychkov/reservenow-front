@@ -11,7 +11,7 @@ import FormField from '@/components/UI/fields/formField';
 import Flex from '@/components/UI/layout/flex';
 import Button from '@/components/UI/buttons/button';
 import * as Yup from 'yup';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import ToastContext from '@/context/toast';
 import { imageStringToFile } from '@/utils/cropImage';
 import { Account, User } from '@/models/User';
@@ -189,10 +189,10 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         </Button>
       </Flex>
 
+      {/* Fix cors */}
       <CroppImageModal
         visible={visible}
         onHide={handleClose}
-        image={image || undefined}
         onCropComplete={setImage}
       />
     </form>

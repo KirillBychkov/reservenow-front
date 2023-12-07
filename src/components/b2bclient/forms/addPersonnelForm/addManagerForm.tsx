@@ -18,8 +18,8 @@ import {
   UpdateManagerDTO,
 } from '@/models/requests/ManagerRequests';
 import { observer } from 'mobx-react-lite';
-import personnelStore from '@/store/PersonnelStore';
-import authStore from '@/store/AuthStore';
+import personnelStore from '@/store/personnelStore';
+import authStore from '@/store/authStore';
 
 const AddManagerForm: React.FC = observer(() => {
   const { t } = useTranslation();

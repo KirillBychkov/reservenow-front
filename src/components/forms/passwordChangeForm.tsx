@@ -5,7 +5,7 @@ import Button from '../UI/buttons/button';
 import Flex from '../UI/layout/flex';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import passwordStore from '@/store/PasswordStore';
+import passwordStore from '@/store/passwordStore';
 import { IChangePasswordDTO } from '@/models/requests/PasswordRequests';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';

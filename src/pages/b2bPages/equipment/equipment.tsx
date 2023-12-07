@@ -1,7 +1,7 @@
 import useFetch from '@/hooks/useFetch';
 import { Equipment } from '@/models/Equipment';
 import styles from './equipment.module.scss';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import { useTranslation } from 'react-i18next';
 import { useContext, useState } from 'react';
 import Searchbar from '@/components/searchbar/searchbar';

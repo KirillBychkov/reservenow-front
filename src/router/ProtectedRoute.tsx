@@ -1,7 +1,7 @@
 import Flex from '@/components/UI/layout/flex';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
-import authStore from '@/store/AuthStore';
+import authStore from '@/store/authStore';
 import { UserRole } from '@/types/enums/user';
 import { observer } from 'mobx-react-lite';
 import { Navigate } from 'react-router-dom';

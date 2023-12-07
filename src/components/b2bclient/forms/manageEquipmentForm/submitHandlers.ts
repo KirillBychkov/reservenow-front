@@ -1,15 +1,15 @@
 import {
-  ICreateEquipmentDTO,
-  IUpdateEquipmentDTO,
+  CreateEquipmentDTO,
+  UpdateEquipmentDTO,
 } from '@/models/requests/EquipmentRequests';
-import equipmentStore from '@/store/EquipmentStore';
+import equipmentStore from '@/store/equipmentStore';
 import { EquipmentFormData } from '@/types/equipment';
 
 export const createEquipment = async (
   values: EquipmentFormData,
   clearForm?: () => void,
 ) => {
-  const equipment: ICreateEquipmentDTO = {
+  const equipment: CreateEquipmentDTO = {
     ...values,
   };
 
@@ -26,7 +26,7 @@ export const updateEquipment = async (
   values: EquipmentFormData,
   equipmentId: number,
 ) => {
-  const equipment: IUpdateEquipmentDTO = {
+  const equipment: UpdateEquipmentDTO = {
     ...values,
   };
   const response = await equipmentStore.updateEquipment(equipmentId, equipment);

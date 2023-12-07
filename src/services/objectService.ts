@@ -8,10 +8,15 @@ import {
 import { AxiosResponse } from 'axios';
 
 export default class ObjectService {
-  static async getObjects(filters: Omit<Filters, 'total'>) {
+  static async getObjects(
+    filters: Omit<Filters, 'total'>,
+    organizationId?: number,
+  ) {
     return $api.get(
       `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
-        filters.search ? `&search=${filters.search}` : ''
+        filters.sort ? `&sort=${filters.sort}` : ''
+      }${filters.search ? `&search=${filters.search}` : ''}${
+        organizationId ? `&organizationId=${organizationId}` : ''
       }`,
     );
   }

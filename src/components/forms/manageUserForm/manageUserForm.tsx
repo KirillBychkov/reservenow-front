@@ -11,7 +11,7 @@ import isValidClassname from '@/utils/isValidClassname';
 import styles from './manageUserForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import usersStore from '@/store/UsersStore';
+import usersStore from '@/store/usersStore';
 import { PlainUserInfo, UserFormData } from '@/types/user';
 import ToastContext from '@/context/toast';
 import ModalContext from '@/context/modal';

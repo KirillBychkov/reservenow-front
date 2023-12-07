@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { SupportStatus, SupportStatusOptions } from '@/types/enums/support';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
-import supportRecordsStore from '@/store/SupportRecordsStore';
+import supportRecordsStore from '@/store/supportRecordsStore';
 import ToastContext from '@/context/toast';
 import FormField from '../UI/fields/formField';
 import { Dropdown } from 'primereact/dropdown';

@@ -22,6 +22,9 @@ import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
 import Schedule from '@/pages/b2bPages/schedule/schedule';
 import AddReservation from '@/pages/b2bPages/schedule/manageReservation/addReservation';
+import Clients from '@/pages/b2bPages/clients/clients';
+import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
+import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 
 interface IRoute {
   path: string;
@@ -175,13 +178,39 @@ export const routes: IRoute[] = [
     path: '/profile',
     element: <Profile />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
   },
   {
     path: '/profile/password',
     element: <PasswordPage />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients',
+    element: <Clients />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/add',
+    element: <ManageClient />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/:id',
+    element: <ClientPage />,
+    params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/:id/edit',
+    element: <ManageClient />,
+    params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
   },
   {
     path: '/schedule/add',

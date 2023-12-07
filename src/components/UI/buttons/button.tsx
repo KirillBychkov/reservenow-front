@@ -4,10 +4,11 @@ interface Props extends ButtonProps {
   fill?: boolean;
 }
 
-const Button: React.FC<Props> = ({ fill, ...rest }) => {
+const Button: React.FC<Props> = ({ fill, type = 'button', ...rest }) => {
   return (
     <PrButton
       {...rest}
+      type={type}
       style={{ width: fill ? '100%' : 'auto', ...rest.style }}
       iconPos={rest?.iconPos || 'left'}
     />

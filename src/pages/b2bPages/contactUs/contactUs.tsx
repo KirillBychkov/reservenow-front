@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { useFormik } from 'formik';
 import { CreateSupportDTO } from '@/models/requests/SupportRequests';
 import { observer } from 'mobx-react-lite';
-import supportRecordsStore from '@/store/SupportRecordsStore';
+import supportRecordsStore from '@/store/supportRecordsStore';
 import ToastContext from '@/context/toast';
 import { useFileUpload } from '@/hooks/useFileUpload';
 

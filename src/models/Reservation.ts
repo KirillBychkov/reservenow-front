@@ -1,6 +1,5 @@
 import { Equipment } from './Equipment';
-// import { RentalObject } from './RentalObject';
-// import { Organization } from './Organization';
+import { RentalObject } from './RentalObject';
 import { Trainer } from './Trainer';
 import { User } from './User';
 import { Order } from './Order';
@@ -8,10 +7,9 @@ import { Order } from './Order';
 export interface Reservation {
   id: number;
   user: User;
-  trainer: Trainer;
-  // rental_object: RentalObject;
-  equipment: Equipment;
-  // organization: Organization;
+  trainer?: Trainer;
+  rental_object?: RentalObject;
+  equipment?: Equipment;
   reservation_time_start: Date | string;
   reservation_time_end: Date | string;
   description?: string;

@@ -6,7 +6,7 @@ import SupportRecordsTable from '@/components/tables/supportRecordsTable';
 import { Support } from '@/models/Support';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
-import supportRecordsStore from '@/store/SupportRecordsStore';
+import supportRecordsStore from '@/store/supportRecordsStore';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import usePaginate from '@/hooks/usePaginate';

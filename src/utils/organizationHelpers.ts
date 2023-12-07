@@ -4,7 +4,7 @@ export const formatHour = (hour: number): string => {
   const parsedHour = parseInt(String(hour), 10);
 
   // Check if the parsedHour is a valid number
-  if (!isNaN(parsedHour) && parsedHour >= 0 && parsedHour <= 23) {
+  if (!isNaN(parsedHour) && parsedHour >= 0 && parsedHour <= 24) {
     // Convert to string and add leading zero if needed
     const formattedHour = parsedHour.toString().padStart(2, '0');
 

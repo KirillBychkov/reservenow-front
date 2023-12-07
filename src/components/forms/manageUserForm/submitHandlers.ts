@@ -1,12 +1,12 @@
-import { ICreateUserDTO, IUpdateUserDTO } from '@/models/requests/UserRequests';
-import usersStore from '@/store/UsersStore';
+import { CreateUserDTO, UpdateUserDTO } from '@/models/requests/UserRequests';
+import usersStore from '@/store/usersStore';
 import { UserFormData } from '@/types/user';
 
 export const createUser = async (
   values: UserFormData,
   clearForm?: () => void,
 ) => {
-  const user: ICreateUserDTO = {
+  const user: CreateUserDTO = {
     email: values.email,
     user: {
       first_name: values.firstName,
@@ -27,7 +27,7 @@ export const createUser = async (
 };
 
 export const updateUser = async (values: UserFormData, userId: number) => {
-  const user: IUpdateUserDTO = {
+  const user: UpdateUserDTO = {
     first_name: values.firstName,
     last_name: values.lastName,
     phone: values.phone,

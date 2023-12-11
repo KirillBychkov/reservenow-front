@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import styles from './addManagerForm.module.scss';
+import styles from './manageManagerForm.module.scss';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import FormField from '@/components/UI/fields/formField';
@@ -11,19 +11,20 @@ import { InputMask } from 'primereact/inputmask';
 import { Manager } from '@/models/Manager';
 import Button from '@/components/UI/buttons/button';
 import { InputTextarea } from 'primereact/inputtextarea';
-import {
-  CreateManagerDTO,
-  UpdateManagerDTO,
-} from '@/models/requests/ManagerRequests';
 import { observer } from 'mobx-react-lite';
-import personnelStore from '@/store/personnelStore';
 import { ManagerFormData } from '@/types/manager';
 import { createManager } from './submitHandlers';
 import ToastContext from '@/context/toast';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
-const AddManagerForm: React.FC = observer(() => {
+interface Props {
+  initialValues?: Manager;
+}
+
+const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
   const { showError, showSuccess } = useContext(ToastContext);
+  console.log(initialValues);
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required(t('invalid.required')),
@@ -35,12 +36,16 @@ const AddManagerForm: React.FC = observer(() => {
     description: Yup.string(),
   });
 
+  if (initialValues) {
+    initialValues = formatObjectIn(initialValues);
+  }
+
   const formData: ManagerFormData = {
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    description: '',
+    firstName: initialValues?.first_name || '',
+    lastName: initialValues?.last_name || '',
+    phone: initialValues?.phone || '',
+    email: '', // only for adding
+    description: initialValues?.description || '',
   };
 
   const handleClearForm = () => formik.resetForm();
@@ -66,6 +71,9 @@ const AddManagerForm: React.FC = observer(() => {
         <h4 className='heading heading-4 heading-primary'>
           {t('forms.overallInfo')}
         </h4>
+        <FormField label={t('personnel.role')}>
+          <p className='paragraph-muted'>{t('personnel.manager')}</p>
+        </FormField>
         <FormField
           label={t('forms.firstName')}
           isValid={!(formik.touched.firstName && formik.errors.firstName)}
@@ -94,20 +102,22 @@ const AddManagerForm: React.FC = observer(() => {
             className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
-        <FormField
-          label={t('forms.email')}
-          isValid={!(formik.touched.email && formik.errors.email)}
-          invalidMessage={formik.errors.email}
-        >
-          <InputText
-            name='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            placeholder={t('forms.enterEmail')}
-            className={classNames(isValidClassname(formik, 'email'))}
-          />
-        </FormField>
+        {!initialValues && (
+          <FormField
+            label={t('forms.email')}
+            isValid={!(formik.touched.email && formik.errors.email)}
+            invalidMessage={formik.errors.email}
+          >
+            <InputText
+              name='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder={t('forms.enterEmail')}
+              className={classNames(isValidClassname(formik, 'email'))}
+            />
+          </FormField>
+        )}
         <FormField
           label={t('forms.phone')}
           isValid={!(formik.touched.phone && formik.errors.phone)}
@@ -151,4 +161,4 @@ const AddManagerForm: React.FC = observer(() => {
   );
 });
 
-export default AddManagerForm;
+export default ManageManagerForm;

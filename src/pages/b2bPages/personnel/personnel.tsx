@@ -4,10 +4,22 @@ import { useTranslation } from 'react-i18next';
 import Button from '@/components/UI/buttons/button';
 import { Plus } from '@blueprintjs/icons';
 import { useNavigate } from 'react-router-dom';
+import personnelStore from '@/store/personnelStore';
+import useFetch from '@/hooks/useFetch';
+import { observer } from 'mobx-react-lite';
+import { Trainer } from '@/models/Trainer';
 
-const Personnel: React.FC = () => {
+const Personnel: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const {
+    data: personnel,
+    isLoading,
+    errorMsg,
+  } = useFetch<Trainer[]>(personnelStore.getTrainers, []);
+
+  console.log(personnel);
 
   return (
     <div className={styles.personnel}>
@@ -28,6 +40,6 @@ const Personnel: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Personnel;

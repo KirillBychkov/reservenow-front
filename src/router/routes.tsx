@@ -11,7 +11,8 @@ import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
 import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
 import Personnel from '@/pages/b2bPages/personnel/personnel';
-import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
+import ManageManager from '@/pages/b2bPages/personnel/managePersonnel/manageManager';
+import ManageTrainer from '@/pages/b2bPages/personnel/managePersonnel/manageTrainer';
 import ContactUs from '@/pages/b2bPages/contactUs/contactUs';
 import FAQ from '@/pages/b2bPages/faq/faq';
 import ManageObject from '@/pages/b2bPages/objects/manageObject/manageObject';
@@ -133,8 +134,26 @@ export const routes: IRoute[] = [
     allowedRoles: [UserRole.UserFull],
   },
   {
-    path: '/personnel/add',
-    element: <AddPersonnel />,
+    path: '/personnel/manager/add',
+    element: <ManageManager />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/manager/:id/edit',
+    element: <ManageManager />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/add',
+    element: <ManageTrainer />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/:id/edit',
+    element: <ManageTrainer />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },
@@ -173,12 +192,12 @@ export const routes: IRoute[] = [
     path: '/profile',
     element: <Profile />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
   },
   {
     path: '/profile/password',
     element: <PasswordPage />,
     isProtected: true,
-    allowedRoles: [UserRole.UserFull]
+    allowedRoles: [UserRole.UserFull],
   },
 ];

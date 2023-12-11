@@ -8,7 +8,7 @@ export interface Reservation {
   id: number;
   user: User;
   trainer?: Trainer;
-  rental_object: RentalObject;
+  rental_object?: RentalObject;
   equipment?: Equipment;
   reservation_time_start: Date | string;
   reservation_time_end: Date | string;

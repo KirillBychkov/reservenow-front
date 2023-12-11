@@ -21,6 +21,9 @@ import ManageEquipment from '@/pages/b2bPages/equipment/manageEquipment/manageEq
 import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
+import Clients from '@/pages/b2bPages/clients/clients';
+import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
+import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 
 interface IRoute {
   path: string;
@@ -197,6 +200,32 @@ export const routes: IRoute[] = [
   {
     path: '/profile/password',
     element: <PasswordPage />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients',
+    element: <Clients />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/add',
+    element: <ManageClient />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/:id',
+    element: <ClientPage />,
+    params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/clients/:id/edit',
+    element: <ManageClient />,
+    params: { id: ':id' },
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },

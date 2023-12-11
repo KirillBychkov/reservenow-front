@@ -8,8 +8,8 @@ export interface Order {
   id: number;
   user: User;
   status: OrderStatus;
+  orders_sum: number;
   payment_method: PaymentMethod;
-  order_sum: number;
   reservations: Reservation[];
   client: Client;
   created_at: Date | string;

@@ -30,6 +30,8 @@ const ManageTrainer: React.FC = observer(() => {
     [id],
   );
 
+  console.log(trainer?.account);
+
   if (errorMsg) {
     showError(errorMsg);
   }

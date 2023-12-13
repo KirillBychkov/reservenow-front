@@ -44,7 +44,7 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
     firstName: initialValues?.first_name || '',
     lastName: initialValues?.last_name || '',
     phone: initialValues?.phone || '',
-    email: '', // only for adding
+    email: initialValues?.account.email || '',
     description: initialValues?.description || '',
   };
 
@@ -102,22 +102,21 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
             className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
-        {!initialValues && (
-          <FormField
-            label={t('forms.email')}
-            isValid={!(formik.touched.email && formik.errors.email)}
-            invalidMessage={formik.errors.email}
-          >
-            <InputText
-              name='email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder={t('forms.enterEmail')}
-              className={classNames(isValidClassname(formik, 'email'))}
-            />
-          </FormField>
-        )}
+        <FormField
+          label={t('forms.email')}
+          isValid={!(formik.touched.email && formik.errors.email)}
+          invalidMessage={formik.errors.email}
+        >
+          <InputText
+            name='email'
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder={t('forms.enterEmail')}
+            className={classNames(isValidClassname(formik, 'email'))}
+            disabled={!!initialValues}
+          />
+        </FormField>
         <FormField
           label={t('forms.phone')}
           isValid={!(formik.touched.phone && formik.errors.phone)}

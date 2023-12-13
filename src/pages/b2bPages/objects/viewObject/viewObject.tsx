@@ -63,17 +63,17 @@ const ViewObject: React.FC = observer(() => {
   const statsCardsData: StatsCardsData[] = [
     {
       icon: <BankAccount />,
-      heading: `${formatToUpperUnit(object.total_reservation_sum)}`,
+      heading: `${formatToUpperUnit(object.total_reservation_sum || 0)}`,
       subheading: 'organizations.totalSales',
     },
     {
       icon: <ShoppingCart />,
-      heading: `${object.total_reservation_amount}`,
+      heading: `${object.total_reservation_amount || 0}`,
       subheading: 'organizations.totalBookings',
     },
     {
       icon: <Endorsed />,
-      heading: `${object.total_clients_amount}`,
+      heading: `${object.total_clients_amount || 0}`,
       subheading: 'organizations.totalClients',
     },
   ];

@@ -24,7 +24,6 @@ interface Props {
 const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
   // const { showError, showSuccess } = useContext(ToastContext);
-  console.log(initialValues);
 
   if (initialValues) {
     initialValues = formatObjectIn(initialValues);
@@ -48,7 +47,7 @@ const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
     firstName: initialValues?.first_name || '',
     lastName: initialValues?.last_name || '',
     phone: initialValues?.phone || '',
-    email: '', // only for adding
+    email: initialValues?.account?.email || '',
     description: initialValues?.description || '',
     price: initialValues?.price_per_hour || 0,
     workingHours,
@@ -106,22 +105,21 @@ const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
             className={classNames(isValidClassname(formik, 'lastName'))}
           />
         </FormField>
-        {!initialValues && (
-          <FormField
-            label={t('forms.email')}
-            isValid={!(formik.touched.email && formik.errors.email)}
-            invalidMessage={formik.errors.email}
-          >
-            <InputText
-              name='email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder={t('forms.enterEmail')}
-              className={classNames(isValidClassname(formik, 'email'))}
-            />
-          </FormField>
-        )}
+        <FormField
+          label={t('forms.email')}
+          isValid={!(formik.touched.email && formik.errors.email)}
+          invalidMessage={formik.errors.email}
+        >
+          <InputText
+            name='email'
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder={t('forms.enterEmail')}
+            className={classNames(isValidClassname(formik, 'email'))}
+            disabled={!!initialValues}
+          />
+        </FormField>
         <FormField
           label={t('forms.phone')}
           isValid={!(formik.touched.phone && formik.errors.phone)}

@@ -1,8 +1,8 @@
 import { Dialog } from 'primereact/dialog';
-import { useState } from 'react';
 import Flex from '../UI/layout/flex';
 import Button from '../UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   visible: boolean;
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const SelectPersonnelModal: React.FC<Props> = ({ visible, setIsVisible }) => {
+  const { t } = useTranslation();
   const naigate = useNavigate();
 
   const onClose = () => {
@@ -28,7 +29,7 @@ const SelectPersonnelModal: React.FC<Props> = ({ visible, setIsVisible }) => {
 
   return (
     <Dialog
-      header='Підтвердження'
+      header={t('forms.confirmation')}
       onHide={onClose}
       visible={visible}
       dismissableMask={true}
@@ -36,15 +37,15 @@ const SelectPersonnelModal: React.FC<Props> = ({ visible, setIsVisible }) => {
       style={{ maxWidth: '37.5rem', width: '100%' }}
     >
       <div style={{ maxWidth: '379px', width: '100%', margin: '0 auto' }}>
-        <p className='text-center' style={{ marginBottom: '30px' }}>
-          Виберіть персонал
+        <p className='paragraph text-center' style={{ marginBottom: '30px' }}>
+          {t('personnel.select')}
         </p>
         <Flex options={{ gap: 1 }}>
           <Button fill onClick={navigateToAddManager}>
-            Менеджер
+            {t('personnel.manager')}
           </Button>
           <Button fill onClick={navigateToAddTrainer}>
-            Тренер
+            {t('personnel.trainer')}
           </Button>
         </Flex>
       </div>

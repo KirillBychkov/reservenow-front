@@ -45,8 +45,6 @@ const ViewOrganization: React.FC = observer(() => {
     [id],
   );
 
-  console.log(organizationStatistics);
-
   const {
     data: objects,
     errorMsg,

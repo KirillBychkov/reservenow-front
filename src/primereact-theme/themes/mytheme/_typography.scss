@@ -65,27 +65,11 @@
   &-error {
     color: var(--text-error-color);
   }
+  &-muted {
+    color: var(--text-color-muted);
+  }
 }
 
 .text-center {
   text-align: center;
-}
-
-.text {
-  &-medium {
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0.07px;
-
-    &-normal {
-      color: var(--text-body-color);
-    }
-
-    &-muted {
-      color: var(--text-color-muted);
-    }
-  }
 }

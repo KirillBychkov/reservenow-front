@@ -95,7 +95,8 @@
     "equipmentName": "Назва товару",
     "equipmentPrice": "Ціна",
     "enterEquipmentName": "Введіть назву товару",
-    "profilePhoto": "Фото профiля"
+    "profilePhoto": "Фото профiля",
+    "confirmation": "Підтвердження"
   },
   "organizations": {
     "organizationId": "ID організації",
@@ -139,7 +140,11 @@
   "personnel": {
     "personnel": "Персонал",
     "add": "Додати персонал",
-    "null": "Наразі немає персоналу"
+    "select": "Виберіть, який персонал ви хочете додати",
+    "null": "Наразі немає персоналу",
+    "role": "Кадрова роль",
+    "manager": "Менеджер",
+    "trainer": "Тренер"
   },
   "invalid": {
     "required": "Обов'язкове поле",

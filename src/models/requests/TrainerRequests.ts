@@ -7,7 +7,7 @@ export interface CreateTrainerDTO extends WeekWorkingHours {
   phone: string;
   description?: string;
   image?: string;
-  hired_at: Date | string;
+  hired_at?: Date | string;
   resigned_at?: Date | string;
   price_per_hour: number;
 }

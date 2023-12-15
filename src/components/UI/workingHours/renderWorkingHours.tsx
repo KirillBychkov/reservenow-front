@@ -2,10 +2,14 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { formatHour } from '@/utils/organizationHelpers';
 import { WeekWorkingHours } from '@/types/weekWorkingHours';
-import { ViewPageData } from './leftSide';
+
+interface DataWithWorkingHours extends WeekWorkingHours {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
 
 interface Props {
-  data: ViewPageData;
+  data: DataWithWorkingHours;
   day: string;
 }
 
@@ -22,15 +26,15 @@ export const RenderWorkingHours: React.FC<Props> = ({ data, day }) => {
   const isDayOff = startHour === null && endHour === null;
 
   return (
-    <p className={classNames('text-medium')} key={day}>
-      {t(`days.${day}`)}{' '}
-      {isDayOff ? (
-        <span className='text-medium-muted'>{t('days.dayOff')}</span>
-      ) : (
-        <span className='text-medium-muted'>
-          {formatHour(startHour as number)} - {formatHour(endHour as number)}
-        </span>
-      )}
+    <p className={classNames('paragraph')} style={{ marginBottom: '4px' }}>
+      {t(`days.${day}`) + ' '}
+      <span className='paragraph-muted'>
+        {isDayOff
+          ? t('days.dayOff')
+          : `${formatHour(startHour as number)} - ${formatHour(
+              endHour as number,
+            )}`}
+      </span>
     </p>
   );
 };

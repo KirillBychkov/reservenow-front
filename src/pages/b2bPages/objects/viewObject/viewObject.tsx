@@ -47,7 +47,7 @@ const ViewObject: React.FC = observer(() => {
     () =>
       ordersStore.getOrders(
         { limit, skip, sort, search },
-        parseInt(objectId || ''),
+        { rentalObjectId: parseInt(objectId || '') },
       ),
     [limit, skip, objectId, sort, search],
   );

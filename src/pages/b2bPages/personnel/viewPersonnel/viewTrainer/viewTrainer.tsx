@@ -14,13 +14,13 @@ import styles from './viewTrainer.module.scss';
 import TrainerInfo from './trainerInfo';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
-// import trainerStatCardsData from './trainerStatCardsData'; // TODO: add trainer statistics when api is ready
 import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
 import { useSort } from '@/hooks/useSort';
 import usePaginate from '@/hooks/usePaginate';
 import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 import Button from '@/components/UI/buttons/button';
+import getTrainersStatsData from './getTrainersStatsData';
 
 const ViewTrainer: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -57,6 +57,8 @@ const ViewTrainer: React.FC = observer(() => {
     return <ProgressSpinner />;
   }
 
+  const statsData = getTrainersStatsData(trainer);
+
   return (
     <div className={styles.viewTrainer}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
@@ -84,6 +86,7 @@ const ViewTrainer: React.FC = observer(() => {
             <RightSide
               heading={t('orders.reservationHistory')}
               setSearch={setSearch}
+              statCardsData={statsData}
             />
           }
           Table={

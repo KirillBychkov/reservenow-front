@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewManager.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
+import Button from '@/components/UI/buttons/button';
 
 const ViewManager: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -36,6 +37,7 @@ const ViewManager: React.FC = observer(() => {
       <h3 className={classNames('heading heading-3', styles.heading)}>
         {`${manager?.first_name || ''} ${manager?.last_name || ''}`}
       </h3>
+      <div className={styles.heading}>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
@@ -46,6 +48,8 @@ const ViewManager: React.FC = observer(() => {
           },
         ]}
       />
+      <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
+      </div>
       {isLoading || !manager ? (
         <ProgressSpinner />
       ) : (

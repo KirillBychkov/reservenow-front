@@ -1,7 +1,7 @@
 import Button from '@/components/UI/buttons/button';
 import ToastContext from '@/context/toast';
 import useFetch from '@/hooks/useFetch';
-import { BankAccount, Endorsed, Home, ShoppingCart } from '@blueprintjs/icons';
+import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import React, { useContext, useState } from 'react';
@@ -12,17 +12,15 @@ import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
-import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
-import RightSideComponent, {
-  StatsCardsData,
-} from '@/components/UI/viewPage/rightSide/rightSide';
+import LeftSide from '@/components/UI/viewPage/leftSide/leftSide';
 import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
 import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
 import { useSort } from '@/hooks/useSort';
-import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
+import getObjectsStatsData from './getObjectsStatsData';
+import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 
 const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -60,23 +58,7 @@ const ViewObject: React.FC = observer(() => {
     showError(errorMsg);
   }
 
-  const statsCardsData: StatsCardsData[] = [
-    {
-      icon: <BankAccount />,
-      heading: `${formatToUpperUnit(object.total_reservation_sum || 0)}`,
-      subheading: 'organizations.totalSales',
-    },
-    {
-      icon: <ShoppingCart />,
-      heading: `${object.total_reservation_amount || 0}`,
-      subheading: 'organizations.totalBookings',
-    },
-    {
-      icon: <Endorsed />,
-      heading: `${object.total_clients_amount || 0}`,
-      subheading: 'organizations.totalClients',
-    },
-  ];
+  const statsData = getObjectsStatsData(object);
 
   return (
     <div className={styles.viewObject}>
@@ -109,10 +91,10 @@ const ViewObject: React.FC = observer(() => {
       ) : (
         <>
           <ViewStatsLayout
-            LeftSideComponent={<LeftSideComponent data={object} />}
+            LeftSideComponent={<LeftSide data={object} />}
             RightSideComponent={
-              <RightSideComponent
-                statCardsData={statsCardsData}
+              <RightSide
+                statCardsData={statsData}
                 heading={t('orders.reservationHistory')}
                 setSearch={setSearch}
               />

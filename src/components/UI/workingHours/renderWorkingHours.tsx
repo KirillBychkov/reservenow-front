@@ -26,7 +26,10 @@ export const RenderWorkingHours: React.FC<Props> = ({ data, day }) => {
   const isDayOff = startHour === null && endHour === null;
 
   return (
-    <p className={classNames('paragraph')} style={{ marginBottom: '4px' }}>
+    <p
+      className={classNames('paragraph paragraph--normal')}
+      style={{ marginBottom: '4px' }}
+    >
       {t(`days.${day}`) + ' '}
       <span className='paragraph-muted'>
         {isDayOff

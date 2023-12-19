@@ -7,16 +7,26 @@ import {
 } from '@/models/requests/OrderRequests';
 import { Orders } from '@/models/response/OrderResponse';
 import { AxiosResponse } from 'axios';
+
+export interface OrderSearchBy {
+  rentalObjectId?: number;
+  equipmentId?: number;
+  trainerId?: number;
+  clientId?: number;
+}
+
 export class OrderService {
   static async getOrders(
     filters: Omit<Filters, 'total'>,
-    rentalObjectId?: number,
-    equipmentId?: number,
-    trainerId?: number,
+    orderSearchBy: OrderSearchBy,
   ): Promise<AxiosResponse<Orders>> {
+    const { rentalObjectId, equipmentId, trainerId, clientId } = orderSearchBy;
+
+    // url path
     let path = `/order?limit=${filters.limit}&skip=${filters.skip}${
       filters.sort ? `&sort=${filters.sort}` : ''
     }${filters.search ? `&search=${filters.search}` : ''}`;
+
     // only one of these params can be used at a time
     if (rentalObjectId) {
       path += `&rental_object_id=${rentalObjectId}`;
@@ -24,6 +34,8 @@ export class OrderService {
       path += `&equipment_id=${equipmentId}`;
     } else if (trainerId) {
       path += `&trainer_id=${trainerId}`;
+    } else if (clientId) {
+      path += `&client_id=${clientId}`;
     }
     return $api.get(path);
   }

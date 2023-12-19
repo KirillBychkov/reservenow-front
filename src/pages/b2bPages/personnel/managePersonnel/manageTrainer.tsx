@@ -30,8 +30,6 @@ const ManageTrainer: React.FC = observer(() => {
     [id],
   );
 
-  console.log(trainer?.account);
-
   if (errorMsg) {
     showError(errorMsg);
   }
@@ -39,16 +37,15 @@ const ManageTrainer: React.FC = observer(() => {
   return (
     <div className={styles.addPersonnel}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
-        {t('personnel.add')}
+        {id ? t('personnel.edit') : t('personnel.add')}
       </h3>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
           { label: t('personnel.personnel'), url: '/personnel' },
-          {
-            label: t('personnel.add'),
-            url: '/personnel/trainer/add',
-          },
+          id
+            ? { label: t('actions.edit'), url: 'edit' }
+            : { label: t('actions.add'), url: 'add' },
         ]}
       />
       {isLoading ? (

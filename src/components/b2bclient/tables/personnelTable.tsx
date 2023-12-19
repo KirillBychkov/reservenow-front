@@ -48,6 +48,8 @@ const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
     rowData: ManagerWithTypeName | TrainerWithTypeName,
   ) => {
     const { id, type } = rowData;
+    console.log(id);
+
     navigate(`/personnel/${type}/${id}`);
   };
 

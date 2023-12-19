@@ -3,6 +3,9 @@
   width: 100%;
   .heading {
     margin-bottom: 0.63rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .manager {
     max-width: 40.625rem;

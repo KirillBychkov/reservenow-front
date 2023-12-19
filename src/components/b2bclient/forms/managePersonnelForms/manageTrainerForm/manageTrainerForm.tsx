@@ -5,7 +5,7 @@ import isValidClassname from '@/utils/isValidClassname';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { InputText } from 'primereact/inputtext';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import styles from './manageTrainerForm.module.scss';
@@ -16,6 +16,8 @@ import Button from '@/components/UI/buttons/button';
 import { WorkingHours } from '@/components/UI/workingHours/workingHours';
 import { transformWorkingHours } from '@/utils/formHelpers/formHelpers';
 import { TrainerFormData } from '@/types/trainer';
+import { createTrainer, updateTrainer } from './submitHandlers';
+import ToastContext from '@/context/toast';
 
 interface Props {
   initialValues?: Trainer;
@@ -23,7 +25,7 @@ interface Props {
 
 const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
   const { t } = useTranslation();
-  // const { showError, showSuccess } = useContext(ToastContext);
+  const { showError, showSuccess } = useContext(ToastContext);
 
   if (initialValues) {
     initialValues = formatObjectIn(initialValues);
@@ -34,7 +36,6 @@ const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
     lastName: Yup.string().required(t('invalid.required')),
     description: Yup.string(),
     phone: Yup.string().required(t('invalid.required')),
-    address: Yup.string().required(t('invalid.required')),
     price: Yup.number().required(t('invalid.required')),
     email: Yup.string()
       .required(t('invalid.required'))
@@ -59,7 +60,15 @@ const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
   };
 
   const onSubmit = async (values: TrainerFormData) => {
-    console.log(values);
+    const res = initialValues
+      ? await updateTrainer(initialValues.id, values)
+      : await createTrainer(values);
+
+    if (res.errorMsg) {
+      showError(res.errorMsg);
+      return;
+    }
+    showSuccess(res.successMsg);
   };
 
   const formik = useFormik({

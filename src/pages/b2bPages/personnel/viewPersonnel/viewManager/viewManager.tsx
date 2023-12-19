@@ -11,28 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewManager.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Account } from '@/models/User';
-
-const mockManager: Manager = {
-  id: 1,
-  first_name: 'Test',
-  last_name: 'Manager',
-  phone: '+380972362211',
-  created_at: '2023-12-04T14:47:47.666Z',
-  updated_at: '2023-12-04T14:47:47.666Z',
-  account: { email: 'test@test.com' } as Account,
-  hired_at: '2023-12-04T14:47:47.666Z',
-  user: {
-    id: 1,
-    first_name: 'Test',
-    last_name: 'User',
-    account: {} as Account,
-    domain_url: 'test',
-    phone: '+380999999999',
-    created_at: '2023-12-04T14:46:29.602Z',
-    updated_at: '2023-12-07T10:54:13.391Z',
-  },
-};
+import Button from '@/components/UI/buttons/button';
 
 const ViewManager: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -40,7 +19,7 @@ const ViewManager: React.FC = observer(() => {
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
 
-  let {
+  const {
     data: manager,
     isLoading,
     errorMsg,
@@ -49,19 +28,16 @@ const ViewManager: React.FC = observer(() => {
     [id],
   );
 
-  if (!manager) {
-    manager = mockManager; // Temporary mock
+  if (errorMsg) {
+    showError(errorMsg);
   }
-
-  // if (errorMsg) {
-  //   showError(errorMsg);
-  // }
 
   return (
     <div className={styles.viewManager}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
         {`${manager?.first_name || ''} ${manager?.last_name || ''}`}
       </h3>
+      <div className={styles.heading}>
       <BreadCrumb
         home={{ icon: <Home color='gray' />, url: '/' }}
         model={[
@@ -72,7 +48,9 @@ const ViewManager: React.FC = observer(() => {
           },
         ]}
       />
-      {isLoading ? (
+      <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
+      </div>
+      {isLoading || !manager ? (
         <ProgressSpinner />
       ) : (
         <div className={styles.manager}>

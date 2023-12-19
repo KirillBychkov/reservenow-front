@@ -24,7 +24,8 @@ import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
 import Clients from '@/pages/b2bPages/clients/clients';
 import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
 import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
-import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager';
+import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
+import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
 
 interface IRoute {
   path: string;
@@ -158,6 +159,12 @@ export const routes: IRoute[] = [
   {
     path: '/personnel/trainer/add',
     element: <ManageTrainer />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/:id',
+    element: <ViewTrainer />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },

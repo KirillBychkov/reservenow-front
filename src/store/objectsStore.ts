@@ -36,10 +36,6 @@ class ObjectsStore {
   getRentalObject = async (
     id: number,
   ): Promise<ResponseOrError<RentalObject>> => {
-    const object = this.objects.find((obj) => obj.id === id);
-    if (object) {
-      return { data: object, error: '' };
-    }
     try {
       const response = await ObjectService.getObjectById(id);
 

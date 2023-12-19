@@ -4,7 +4,10 @@ import {
   CreateManagerDTO,
   UpdateManagerDTO,
 } from '@/models/requests/ManagerRequests';
-import { CreateTrainerDTO } from '@/models/requests/TrainerRequests';
+import {
+  CreateTrainerDTO,
+  UpdateTrainerDTO,
+} from '@/models/requests/TrainerRequests';
 import ManagerService from '@/services/managerService';
 import TrainerService from '@/services/trainerService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
@@ -86,6 +89,18 @@ class PersonnelStore {
       return { successMsg: 'Created trainer successfully', errorMsg: '' };
     } catch (error) {
       return { successMsg: '', errorMsg: 'Error creating trainer' };
+    }
+  };
+
+  updateTrainer = async (
+    id: number,
+    trainer: UpdateTrainerDTO,
+  ): Promise<SuccessOrError> => {
+    try {
+      await TrainerService.updateTrainer(id, trainer);
+      return { successMsg: 'Updated trainer successfully', errorMsg: '' };
+    } catch (error) {
+      return { successMsg: '', errorMsg: 'Error updating trainer' };
     }
   };
 

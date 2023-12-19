@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './viewOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { BankAccount, Endorsed, Home, ShoppingCart } from '@blueprintjs/icons';
+import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,14 +15,12 @@ import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
-import RightSideComponent, {
-  StatsCardsData,
-} from '@/components/UI/viewPage/rightSide/rightSide';
 import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
 import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { RentalObject } from '@/models/RentalObject';
 import { useSort } from '@/hooks/useSort';
-import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
+import getOrganizationsStatsData from './getOrganizationsStatsData';
+import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -62,27 +60,7 @@ const ViewOrganization: React.FC = observer(() => {
     showError(errorMsg);
   }
 
-  const statsCardData: StatsCardsData[] | undefined = organizationStatistics
-    ? [
-        {
-          icon: <BankAccount />,
-          heading: `${formatToUpperUnit(
-            organizationStatistics[0]?.total_revenue || 0,
-          )}`,
-          subheading: 'organizations.totalSales',
-        },
-        {
-          icon: <ShoppingCart />,
-          heading: `${organizationStatistics[0]?.total_reservations || 0}`,
-          subheading: 'organizations.totalBookings',
-        },
-        {
-          icon: <Endorsed />,
-          heading: `${organizationStatistics[0]?.total_hours || 0}`,
-          subheading: 'organizations.totalHours',
-        },
-      ]
-    : undefined;
+  const statsCardData = getOrganizationsStatsData(organizationStatistics);
 
   return (
     <div className={styles.ViewOrganizations}>
@@ -117,7 +95,7 @@ const ViewOrganization: React.FC = observer(() => {
           <ViewStatsLayout
             LeftSideComponent={<LeftSideComponent data={organization} />}
             RightSideComponent={
-              <RightSideComponent
+              <RightSide
                 statCardsData={statsCardData}
                 heading={t('objects.objects')}
                 buttonText={t('objects.add')}

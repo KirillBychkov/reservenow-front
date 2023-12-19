@@ -13,7 +13,7 @@ import Button from '@/components/UI/buttons/button';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { observer } from 'mobx-react-lite';
 import { ManagerFormData } from '@/types/manager';
-import { createManager } from './submitHandlers';
+import { createManager, updateManager } from './submitHandlers';
 import ToastContext from '@/context/toast';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 
@@ -51,7 +51,9 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
   const handleClearForm = () => formik.resetForm();
 
   const onSubmit = async (values: ManagerFormData) => {
-    const res = await createManager(values, handleClearForm);
+    const res = initialValues
+      ? await updateManager(initialValues.id, values)
+      : await createManager(values, handleClearForm);
     if (res.errorMsg) {
       showError(res.errorMsg);
       return;

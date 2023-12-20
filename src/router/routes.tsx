@@ -26,6 +26,7 @@ import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
 import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
 import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
+import Statistics from '@/pages/b2bPages/statistics/statistics';
 
 interface IRoute {
   path: string;
@@ -240,6 +241,12 @@ export const routes: IRoute[] = [
     path: '/clients/:id/edit',
     element: <ManageClient />,
     params: { id: ':id' },
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/statistics',
+    element: <Statistics />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },

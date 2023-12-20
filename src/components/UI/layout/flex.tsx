@@ -2,21 +2,19 @@ import React from 'react';
 import styles from './flex.module.scss';
 import classNames from 'classnames';
 
-interface FlexProps {
-  children: React.ReactNode;
+interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   options?: {
     gap?: number;
     direction?: 'column';
     justify?: 'center' | 'space-between' | 'flex-end';
     align?: 'center' | 'space-between';
   };
-  className?: string;
 }
 
-const Flex: React.FC<FlexProps> = ({ children, options, className }) => {
+const Flex: React.FC<FlexProps> = ({ options, ...rest }) => {
   return (
     <div
-      className={classNames(styles.flex, className, {
+      className={classNames(styles.flex, rest.className, {
         [styles['flex--column']]: options?.direction === 'column',
         [styles['flex--justify-center']]: options?.justify === 'center',
         [styles['flex--justify-space-between']]:
@@ -26,9 +24,9 @@ const Flex: React.FC<FlexProps> = ({ children, options, className }) => {
         [styles['flex--align-space-between']]:
           options?.align === 'space-between',
       })}
-      style={{ gap: `${options?.gap}rem` }}
+      style={{ gap: `${options?.gap}rem`, ...rest.style }}
     >
-      {children}
+      {rest.children}
     </div>
   );
 };

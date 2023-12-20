@@ -1,0 +1,16 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
+.formSection {
+  @include mixins.formSection;
+}
+
+.btn {
+  max-width: 174px;
+}
+
+.addReservationBtn {
+  height: 62px;
+  font-size: 22px;
+  font-weight: 500;
+  background: #fff;
+}

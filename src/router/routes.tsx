@@ -21,9 +21,11 @@ import ManageEquipment from '@/pages/b2bPages/equipment/manageEquipment/manageEq
 import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
+import Schedule from '@/pages/b2bPages/schedule/schedule';
 import Clients from '@/pages/b2bPages/clients/clients';
 import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
 import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
+import ManageReservation from '@/pages/b2bPages/schedule/manageReservation/manageReservation';
 import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
 import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
 
@@ -243,4 +245,23 @@ export const routes: IRoute[] = [
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },
+  {
+    path: '/schedule/add',
+    element: <ManageReservation />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/schedule/:id/edit',
+    params: {id: ':id'},
+    element: <ManageReservation />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/schedule',
+    element: <Schedule />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  }
 ];

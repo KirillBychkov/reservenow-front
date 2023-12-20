@@ -5,9 +5,4 @@ export enum OrderStatus {
   REJECTED = 'rejected',
 }
 
-export enum PaymentMethod {
-  CASH = 'cash',
-  CARD = 'card',
-}
-
 export const OrderStatusOptions: OrderStatus[] = Object.values(OrderStatus);

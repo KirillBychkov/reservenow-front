@@ -1,0 +1,13 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
+.formSection {
+  @include mixins.formSection;
+}
+
+.cross {
+  cursor: pointer;
+}
+
+.calendar {
+  width: 100%;
+}

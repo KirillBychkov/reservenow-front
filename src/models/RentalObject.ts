@@ -16,3 +16,12 @@ export interface RentalObject extends WeekWorkingHours {
   total_reservation_amount: number;
   total_clients_amount: number;
 }
+
+export interface TopObject {
+  id: number;
+  name: string;
+  load: number;
+  empty_days: number | null;
+  total_reservations: number;
+  total_revenue: number;
+}

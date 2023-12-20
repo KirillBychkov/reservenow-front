@@ -29,6 +29,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { TopObject } from '@/models/RentalObject';
+import TopObjectsTable from '@/components/b2bclient/tables/topObjectsTable';
 
 const monthNames = [
   'Jan',
@@ -109,6 +111,9 @@ const Statistics = observer(() => {
   if (!organizations) {
     return <ProgressSpinner />;
   }
+  if (selectedOrganizationId && !statistics) {
+    return <ProgressSpinner />;
+  }
 
   const dropdownOptions = organizations?.map((organization) => ({
     label: organization.name,
@@ -130,8 +135,8 @@ const Statistics = observer(() => {
   }));
 
   const objects = statistics![0]?.top_objects || '[]';
-  const topObjects = JSON.parse(objects);
-  // console.log(topObjects);
+  const topObjects: TopObject[] = JSON.parse(objects);
+  console.log(topObjects);
 
   return (
     <div className={styles.statistics}>
@@ -239,6 +244,7 @@ const Statistics = observer(() => {
                 </ResponsiveContainer>
               </div>
             </Flex>
+            <TopObjectsTable topObjects={topObjects} />
           </div>
         )
       )}

@@ -11,7 +11,8 @@ import { UserRole } from '@/types/enums/user';
 import ActivateAccount from '@/pages/b2bPages/activateAccount/activateAccount';
 import OpenRequest from '@/pages/superadminPages/requests/openRequest/openRequest';
 import Personnel from '@/pages/b2bPages/personnel/personnel';
-import AddPersonnel from '@/pages/b2bPages/personnel/addPersonnel/addPersonnel';
+import ManageManager from '@/pages/b2bPages/personnel/managePersonnel/manageManager';
+import ManageTrainer from '@/pages/b2bPages/personnel/managePersonnel/manageTrainer';
 import ContactUs from '@/pages/b2bPages/contactUs/contactUs';
 import FAQ from '@/pages/b2bPages/faq/faq';
 import ManageObject from '@/pages/b2bPages/objects/manageObject/manageObject';
@@ -25,6 +26,8 @@ import Clients from '@/pages/b2bPages/clients/clients';
 import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
 import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 import ManageReservation from '@/pages/b2bPages/schedule/manageReservation/manageReservation';
+import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
+import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
 
 interface IRoute {
   path: string;
@@ -138,8 +141,38 @@ export const routes: IRoute[] = [
     allowedRoles: [UserRole.UserFull],
   },
   {
-    path: '/personnel/add',
-    element: <AddPersonnel />,
+    path: '/personnel/manager/add',
+    element: <ManageManager />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/manager/:id',
+    element: <ViewManager />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/manager/:id/edit',
+    element: <ManageManager />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/add',
+    element: <ManageTrainer />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/:id',
+    element: <ViewTrainer />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/personnel/trainer/:id/edit',
+    element: <ManageTrainer />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },

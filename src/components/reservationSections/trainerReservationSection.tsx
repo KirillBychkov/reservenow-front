@@ -94,9 +94,6 @@ const TrainerReservationSection = ({
     }
   };
 
-  console.log(fromHours, toHours);
-  
-
   const handleFromHoursChange = (e: DropdownChangeEvent) => {
     const fromHours = e.target.value as number;
     setFromHours(fromHours);

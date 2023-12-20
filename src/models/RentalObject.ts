@@ -12,4 +12,7 @@ export interface RentalObject extends WeekWorkingHours {
   address: string;
   created_at: Date | string;
   updated_at: Date | string;
+  total_reservation_sum: number;
+  total_reservation_amount: number;
+  total_clients_amount: number;
 }

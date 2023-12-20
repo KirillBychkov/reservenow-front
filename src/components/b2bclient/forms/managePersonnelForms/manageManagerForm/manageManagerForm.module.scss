@@ -1,0 +1,7 @@
+@use '../../manageOrganizationForm/manageOrganizationForm.module.scss' as
+  manageOrganizationForm;
+.form {
+  &Section {
+    @include manageOrganizationForm.form-section;
+  }
+}

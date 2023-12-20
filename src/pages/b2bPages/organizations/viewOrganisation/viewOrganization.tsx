@@ -15,11 +15,12 @@ import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
-import RightSideComponent from '@/components/UI/viewPage/rightSide/rightSide';
 import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
-import { Organization } from '@/models/Organization';
+import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { RentalObject } from '@/models/RentalObject';
 import { useSort } from '@/hooks/useSort';
+import getOrganizationsStatsData from './getOrganizationsStatsData';
+import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -34,6 +35,11 @@ const ViewOrganization: React.FC = observer(() => {
 
   const { data: organization } = useFetch<Organization>(
     () => organizationStore.getOrganizationById(parseInt(id || '0')),
+    [id],
+  );
+
+  const { data: organizationStatistics } = useFetch<OrganizationStatistics[]>(
+    () => organizationStore.getOrganizationStatistics(parseInt(id || '0')),
     [id],
   );
 
@@ -53,6 +59,8 @@ const ViewOrganization: React.FC = observer(() => {
   if (errorMsg) {
     showError(errorMsg);
   }
+
+  const statsCardData = getOrganizationsStatsData(organizationStatistics);
 
   return (
     <div className={styles.ViewOrganizations}>
@@ -87,7 +95,8 @@ const ViewOrganization: React.FC = observer(() => {
           <ViewStatsLayout
             LeftSideComponent={<LeftSideComponent data={organization} />}
             RightSideComponent={
-              <RightSideComponent
+              <RightSide
+                statCardsData={statsCardData}
                 heading={t('objects.objects')}
                 buttonText={t('objects.add')}
               />

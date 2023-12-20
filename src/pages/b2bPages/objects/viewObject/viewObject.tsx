@@ -12,14 +12,15 @@ import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
-import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
-import RightSideComponent from '@/components/UI/viewPage/rightSide/rightSide';
+import LeftSide from '@/components/UI/viewPage/leftSide/leftSide';
 import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
 import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
 import { useSort } from '@/hooks/useSort';
+import getObjectsStatsData from './getObjectsStatsData';
+import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 
 const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -38,12 +39,13 @@ const ViewObject: React.FC = observer(() => {
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
   );
+  console.log(object);
 
   const { data: orders } = useFetch<Order[]>(
     () =>
       ordersStore.getOrders(
         { limit, skip, sort, search },
-        parseInt(objectId || ''),
+        { rentalObjectId: parseInt(objectId || '') },
       ),
     [limit, skip, objectId, sort, search],
   );
@@ -55,6 +57,8 @@ const ViewObject: React.FC = observer(() => {
   if (errorMsg) {
     showError(errorMsg);
   }
+
+  const statsData = getObjectsStatsData(object);
 
   return (
     <div className={styles.viewObject}>
@@ -87,9 +91,10 @@ const ViewObject: React.FC = observer(() => {
       ) : (
         <>
           <ViewStatsLayout
-            LeftSideComponent={<LeftSideComponent data={object} />}
+            LeftSideComponent={<LeftSide data={object} />}
             RightSideComponent={
-              <RightSideComponent
+              <RightSide
+                statCardsData={statsData}
                 heading={t('orders.reservationHistory')}
                 setSearch={setSearch}
               />

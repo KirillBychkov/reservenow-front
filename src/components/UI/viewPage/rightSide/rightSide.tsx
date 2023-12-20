@@ -12,7 +12,7 @@ export interface StatsCardsData {
   subheading: string;
 }
 
-const mockCardData = [
+const mockCardData: StatsCardsData[] = [
   {
     icon: <BankAccount />,
     heading: `UAH 26 124,12`,

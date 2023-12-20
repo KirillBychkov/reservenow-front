@@ -1,8 +1,8 @@
 import { Filters } from '@/models/Filters';
 import { Order } from '@/models/Order';
 import { CreateOrderDTO, UpdateOrderDTO } from '@/models/requests/OrderRequests';
-import { OrderService } from '@/services/orderService';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { OrderSearchBy, OrderService } from '@/services/orderService';
 import { makeAutoObservable } from 'mobx';
 
 class OrdersStore {
@@ -23,17 +23,10 @@ class OrdersStore {
 
   getOrders = async (
     filters: Omit<Filters, 'total'>,
-    rentalObjectId?: number,
-    equipmentId?: number,
-    trainerId?: number,
+    orderSearchBy: OrderSearchBy,
   ): Promise<ResponseOrError<Order[]>> => {
     try {
-      const response = await OrderService.getOrders(
-        filters,
-        rentalObjectId,
-        equipmentId,
-        trainerId,
-      );
+      const response = await OrderService.getOrders(filters, orderSearchBy);
       console.log(response.data.data);
       this.setOrders(response.data.data);
       this.setFilters(response.data.filters);

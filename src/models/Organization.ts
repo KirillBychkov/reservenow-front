@@ -15,3 +15,17 @@ export interface Organization extends WeekWorkingHours {
   created_at: string;
   update_at: string;
 }
+
+export interface OrganizationStatistics {
+  id: number;
+  organization: Organization;
+  total_revenue: number;
+  total_reservations: number;
+  total_hours: number;
+  organization_load: number;
+  statistics_per_period: string;
+  top_objects: string;
+  top_clients: string;
+  created_at: string;
+  updated_at: string;
+}

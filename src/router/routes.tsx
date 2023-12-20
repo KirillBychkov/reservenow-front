@@ -21,10 +21,10 @@ import Profile from '@/pages/b2bPages/profile/profile';
 import PasswordPage from '@/pages/b2bPages/profile/password/password';
 import ViewObject from '@/pages/b2bPages/objects/viewObject/viewObject';
 import Schedule from '@/pages/b2bPages/schedule/schedule';
-import AddReservation from '@/pages/b2bPages/schedule/manageReservation/addReservation';
 import Clients from '@/pages/b2bPages/clients/clients';
 import ManageClient from '@/pages/b2bPages/clients/manageClient/manageClient';
 import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
+import ManageReservation from '@/pages/b2bPages/schedule/manageReservation/manageReservation';
 
 interface IRoute {
   path: string;
@@ -214,7 +214,14 @@ export const routes: IRoute[] = [
   },
   {
     path: '/schedule/add',
-    element: <AddReservation />,
+    element: <ManageReservation />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/schedule/:id/edit',
+    params: {id: ':id'},
+    element: <ManageReservation />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   },

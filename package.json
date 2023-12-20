@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@blueprintjs/icons": "^5.1.5",
+    "@types/react-big-calendar": "^1.8.7",
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
     "formik": "^2.4.3",
@@ -19,8 +20,10 @@
     "i18next-browser-languagedetector": "^7.1.0",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
+    "moment": "^2.29.4",
     "primereact": "^9.6.2",
     "react": "^18.2.0",
+    "react-big-calendar": "^1.8.5",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.2",
     "react-i18next": "^13.2.2",

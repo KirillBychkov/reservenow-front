@@ -176,7 +176,8 @@
     "undefined": "Невідомий",
     "inactive": "Неактивний",
     "not_paid": "Не сплачено",
-    "paid": "Сплачено"
+    "paid": "Сплачено",
+    "processing": "Обробка"
   },
   "actions": {
     "action": "Дія",
@@ -276,5 +277,67 @@
     "create_at": "Дата",
     "totalOrderSum": "Разом ₴",
     "status": "Cтатус"
+  },
+  "schedule": {
+    "addReservation": "Додати бронювання",
+    "objectsNull": "Ця організація не має об'єктів",
+    "organizationWorkingHoursNull": "В цей день об`єкт не працює",
+    "trainerWorkingHoursNull": "В цей день тренер не працює",
+    "editReservation": "Редагувати бронювання",
+    "schedule": "Розклад",
+    "form": {
+      "clientSection": {
+        "clientInfo": "Інформація про клієнта",
+        "organizationDescription": "Введіть тут опис організації. . ."
+      },
+      "equipmentSection": {
+        "header": "Інформація про бронювання № {{reservationNumber}} (товар)",
+        "chooseEquipment": "Виберіть товар"
+      },
+      "trainerSection": {
+        "header": "Інформація про бронювання № {{reservationNumber}} (тренер)",
+        "trainerName": "Ім'я персоналу",
+        "chooseTrainer": "Виберіть персонал"
+      },
+      "objectSection": {
+        "header": "Інформація про бронювання № {{reservationNumber}}",
+        "organization": "Організація",
+        "chooseOrganization": "Виберіть організацію",
+        "object": "Об'єкт",
+        "chooseObject": "Виберіть об'єкт"
+      },
+      "addToOrder": "Додати до замовлення:",
+      "trainer": "Тренер",
+      "reservation": "Бронювання",
+      "equipment": "Товари",
+      "paymentMethod": "Спосіб оплати",
+      "choosePaymentMethod": "Виберіть спосіб оплати",
+      "totalSum": "Загальна сума",
+      "dateAndTime": "Дата і час",
+      "chooseDate": "Виберіть дату резверації",
+      "timeFrom": "Від",
+      "timeTo": "До",
+      "chooseTime": "Виберіть час"
+    },
+    "reservationErrors": {
+      "equipmentNull": "У вас є незаповнена резервація товару. Видалить її або встановіть коректне значення",
+      "trainerNull": "У вас є незаповнена резервація тренера. Видаліть її або встановіть коректне значення",
+      "addReservationTimeForTrainer": "Виберіть час та дату резервації для тренера {{first_name}} {{last_name}}",
+      "objectNull": "У вас є незаповнена резервація об'єкта. Видаліть її або встановіть коректне значення",
+      "addReservationTimeForObject": "Виберіть час та дату резервації для об'єкта {{name}}"
+    },
+    "events": {
+      "organizations": "Організації",
+      "trainers": "Тренера"
+    }
+  },
+  "payment": {
+    "cash": "Готівка",
+    "card": "Карта"
+  },
+  "view": {
+    "month": "Місяць",
+    "week": "Тиждень",
+    "day": "День"
   }
 }

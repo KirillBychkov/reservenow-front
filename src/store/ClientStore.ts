@@ -145,6 +145,33 @@ class ClientStore {
       };
     }
   };
+
+  getClientByPhone = async (
+    phone: string,
+  ): Promise<ResponseOrError<Client>> => {
+    const client = this.clients.find((client) => client.phone === phone);
+
+    if (client) {
+      return { data: client, error: '' };
+    }
+
+    try {
+      const { data } = await ClientService.getClientByPhone(phone);
+
+      if (!data) {
+        return { data: {} as Client, error: 'Client not found' };
+      }
+
+      this.clients.push(data);
+
+      return { data: data, error: '' };
+    } catch {
+      return {
+        data: {} as Client,
+        error: 'An error occurred while fetching client orders',
+      };
+    }
+  };
 }
 
 const clientStore = new ClientStore();

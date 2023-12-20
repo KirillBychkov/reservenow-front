@@ -51,4 +51,8 @@ export default class ClientService {
   static deleteClient(id: number): Promise<AxiosResponse> {
     return $api.delete(`/client/${id}`);
   }
+
+  static getClientByPhone(phone: string): Promise<AxiosResponse<Client>> {
+    return $api.get(`/client/byPhone?phone=${phone}`);
+  }
 }

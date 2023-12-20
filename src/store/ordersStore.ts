@@ -1,7 +1,8 @@
 import { Filters } from '@/models/Filters';
 import { Order } from '@/models/Order';
+import { CreateOrderDTO, UpdateOrderDTO } from '@/models/requests/OrderRequests';
 import { OrderService } from '@/services/orderService';
-import { ResponseOrError } from '@/types/store';
+import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
 class OrdersStore {
@@ -39,6 +40,50 @@ class OrdersStore {
       return { data: response.data.data, error: '' };
     } catch (e) {
       return { data: [], error: 'An error occurred while fetching orders.' };
+    }
+  };
+
+  createOrder = async (order: CreateOrderDTO): Promise<SuccessOrError> => {
+    try {
+      const { data: createdOrder } = await OrderService.addOrder(order);
+      this.orders.push(createdOrder);
+      return { successMsg: 'Order was created', errorMsg: '' };
+    } catch (e) {
+      return {
+        successMsg: '',
+        errorMsg: 'An error occurred while creating order',
+      };
+    }
+  };
+
+  editOrder = async (
+    id: number,
+    order: UpdateOrderDTO,
+  ): Promise<SuccessOrError> => {
+    try {
+      await OrderService.editOrder(id, order);
+      return { successMsg: 'Order was edited', errorMsg: '' };
+    } catch (e) {
+      return {
+        successMsg: '',
+        errorMsg: 'An error occurred while editing order',
+      };
+    }
+  };
+
+  getOrderById = async (id: number): Promise<ResponseOrError<Order>> => {
+    const order = this.orders.find((order) => order.id === id);
+
+    if (order) {
+      return { data: order, error: '' };
+    }
+
+    try {
+      const { data: order } = await OrderService.getOrderById(id);
+      this.orders.push(order);
+      return { data: order, error: '' };
+    } catch {
+      return { data: {} as Order, error: 'Error fetching order' };
     }
   };
 }

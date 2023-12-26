@@ -10,7 +10,6 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
-import { useNavigate } from 'react-router-dom';
 import styles from './statistics.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -30,7 +29,8 @@ import {
   YAxis,
 } from 'recharts';
 import { TopObject } from '@/models/RentalObject';
-import TopObjectsTable from '@/components/b2bclient/tables/topObjectsTable';
+import TopObjectsTable from '@/components/b2bclient/tables/statisticsTables/topObjectsTable';
+import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topClientsTable';
 
 const monthNames = [
   'Jan',
@@ -78,7 +78,6 @@ function CustomTooltip({
 
 const Statistics = observer(() => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { showError } = useContext(ToastContext);
   const [selectedOrganizationId, setSelectedOrganizationId] = React.useState<
     number | null
@@ -87,6 +86,8 @@ const Statistics = observer(() => {
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
     [],
+    false,
+    (data) => data[0]?.id && setSelectedOrganizationId(data[0]?.id),
   );
 
   const {
@@ -108,10 +109,7 @@ const Statistics = observer(() => {
     showError(errorMsg);
   }
 
-  if (!organizations) {
-    return <ProgressSpinner />;
-  }
-  if (selectedOrganizationId && !statistics) {
+  if (!organizations || (selectedOrganizationId && !statistics)) {
     return <ProgressSpinner />;
   }
 
@@ -120,9 +118,8 @@ const Statistics = observer(() => {
     value: organization.id,
   }));
 
-  const area = statistics![0]?.statistics_per_period || '[]';
+  const area = statistics?.[0]?.statistics_per_period ?? '[]';
   const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(area);
-  console.log(statisticsPerPeriod);
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
     ...obj,
     total_revenue: formatToUpperUnit(obj.total_revenue),
@@ -134,9 +131,12 @@ const Statistics = observer(() => {
     week: item.week,
   }));
 
-  const objects = statistics![0]?.top_objects || '[]';
+  const objects = statistics?.[0]?.top_objects ?? '[]';
   const topObjects: TopObject[] = JSON.parse(objects);
-  console.log(topObjects);
+
+  const clients = statistics?.[0]?.top_clients ?? '[]';
+  const topClients = JSON.parse(clients);
+  console.log(topClients);
 
   return (
     <div className={styles.statistics}>
@@ -183,9 +183,9 @@ const Statistics = observer(() => {
             </Flex>
             <Flex options={{ justify: 'space-between', gap: 1.5 }}>
               <div className={styles.card}>
-                <h4 className={styles.heading}>
+                <h2 className={styles.heading}>
                   {t('statistics.organizationLoad')}
-                </h4>
+                </h2>
                 <p className={styles.subheading}>{t('dates.thisMonth')}</p>
                 <Flex options={{ justify: 'center' }}>
                   <Knob
@@ -212,7 +212,7 @@ const Statistics = observer(() => {
                 </Flex>
               </div>
               <div className={styles.card} style={{ width: '100%' }}>
-                <h4 className={styles.heading}>{t('statistics.statistics')}</h4>
+                <h2 className={styles.heading}>{t('statistics.statistics')}</h2>
                 <p className={styles.subheading}>
                   {t('orders.totalReservations')}
                 </p>
@@ -244,7 +244,11 @@ const Statistics = observer(() => {
                 </ResponsiveContainer>
               </div>
             </Flex>
-            <TopObjectsTable topObjects={topObjects} />
+            <TopObjectsTable
+              topObjects={topObjects}
+              organizationId={selectedOrganizationId}
+            />
+            <TopClientsTable topClients={topClients} />
           </div>
         )
       )}

@@ -3,24 +3,24 @@ import { TopObject } from '@/models/RentalObject';
 import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'primereact/progressbar';
+import styles from './statisticsTables.module.scss';
+import classNames from 'classnames';
 
 interface Props {
   topObjects: TopObject[];
+  organizationId: number;
 }
 
-const TopObjectsTable: React.FC<Props> = ({ topObjects }) => {
+const TopObjectsTable: React.FC<Props> = ({ topObjects, organizationId }) => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  // const [selectedObject, setSelectedObject] = useState<RentalObject | null>(
-  //   null,
-  // );
+  const { t } = useTranslation();
 
   const handleViewObject = (object: TopObject) => {
-    navigate(`/objects/${object.id}`);
+    navigate(`/organizations/${organizationId}/objects/${object.id}`);
   };
 
   const formattedObjects = topObjects.map((object) => ({
@@ -30,20 +30,29 @@ const TopObjectsTable: React.FC<Props> = ({ topObjects }) => {
 
   return (
     <div>
-      <DataTable className='customObjectTable' value={formattedObjects}>
+      <div className={styles.tableHeader}>
+        <h2 className='heading heading-4'>{t('objects.topObjects')}</h2>
+      </div>
+      <DataTable
+        className={classNames('tableWithHeader tableWithoutFooter')}
+        removableSort
+        value={formattedObjects}
+      >
         <Column field='id' header={t('objects.id')} sortable />
         <Column field='name' header={t('objects.name')} sortable />
-        <Column field='type' header={t('objects.sportType')} />
         <Column
           field='total_reservations'
           header={t('orders.totalReservations')}
         />
         <Column
+          sortable
           field='total_revenue'
           header={t('orders.totalReservationsSum')}
         />
         <Column
-          header={'load'}
+          header={t('objects.load')}
+          sortable
+          sortField='load'
           body={(rowData: TopObject) => (
             <>
               <p className='paragraph paragraph--normal'>{`${Math.round(

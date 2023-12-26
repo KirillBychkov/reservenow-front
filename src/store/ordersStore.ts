@@ -1,6 +1,9 @@
 import { Filters } from '@/models/Filters';
 import { Order } from '@/models/Order';
-import { CreateOrderDTO, UpdateOrderDTO } from '@/models/requests/OrderRequests';
+import {
+  CreateOrderDTO,
+  UpdateOrderDTO,
+} from '@/models/requests/OrderRequests';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { OrderSearchBy, OrderService } from '@/services/orderService';
 import { makeAutoObservable } from 'mobx';
@@ -27,7 +30,6 @@ class OrdersStore {
   ): Promise<ResponseOrError<Order[]>> => {
     try {
       const response = await OrderService.getOrders(filters, orderSearchBy);
-      console.log(response.data.data);
       this.setOrders(response.data.data);
       this.setFilters(response.data.filters);
       return { data: response.data.data, error: '' };

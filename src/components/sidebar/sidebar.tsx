@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './sidebar.module.scss';
-import MenuButton from '../UI/buttons/menuButton';
+import MenuButton from '../UI/buttons/menuButton/menuButton';
 import useRoleBasedMenu from '@/hooks/useRoleBasedMenu';
 import { observer } from 'mobx-react-lite';
 

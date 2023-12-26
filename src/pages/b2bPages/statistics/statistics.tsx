@@ -7,7 +7,7 @@ import {
 } from '@/models/Organization';
 import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import styles from './statistics.module.scss';
@@ -31,6 +31,8 @@ import {
 import { TopObject } from '@/models/RentalObject';
 import TopObjectsTable from '@/components/b2bclient/tables/statisticsTables/topObjectsTable';
 import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topClientsTable';
+import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
+import { TopClient } from '@/models/Client';
 
 const monthNames = [
   'Jan',
@@ -76,12 +78,36 @@ function CustomTooltip({
   }
 }
 
+const dateSpanOptions = [
+  { label: 'Весь час', value: '' },
+  {
+    label: '30 днів',
+    value: new Date(
+      new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
+  },
+  {
+    label: '7днів',
+    value: new Date(
+      new Date().getTime() - 7 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
+  },
+  {
+    label: '24 години',
+    value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
 const Statistics = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
   const [selectedOrganizationId, setSelectedOrganizationId] = React.useState<
     number | null
   >(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().getTime()).toISOString(),
+  );
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -97,12 +123,16 @@ const Statistics = observer(() => {
   } = useFetch<OrganizationStatistics[]>(
     () =>
       selectedOrganizationId
-        ? organizationStore.getOrganizationStatistics(selectedOrganizationId)
+        ? organizationStore.getOrganizationStatistics(
+            selectedOrganizationId,
+            startDate,
+            endDate,
+          )
         : Promise.resolve({
             data: {} as OrganizationStatistics[],
             error: '',
           }),
-    [selectedOrganizationId],
+    [selectedOrganizationId, startDate, endDate],
   );
 
   if (errorMsg) {
@@ -118,8 +148,11 @@ const Statistics = observer(() => {
     value: organization.id,
   }));
 
-  const area = statistics?.[0]?.statistics_per_period ?? '[]';
-  const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(area);
+  const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(
+    statistics?.[0]?.statistics_per_period ?? '[]',
+  );
+  console.log(statistics);
+
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
     ...obj,
     total_revenue: formatToUpperUnit(obj.total_revenue),
@@ -131,16 +164,17 @@ const Statistics = observer(() => {
     week: item.week,
   }));
 
-  const objects = statistics?.[0]?.top_objects ?? '[]';
-  const topObjects: TopObject[] = JSON.parse(objects);
+  const topObjects: TopObject[] = JSON.parse(
+    statistics?.[0]?.top_objects ?? '[]',
+  );
 
-  const clients = statistics?.[0]?.top_clients ?? '[]';
-  const topClients = JSON.parse(clients);
-  console.log(topClients);
+  const topClients: TopClient[] = JSON.parse(
+    statistics?.[0]?.top_clients ?? '[]',
+  );
 
   return (
     <div className={styles.statistics}>
-      <Flex options={{ gap: 1.25, align: 'center' }}>
+      <Flex options={{ gap: 1.25, align: 'center' }} style={{ height: '40px' }}>
         <Dropdown
           options={dropdownOptions}
           value={selectedOrganizationId}
@@ -148,6 +182,14 @@ const Statistics = observer(() => {
             setSelectedOrganizationId(e.value)
           }
           placeholder='Select an organization'
+        />
+        <SelectButton
+          value={startDate}
+          onChange={(e) => {
+            setStartDate(e.value);
+            // console.log(e.value);
+          }}
+          options={dateSpanOptions}
         />
       </Flex>
       {!selectedOrganizationId ? (

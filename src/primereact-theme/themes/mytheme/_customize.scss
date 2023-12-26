@@ -9,9 +9,9 @@
 
 .tableWithoutFooter {
   .p-datatable-table .p-datatable-tbody > tr:last-child > td:first-child {
-    border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 8px;
   }
   .p-datatable-table .p-datatable-tbody > tr:last-child > td:last-child {
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 8px;
   }
 }

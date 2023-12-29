@@ -23,7 +23,7 @@ class OrdersStore {
 
   getOrders = async (
     filters: Omit<Filters, 'total'>,
-    orderSearchBy: OrderSearchBy,
+    orderSearchBy?: OrderSearchBy,
   ): Promise<ResponseOrError<Order[]>> => {
     try {
       const response = await OrderService.getOrders(filters, orderSearchBy);

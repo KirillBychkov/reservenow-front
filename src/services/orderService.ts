@@ -18,24 +18,22 @@ export interface OrderSearchBy {
 export class OrderService {
   static async getOrders(
     filters: Omit<Filters, 'total'>,
-    orderSearchBy: OrderSearchBy,
+    orderSearchBy?: OrderSearchBy,
   ): Promise<AxiosResponse<Orders>> {
-    const { rentalObjectId, equipmentId, trainerId, clientId } = orderSearchBy;
-
     // url path
     let path = `/order?limit=${filters.limit}&skip=${filters.skip}${
       filters.sort ? `&sort=${filters.sort}` : ''
     }${filters.search ? `&search=${filters.search}` : ''}`;
 
     // only one of these params can be used at a time
-    if (rentalObjectId) {
-      path += `&rental_object_id=${rentalObjectId}`;
-    } else if (equipmentId) {
-      path += `&equipment_id=${equipmentId}`;
-    } else if (trainerId) {
-      path += `&trainer_id=${trainerId}`;
-    } else if (clientId) {
-      path += `&client_id=${clientId}`;
+    if (orderSearchBy?.rentalObjectId) {
+      path += `&rental_object_id=${orderSearchBy.rentalObjectId}`;
+    } else if (orderSearchBy?.equipmentId) {
+      path += `&equipment_id=${orderSearchBy.equipmentId}`;
+    } else if (orderSearchBy?.trainerId) {
+      path += `&trainer_id=${orderSearchBy.trainerId}`;
+    } else if (orderSearchBy?.clientId) {
+      path += `&client_id=${orderSearchBy.clientId}`;
     }
     return $api.get(path);
   }

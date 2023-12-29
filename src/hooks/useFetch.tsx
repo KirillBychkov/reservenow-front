@@ -25,6 +25,7 @@ function useFetch<T>(
 
   const invokeFunction = () => {
     setData(null)
+    setIsLoading(true);
     fetchFunction().then((data) => {
       if (data.error) {
         setError(data.error);

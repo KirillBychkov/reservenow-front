@@ -28,6 +28,8 @@ import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 import ManageReservation from '@/pages/b2bPages/schedule/manageReservation/manageReservation';
 import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
 import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
+import ReservationHistory from '@/pages/b2bPages/reservationHistory/reservationHistory';
+import ReservationPage from '@/pages/b2bPages/reservationHistory/reservationPage/reservationPage';
 
 interface IRoute {
   path: string;
@@ -261,6 +263,19 @@ export const routes: IRoute[] = [
   {
     path: '/schedule',
     element: <Schedule />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/booking',
+    element: <ReservationHistory />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
+    path: '/booking/:id',
+    element: <ReservationPage />,
+    params: {id: ':id'},
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
   }

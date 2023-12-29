@@ -1,0 +1,41 @@
+.card {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Gray-Gray-100, #e0e2e7);
+  background: var(--Neutral-White, #fff);
+  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
+  padding: 24px;
+  width: 100%;
+  min-height: 169px;
+}
+
+.status {
+  display: flex;
+  height: 20px;
+  padding: 0.125rem 0.375rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 1.875rem;
+  max-width: 10rem;
+  width: 90px;
+  &.pending {
+    background: rgba(255, 193, 7, 0.15);
+    color: #b58c2a;
+  }
+  &.paid {
+    background: rgba(35, 133, 81, 0.15);
+    color: #165a36;
+  }
+  &.not_paid {
+    background: rgba(255, 193, 7, 0.15);
+    color: #b58c2a;
+  }
+  &.rejected {
+    background: rgba(205, 66, 70, 0.15);
+    color: #8e292c;
+  }
+  &.undefined {
+    background: rgba(0, 0, 0, 0.15);
+    color: #000000;
+  }
+}

@@ -345,5 +345,43 @@
     "month": "Місяць",
     "week": "Тиждень",
     "day": "День"
+  },
+  "reservationHistory": {
+    "reservationDetails": "Деталі бронювання",
+    "addReservation":"Додати бронювання",
+    "table": {
+      "id": "ID",
+      "clientName": "Ім'я клієнта",
+      "phone": "Телефон",
+      "reservations": "Бронювання",
+      "createdAt": "Створено",
+      "orderSum": "Сумма",
+      "manager": "Менеджер",
+      "status": "Cтатус"
+    },
+    "reservationTable": {
+      "object":"Об'єкт",
+      "createdAt":"Дата",
+      "rentalTime": "Час",
+      "total": "Всього",
+      "totalPrice": "Загальна сума"
+    },
+    "details": {
+      "title": "Бронювання №{{id}}",
+      "createdAt": "Додано",
+      "paymentMethod":"Спосіб оплати",
+      "organization": "Організація",
+      "customer": "Замовник",
+      "phone":"Номер телефону",
+      "createdBy": "Створено",
+      "creatorDescription": "Опис",
+      "info": "Інформація"
+    },
+    "status": {
+      "status": "Статус бронювання",
+      "created": "Створення бронювання",
+      "processing": "Обробка",
+      "completed": "Статус завершення (завершено/скасовано)"
+    }
   }
 }

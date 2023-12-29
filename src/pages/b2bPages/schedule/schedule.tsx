@@ -1,11 +1,7 @@
 import useFetch from '@/hooks/useFetch';
 import ordersStore from '@/store/ordersStore';
 import { useMemo, useState } from 'react';
-import {
-  Calendar,
-  Event,
-  momentLocalizer,
-} from 'react-big-calendar';
+import { Calendar, Event, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Flex from '@/components/UI/layout/flex';
@@ -70,7 +66,11 @@ const Schedule = observer(() => {
 
   // Todo: remove when getAllRentalObjectOrders is done
   useFetch(
-    () => ordersStore.getOrders({ limit: 1000, skip: 0 }, currentObj?.id),
+    () =>
+      ordersStore.getOrders(
+        { limit: 1000, skip: 0 },
+        { rentalObjectId: currentObj?.id },
+      ),
     [currentObj],
     currentObj === null,
     (orders) => {
@@ -152,10 +152,10 @@ const Schedule = observer(() => {
                   <p>{t(`schedule.events.${event}`)}</p>
                   <Checkbox
                     onChange={() => {
-                      setCurrentEventType(event)
-                      setCurrentObj(null)
-                      setCurrentOrg(null)
-                      setEvents(null)
+                      setCurrentEventType(event);
+                      setCurrentObj(null);
+                      setCurrentOrg(null);
+                      setEvents(null);
                     }}
                     value={event}
                     checked={currentEventType === event}
@@ -168,17 +168,23 @@ const Schedule = observer(() => {
         {currentEventType === Events.Organizations && (
           <Flex options={{ gap: 1 }}>
             <CustomDropdown
-              placeholder={currentOrg?.name || t('schedule.form.objectSection.chooseObject')}
+              placeholder={
+                currentOrg?.name ||
+                t('schedule.form.objectSection.chooseObject')
+              }
               onChange={(e) => {
-                setCurrentOrg(e.target.value.organization)
-                setCurrentObj(null)
-                setEvents(null)
+                setCurrentOrg(e.target.value.organization);
+                setCurrentObj(null);
+                setEvents(null);
               }}
               className={styles.dropdown}
               options={orgOptions}
             />
             <CustomDropdown
-              placeholder={currentObj?.name || t('schedule.form.objectSection.chooseOrganization')}
+              placeholder={
+                currentObj?.name ||
+                t('schedule.form.objectSection.chooseOrganization')
+              }
               className={styles.dropdown}
               options={objOptions}
               onChange={(e) => setCurrentObj(e.target.value.object)}

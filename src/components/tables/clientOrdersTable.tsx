@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Button from '../UI/buttons/button';
 import { useMemo } from 'react';
-import { formatDate } from '@/utils/formatters/formatDate';
 import classNames from 'classnames';
 import styles from './status.module.scss';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { formatPhoneIn } from '@/utils/formatters/formatPhone';
+import { getAllObjectsNamesInOrder } from './helper';
 
 type Props = {
   orders: Order[];
@@ -21,16 +21,6 @@ type Props = {
   sortField: SortField;
   sortOrder: SortOrder;
   onSortChange: (e: DataTableStateEvent) => void;
-};
-
-const getAllObjectsNamesInOrder = ({ reservations }: Order) => {
-  return reservations.map((reservation) => {
-    return (
-      reservation.equipment?.name ||
-      reservation.rental_object?.name ||
-      reservation.trainer?.first_name
-    );
-  });
 };
 
 const ClientOrdersTable = ({
@@ -45,8 +35,7 @@ const ClientOrdersTable = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const handleNavigateToOrder = (id: number) => {
-    //Todo add link to reservation history page
-    // navigate(`/reservations/${id}`);
+    navigate(`/booking/${id}`);
   };
 
   const formattedOrders: Order[] = useMemo(
@@ -83,7 +72,7 @@ const ClientOrdersTable = ({
       <Column
         header={t('orders.objectNames')}
         style={{ width: '30%' }}
-        body={(order: Order) => getAllObjectsNamesInOrder(order)}
+        body={(order: Order) => getAllObjectsNamesInOrder(order).join(', ')}
       />
 
       <Column

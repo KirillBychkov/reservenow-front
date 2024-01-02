@@ -8,7 +8,7 @@ export interface Order {
   id: number;
   user: User;
   status: OrderStatus;
-  orders_sum: number;
+  order_sum: number;
   payment_method: PaymentMethod;
   reservations: Reservation[];
   client: Client;

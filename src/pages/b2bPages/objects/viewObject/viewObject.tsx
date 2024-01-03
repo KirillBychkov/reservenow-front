@@ -39,7 +39,6 @@ const ViewObject: React.FC = observer(() => {
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
   );
-  console.log(object);
 
   const { data: orders } = useFetch<Order[]>(
     () =>

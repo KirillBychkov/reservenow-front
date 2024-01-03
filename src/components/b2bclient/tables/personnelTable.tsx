@@ -48,13 +48,16 @@ const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
     rowData: ManagerWithTypeName | TrainerWithTypeName,
   ) => {
     const { id, type } = rowData;
-    console.log(id);
 
     navigate(`/personnel/${type}/${id}`);
   };
 
   return (
-    <DataTable removableSort value={formattedPersonnel}>
+    <DataTable
+      removableSort
+      value={formattedPersonnel}
+      className='tableWithoutFooter'
+    >
       <Column field='id' header={t('objects.id')} />
       <Column
         header={t('forms.firstName')}

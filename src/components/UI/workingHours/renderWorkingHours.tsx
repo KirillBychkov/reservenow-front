@@ -30,10 +30,10 @@ export const RenderWorkingHours: React.FC<Props> = ({ data, day }) => {
       className={classNames('paragraph paragraph--normal')}
       style={{ marginBottom: '4px' }}
     >
-      {t(`days.${day}`) + ' '}
+      {t(`dates.days.${day}`) + ' '}
       <span className='paragraph-muted'>
         {isDayOff
-          ? t('days.dayOff')
+          ? t('dates.days.dayOff')
           : `${formatHour(startHour as number)} - ${formatHour(
               endHour as number,
             )}`}

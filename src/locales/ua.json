@@ -28,6 +28,7 @@
     "subheading": "Введіть свій новий пароль, щоб увійти"
   },
   "clients": {
+    "topClients": "Топ клієнтів",
     "clients": "Клієнти",
     "add": "Додати клієнта",
     "edit": "Редагувати клієнта",
@@ -122,7 +123,9 @@
     "price": "Ціна",
     "enterPrice": "Введіть ціну",
     "image": "Зображення об'єкту",
-    "null": "Наразі немає об'єктів"
+    "null": "Наразі немає об'єктів",
+    "topObjects": "Топ об'єктів",
+    "load": "Навантаження"
   },
   "addOrganizationForm": {
     "enterName": "Введіть тут назву організації. . .",
@@ -156,17 +159,20 @@
   "dates": {
     "date": "Дата",
     "createdAt": "Дата створення",
-    "updatedAt": "Дата оновлення"
-  },
-  "days": {
-    "monday": "Пн",
-    "tuesday": "Вт",
-    "wednesday": "Ср",
-    "thursday": "Чт",
-    "friday": "Пт",
-    "saturday": "Сб",
-    "sunday": "Нд",
-    "dayOff": "Вихідний"
+    "updatedAt": "Дата оновлення",
+    "days": {
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб",
+      "sunday": "Нд",
+      "dayOff": "Вихідний"
+    },
+    "week": "Тиждень",
+    "month": "Місяць",
+    "thisMonth": "Цей місяць"
   },
   "status": {
     "pending": "Очікує",
@@ -283,6 +289,12 @@
     "create_at": "Дата",
     "totalOrderSum": "Разом ₴",
     "status": "Cтатус"
+  },
+  "statistics": {
+    "statistics": "Статистика",
+    "pickOrganization": "Оберіть організацію",
+    "notSelected": "Ви не обрали організацію",
+    "organizationLoad": "Навантаження організації"
   },
   "schedule": {
     "addReservation": "Додати бронювання",

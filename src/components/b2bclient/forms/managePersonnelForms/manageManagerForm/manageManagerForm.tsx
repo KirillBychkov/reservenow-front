@@ -24,7 +24,6 @@ interface Props {
 const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
   const { showError, showSuccess } = useContext(ToastContext);
-  console.log(initialValues);
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required(t('invalid.required')),

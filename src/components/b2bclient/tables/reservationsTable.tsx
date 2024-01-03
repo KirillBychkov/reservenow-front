@@ -42,7 +42,7 @@ const OrdersTable: React.FC<Props> = observer(
 
     return (
       <DataTable
-        className='customObjectTable'
+        className='tableWithHeader'
         removableSort
         value={formattedObjects}
         selectionMode='single'

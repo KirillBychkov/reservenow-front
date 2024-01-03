@@ -28,6 +28,7 @@ import ClientPage from '@/pages/b2bPages/clients/clientPage/clientPage';
 import ManageReservation from '@/pages/b2bPages/schedule/manageReservation/manageReservation';
 import ViewManager from '@/pages/b2bPages/personnel/viewPersonnel/viewManager/viewManager';
 import ViewTrainer from '@/pages/b2bPages/personnel/viewPersonnel/viewTrainer/viewTrainer';
+import Statistics from '@/pages/b2bPages/statistics/statistics';
 import ReservationHistory from '@/pages/b2bPages/reservationHistory/reservationHistory';
 import ReservationPage from '@/pages/b2bPages/reservationHistory/reservationPage/reservationPage';
 
@@ -248,6 +249,12 @@ export const routes: IRoute[] = [
     allowedRoles: [UserRole.UserFull],
   },
   {
+    path: '/statistics',
+    element: <Statistics />,
+    isProtected: true,
+    allowedRoles: [UserRole.UserFull],
+  },
+  {
     path: '/schedule/add',
     element: <ManageReservation />,
     isProtected: true,
@@ -255,7 +262,7 @@ export const routes: IRoute[] = [
   },
   {
     path: '/schedule/:id/edit',
-    params: {id: ':id'},
+    params: { id: ':id' },
     element: <ManageReservation />,
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
@@ -275,8 +282,8 @@ export const routes: IRoute[] = [
   {
     path: '/booking/:id',
     element: <ReservationPage />,
-    params: {id: ':id'},
+    params: { id: ':id' },
     isProtected: true,
     allowedRoles: [UserRole.UserFull],
-  }
+  },
 ];

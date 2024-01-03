@@ -20,6 +20,7 @@ type Props = {
     data: { equipment?: Equipment; description?: string },
   ) => void;
   reservationNumber: number;
+  isEditingMode: boolean;
 };
 
 export const EquipmentReservationSection = ({
@@ -28,6 +29,7 @@ export const EquipmentReservationSection = ({
   onChange,
   onDelete,
   reservationNumber,
+  isEditingMode,
 }: Props) => {
   const { equipment, id } = equipmentReservation;
   const { t } = useTranslation();
@@ -46,15 +48,19 @@ export const EquipmentReservationSection = ({
         <h4 className='heading heading-4'>
           {t('schedule.form.equipmentSection.header', { reservationNumber })}
         </h4>
-        <Cross
-          className={styles.cross}
-          color='#B8B8BA'
-          onClick={() => onDelete(id)}
-        />
+
+        {!isEditingMode && (
+          <Cross
+            className={styles.cross}
+            color='#B8B8BA'
+            onClick={() => onDelete(id)}
+          />
+        )}
       </Flex>
 
       <FormField label={t('forms.equipmentName')}>
         <CustomDropdown
+          disabled={!isEditingMode}
           placeholder={
             equipment?.name ||
             t('schedule.form.equipmentSection.chooseEquipment')
@@ -81,6 +87,7 @@ export const EquipmentReservationSection = ({
         <InputTextarea
           placeholder={t('forms.enterDescription')}
           autoResize
+          disabled={!isEditingMode}
           onChange={handleChangeDescription}
           rows={4}
         />

@@ -12,16 +12,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './clientPage.module.scss';
 import LeftSideComponent from '@/components/b2bclient/clients/leftSideComponent';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import ClientPageLayout from '@/components/UI/layout/clientPageLayout';
-import RightSideComponent from '@/components/b2bclient/clients/rightSideComponent';
 import { useSort } from '@/hooks/useSort';
 import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
 import ClientOrdersTable from '@/components/tables/clientOrdersTable';
 import { Order } from '@/models/Order';
-import Searchbar from '@/components/searchbar/searchbar';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
+import getClientStatsData from './getClientStatsData';
+import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
+import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 
 const ClientPage = observer(() => {
   const { id } = useParams();
@@ -56,6 +56,12 @@ const ClientPage = observer(() => {
     return <ProgressSpinner />;
   }
 
+  const { total_reservation_amount, total_reservation_sum } = client;
+  const clientStatsData = getClientStatsData({
+    total_reservation_amount,
+    total_reservation_sum: formatToUpperUnit(total_reservation_sum || 0),
+  });
+
   return (
     <div className={styles.page}>
       <Flex options={{ direction: 'column', gap: 0.625 }}>
@@ -82,23 +88,19 @@ const ClientPage = observer(() => {
         </div>
       </Flex>
 
-      <ClientPageLayout
-        leftSideComponent={<LeftSideComponent client={formatObjectIn(client)} />}
-        rightSideComponent={
-          <RightSideComponent
-            totalReservationAmount={client.total_reservation_amount}
-            totalReservationSum={formatToUpperUnit(client.total_reservation_sum || 0)}
+      <ViewStatsLayout
+        LeftSideComponent={
+          <LeftSideComponent client={formatObjectIn(client)} />
+        }
+        RightSideComponent={
+          <RightSide
+            heading={t('clients.ordersHistory')}
+            setSearch={setSearch}
+            statCardsData={clientStatsData}
           />
         }
-        table={
+        Table={
           <div className={styles.tableBg}>
-            <Flex
-              className={styles.tableHeader}
-              options={{ justify: 'space-between', align: 'center' }}
-            >
-              <h4 className='heading heading-4'>{t('clients.ordersHistory')}</h4>
-              <Searchbar setSearch={setSearch} />
-            </Flex>
             {orders ? (
               <ClientOrdersTable
                 sortField={sortField}

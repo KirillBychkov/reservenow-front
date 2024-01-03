@@ -162,7 +162,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
       }
 
       const { successMsg, errorMsg } = initialOrder?.id
-        ? await editOrder(initialOrder.id, values, reservations)
+        ? await editOrder(initialOrder.id, values)
         : await createOrder(values, reservations);
 
       if (errorMsg) {
@@ -263,6 +263,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
 
         {objectReservations.map((reservation, index) => (
           <ObjectReservationSection
+            isEditingMode={!!initialOrder}
             objectReservation={reservation}
             key={reservation.id}
             reservationNumber={index + 1}
@@ -275,6 +276,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
 
         {trainerReservations.map((reservation, index) => (
           <TrainerReservationSection
+            isEditingMode={!!initialOrder}
             key={reservation.id}
             trainerReservation={reservation}
             reservationNumber={index + 1}
@@ -287,6 +289,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
 
         {equipmentReservations.map((reservation, index) => (
           <EquipmentReservationSection
+            isEditingMode={!!initialOrder}
             key={reservation.id}
             equipmentReservation={reservation}
             onChange={handleChangeReservationData}

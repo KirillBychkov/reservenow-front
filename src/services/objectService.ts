@@ -9,15 +9,15 @@ import { AxiosResponse } from 'axios';
 
 export default class ObjectService {
   static async getObjects(
-    filters: Omit<Filters, 'total'>,
+    filters?: Omit<Filters, 'total'>,
     organizationId?: number,
   ) {
     return $api.get(
-      `/rental_object?limit=${filters.limit}&skip=${filters.skip}${
-        filters.sort ? `&sort=${filters.sort}` : ''
-      }${filters.search ? `&search=${filters.search}` : ''}${
-        organizationId ? `&organizationId=${organizationId}` : ''
-      }`,
+      `/rental_object?${filters?.limit ? `limit=${filters.limit}` : ''}${
+        filters?.skip ? `&limit=${filters.skip}` : ''
+      }${filters?.sort ? `&sort=${filters.sort}` : ''}${
+        filters?.search ? `&search=${filters.search}` : ''
+      }${organizationId ? `&organizationId=${organizationId}` : ''}`,
     );
   }
 

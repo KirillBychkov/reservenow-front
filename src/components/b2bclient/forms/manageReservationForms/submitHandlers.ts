@@ -41,24 +41,8 @@ export const createOrder = async (
   return response;
 };
 
-export const editOrder = async (
-  id: number,
-  values: OrderFormData,
-  reservations: CreateReservationDTO[],
-) => {
-  const client: CreateClientDTO = {
-    phone: values.phone,
-    description: values.description,
-    first_name: values.first_name,
-    last_name: values.last_name,
-  };
-
-  const response = await ordersStore.editOrder(id, {
-    client: formatObjectOut(client),
-    reservations,
+export const editOrder = async (id: number, values: OrderFormData) =>
+  ordersStore.editOrder(id, {
     status: values.status.value,
     payment_method: values.payment.value,
   });
-
-  return response;
-};

@@ -29,8 +29,9 @@ type Props = {
     id: string,
     time: { start?: string | null; end?: string | null },
   ) => void;
+  isEditingMode: boolean;
 };
- 
+
 const TrainerReservationSection = ({
   options,
   trainerReservation,
@@ -38,6 +39,7 @@ const TrainerReservationSection = ({
   onDelete,
   onDataChange,
   onReservationTimeChange,
+  isEditingMode,
 }: Props) => {
   const { t } = useTranslation();
   const {
@@ -71,7 +73,7 @@ const TrainerReservationSection = ({
 
   const handleChangeTrainer = (e: DropdownChangeEvent) => {
     onDataChange(id, { trainer: e.target.value.trainer as Trainer });
-    fullResetOfTime()
+    fullResetOfTime();
   };
 
   const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -122,14 +124,17 @@ const TrainerReservationSection = ({
         <h4 className='heading heading-4'>
           {t('schedule.form.trainerSection.header', { reservationNumber })}
         </h4>
-        <Cross
-          className={styles.cross}
-          color='#B8B8BA'
-          onClick={() => onDelete(id)}
-        />
+        {!isEditingMode && (
+          <Cross
+            className={styles.cross}
+            color='#B8B8BA'
+            onClick={() => onDelete(id)}
+          />
+        )}
       </Flex>
       <FormField label={t('schedule.form.trainerSection.trainerName')}>
         <CustomDropdown
+          disabled={isEditingMode}
           placeholder={
             trainer
               ? `${trainer?.first_name} ${trainer?.last_name}`
@@ -145,7 +150,7 @@ const TrainerReservationSection = ({
           className={styles.calendar}
           placeholder={t('schedule.form.chooseDate')}
           value={date}
-          disabled={trainer === null}
+          disabled={trainer === null || isEditingMode}
           onChange={handleDateChange}
           minDate={new Date()}
         />
@@ -155,7 +160,7 @@ const TrainerReservationSection = ({
         <div style={{ flexGrow: 1 }}>
           <FormField label={t('schedule.form.timeFrom')}>
             <CustomDropdown
-              disabled={date === null}
+              disabled={date === null || isEditingMode}
               placeholder={t('schedule.form.chooseTime')}
               value={fromHours}
               emptyMessage={t('schedule.trainerWorkingHoursNull')}
@@ -175,7 +180,7 @@ const TrainerReservationSection = ({
         <div style={{ flexGrow: 1 }}>
           <FormField label={t('schedule.form.timeTo')}>
             <CustomDropdown
-              disabled={fromHours === null}
+              disabled={fromHours === null || isEditingMode}
               options={
                 fromHours !== null
                   ? generateDropdownOptions(
@@ -209,6 +214,7 @@ const TrainerReservationSection = ({
         <InputTextarea
           placeholder={t('forms.enterDescription')}
           autoResize
+          disabled={isEditingMode}
           value={description || ''}
           onChange={handleChangeDescription}
           rows={4}

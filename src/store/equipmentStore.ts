@@ -42,7 +42,7 @@ class EquipmentStore {
   };
 
   getEquipment = async (
-    filters: Omit<Filters, 'total'>,
+    filters?: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<Equipment[]>> => {
     try {
       const { data } = await EquipmentService.getEquipment(filters);

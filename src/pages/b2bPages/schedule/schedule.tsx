@@ -49,10 +49,8 @@ const Schedule = observer(() => {
     }));
   }, [organizations]);
 
-  // Todo: Remove when getAllRentalObjects is done
   const { data: objects } = useFetch(
-    () =>
-      objectsStore.getRentalObjects({ limit: 1000, skip: 0 }, currentOrg?.id),
+    () => objectsStore.getRentalObjects({}, currentOrg?.id),
     [currentOrg],
     currentOrg === null,
   );
@@ -66,17 +64,12 @@ const Schedule = observer(() => {
 
   // Todo: remove when getAllRentalObjectOrders is done
   useFetch(
-    () =>
-      ordersStore.getOrders(
-        { limit: 1000, skip: 0 },
-        { rentalObjectId: currentObj?.id },
-      ),
+    () => ordersStore.getOrders({}, { rentalObjectId: currentObj?.id }),
     [currentObj],
     currentObj === null,
     (orders) => {
       const objectReservations = getAllObjectReservations(
         orders || [],
-        currentObj?.id || 0,
       );
 
       const events: Event[] = objectReservations.map(

@@ -14,6 +14,14 @@ const UserProfile: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const logout = async () => {
+    const { successMsg } = await authStore.logout();
+
+    if (successMsg) {
+      navigate('/');
+    }
+  };
+
   const items = [
     {
       label: t('profile.heading'),
@@ -30,7 +38,7 @@ const UserProfile: React.FC = observer(() => {
     {
       template: () => {
         return (
-          <div className='p-menuitem-link'>
+          <div className='p-menuitem-link' onClick={logout}>
             <p className='p-menuitem-text'>{t('actions.signout')}</p>
             <LogOut color='#7961DB' />
           </div>

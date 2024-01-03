@@ -17,7 +17,7 @@ class ObjectsStore {
   }
 
   getRentalObjects = async (
-    filters: Omit<Filters, 'total'>,
+    filters?: Omit<Filters, 'total'>,
     organizationId?: number,
   ): Promise<ResponseOrError<RentalObject[]>> => {
     try {

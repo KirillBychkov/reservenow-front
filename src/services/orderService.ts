@@ -17,13 +17,15 @@ export interface OrderSearchBy {
 
 export class OrderService {
   static async getOrders(
-    filters: Omit<Filters, 'total'>,
+    filters?: Omit<Filters, 'total'>,
     orderSearchBy?: OrderSearchBy,
   ): Promise<AxiosResponse<Orders>> {
     // url path
-    let path = `/order?limit=${filters.limit}&skip=${filters.skip}${
-      filters.sort ? `&sort=${filters.sort}` : ''
-    }${filters.search ? `&search=${filters.search}` : ''}`;
+    let path = `/order?${filters?.limit ? `limit=${filters.limit}` : ''}${
+      filters?.skip ? `&skip=${filters.skip}` : ''
+    }${filters?.search ? `&search=${filters.search}` : ''}${
+      filters?.sort ? `&sort=${filters.sort}` : ''
+    }`;
 
     // only one of these params can be used at a time
     if (orderSearchBy?.rentalObjectId) {

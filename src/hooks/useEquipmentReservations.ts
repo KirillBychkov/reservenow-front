@@ -21,11 +21,7 @@ export const useEquipmentReservations = (initialValues?: EquipmentReservation[])
   >(initialValues || []);
 
   const fetchAndSetOptions = async () => {
-    //Todo: remove limit and skip when getAllEquipment endpoint is done
-    const { data: equipment } = await equipmentStore.getEquipment({
-      limit: 1000,
-      skip: 0,
-    });
+    const { data: equipment } = await equipmentStore.getEquipment();
 
     setOptions(
       equipment.map((eq) => {

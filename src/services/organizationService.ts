@@ -43,6 +43,10 @@ export default class OrganizationService {
     start_date?: string,
     end_date?: string,
   ): Promise<AxiosResponse> {
-    return $api.get(`/organization/${id}/statistics`);
+    let path = `/organization/${id}/statistics`;
+    if (start_date && end_date) {
+      path += `?start_date=${start_date}&end_date=${end_date}`;
+    }
+    return $api.get(path);
   }
 }

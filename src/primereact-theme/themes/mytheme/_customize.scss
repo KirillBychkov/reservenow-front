@@ -1,0 +1,17 @@
+// classes to customize the table
+
+.tableWithHeader {
+  .p-datatable-table .p-datatable-thead > tr > th {
+    border-radius: 0px;
+    border-top: none;
+  }
+}
+
+.tableWithoutFooter {
+  .p-datatable-table .p-datatable-tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: 8px;
+  }
+  .p-datatable-table .p-datatable-tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: 8px;
+  }
+}

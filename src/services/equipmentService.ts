@@ -10,12 +10,14 @@ import { AxiosResponse } from 'axios';
 
 export default class EquipmentService {
   static getEquipment(
-    filters: Omit<Filters, 'total'>,
+    filters?: Omit<Filters, 'total'>,
   ): Promise<AxiosResponse<Equipments>> {
     return $api.get(
-      `/equipment?limit=${filters.limit}&skip=${filters.skip}${
-        filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
+      `/equipment?${filters?.limit ? `limit=${filters.limit}` : ''}${
+        filters?.skip ? `&skip=${filters.skip}` : ''
+      }${filters?.search ? `&search=${filters.search}` : ''}${
+        filters?.sort ? `&sort=${filters.sort}` : ''
+      }`,
     );
   }
 

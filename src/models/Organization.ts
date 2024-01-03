@@ -29,3 +29,10 @@ export interface OrganizationStatistics {
   created_at: string;
   updated_at: string;
 }
+
+export interface StatisticsPerPeriod {
+  week: number;
+  total_revenue: number;
+  total_reservations: number;
+  total_hours: number;
+}

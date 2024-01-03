@@ -34,6 +34,7 @@ type Props = {
     id: string,
     time: { start?: string | null; end?: string | null },
   ) => void;
+  isEditingMode: boolean;
 };
 
 const ObjectReservationSection = ({
@@ -43,6 +44,7 @@ const ObjectReservationSection = ({
   objectReservation,
   onDataChange,
   onReservationTimeChange,
+  isEditingMode,
 }: Props) => {
   const { t } = useTranslation();
   const {
@@ -52,6 +54,7 @@ const ObjectReservationSection = ({
     reservation_time_start,
     description,
   } = objectReservation;
+
   const dateOfStart = reservation_time_start
     ? new Date(reservation_time_start)
     : null;
@@ -64,14 +67,9 @@ const ObjectReservationSection = ({
   );
   const [currentOrganization, setCurrentOrganization] =
     useState<Organization | null>(rental_object?.organization || null);
-  
-  // Todo: remove limit and skip when getAllRentalObjects endpoint is done
+
   const { data: objects, isLoading } = useFetch(
-    () =>
-      objectsStore.getRentalObjects(
-        { limit: 1000, skip: 0 },
-        currentOrganization?.id,
-      ),
+    () => objectsStore.getRentalObjects({}, currentOrganization?.id),
     [currentOrganization],
     currentOrganization === null,
   );
@@ -163,17 +161,21 @@ const ObjectReservationSection = ({
         <h4 className='heading heading-4'>
           {t('schedule.form.objectSection.header', { reservationNumber })}
         </h4>
-        <Cross
-          className={styles.cross}
-          color='#B8B8BA'
-          onClick={() => onDelete(id)}
-        />
+
+        {!isEditingMode && (
+          <Cross
+            className={styles.cross}
+            color='#B8B8BA'
+            onClick={() => onDelete(id)}
+          />
+        )}
       </Flex>
 
       <Flex options={{ gap: 1 }}>
         <div style={{ flexGrow: 1 }}>
           <FormField label={t('schedule.form.objectSection.organization')}>
             <CustomDropdown
+              disabled={isEditingMode}
               options={orgOptions}
               onChange={handleOrgChange}
               placeholder={
@@ -188,7 +190,7 @@ const ObjectReservationSection = ({
           <FormField label={t('schedule.form.objectSection.object')}>
             <CustomDropdown
               options={objectOptions}
-              disabled={currentOrganization === null}
+              disabled={currentOrganization === null || isEditingMode}
               placeholder={
                 rental_object?.name ||
                 t('schedule.form.objectSection.chooseObject')
@@ -210,7 +212,7 @@ const ObjectReservationSection = ({
 
       <FormField label={t('schedule.form.dateAndTime')}>
         <Calendar
-          disabled={rental_object === null}
+          disabled={rental_object === null || isEditingMode}
           className={styles.calendar}
           placeholder={t('schedule.form.chooseDate')}
           value={date}
@@ -224,7 +226,7 @@ const ObjectReservationSection = ({
           <FormField label={t('schedule.form.timeFrom')}>
             <CustomDropdown
               placeholder={t('schedule.form.chooseTime')}
-              disabled={date === null}
+              disabled={date === null || isEditingMode}
               value={fromHours}
               emptyMessage={t('schedule.workingHoursNull')}
               options={
@@ -243,7 +245,7 @@ const ObjectReservationSection = ({
         <div style={{ flexGrow: 1 }}>
           <FormField label={t('schedule.form.timeTo')}>
             <CustomDropdown
-              disabled={fromHours === null}
+              disabled={fromHours === null || isEditingMode}
               options={
                 fromHours !== null
                   ? generateDropdownOptions(
@@ -277,6 +279,7 @@ const ObjectReservationSection = ({
         <InputTextarea
           placeholder={t('forms.enterDescription')}
           autoResize
+          disabled={isEditingMode}
           rows={4}
           value={description || ''}
           onChange={handleDescriptionChange}

@@ -22,7 +22,7 @@ export const getTotalSum = (
   objects: ObjectReservation[],
 ) => {
   const totalEquipmentPrice = equipment.reduce(
-    (total, current) => total + (current?.equipment?.price_per_hour || 0),
+    (total, current) => total + (current?.equipment?.price || 0),
     0,
   );
 

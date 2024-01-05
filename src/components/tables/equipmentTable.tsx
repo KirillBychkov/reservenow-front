@@ -9,8 +9,9 @@ import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useTranslation } from 'react-i18next';
 import Flex from '../UI/layout/flex';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import ToastContext from '@/context/toast';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 type TableProps = {
   equipment: Equipment[];
@@ -31,7 +32,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
     const handleEditEquipment = (id: number) => {
       navigate(`${id}/edit`);
     };
-
+    
     const handleDeleteEquipment = async (id: number) => {
       const { successMsg, errorMsg } = await equipmentStore.deleteEquipment(id);
 
@@ -43,10 +44,15 @@ export const EquipmentTable: React.FC<TableProps> = observer(
       showSuccess(successMsg);
     };
 
+    const formattedEquipment = useMemo(
+      () => equipment.map((eq) => formatObjectIn(eq)),
+      [equipment],
+    );
+
     return (
       <DataTable
         removableSort
-        value={equipment}
+        value={formattedEquipment}
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSortChange}
@@ -75,10 +81,10 @@ export const EquipmentTable: React.FC<TableProps> = observer(
           sortable
         />
         <Column
-          field='price_per_hour'
+          field='price'
           header={t('equipment.priceColumn')}
           body={(rowData: Equipment) => (
-            <p className='text-medium'>UAH {rowData.price_per_hour}</p>
+            <p className='text-medium'>UAH {rowData.price}</p>
           )}
           sortable
         />

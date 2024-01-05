@@ -5,7 +5,7 @@ export interface Equipment {
   user: User;
   name: string;
   description?: string;
-  price_per_hour: number;
+  price: number;
   created_at: Date | string;
   updated_at: Date | string;
 }

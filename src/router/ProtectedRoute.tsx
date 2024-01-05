@@ -33,13 +33,13 @@ const ProtectedRoute: React.FC<ProtectedRoute> = observer(
 
     // Render the protected route with Header and Sidebar if applicable
     return isProtected ? (
-      <>
+      <Flex className='page' options={{ direction: 'column' }}>
         <Header />
-        <Flex>
+        <Flex className='main'>
           <Sidebar />
           {children}
         </Flex>
-      </>
+      </Flex>
     ) : (
       <>{children}</>
     );

@@ -19,6 +19,7 @@ import ToastContext from '@/context/toast';
 import { EquipmentFormData } from '@/types/equipment';
 import { createEquipment, updateEquipment } from './submitHandlers';
 import { useNavigate } from 'react-router-dom';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 type Props = {
   initialValues?: Equipment;
@@ -56,15 +57,15 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
     navigate('/equipment');
   };
 
-  const formData: EquipmentFormData = {
+  const formData: EquipmentFormData = formatObjectIn({
     name: initialValues?.name || '',
     description: initialValues?.description || '',
-    price_per_hour: initialValues?.price_per_hour || 0,
-  };
+    price: initialValues?.price || 0,
+  });
 
   const validationSchema = yup.object({
     name: yup.string().required(t('invalid.required')),
-    price_per_hour: yup
+    price: yup
       .number()
       .required(t('invalid.required'))
       .positive(t('invalid.positiveOnly')),
@@ -126,18 +127,18 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
           <FormField
             label={t('forms.equipmentPrice')}
             isValid={
-              !(formik.touched.price_per_hour && formik.errors.price_per_hour)
+              !(formik.touched.price && formik.errors.price)
             }
-            invalidMessage={formik.errors.price_per_hour}
+            invalidMessage={formik.errors.price}
           >
             <InputNumber
-              name='price_per_hour'
-              value={formik.values.price_per_hour}
+              name='price'
+              value={formik.values.price}
               onChange={(e) => {
-                formik.setFieldValue('price_per_hour', e.value);
+                formik.setFieldValue('price', e.value);
               }}
               onBlur={formik.handleBlur}
-              className={classNames(isValidClassname(formik, 'price_per_hour'))}
+              className={classNames(isValidClassname(formik, 'price'))}
               size={100}
               type='text'
               mode='currency'
@@ -172,7 +173,7 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
             fill
             className={styles.btn}
           >
-            {t('actions.addEquipment')}
+            {initialValues?.id ? t('actions.editEquipment') : t('actions.addEquipment')}
           </Button>
         </Flex>
       </Flex>

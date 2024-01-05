@@ -7,6 +7,7 @@ import Flex from '../UI/layout/flex';
 import { useTranslation } from 'react-i18next';
 import * as dayjs from 'dayjs';
 import { getNameFromReservation } from './helper';
+import { Minus } from '@blueprintjs/icons';
 type Props = {
   reservations: Reservation[];
   total: number;
@@ -62,9 +63,13 @@ const ReservationsTable = ({ reservations, total }: Props) => {
       <Column
         header={t('reservationHistory.reservationTable.rentalTime')}
         body={({ reservation_time_start, reservation_time_end }: Reservation) =>
-          getTimeRange(
-            reservation_time_start as string,
-            reservation_time_end as string,
+          reservation_time_start ? (
+            getTimeRange(
+              reservation_time_start as string,
+              reservation_time_end as string,
+            )
+          ) : (
+            <Minus />
           )
         }
       />

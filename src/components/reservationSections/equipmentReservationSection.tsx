@@ -60,7 +60,7 @@ export const EquipmentReservationSection = ({
 
       <FormField label={t('forms.equipmentName')}>
         <CustomDropdown
-          disabled={!isEditingMode}
+          disabled={isEditingMode}
           placeholder={
             equipment?.name ||
             t('schedule.form.equipmentSection.chooseEquipment')
@@ -73,7 +73,7 @@ export const EquipmentReservationSection = ({
       <FormField label={t('forms.equipmentPrice')}>
         <InputNumber
           placeholder='0.00₴'
-          value={equipment?.price_per_hour}
+          value={equipment?.price}
           size={100}
           type='text'
           mode='currency'
@@ -87,7 +87,7 @@ export const EquipmentReservationSection = ({
         <InputTextarea
           placeholder={t('forms.enterDescription')}
           autoResize
-          disabled={!isEditingMode}
+          disabled={isEditingMode}
           onChange={handleChangeDescription}
           rows={4}
         />

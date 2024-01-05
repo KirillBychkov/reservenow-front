@@ -6,6 +6,7 @@ import {
   UpdateOrderDTO,
 } from '@/models/requests/OrderRequests';
 import { Orders } from '@/models/response/OrderResponse';
+import { TimeRange } from '@/types/timeRange';
 import { AxiosResponse } from 'axios';
 
 export interface OrderSearchBy {
@@ -19,6 +20,7 @@ export class OrderService {
   static async getOrders(
     filters?: Omit<Filters, 'total'>,
     orderSearchBy?: OrderSearchBy,
+    timeRange?: TimeRange,
   ): Promise<AxiosResponse<Orders>> {
     // url path
     let path = `/order?${filters?.limit ? `limit=${filters.limit}` : ''}${
@@ -36,6 +38,8 @@ export class OrderService {
       path += `&trainer_id=${orderSearchBy.trainerId}`;
     } else if (orderSearchBy?.clientId) {
       path += `&client_id=${orderSearchBy.clientId}`;
+    } else if (timeRange?.startDate && timeRange.endDate) {
+      path += `&start_date=${timeRange.startDate}&end_date=${timeRange.endDate}`;
     }
     return $api.get(path);
   }

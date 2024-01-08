@@ -360,7 +360,7 @@
   },
   "reservationHistory": {
     "reservationDetails": "Деталі бронювання",
-    "addReservation":"Додати бронювання",
+    "addReservation": "Додати бронювання",
     "table": {
       "id": "ID",
       "clientName": "Ім'я клієнта",
@@ -372,8 +372,8 @@
       "status": "Cтатус"
     },
     "reservationTable": {
-      "object":"Об'єкт",
-      "createdAt":"Дата",
+      "object": "Об'єкт",
+      "createdAt": "Дата",
       "rentalTime": "Час",
       "total": "Всього",
       "totalPrice": "Загальна сума"
@@ -381,10 +381,10 @@
     "details": {
       "title": "Бронювання №{{id}}",
       "createdAt": "Додано",
-      "paymentMethod":"Спосіб оплати",
+      "paymentMethod": "Спосіб оплати",
       "organization": "Організація",
       "customer": "Замовник",
-      "phone":"Номер телефону",
+      "phone": "Номер телефону",
       "createdBy": "Створено",
       "creatorDescription": "Опис",
       "info": "Інформація"

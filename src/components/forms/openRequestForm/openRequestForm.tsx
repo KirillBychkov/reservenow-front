@@ -7,12 +7,12 @@ import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import supportRecordsStore from '@/store/supportRecordsStore';
 import ToastContext from '@/context/toast';
-import FormField from '../UI/fields/formField';
+import FormField from '../../UI/fields/formField';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
-import Button from '../UI/buttons/button';
+import Button from '../../UI/buttons/button';
 import styles from './openRequestForm.module.scss';
 
 interface Props {
@@ -21,46 +21,52 @@ interface Props {
 
 const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
-  const { showSuccess, showError } = useContext(ToastContext);
+  // const { showSuccess, showError } = useContext(ToastContext);
 
-  const formattedSupportStatusOptions = useMemo(() => {
-    return SupportStatusOptions.map((value) => {
-      return {
-        value,
-        label: t(`status.${value}`),
-      };
-    });
-  }, [t]);
-
-  const requestData = useMemo(() => {
+  const formattedSupportStatusOptions = SupportStatusOptions.map((value) => {
     return {
-      status: formattedSupportStatusOptions.find(
-        (el) => el.value === initialValues?.status,
-      ),
-      description: initialValues?.resultDescription || '',
+      value,
+      label: t(`status.${value}`),
     };
-  }, [formattedSupportStatusOptions, initialValues]);
+  });
+  console.log(formattedSupportStatusOptions);
+
+  // const requestData = useMemo(() => {
+  //   return {
+  //     status: formattedSupportStatusOptions.find(
+  //       (el) => el.value === initialValues?.status,
+  //     ),
+  //     description: initialValues?.resultDescription || '',
+  //   };
+  // }, [formattedSupportStatusOptions, initialValues]);
 
   const validationSchema = Yup.object({
     description: Yup.string().required(t('invalid.required')),
+    status: Yup.object().required(t('invalid.required')),
   });
 
+  const formData = {
+    status: initialValues?.status,
+    description: initialValues?.resultDescription || '',
+  };
+
   const formik = useFormik({
-    initialValues: requestData,
+    initialValues: formData,
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      if (!initialValues) return;
-      const { successMsg, errorMsg } =
-        await supportRecordsStore.updateSupportRecord(initialValues.id, {
-          status: values.status?.value as SupportStatus,
-          result_description: values.description,
-        });
-      if (successMsg) {
-        showSuccess(successMsg);
-      } else {
-        showError(errorMsg);
-      }
+      console.log(values);
+      // if (!initialValues) return;
+      // const { successMsg, errorMsg } =
+      //   await supportRecordsStore.updateSupportRecord(initialValues.id, {
+      //     status: values.status as SupportStatus,
+      //     result_description: values.description,
+      //   });
+      // if (successMsg) {
+      //   showSuccess(successMsg);
+      // } else {
+      //   showError(errorMsg);
+      // }
     },
   });
 
@@ -78,7 +84,7 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
           <Dropdown
             name='status.value'
             style={{ width: '100%' }}
-            value={formik.values.status?.value}
+            value={formik.values.status}
             options={formattedSupportStatusOptions}
             onChange={formik.handleChange}
           />

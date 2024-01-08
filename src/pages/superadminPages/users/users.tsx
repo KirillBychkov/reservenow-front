@@ -52,7 +52,7 @@ const Users: React.FC = observer(() => {
         <Searchbar setSearch={setSearch} />
         <div className={styles.buttonGroup}>
           <Button icon={<Export color='white' />} severity='secondary'>
-            {t('clients.export')}
+            {t('actions.export')}
           </Button>
           <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
             {t('clients.add')}

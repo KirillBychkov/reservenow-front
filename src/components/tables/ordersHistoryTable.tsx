@@ -66,12 +66,13 @@ const OrdersHistoryTable: React.FC<Props> = observer(
           }
         >
           <Column
-            style={{ maxWidth: '50px' }}
+            style={{ maxWidth: '60px' }}
             field='id'
             header={t('reservationHistory.table.id')}
             sortable
           />
           <Column
+            field='name'
             style={{ maxWidth: '120px' }}
             header={t('reservationHistory.table.clientName')}
             body={({ client }: Order) => {

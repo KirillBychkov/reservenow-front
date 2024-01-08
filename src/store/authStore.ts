@@ -4,6 +4,7 @@ import AuthService from '@/services/authService';
 import { computed, makeAutoObservable } from 'mobx';
 import { SignInDTO } from '@/models/requests/AuthRequests';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
+import { AxiosError } from 'axios';
 
 class AuthStore {
   user = {} as Account;
@@ -29,6 +30,13 @@ class AuthStore {
       this.setUserRoleFromResponse(response.data.account);
       return { successMsg: 'Logged in succesfully', errorMsg: '' };
     } catch (e) {
+      if ((e as AxiosError)?.response?.status === 401) {
+        return {
+          successMsg: '',
+          errorMsg: 'invalidCredentials',
+        };
+      }
+
       return { successMsg: '', errorMsg: 'Error logging in' };
     }
   }

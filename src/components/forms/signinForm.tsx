@@ -33,7 +33,15 @@ const SigninForm: React.FC = observer(() => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await authStore.login(values); // TODO: make request with store method, not directly, handle success and/or error messages
+      const res = await authStore.login(values);
+      if (res.errorMsg) {
+        formik.setErrors({
+          email: t(`invalid.${res.errorMsg}`),
+          password: t(`invalid.${res.errorMsg}`),
+        });
+        return;
+      }
+
       resetForm();
       navigate('/');
     },

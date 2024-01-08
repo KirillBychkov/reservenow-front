@@ -51,8 +51,14 @@ const Users: React.FC = observer(() => {
       <div className={styles.controls}>
         <Searchbar setSearch={setSearch} />
         <div className={styles.buttonGroup}>
-          <Button icon={<Export color='white' />} severity='secondary'>
-            {t('clients.export')}
+          <Button
+            icon={<Export color='white' />}
+            severity='secondary'
+            onClick={() =>
+              usersStore.initiateExport({ limit, skip, search, sort })
+            }
+          >
+            {t('actions.export')}
           </Button>
           <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
             {t('clients.add')}

@@ -126,6 +126,43 @@ class UsersStore {
       return { data: [], error: 'An error occurred while fetching clients.' };
     }
   };
+
+  exportUsers = async (
+    filters: Omit<Filters, 'total'>,
+  ): Promise<ResponseOrError<string>> => {
+    try {
+      const response = await UserService.exportUsers(filters);
+
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return { data: '', error: 'An error occurred while exporting clients.' };
+    }
+  };
+
+  // Assume this is your function to initiate the export on the frontend
+  initiateExport = async (filters: Omit<Filters, 'total'>) => {
+    try {
+      // Call your backend API to trigger the export
+      const response = await this.exportUsers(filters);
+
+      // Create a URL for the Blob
+      const blobUrl = URL.createObjectURL(new Blob([response.data]));
+
+      // Create a link element and trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = 'users.xlsx'; // Provide a default file name
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // Clean up the Blob URL after the download link is clicked
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      // Handle other errors
+      console.error('An error occurred:', error);
+    }
+  };
 }
 
 const usersStore = new UsersStore();

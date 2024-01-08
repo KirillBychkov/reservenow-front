@@ -151,7 +151,6 @@ const Statistics = observer(() => {
   const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(
     statistics?.[0]?.statistics_per_period ?? '[]',
   );
-  console.log(statistics);
 
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
     ...obj,
@@ -187,7 +186,6 @@ const Statistics = observer(() => {
           value={startDate}
           onChange={(e) => {
             setStartDate(e.value);
-            // console.log(e.value);
           }}
           options={dateSpanOptions}
         />

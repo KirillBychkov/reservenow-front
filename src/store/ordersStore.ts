@@ -87,6 +87,15 @@ class OrdersStore {
       return { data: {} as Order, error: 'Error fetching order' };
     }
   };
+
+  getOrdersWithTrainers = async (): Promise<ResponseOrError<Order[]>> => {
+    try {
+      const { data: order } = await OrderService.getOrdersWithTrainers();
+      return { data: order, error: '' };
+    } catch {
+      return { data: [] as Order[], error: 'Error fetching order' };
+    }
+  };
 }
 
 const ordersStore = new OrdersStore();

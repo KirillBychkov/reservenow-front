@@ -14,14 +14,19 @@ export type EquipmentReservation = {
   description?: string;
 };
 
-export const useEquipmentReservations = (initialValues?: EquipmentReservation[]) => {
+export const useEquipmentReservations = (
+  initialValues?: EquipmentReservation[],
+) => {
   const [options, setOptions] = useState<EquipmentOption[]>([]);
   const [equipmentReservations, setEquipmentReservations] = useState<
     EquipmentReservation[]
   >(initialValues || []);
 
   const fetchAndSetOptions = async () => {
-    const { data: equipment } = await equipmentStore.getEquipment();
+    const { data: equipment } = await equipmentStore.getEquipment({
+      limit: 1000,
+      skip: 0,
+    });
 
     setOptions(
       equipment.map((eq) => {

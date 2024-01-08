@@ -29,9 +29,32 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   const handleShowModalAndSubmit = async () => {
     const res = await showModal(t('forms.areYouSure'));
     if (res) {
-      await formik.handleSubmit();
+      formik.handleSubmit();
     }
   };
+
+  const handleShowModalAndDelete = async () => {
+    const res = await showModal(t('forms.areYouSure'));
+    if (res) {
+      await handleDeleteUser();
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!initialValues) {
+      return;
+    }
+    const { successMsg, errorMsg } = await usersStore.deleteUser(
+      initialValues.id!,
+    );
+    if (errorMsg) {
+      showError(errorMsg);
+      return;
+    }
+    showSuccess(successMsg);
+  };
+
+  const handleClearForm = () => formik.resetForm();
 
   const validationSchema = Yup.object({
     id: Yup.number(),
@@ -60,31 +83,24 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
     description: '',
   };
 
-  const formik = useFormik({
-    initialValues: formData,
-    validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      const { successMsg, errorMsg } = initialValues?.id
-        ? await updateUser(values, initialValues.id)
-        : await createUser(values, resetForm);
+  const onSubmit = async (values: UserFormData) => {
+    const { successMsg, errorMsg } = initialValues?.id
+      ? await updateUser(values, initialValues.id)
+      : await createUser(values, handleClearForm);
 
-      if (errorMsg) {
-        showError(errorMsg);
-        return;
-      }
-
-      showSuccess(successMsg);
-    },
-  });
-
-  const handleDeleteUser = async () => {
-    if (!initialValues) {
+    if (errorMsg) {
+      showError(errorMsg);
       return;
     }
-    return await usersStore.deleteUser(initialValues.id!);
+
+    showSuccess(successMsg);
   };
 
-  const handleClearForm = () => formik.resetForm();
+  const formik = useFormik({
+    initialValues: formData,
+    validationSchema,
+    onSubmit,
+  });
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -182,7 +198,7 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
             fill
             className={styles.button}
             outlined
-            onClick={handleDeleteUser}
+            onClick={handleShowModalAndDelete}
           >
             {t('actions.delete')}
           </Button>

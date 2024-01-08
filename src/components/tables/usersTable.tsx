@@ -41,7 +41,6 @@ const UsersTable: React.FC<Props> = observer(
     };
 
     const formattedUsers: User[] = users.map((user) => formatObjectIn(user));
-    console.log(formattedUsers);
 
     return (
       <div>

@@ -1,6 +1,6 @@
-import { PlainSupportRecordInfo } from '@/types/support';
+import { PlainSupportRecordInfo, SupportRecordFormData } from '@/types/support';
 import * as Yup from 'yup';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { SupportStatus, SupportStatusOptions } from '@/types/enums/support';
 import { observer } from 'mobx-react-lite';
@@ -21,7 +21,7 @@ interface Props {
 
 const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t } = useTranslation();
-  // const { showSuccess, showError } = useContext(ToastContext);
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const formattedSupportStatusOptions = SupportStatusOptions.map((value) => {
     return {
@@ -29,45 +29,36 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
       label: t(`status.${value}`),
     };
   });
-  console.log(formattedSupportStatusOptions);
-
-  // const requestData = useMemo(() => {
-  //   return {
-  //     status: formattedSupportStatusOptions.find(
-  //       (el) => el.value === initialValues?.status,
-  //     ),
-  //     description: initialValues?.resultDescription || '',
-  //   };
-  // }, [formattedSupportStatusOptions, initialValues]);
 
   const validationSchema = Yup.object({
-    description: Yup.string().required(t('invalid.required')),
-    status: Yup.object().required(t('invalid.required')),
+    resultDescription: Yup.string().required(t('invalid.required')),
+    status: Yup.string().required(t('invalid.required')),
   });
 
-  const formData = {
-    status: initialValues?.status,
-    description: initialValues?.resultDescription || '',
+  const formData: SupportRecordFormData = {
+    status: initialValues?.status || SupportStatus.IN_PROGRESS,
+    resultDescription: initialValues?.resultDescription || '',
+  };
+
+  const onSubmit = async (values: SupportRecordFormData) => {
+    if (!initialValues) return;
+
+    const { successMsg, errorMsg } =
+      await supportRecordsStore.updateSupportRecord(initialValues.id, {
+        status: values.status as SupportStatus,
+        result_description: values.resultDescription,
+      });
+    if (successMsg) {
+      showSuccess(successMsg);
+    } else {
+      showError(errorMsg);
+    }
   };
 
   const formik = useFormik({
     initialValues: formData,
     validationSchema: validationSchema,
-    enableReinitialize: true,
-    onSubmit: async (values) => {
-      console.log(values);
-      // if (!initialValues) return;
-      // const { successMsg, errorMsg } =
-      //   await supportRecordsStore.updateSupportRecord(initialValues.id, {
-      //     status: values.status as SupportStatus,
-      //     result_description: values.description,
-      //   });
-      // if (successMsg) {
-      //   showSuccess(successMsg);
-      // } else {
-      //   showError(errorMsg);
-      // }
-    },
+    onSubmit,
   });
 
   const handleClearForm = () => {
@@ -82,7 +73,7 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
         )} #${initialValues?.id}`}</h3>
         <FormField label={t('forms.status')}>
           <Dropdown
-            name='status.value'
+            name='status'
             style={{ width: '100%' }}
             value={formik.values.status}
             options={formattedSupportStatusOptions}
@@ -91,16 +82,23 @@ const OpenRequestForm: React.FC<Props> = observer(({ initialValues }) => {
         </FormField>
         <FormField
           label={t('forms.description')}
-          isValid={!(formik.touched.description && formik.errors.description)}
-          invalidMessage={formik.errors.description}
+          isValid={
+            !(
+              formik.touched.resultDescription &&
+              formik.errors.resultDescription
+            )
+          }
+          invalidMessage={formik.errors.resultDescription}
         >
           <InputTextarea
-            name='description'
-            value={formik.values.description}
+            name='resultDescription'
+            value={formik.values.resultDescription}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             placeholder={t('forms.enterDescription')}
-            className={classNames(isValidClassname(formik, 'description'))}
+            className={classNames(
+              isValidClassname(formik, 'resultDescription'),
+            )}
           />
         </FormField>
       </div>

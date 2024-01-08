@@ -29,7 +29,7 @@ export const useEquipmentReservations = (initialValues?: EquipmentReservation[])
           label: eq.name,
           equipment: {
             ...eq,
-            price_per_hour: formatToUpperUnit(eq.price_per_hour),
+            price: formatToUpperUnit(eq.price),
           },
         };
       }),

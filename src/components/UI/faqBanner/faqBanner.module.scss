@@ -1,0 +1,60 @@
+.banner {
+  background-image: url('/src/assets/faq-banner.png');
+  background-size: contain;
+  padding: 20px;
+  align-self: center;
+  height: 170px;
+  width: 218px;
+  border-radius: 15px;
+
+  .faqButton {
+    display: flex;
+    padding: 6px;
+    width: 99px;
+    gap: 11px;
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid var(--surface-a);
+    transition: background-color 0.5s ease-out;
+
+    .faqText {
+      color: var(--primary-color-text);
+      transition: color 0.5s ease-out;
+    }
+
+    &:hover {
+      background-color: var(--surface-a);
+
+      .faqText {
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.contactButton {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  color: var(--primary-color);
+  background-color: var(--surface-a);
+  width: 100%;
+  height: 35px;
+  transition: background-color 0.5s ease-out;
+  border: 1px solid var(--surface-a);
+
+  .buttonText {
+    color: var(--primary-color);
+    transition: background-color 0.5s ease-out;
+  }
+
+  &:hover {
+    background-color: transparent;
+
+    .buttonText {
+      color: var(--primary-color-text);
+    }
+  }
+}

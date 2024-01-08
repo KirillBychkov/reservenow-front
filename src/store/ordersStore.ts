@@ -7,6 +7,7 @@ import {
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { OrderSearchBy, OrderService } from '@/services/orderService';
 import { makeAutoObservable } from 'mobx';
+import { TimeRange } from '@/types/timeRange';
 
 class OrdersStore {
   orders: Order[] = [];
@@ -27,9 +28,14 @@ class OrdersStore {
   getOrders = async (
     filters?: Omit<Filters, 'total'>,
     orderSearchBy?: OrderSearchBy,
+    timeRange?: TimeRange,
   ): Promise<ResponseOrError<Order[]>> => {
     try {
-      const response = await OrderService.getOrders(filters, orderSearchBy);
+      const response = await OrderService.getOrders(
+        filters,
+        orderSearchBy,
+        timeRange,
+      );
       this.setOrders(response.data.data);
       this.setFilters(response.data.filters);
       return { data: response.data.data, error: '' };

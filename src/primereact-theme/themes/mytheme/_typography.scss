@@ -40,6 +40,9 @@
   &-muted {
     color: var(--text-color-muted);
   }
+  &-white {
+    color: var(--primary-color-text)
+  }
 }
 
 .paragraph {
@@ -67,6 +70,9 @@
   }
   &-muted {
     color: var(--text-color-muted);
+  }
+  &-white {
+    color: var(--primary-color-text)
   }
 }
 

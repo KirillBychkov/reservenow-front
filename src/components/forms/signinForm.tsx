@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import authStore from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
+import { SignInDTO } from '@/models/requests/AuthRequests';
 
 const SigninForm: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -26,25 +27,29 @@ const SigninForm: React.FC = observer(() => {
       .required(t('invalid.required')),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      const res = await authStore.login(values);
-      if (res.errorMsg) {
-        formik.setErrors({
-          email: t(`invalid.${res.errorMsg}`),
-          password: t(`invalid.${res.errorMsg}`),
-        });
-        return;
-      }
+  const initialValues: SignInDTO = {
+    email: '',
+    password: '',
+  };
 
-      resetForm();
-      navigate('/');
-    },
+  const resetForm = () => formik.resetForm();
+
+  const onSubmit = async (values: SignInDTO) => {
+    const res = await authStore.login(values, t);
+
+    if (res.email || res.password) {
+      formik.setErrors(res);
+      return;
+    }
+
+    resetForm();
+    navigate('/');
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
   });
 
   return (

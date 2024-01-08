@@ -5,6 +5,12 @@ import { computed, makeAutoObservable } from 'mobx';
 import { SignInDTO } from '@/models/requests/AuthRequests';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { AxiosError } from 'axios';
+import { TFunction } from 'i18next';
+
+interface FieldErrors {
+  email?: string;
+  password?: string;
+}
 
 class AuthStore {
   user = {} as Account;
@@ -19,7 +25,7 @@ class AuthStore {
     this.initAuth();
   }
 
-  async login(user: SignInDTO): Promise<SuccessOrError> {
+  async login(user: SignInDTO, t: TFunction): Promise<FieldErrors> {
     try {
       const response = await AuthService.login(user);
       localStorage.setItem('token', response.data.access_token);
@@ -28,16 +34,19 @@ class AuthStore {
       this.setUserNameFromResponse(response.data.account);
       this.setUser(response.data.account);
       this.setUserRoleFromResponse(response.data.account);
-      return { successMsg: 'Logged in succesfully', errorMsg: '' };
+      return {};
     } catch (e) {
-      if ((e as AxiosError)?.response?.status === 401) {
-        return {
-          successMsg: '',
-          errorMsg: 'invalidCredentials',
-        };
+      switch ((e as AxiosError).response?.status) {
+        case 401:
+          return { password: t('invalid.passwordMatch') };
+        case 409:
+          return { email: t('invalid.nonexistentEmail') };
+        default:
+          return {
+            email: t('invalid.invalidCredentials'),
+            password: t('invalid.invalidCredentials'),
+          };
       }
-
-      return { successMsg: '', errorMsg: 'Error logging in' };
     }
   }
 

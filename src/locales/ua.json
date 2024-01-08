@@ -155,7 +155,8 @@
     "confirmPasswordMustMatch": "Паролі повинні співпадати",
     "phone": "Невірний формат номеру телефону",
     "positiveOnly": "Лише додаткові значення",
-    "invalidCredentials": "Пароль чи пошта невірні"
+    "invalidCredentials": "Пароль чи пошта невірні",
+    "nonexistentEmail": "Користувача з такою електронною поштою не існує"
   },
   "dates": {
     "date": "Дата",

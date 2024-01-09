@@ -7,7 +7,6 @@ import { Reservation } from '@/models/Reservation';
 import { Trainer } from '@/models/Trainer';
 import { CreateReservationDTO } from '@/models/requests/OrderRequests';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
-import { TFunction } from 'i18next';
 
 const getRentalTime = (startISO: string, endISO: string) => {
   const startDate = new Date(startISO);

@@ -33,7 +33,6 @@ export const updateTrainer = async (
   const trainer: UpdateTrainerDTO = {
     first_name: data.firstName,
     last_name: data.lastName,
-    email: data.email,
     phone: data.phone,
     description: data.description,
     price_per_hour: data.price,

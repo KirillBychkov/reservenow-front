@@ -1,6 +1,7 @@
 import { CreateUserDTO, UpdateUserDTO } from '@/models/requests/UserRequests';
 import usersStore from '@/store/usersStore';
 import { UserFormData } from '@/types/user';
+import { formatObjectOut } from '@/utils/formatters/formatObject';
 
 export const createUser = async (
   values: UserFormData,
@@ -16,8 +17,11 @@ export const createUser = async (
       description: values.description,
     },
   };
-
-  const response = await usersStore.addUser(user);
+  const formattedUser = {
+    ...user,
+    user: formatObjectOut(user.user),
+  };
+  const response = await usersStore.addUser(formattedUser);
 
   if (response.successMsg && clearForm) {
     clearForm();
@@ -34,8 +38,8 @@ export const updateUser = async (values: UserFormData, userId: number) => {
     domain_url: values.companyName,
     description: values.description,
   };
-
-  const response = await usersStore.updateUser(userId, user);
+  const formattedUser = formatObjectOut(user);
+  const response = await usersStore.updateUser(userId, formattedUser);
 
   return response;
 };

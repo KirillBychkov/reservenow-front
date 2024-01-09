@@ -34,21 +34,6 @@ import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topC
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
 
-const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'June',
-  'July',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
 type CustomTooltipProps = {
   payload?: any[];
   label?: string;
@@ -116,11 +101,7 @@ const Statistics = observer(() => {
     (data) => data[0]?.id && setSelectedOrganizationId(data[0]?.id),
   );
 
-  const {
-    data: statistics,
-    errorMsg,
-    isLoading,
-  } = useFetch<OrganizationStatistics[]>(
+  const { data: statistics, errorMsg } = useFetch<OrganizationStatistics[]>(
     () =>
       selectedOrganizationId
         ? organizationStore.getOrganizationStatistics(
@@ -151,7 +132,6 @@ const Statistics = observer(() => {
   const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(
     statistics?.[0]?.statistics_per_period ?? '[]',
   );
-  console.log(statistics);
 
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
     ...obj,
@@ -187,7 +167,6 @@ const Statistics = observer(() => {
           value={startDate}
           onChange={(e) => {
             setStartDate(e.value);
-            // console.log(e.value);
           }}
           options={dateSpanOptions}
         />

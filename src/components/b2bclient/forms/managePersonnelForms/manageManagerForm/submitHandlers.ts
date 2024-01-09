@@ -29,7 +29,6 @@ export const updateManager = async (id: number, data: ManagerFormData) => {
   const manager: UpdateManagerDTO = {
     first_name: data.firstName,
     last_name: data.lastName,
-    email: data.email,
     phone: data.phone,
     description: data.description,
   };

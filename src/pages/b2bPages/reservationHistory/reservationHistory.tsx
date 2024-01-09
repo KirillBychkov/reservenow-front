@@ -24,9 +24,7 @@ const ReservationHistory = observer(() => {
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const [startDate, setStartDate] = useState('');
-  const [endDate] = useState(
-    new Date(new Date().getTime()).toISOString(),
-  );
+  const [endDate] = useState(new Date(new Date().getTime()).toISOString());
   const {
     data: orders,
     isLoading,
@@ -86,7 +84,6 @@ const ReservationHistory = observer(() => {
               value={startDate}
               onChange={(e) => {
                 setStartDate(e.value);
-                // console.log(e.value);
               }}
               options={dateSpanOptions}
             />

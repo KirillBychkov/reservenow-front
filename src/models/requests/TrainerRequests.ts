@@ -12,4 +12,5 @@ export interface CreateTrainerDTO extends WeekWorkingHours {
   price_per_hour: number;
 }
 
-export interface UpdateTrainerDTO extends Partial<CreateTrainerDTO> {}
+export interface UpdateTrainerDTO
+  extends Partial<Omit<CreateTrainerDTO, 'email'>> {}

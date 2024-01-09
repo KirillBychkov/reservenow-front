@@ -8,4 +8,5 @@ export interface CreateManagerDTO {
   resigned_at?: Date | string;
 }
 
-export interface UpdateManagerDTO extends Partial<CreateManagerDTO> {}
+export interface UpdateManagerDTO
+  extends Partial<Omit<CreateManagerDTO, 'email'>> {}

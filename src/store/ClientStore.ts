@@ -156,7 +156,7 @@ class ClientStore {
     }
 
     try {
-      const { data } = await ClientService.getClientByPhone(phone);
+      const { data } = await ClientService.getClientByPhone(encodeURIComponent(phone));
 
       if (!data) {
         return { data: {} as Client, error: 'Client not found' };

@@ -58,8 +58,6 @@ const UserProfile: React.FC = observer(() => {
     })();
   }, []);
 
-  console.log('userRole', userRole);
-
   return (
     <div
       className={styles.profile}

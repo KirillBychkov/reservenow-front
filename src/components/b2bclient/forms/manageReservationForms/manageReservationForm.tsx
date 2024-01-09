@@ -40,12 +40,13 @@ type Props = {
 
 const ManageReservationForm = ({ initialOrder }: Props) => {
   const { t } = useTranslation();
-  const { showError, showSuccess, showWarn } = useContext(ToastContext);
+  const { showError, showSuccess } = useContext(ToastContext);
   const { equipment, objects, trainers } = getInitialReservationValues(
     initialOrder?.reservations || [],
   );
 
   const {
+    clearAll: clearEquipment,
     options,
     handleAddEmptyReservation,
     handleDeleteReservation,
@@ -54,6 +55,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
   } = useEquipmentReservations(equipment);
 
   const {
+    clearAll: clearTrainers,
     options: trainerOptions,
     trainerReservations,
     addEmptyTrainerReservation,
@@ -63,6 +65,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
   } = useTrainerReservation(trainers);
 
   const {
+    clearAll: clearObjects,
     orgOptions,
     objectReservations,
     addEmptyObjectReservation,
@@ -90,6 +93,13 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
     formik.setFieldValue('last_name', client.last_name);
     formik.setFieldValue('phone', client.phone);
     formik.setFieldValue('description', client.description || '');
+  };
+
+  const resetForm = () => {
+    formik.resetForm();
+    clearTrainers();
+    clearEquipment();
+    clearObjects();
   };
 
   // Todo: remove %2B symbol after back fixes
@@ -153,11 +163,9 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
         equipmentReservations,
         trainerReservations,
         objectReservations,
-        t,
       );
 
       if (reservationsErrorMessage) {
-        showWarn(reservationsErrorMessage);
         return;
       }
 
@@ -265,6 +273,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
           <ObjectReservationSection
             isEditingMode={!!initialOrder}
             objectReservation={reservation}
+            isSubmitting={formik.isSubmitting}
             key={reservation.id}
             reservationNumber={index + 1}
             orgOptions={orgOptions}
@@ -278,6 +287,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
           <TrainerReservationSection
             isEditingMode={!!initialOrder}
             key={reservation.id}
+            isSubmitting={formik.isSubmitting}
             trainerReservation={reservation}
             reservationNumber={index + 1}
             onDataChange={changeTrainerReservationData}
@@ -290,6 +300,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
         {equipmentReservations.map((reservation, index) => (
           <EquipmentReservationSection
             isEditingMode={!!initialOrder}
+            isSubmitting={formik.isSubmitting}
             key={reservation.id}
             equipmentReservation={reservation}
             onChange={handleChangeReservationData}
@@ -379,7 +390,12 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
         </Flex>
 
         <Flex options={{ justify: 'flex-end', gap: 1 }}>
-          <Button severity='danger' fill className={styles.btn}>
+          <Button
+            severity='danger'
+            onClick={resetForm}
+            fill
+            className={styles.btn}
+          >
             {t('actions.clear')}
           </Button>
           <Button type='submit' fill className={styles.btn}>

@@ -74,7 +74,12 @@ export const useEquipmentReservations = (initialValues?: EquipmentReservation[])
     });
   };
 
+  const clearAll = () => {
+    setEquipmentReservations([])
+  }
+
   return {
+    clearAll,
     options,
     handleDeleteReservation,
     handleChangeReservationData,

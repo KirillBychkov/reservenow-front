@@ -297,8 +297,10 @@
   },
   "schedule": {
     "addReservation": "Додати бронювання",
-    "objectsNull": "Ця організація не має об'єктів",
-    "organizationWorkingHoursNull": "В цей день об`єкт не працює",
+    "organizationsNull": "Організацій не знайдено",
+    "trainersNull": "Тренерів не знайдено",
+    "objectsNull": "Об'єктів не зайдено",
+    "organizationWorkingHoursNull": "В цей день об'єкт не працює",
     "trainerWorkingHoursNull": "В цей день тренер не працює",
     "editReservation": "Редагувати бронювання",
     "schedule": "Розклад",
@@ -335,13 +337,6 @@
       "timeFrom": "Від",
       "timeTo": "До",
       "chooseTime": "Виберіть час"
-    },
-    "reservationErrors": {
-      "equipmentNull": "У вас є незаповнена резервація товару. Видалить її або встановіть коректне значення",
-      "trainerNull": "У вас є незаповнена резервація тренера. Видаліть її або встановіть коректне значення",
-      "addReservationTimeForTrainer": "Виберіть час та дату резервації для тренера {{first_name}} {{last_name}}",
-      "objectNull": "У вас є незаповнена резервація об'єкта. Видаліть її або встановіть коректне значення",
-      "addReservationTimeForObject": "Виберіть час та дату резервації для об'єкта {{name}}"
     },
     "events": {
       "organizations": "Організації",

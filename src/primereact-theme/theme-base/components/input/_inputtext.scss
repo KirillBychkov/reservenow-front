@@ -15,7 +15,8 @@
   }
 
   &:enabled:focus {
-    @include focused-input();
+    // @include focused-input();
+    outline: none;
   }
 
   &.p-invalid.p-component {
@@ -69,9 +70,9 @@
   padding-right: nth($inputPadding, 2) * 2 + $primeIconFontSize;
 }
 
-@include placeholder {
-  color: $inputPlaceholderTextColor;
-}
+// @include placeholder {
+//   color: $inputPlaceholderTextColor;
+// }
 
 .p-input-filled {
   .p-inputtext {

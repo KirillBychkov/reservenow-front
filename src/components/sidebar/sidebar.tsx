@@ -6,13 +6,16 @@ import { observer } from 'mobx-react-lite';
 import Flex from '../UI/layout/flex';
 import { Help } from '@blueprintjs/icons';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaqBanner } from '../UI/faqBanner/faqBanner';
+import authStore from '@/store/authStore';
+import { UserRole } from '@/types/enums/user';
 
 const Sidebar: React.FC = () => {
-  // Hook that provides menu items for RBAC
   const menu = useRoleBasedMenu();
+  const userRole = authStore.getUserRole;
   const isSidebarShrinking = useMediaQuery('(max-width: 1200px)');
+  const isUserFull = userRole === UserRole.UserFull;
 
   return (
     <Flex
@@ -31,13 +34,14 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
 
-      {isSidebarShrinking ? (
-        <Link to='/faq'  className={styles.faqMini}>
-          <Help size={22} color='#fff' className={styles.icon}/>
-        </Link>
-      ) : (
-        <FaqBanner />
-      )}
+      {isUserFull &&
+        (isSidebarShrinking ? (
+          <Link to='/faq' className={styles.faqMini}>
+            <Help size={22} color='#fff' className={styles.icon} />
+          </Link>
+        ) : (
+          <FaqBanner />
+        ))}
     </Flex>
   );
 };

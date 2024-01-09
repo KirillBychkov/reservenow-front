@@ -11,7 +11,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { PlainSupportRecordInfo } from '@/types/support';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
-import OpenRequestForm from '@/components/forms/openRequestForm';
+import OpenRequestForm from '@/components/forms/openRequestForm/openRequestForm';
 import ViewImage from '@/components/UI/links/viewImage';
 
 const OpenRequest: React.FC = observer(() => {

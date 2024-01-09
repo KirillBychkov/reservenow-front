@@ -12,7 +12,7 @@ i18n
         translation: uaJSON,
       },
     },
-    lng: 'ua',
+    lng: 'uk-UA',
     fallbackLng: 'ua',
     debug: true,
   });

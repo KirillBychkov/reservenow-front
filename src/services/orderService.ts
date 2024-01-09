@@ -62,4 +62,8 @@ export class OrderService {
   static async deleteOrder(id: number): Promise<AxiosResponse<void>> {
     return $api.delete(`/order/${id}`);
   }
+
+  static async getOrdersWithTrainers(): Promise<AxiosResponse<Order[]>> {
+    return $api.get('order/withTrainer');
+  }
 }

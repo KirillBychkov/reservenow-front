@@ -6,13 +6,16 @@ import { Users } from '@/models/response/GetUsersResponse';
 import { AxiosResponse } from 'axios';
 
 export default class UserService {
-  static async getUsers(
-    filters: Omit<Filters, 'total'>,
-  ): Promise<AxiosResponse<Users>> {
+  static async getUsers({
+    limit,
+    skip,
+    search,
+    sort,
+  }: Omit<Filters, 'total'>): Promise<AxiosResponse<Users>> {
     return $api.get(
-      `/users?limit=${filters.limit}&skip=${filters.skip}${
-        filters.search ? `&search=${filters.search}` : ''
-      }${filters.sort ? `&sort=${filters.sort}` : ''}`,
+      `/users?limit=${limit}&skip=${skip}${search ? `&search=${search}` : ''}${
+        sort ? `&sort=${sort}` : ''
+      }`,
     );
   }
 
@@ -20,13 +23,19 @@ export default class UserService {
     return $api.post('/users', user);
   }
 
-  static async exportUsers(
-    limit = 10,
-    skip = 0,
-    search?: string,
-  ): Promise<AxiosResponse> {
+  static async exportUsers({
+    limit,
+    skip,
+    search,
+    sort,
+  }: Omit<Filters, 'total'>): Promise<AxiosResponse> {
     return $api.get(
-      `/users/export?limit=${limit}&skip=${skip}&search=${search}`,
+      `/users/export?limit=${limit}&skip=${skip}${
+        search ? `&search=${search}` : ''
+      }${sort ? `&sort=${sort}` : ''}`,
+      {
+        responseType: 'blob',
+      },
     );
   }
 
@@ -36,23 +45,19 @@ export default class UserService {
 
   static async updateUser(
     id: number,
-    user: UpdateUserDTO
+    user: UpdateUserDTO,
   ): Promise<AxiosResponse<User>> {
     return $api.patch(`/users/${id}`, user);
   }
 
   static async uploadImageForUser(id: number, file: File) {
     const formData = new FormData();
-    formData.append("file", file);
-    const response = $api.put(
-      `/users/upload/image/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    formData.append('file', file);
+    const response = $api.put(`/users/upload/image/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response;
   }
 

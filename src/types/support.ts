@@ -13,3 +13,8 @@ export interface PlainSupportRecordInfo {
   companyName: string;
   file?: string;
 }
+
+export interface SupportRecordFormData {
+  status: SupportStatus;
+  resultDescription: string;
+}

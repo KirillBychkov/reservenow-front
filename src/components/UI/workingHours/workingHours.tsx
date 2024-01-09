@@ -102,7 +102,7 @@ export const WorkingHours = <T extends { workingHours: Week }>({
         <div key={index} className={styles['WorkingHours-Row']}>
           <div className={styles['WorkingHours-Group']}>
             <div className={styles['WorkingHours-Switch']}>
-              <FormField label={t(`days.${getDayLabel(index)}`)}>
+              <FormField label={t(`dates.days.${getDayLabel(index)}`)}>
                 <InputSwitch
                   name={`workingHours.${getDayLabel(index)}.enabled`}
                   checked={day.enabled}

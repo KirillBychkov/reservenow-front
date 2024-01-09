@@ -102,12 +102,9 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
     clearObjects();
   };
 
-  // Todo: remove %2B symbol after back fixes
   const { data, invokeFunction } = useFetch(
     () =>
-      clientStore.getClientByPhone(
-        '%2B' + formatPhoneOut(formik.values.phone).substring(1),
-      ),
+      clientStore.getClientByPhone(formatPhoneOut(formik.values.phone)),
     [],
     true,
     setClientValues,

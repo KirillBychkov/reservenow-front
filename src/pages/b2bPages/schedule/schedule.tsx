@@ -17,8 +17,7 @@ import { Organization } from '@/models/Organization';
 import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { Toolbar } from '@/components/b2bclient/calendarComponents/toolbar/toolbar';
-import { EventTitle } from '@/components/b2bclient/calendarComponents/eventTitle/eventTitle';
-import { getAllObjectReservations, getAllTrainersReservations } from './helper';
+import { collectAllReservations, createEventsFromReservations } from './helper';
 
 const localizer = momentLocalizer(moment);
 
@@ -50,7 +49,8 @@ const Schedule = observer(() => {
   }, [organizations]);
 
   const { data: objects } = useFetch(
-    () => objectsStore.getRentalObjects({}, currentOrg?.id),
+    () =>
+      objectsStore.getRentalObjects({ limit: 1000, skip: 0 }, currentOrg?.id),
     [currentOrg],
     currentOrg === null,
   );
@@ -62,66 +62,29 @@ const Schedule = observer(() => {
     }));
   }, [objects]);
 
-  // Todo: remove when getAllRentalObjectOrders is done
   useFetch(
-    () => ordersStore.getOrders({}, { rentalObjectId: currentObj?.id }),
+    () =>
+      ordersStore.getOrders(
+        { limit: 1000, skip: 0 },
+        { rentalObjectId: currentObj?.id },
+      ),
     [currentObj],
     currentObj === null,
     (orders) => {
-      const objectReservations = getAllObjectReservations(
-        orders || [],
-      );
-
-      const events: Event[] = objectReservations.map(
-        ({
-          rental_object,
-          reservation_time_end,
-          reservation_time_start,
-          description,
-        }) => {
-          return {
-            start: new Date(reservation_time_start as string),
-            end: new Date(reservation_time_end as string),
-            title: (
-              <EventTitle
-                title={rental_object?.name as string}
-                description={description || ''}
-              />
-            ),
-          };
-        },
-      );
+      const objectReservations = collectAllReservations(orders || []);
+      const events: Event[] = createEventsFromReservations(objectReservations)
 
       setEvents(events);
     },
   );
 
   useFetch(
-    () => ordersStore.getOrders({ limit: 1000, skip: 0 }),
+    () => ordersStore.getOrdersWithTrainers(),
     [currentEventType],
     currentEventType !== Events.Trainers,
     (orders) => {
-      const trainerReservations = getAllTrainersReservations(orders || []);
-
-      const events: Event[] = trainerReservations.map(
-        ({
-          trainer,
-          reservation_time_end,
-          reservation_time_start,
-          description,
-        }) => {
-          return {
-            start: new Date(reservation_time_start as string),
-            end: new Date(reservation_time_end as string),
-            title: (
-              <EventTitle
-                title={`${trainer?.first_name} ${trainer?.last_name}` as string}
-                description={description || ''}
-              />
-            ),
-          };
-        },
-      );
+      const trainerReservations = collectAllReservations(orders || []);
+      const events: Event[] = createEventsFromReservations(trainerReservations)
 
       setEvents(events);
     },

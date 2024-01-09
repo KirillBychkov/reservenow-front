@@ -154,7 +154,7 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
           {t('actions.cancel')}
         </Button>
         <Button type='submit' fill className={styles.Button}>
-          {t('personnel.add')}
+          {initialValues ? t('personnel.edit') : t('personnel.add')}
         </Button>
       </div>
     </form>

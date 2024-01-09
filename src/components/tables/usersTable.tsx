@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import classNames from 'classnames';
 import { User } from '@/models/User';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { formatDate } from '@/utils/formatters/formatDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import usersStore from '@/store/usersStore';
 import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 interface Props {
   users: User[];
@@ -39,16 +40,7 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: User[] = useMemo(() => {
-      return users.map((user) => {
-        const formattedDate = formatDate(user.created_at, i18n.language);
-
-        return {
-          ...user,
-          created_at: formattedDate,
-        };
-      });
-    }, [users, i18n.language]);
+    const formattedUsers: User[] = users.map((user) => formatObjectIn(user));
 
     return (
       <div>
@@ -97,7 +89,14 @@ const UsersTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column field='created_at' header={t('dates.createdAt')} sortable />
+          <Column
+            header={t('dates.createdAt')}
+            sortable
+            sortField='created_at'
+            body={({ created_at }: User) =>
+              formatDate(created_at, i18n.language)
+            }
+          />
           <Column
             header={t('actions.actions')}
             body={(rowData: Account) => (

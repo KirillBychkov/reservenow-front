@@ -1,9 +1,7 @@
-import { formatDate } from './formatDate';
 import { formatPhoneIn, formatPhoneOut } from './formatPhone';
 import { formatToLowerUnit, formatToUpperUnit } from './formatPrice';
 
 interface FormatterObj {
-  created_at?: (date: string | Date, lang: string) => string;
   order_sum?: (price: number) => number;
   price_per_hour: (price: number) => number;
   price: (price: number) => number;
@@ -12,7 +10,6 @@ interface FormatterObj {
 
 // Define input and output types for each formatter
 const formatterObjIn: FormatterObj = {
-  created_at: formatDate,
   order_sum: formatToUpperUnit,
   price_per_hour: formatToUpperUnit,
   price: formatToUpperUnit,
@@ -27,7 +24,6 @@ const formatterObjOut: FormatterObj = {
 
 // Define the object type to format
 interface ObjectToFormat {
-  created_at?: string | Date;
   order_sum?: number;
   price_per_hour?: number;
   price?: number;

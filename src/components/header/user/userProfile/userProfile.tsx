@@ -7,19 +7,18 @@ import { observer } from 'mobx-react-lite';
 import { Menu } from 'primereact/menu';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { UserRole } from '@/types/enums/user';
 
 const UserProfile: React.FC = observer(() => {
   const [userName, setUserName] = useState<string | undefined>(undefined);
+  const [userRole, setUserRole] = useState<string | undefined>(undefined);
   const menuLeft = useRef<Menu>(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const logout = async () => {
-    const { successMsg } = await authStore.logout();
-
-    if (successMsg) {
-      navigate('/');
-    }
+    await authStore.logout();
+    navigate('/signin');
   };
 
   const items = [
@@ -52,11 +51,14 @@ const UserProfile: React.FC = observer(() => {
       try {
         await authStore.getUser();
         setUserName(authStore.getUserName || '');
+        setUserRole(authStore.getUserRole || '');
       } catch (e) {
         setUserName('');
       }
     })();
   }, []);
+
+  console.log('userRole', userRole);
 
   return (
     <div
@@ -64,7 +66,9 @@ const UserProfile: React.FC = observer(() => {
       onClick={(event) => menuLeft?.current?.toggle(event)}
     >
       <Flex options={{ gap: 0.62, align: 'center' }}>
-        <div className={styles.username}>{userName}</div>
+        <div className={styles.username}>
+          {userRole === UserRole.Superuser ? 'Admin' : userName}
+        </div>
         <div className={styles['avatar-placeholder']}>
           <Person color='white' />
         </div>

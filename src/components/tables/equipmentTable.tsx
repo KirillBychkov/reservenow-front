@@ -24,7 +24,7 @@ type TableProps = {
 
 export const EquipmentTable: React.FC<TableProps> = observer(
   ({ equipment, onPageChange, onSortChange, first, sortField, sortOrder }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const { showSuccess, showError } = useContext(ToastContext);
     const filters = equipmentStore.getFilters();
@@ -32,7 +32,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
     const handleEditEquipment = (id: number) => {
       navigate(`${id}/edit`);
     };
-    
+
     const handleDeleteEquipment = async (id: number) => {
       const { successMsg, errorMsg } = await equipmentStore.deleteEquipment(id);
 
@@ -45,7 +45,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
     };
 
     const formattedEquipment = useMemo(
-      () => equipment.map((eq) => formatObjectIn(eq)),
+      () => equipment.map((eq) => formatObjectIn(eq, i18n.language)),
       [equipment],
     );
 

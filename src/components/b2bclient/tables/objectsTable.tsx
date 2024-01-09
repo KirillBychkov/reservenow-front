@@ -9,8 +9,8 @@ import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
 import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
-import { formatDate } from '@/utils/formatters/formatDate';
 import { SortField, SortOrder } from '@/hooks/useSort';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 type Props = {
   objects: RentalObject[];
@@ -39,10 +39,9 @@ const ObjectsTable: React.FC<Props> = observer(
       navigate(`objects/${object.id}/edit`);
     };
 
-    const formattedObjects = objects.map((object) => ({
-      ...object,
-      created_at: formatDate(object.created_at, i18n.language),
-    }));
+    const formattedObjects = objects.map((object) =>
+      formatObjectIn(object, i18n.language),
+    );
 
     return (
       <div>

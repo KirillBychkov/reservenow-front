@@ -184,20 +184,22 @@ type ReservationsObject = {
 
 const formatEquipmentReservationIn = (
   reservation: Reservation,
+  language: string,
 ): EquipmentReservation => {
   return {
     id: crypto.randomUUID(),
-    equipment: formatObjectIn(reservation.equipment as Equipment),
+    equipment: formatObjectIn(reservation.equipment as Equipment, language),
     description: reservation.description,
   };
 };
 
 const formatTrainerReservationIn = (
   reservation: Reservation,
+  language: string,
 ): TrainerReservation => {
   return {
     id: crypto.randomUUID(),
-    trainer: formatObjectIn(reservation.trainer as Trainer),
+    trainer: formatObjectIn(reservation.trainer as Trainer, language),
     description: reservation.description || '',
     reservation_time_end: reservation.reservation_time_end as string,
     reservation_time_start: reservation.reservation_time_start as string,
@@ -206,17 +208,24 @@ const formatTrainerReservationIn = (
 
 const formatObjectReservationIn = (
   reservation: Reservation,
+  language: string,
 ): ObjectReservation => {
   return {
     id: crypto.randomUUID(),
-    rental_object: formatObjectIn(reservation.rental_object as RentalObject),
+    rental_object: formatObjectIn(
+      reservation.rental_object as RentalObject,
+      language,
+    ),
     description: reservation.description || '',
     reservation_time_end: reservation.reservation_time_end as string,
     reservation_time_start: reservation.reservation_time_start as string,
   };
 };
 
-export const getInitialReservationValues = (reservation: Reservation[]) => {
+export const getInitialReservationValues = (
+  reservation: Reservation[],
+  language: string,
+) => {
   const initialReservationsObject: ReservationsObject = {
     equipment: [],
     trainers: [],
@@ -225,15 +234,15 @@ export const getInitialReservationValues = (reservation: Reservation[]) => {
 
   return reservation.reduce((prev, current) => {
     if (current.equipment) {
-      prev.equipment.push(formatEquipmentReservationIn(current));
+      prev.equipment.push(formatEquipmentReservationIn(current, language));
     }
 
     if (current.rental_object) {
-      prev.objects.push(formatObjectReservationIn(current));
+      prev.objects.push(formatObjectReservationIn(current, language));
     }
 
     if (current.trainer) {
-      prev.trainers.push(formatTrainerReservationIn(current));
+      prev.trainers.push(formatTrainerReservationIn(current, language));
     }
 
     return prev;

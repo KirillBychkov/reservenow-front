@@ -39,10 +39,11 @@ type Props = {
 };
 
 const ManageReservationForm = ({ initialOrder }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showError, showSuccess, showWarn } = useContext(ToastContext);
   const { equipment, objects, trainers } = getInitialReservationValues(
     initialOrder?.reservations || [],
+    i18n.language,
   );
 
   const {
@@ -93,8 +94,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
   };
 
   const { data, invokeFunction } = useFetch(
-    () =>
-      clientStore.getClientByPhone(formatPhoneOut(formik.values.phone)),
+    () => clientStore.getClientByPhone(formatPhoneOut(formik.values.phone)),
     [],
     true,
     setClientValues,

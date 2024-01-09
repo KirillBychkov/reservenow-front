@@ -23,15 +23,18 @@ interface TrainerWithTypeName extends Trainer {
   type: 'trainer';
 }
 
-const getPersonnelTableData = (personnel: Personnel): PersonnelTableData => {
+const getPersonnelTableData = (
+  personnel: Personnel,
+  language: string,
+): PersonnelTableData => {
   const { managers, trainers } = personnel;
   const res = [];
   const formattedManagers = managers.map((manager) => ({
-    ...formatObjectIn(manager),
+    ...formatObjectIn(manager, language),
     type: 'manager',
   }));
   const formattedTrainers = trainers.map((trainer) => ({
-    ...formatObjectIn(trainer),
+    ...formatObjectIn(trainer, language),
     type: 'trainer',
   }));
   res.push(...formattedManagers, ...formattedTrainers);
@@ -40,9 +43,9 @@ const getPersonnelTableData = (personnel: Personnel): PersonnelTableData => {
 
 const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const formattedPersonnel = getPersonnelTableData(personnel);
+  const formattedPersonnel = getPersonnelTableData(personnel, i18n.language);
 
   const handleOpenPersonnel = (
     rowData: ManagerWithTypeName | TrainerWithTypeName,

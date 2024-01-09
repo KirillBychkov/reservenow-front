@@ -3,6 +3,7 @@ import { RentalObject } from '@/models/RentalObject';
 import organizationStore from '@/store/organizationsStore';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type OrganizationOption = {
   label: string;
@@ -27,6 +28,7 @@ const useObjectReservation = (initialValues?: ObjectReservation[]) => {
   const [objectReservations, setObjectReservations] = useState<
     ObjectReservation[]
   >(initialValues || []);
+  const { i18n } = useTranslation();
 
   const deleteObjectReservation = (id: string) => {
     setObjectReservations((reservations) => {
@@ -41,7 +43,7 @@ const useObjectReservation = (initialValues?: ObjectReservation[]) => {
       organizations.map((organization) => {
         return {
           label: organization.name,
-          organization: formatObjectIn(organization),
+          organization: formatObjectIn(organization, i18n.language),
         };
       }),
     );

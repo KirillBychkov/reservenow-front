@@ -28,13 +28,13 @@ interface Props {
 }
 
 const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
   const { id: organizationId, objectId } = useParams();
   const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
 
   if (initialValues) {
-    initialValues = formatObjectIn(initialValues);
+    initialValues = formatObjectIn(initialValues, i18n.language);
   }
 
   const validationSchema = Yup.object({
@@ -44,6 +44,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
     address: Yup.string().required(t('invalid.required')),
     price: Yup.number().required(t('invalid.required')),
   });
+  // console.log(initialValues);
 
   const workingHours = transformWorkingHours<RentalObject>(initialValues);
 
@@ -163,9 +164,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
           fileName={fileName}
         />
       </div>
-      <div className={styles.section}>
-        <WorkingHours<ObjectFormData> formik={formik} />
-      </div>
+      <WorkingHours<ObjectFormData> formik={formik} />
       <div className={styles.Controls}>
         <Button
           severity='danger'

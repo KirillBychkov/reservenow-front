@@ -46,7 +46,7 @@ const ObjectReservationSection = ({
   onReservationTimeChange,
   isEditingMode,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     rental_object,
     id,
@@ -105,7 +105,7 @@ const ObjectReservationSection = ({
   const objectOptions = useMemo(() => {
     return objects?.map((object) => ({
       label: object.name,
-      object: formatObjectIn(object),
+      object: formatObjectIn(object, i18n.language),
     }));
   }, [currentOrganization, objects]);
 

@@ -5,20 +5,20 @@
 }
 
 @mixin focused() {
-  outline: $focusOutline;
-  outline-offset: $focusOutlineOffset;
-  box-shadow: $focusShadow;
+  // outline: $focusOutline;
+  // outline-offset: $focusOutlineOffset;
+  // box-shadow: $focusShadow;
 }
 
 @mixin focused-inset() {
-  outline: $focusOutline;
-  outline-offset: $focusOutlineOffset;
-  box-shadow: inset $focusShadow;
+  // outline: $focusOutline;
+  // outline-offset: $focusOutlineOffset;
+  // box-shadow: inset $focusShadow;
 }
 
 @mixin focused-input() {
-  @include focused();
-  border-color: $inputFocusBorderColor;
+  // @include focused();
+  // border-color: $inputFocusBorderColor;
 }
 
 @mixin focused-listitem() {

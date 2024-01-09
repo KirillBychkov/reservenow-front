@@ -25,11 +25,7 @@ const ReservationHistory = observer(() => {
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const [startDate, setStartDate] = useState('');
   const [endDate] = useState(new Date(new Date().getTime()).toISOString());
-  const {
-    data: orders,
-    isLoading,
-    errorMsg,
-  } = useFetch<Order[]>(
+  const { data: orders, isLoading } = useFetch<Order[]>(
     () =>
       ordersStore.getOrders(
         {
@@ -42,6 +38,12 @@ const ReservationHistory = observer(() => {
         { startDate, endDate },
       ),
     [limit, skip, search, sort, startDate, endDate],
+    {
+      onError: (err) => {
+        showError(err);
+        navigate('/');
+      },
+    },
   );
 
   const dateSpanOptions = useMemo(
@@ -68,11 +70,6 @@ const ReservationHistory = observer(() => {
     ],
     [t],
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-    navigate('/');
-  }
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>

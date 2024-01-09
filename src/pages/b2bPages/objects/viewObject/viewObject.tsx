@@ -31,13 +31,10 @@ const ViewObject: React.FC = observer(() => {
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
 
-  const {
-    data: object,
-    isLoading,
-    errorMsg,
-  } = useFetch<RentalObject>(
+  const { data: object, isLoading } = useFetch<RentalObject>(
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
+    { onError: showError },
   );
 
   const { data: orders } = useFetch<Order[]>(
@@ -47,14 +44,11 @@ const ViewObject: React.FC = observer(() => {
         { rentalObjectId: parseInt(objectId || '') },
       ),
     [limit, skip, objectId, sort, search],
+    { onError: showError },
   );
 
   if (!object || !orders) {
     return <ProgressSpinner />;
-  }
-
-  if (errorMsg) {
-    showError(errorMsg);
   }
 
   const statsData = getObjectsStatsData(object);

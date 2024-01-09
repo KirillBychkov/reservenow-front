@@ -43,21 +43,15 @@ const ViewOrganization: React.FC = observer(() => {
     [id],
   );
 
-  const {
-    data: objects,
-    errorMsg,
-    isLoading,
-  } = useFetch<RentalObject[]>(
+  const { data: objects, isLoading } = useFetch<RentalObject[]>(
     () =>
       objectsStore.getRentalObjects({ limit, skip, sort }, parseInt(id || '0')),
     [limit, skip, id, sort],
+    { onError: showError },
   );
 
   if (!organization || !objects) {
     return <ProgressSpinner />;
-  }
-  if (errorMsg) {
-    showError(errorMsg);
   }
 
   const statsCardData = getOrganizationsStatsData(organizationStatistics);

@@ -20,19 +20,15 @@ const ManageClient = observer(() => {
   const {
     data: initialValues,
     isLoading,
-    errorMsg,
   } = useFetch<Client>(
     () =>
       id
         ? clientStore.getClientById(parseInt(id))
         : Promise.resolve({ data: {} as Client, error: '' }),
     [id],
+    { onError: showError },
   );
   const isEditingMode = id && initialValues;
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.pageBody}>

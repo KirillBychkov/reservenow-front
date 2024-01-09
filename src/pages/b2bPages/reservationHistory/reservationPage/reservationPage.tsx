@@ -23,19 +23,16 @@ const ReservationPage = observer(() => {
   const { showError } = useContext(ToastContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const {
-    data: order,
-    errorMsg,
-    isLoading,
-  } = useFetch<Order>(
+  const { data: order, isLoading } = useFetch<Order>(
     () => ordersStore.getOrderById(parseInt(id || '0')),
     [id],
+    {
+      onError(err) {
+        showError(err);
+        navigate('/booking');
+      },
+    },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-    navigate('/booking');
-  }
 
   const formattedOrder = useMemo(() => {
     if (!order) {

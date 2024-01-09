@@ -18,21 +18,14 @@ const ManageOrganisation: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const {
-    data: organization,
-    isLoading,
-    errorMsg,
-  } = useFetch(
+  const { data: organization, isLoading } = useFetch(
     () =>
       id
         ? organizationStore.getOrganizationById(parseInt(id || '0'))
         : Promise.resolve({ data: {} as Organization, error: '' }),
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.AddOrganization}>

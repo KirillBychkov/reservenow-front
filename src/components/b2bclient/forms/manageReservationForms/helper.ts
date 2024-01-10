@@ -7,7 +7,6 @@ import { Reservation } from '@/models/Reservation';
 import { Trainer } from '@/models/Trainer';
 import { CreateReservationDTO } from '@/models/requests/OrderRequests';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
-import { TFunction } from 'i18next';
 
 const getRentalTime = (startISO: string, endISO: string) => {
   const startDate = new Date(startISO);
@@ -61,72 +60,66 @@ export const getTotalSum = (
   return totalTrainersPrice + totalEquipmentPrice + totalObjectsPrice;
 };
 
-const getEquipmentReservationErrors = (
+const isAnyEquipmentReservationErrors = (
   equipmentReservation: EquipmentReservation[],
-  t: TFunction,
 ) => {
   for (let i = 0; i < equipmentReservation.length; i++) {
     if (equipmentReservation[i].equipment === null) {
-      return t('schedule.reservationErrors.equipmentNull');
+      return true;
     }
   }
+
+  return false;
 };
 
-const getTrainersReservationErrors = (
+const isAnyTrainersReservationErrors = (
   trainersReservation: TrainerReservation[],
-  t: TFunction,
 ) => {
   for (let i = 0; i < trainersReservation.length; i++) {
     const { trainer, reservation_time_end, reservation_time_start } =
       trainersReservation[i];
 
     if (trainer === null) {
-      return t('schedule.reservationErrors.trainerNull');
+      return true;
     }
 
     if (reservation_time_start === null || reservation_time_end === null) {
-      const { first_name, last_name } = trainer;
-      return t('schedule.reservationErrors.addReservationTimeForTrainer', {
-        first_name,
-        last_name,
-      });
+      return true;
     }
   }
+
+  return false;
 };
 
-const getObjectsReservationErrors = (
+const isAnyObjectsReservationErrors = (
   objectsReservation: ObjectReservation[],
-  t: TFunction,
 ) => {
   for (let i = 0; i < objectsReservation.length; i++) {
     const { rental_object, reservation_time_end, reservation_time_start } =
       objectsReservation[i];
 
     if (rental_object === null) {
-      return t('schedule.reservationErrors.objectNull');
+      return true;
     }
 
     if (reservation_time_start === null || reservation_time_end === null) {
-      const { name } = rental_object;
-      return t('schedule.reservationErrors.addReservationTimeForObject', {
-        name,
-      });
+      return true;
     }
   }
+
+  return false;
 };
 
 export const checkErrorsInReservations = (
   equipment: EquipmentReservation[],
   trainers: TrainerReservation[],
   objects: ObjectReservation[],
-  t: TFunction,
 ) => {
-  let errorMsg =
-    getEquipmentReservationErrors(equipment, t) ||
-    getObjectsReservationErrors(objects, t) ||
-    getTrainersReservationErrors(trainers, t);
-
-  return errorMsg;
+  return (
+    isAnyEquipmentReservationErrors(equipment) ||
+    isAnyObjectsReservationErrors(objects) ||
+    isAnyTrainersReservationErrors(trainers)
+  );
 };
 
 export const getReservations = (

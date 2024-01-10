@@ -104,7 +104,12 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
     fetchAndSetOptions();
   }, []);
 
+  const clearAll = () => {
+    setTrainerReservations([])
+  }
+
   return {
+    clearAll,
     options,
     trainerReservations,
     addEmptyTrainerReservation,

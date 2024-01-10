@@ -112,8 +112,13 @@ const useObjectReservation = (initialValues?: ObjectReservation[]) => {
     });
   };
 
+  const clearAll = () => {
+    setObjectReservations([])
+  }
+
   return {
     objectReservations,
+    clearAll,
     orgOptions,
     deleteObjectReservation,
     addEmptyObjectReservation,

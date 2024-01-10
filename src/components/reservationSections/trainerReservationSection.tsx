@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Cross } from '@blueprintjs/icons';
 import { Calendar, CalendarChangeEvent } from 'primereact/calendar';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import {
   TrainerOption,
   TrainerReservation,
@@ -15,6 +15,10 @@ import {
 import { Trainer } from '@/models/Trainer';
 import { DropdownChangeEvent } from 'primereact/dropdown';
 import { generateDropdownOptions, getTimeOnCertainDay } from './helper';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import classNames from 'classnames';
+import isValidClassname from '@/utils/isValidClassname';
 
 type Props = {
   options: TrainerOption[];
@@ -30,6 +34,7 @@ type Props = {
     time: { start?: string | null; end?: string | null },
   ) => void;
   isEditingMode: boolean;
+  isSubmitting: boolean;
 };
 
 const TrainerReservationSection = ({
@@ -40,6 +45,7 @@ const TrainerReservationSection = ({
   onDataChange,
   onReservationTimeChange,
   isEditingMode,
+  isSubmitting,
 }: Props) => {
   const { t } = useTranslation();
   const {
@@ -52,27 +58,53 @@ const TrainerReservationSection = ({
   const dateOfStart = reservation_time_start
     ? new Date(reservation_time_start)
     : null;
-  const [date, setDate] = useState<Date | null>(dateOfStart);
-  const [fromHours, setFromHours] = useState<number | null>(
-    dateOfStart?.getHours() || null,
-  );
-  const [toHours, setToHours] = useState<number | null>(
-    new Date(reservation_time_end as string)?.getHours() || null,
-  );
 
-  const resetHours = () => {
-    setFromHours(null);
-    setToHours(null);
+  const validationSchema = yup.object({
+    trainerName: yup.string().required(t('invalid.required')),
+    date: yup.date().required(t('invalid.required')),
+    startHours: yup.number().required(t('invalid.required')),
+    endHours: yup.number().required(t('invalid.required')),
+  });
+
+  const initialValues = {
+    trainerName: trainer ? `${trainer?.first_name} ${trainer?.last_name}` : '',
+    date: dateOfStart ? new Date(dateOfStart) : null,
+    startHours: dateOfStart?.getHours() || null,
+    endHours: reservation_time_end
+      ? new Date(reservation_time_end as string)?.getHours()
+      : null,
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit() {},
+  });
+
+  useEffect(() => {
+    if (isSubmitting) {
+      formik.submitForm();
+    }
+  }, [isSubmitting]);
+
+  const resetHours = async () => {
+    await formik.setFieldValue('endHours', null);
+    await formik.setFieldValue('startHours', null);
   };
 
   const fullResetOfTime = () => {
     resetHours();
-    setDate(null);
+    formik.setFieldValue('date', null);
     onReservationTimeChange(id, { start: null, end: null });
   };
 
   const handleChangeTrainer = (e: DropdownChangeEvent) => {
-    onDataChange(id, { trainer: e.target.value.trainer as Trainer });
+    const trainer = e.target.value.trainer as Trainer;
+    onDataChange(id, { trainer });
+    formik.setFieldValue(
+      'trainerName',
+      `${trainer.first_name} ${trainer.last_name}`,
+    );
     fullResetOfTime();
   };
 
@@ -81,38 +113,42 @@ const TrainerReservationSection = ({
   };
 
   const time =
-    trainer && getTimeOnCertainDay(trainer, date?.getDay() as number);
+    trainer &&
+    getTimeOnCertainDay(trainer, formik.values.date?.getDay() as number);
   const isWorkingDay = time?.start !== null && time?.end !== null;
 
   const handleDateChange = (e: CalendarChangeEvent) => {
-    setDate(e.value as Date);
-
-    if (fromHours || toHours) {
-      resetHours();
-    }
+    formik.handleChange(e);
+    const { startHours, endHours } = formik.values;
 
     if (reservation_time_end || reservation_time_start) {
       onReservationTimeChange(id, { start: null, end: null });
     }
+    if (startHours || endHours) {
+      resetHours();
+    }
   };
 
   const handleFromHoursChange = (e: DropdownChangeEvent) => {
+    formik.handleChange(e);
     const fromHours = e.target.value as number;
-    setFromHours(fromHours);
-
+    const { date, endHours } = formik.values;
     const start = new Date(date?.setHours(fromHours) as number).toISOString();
 
-    onReservationTimeChange(id, {
-      start,
-      end: fromHours >= (toHours as number) ? null : undefined,
-    });
+    if (fromHours >= (endHours as number)) {
+      onReservationTimeChange(id, {
+        start,
+        end: null,
+      });
+      formik.setFieldValue('endHours', null);
+    }
   };
 
   const handleToHoursChange = (e: DropdownChangeEvent) => {
-    setToHours(e.target.value);
-
+    formik.handleChange(e);
+    const endHours = e.target.value as number;
     const end = new Date(
-      date?.setHours(e.target.value as number) as number,
+      formik.values.date?.setHours(endHours as number) as number,
     ).toISOString();
 
     onReservationTimeChange(id, { end });
@@ -132,37 +168,58 @@ const TrainerReservationSection = ({
           />
         )}
       </Flex>
-      <FormField label={t('schedule.form.trainerSection.trainerName')}>
+      <FormField
+        label={t('schedule.form.trainerSection.trainerName')}
+        isValid={!(formik.touched.trainerName && formik.errors.trainerName)}
+        invalidMessage={formik.errors.trainerName}
+      >
         <CustomDropdown
+          name='trainerName'
           disabled={isEditingMode}
           placeholder={
-            trainer
-              ? `${trainer?.first_name} ${trainer?.last_name}`
-              : t('schedule.form.trainerSection.chooseTrainer')
+            formik.values.trainerName ||
+            t('schedule.form.trainerSection.chooseTrainer')
           }
+          emptyMessage={t('schedule.trainersNull')}
           options={options}
           onChange={handleChangeTrainer}
+          onBlur={formik.handleBlur}
+          className={classNames(isValidClassname(formik, 'trainerName'))}
         />
       </FormField>
 
-      <FormField label={t('schedule.form.dateAndTime')}>
+      <FormField
+        label={t('schedule.form.dateAndTime')}
+        isValid={!(formik.touched.date && formik.errors.date)}
+        invalidMessage={formik.errors.date}
+      >
         <Calendar
-          className={styles.calendar}
+          name='date'
+          className={classNames(
+            styles.calendar,
+            isValidClassname(formik, 'date'),
+          )}
           placeholder={t('schedule.form.chooseDate')}
-          value={date}
-          disabled={trainer === null || isEditingMode}
+          value={formik.values.date}
+          disabled={isEditingMode}
+          onShow={() => formik.setFieldTouched('date')}
           onChange={handleDateChange}
           minDate={new Date()}
         />
       </FormField>
 
       <Flex options={{ gap: 1 }}>
-        <div style={{ flexGrow: 1 }}>
-          <FormField label={t('schedule.form.timeFrom')}>
+        <div className={styles.halfSection}>
+          <FormField
+            label={t('schedule.form.timeFrom')}
+            isValid={!(formik.touched.startHours && formik.errors.startHours)}
+            invalidMessage={formik.errors.startHours}
+          >
             <CustomDropdown
-              disabled={date === null || isEditingMode}
+              name='startHours'
+              disabled={formik.values.date === null || isEditingMode}
               placeholder={t('schedule.form.chooseTime')}
-              value={fromHours}
+              value={formik.values.startHours}
               emptyMessage={t('schedule.trainerWorkingHoursNull')}
               options={
                 isWorkingDay
@@ -173,25 +230,34 @@ const TrainerReservationSection = ({
                   : undefined
               }
               onChange={handleFromHoursChange}
+              onBlur={formik.handleBlur}
+              className={classNames(isValidClassname(formik, 'startHours'))}
             />
           </FormField>
         </div>
 
-        <div style={{ flexGrow: 1 }}>
-          <FormField label={t('schedule.form.timeTo')}>
+        <div className={styles.halfSection}>
+          <FormField
+            label={t('schedule.form.timeTo')}
+            isValid={!(formik.touched.endHours && formik.errors.endHours)}
+            invalidMessage={formik.errors.endHours}
+          >
             <CustomDropdown
-              disabled={fromHours === null || isEditingMode}
+              name='endHours'
+              disabled={formik.values.startHours === null || isEditingMode}
               options={
-                fromHours !== null
+                formik.values.startHours !== null
                   ? generateDropdownOptions(
-                      (fromHours + 1) as number,
+                      (formik.values.startHours + 1) as number,
                       time?.end as number,
                     )
                   : undefined
               }
               placeholder={t('schedule.form.chooseTime')}
-              value={toHours}
+              value={formik.values.endHours}
               onChange={handleToHoursChange}
+              onBlur={formik.handleBlur}
+              className={classNames(isValidClassname(formik, 'endHours'))}
             />
           </FormField>
         </div>

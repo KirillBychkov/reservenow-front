@@ -17,15 +17,11 @@ const Personnel: React.FC = observer(() => {
   const [isSelectPersonnelModalOpen, setIsSelectPersonnelModalOpen] =
     useState<boolean>(false);
 
-  const {
-    data: personnel,
-    isLoading,
-    errorMsg,
-  } = useFetch<Personnel>(personnelStore.getPersonnel, []);
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
+  const { data: personnel, isLoading } = useFetch<Personnel>(
+    personnelStore.getPersonnel,
+    [],
+    { onError: showError },
+  );
 
   return (
     <div className={styles.personnel}>

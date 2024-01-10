@@ -9,7 +9,11 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import styles from './reservationSections.module.scss';
 import { useTranslation } from 'react-i18next';
 import { DropdownChangeEvent } from 'primereact/dropdown';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup'
+import classNames from 'classnames';
+import isValidClassname from '@/utils/isValidClassname';
 
 type Props = {
   equipmentReservation: EquipmentReservation;
@@ -21,6 +25,7 @@ type Props = {
   ) => void;
   reservationNumber: number;
   isEditingMode: boolean;
+  isSubmitting: boolean,
 };
 
 export const EquipmentReservationSection = ({
@@ -30,17 +35,39 @@ export const EquipmentReservationSection = ({
   onDelete,
   reservationNumber,
   isEditingMode,
+  isSubmitting,
 }: Props) => {
   const { equipment, id } = equipmentReservation;
   const { t } = useTranslation();
+  const validationSchema = yup.object({
+    equipmentName: yup.string().required(t('invalid.required')),
+  });
+
+  const initialValues = {
+    equipmentName: equipment?.name || '',
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    validateOnBlur: true,
+    onSubmit() {},
+  });
 
   const handleChangeEquipment = (e: DropdownChangeEvent) => {
     onChange(id, { equipment: e.target.value.equipment as Equipment });
+    formik.setFieldValue('equipmentName', e.target.value.equipment.name)
   };
 
   const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
     onChange(id, { description: e.target.value });
   };
+  
+  useEffect(() => {
+    if (isSubmitting) {
+      formik.submitForm()
+    }
+  }, [isSubmitting])
 
   return (
     <div className={styles.formSection}>
@@ -58,15 +85,22 @@ export const EquipmentReservationSection = ({
         )}
       </Flex>
 
-      <FormField label={t('forms.equipmentName')}>
+      <FormField
+        label={t('forms.equipmentName')}
+        isValid={!(formik.touched.equipmentName && formik.errors.equipmentName)}
+        invalidMessage={formik.errors.equipmentName}
+      >
         <CustomDropdown
+          name='equipmentName'
           disabled={isEditingMode}
           placeholder={
-            equipment?.name ||
+            formik.values.equipmentName ||
             t('schedule.form.equipmentSection.chooseEquipment')
           }
           options={options}
           onChange={handleChangeEquipment}
+          onBlur={formik.handleBlur}
+          className={classNames(isValidClassname(formik, 'equipmentName'))}
         />
       </FormField>
 

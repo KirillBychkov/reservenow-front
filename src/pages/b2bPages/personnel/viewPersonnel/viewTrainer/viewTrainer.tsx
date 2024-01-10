@@ -31,13 +31,10 @@ const ViewTrainer: React.FC = observer(() => {
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
 
-  const {
-    data: trainer,
-    isLoading,
-    errorMsg,
-  } = useFetch<Trainer>(
+  const { data: trainer, isLoading } = useFetch<Trainer>(
     () => personnelStore.getTrainer(parseInt(id || '0')),
     [id],
+    { onError: showError },
   );
 
   const { data: orders } = useFetch<Order[]>(
@@ -47,11 +44,8 @@ const ViewTrainer: React.FC = observer(() => {
         { trainerId: parseInt(id || '0') },
       ),
     [limit, skip, search, sort, id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   if (!trainer || !orders) {
     return <ProgressSpinner />;

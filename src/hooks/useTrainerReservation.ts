@@ -2,6 +2,7 @@ import { Trainer } from '@/models/Trainer';
 import personnelStore from '@/store/personnelStore';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type TrainerOption = {
   label: string;
@@ -21,6 +22,7 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
   const [trainerReservations, setTrainerReservations] = useState<
     TrainerReservation[]
   >(initialValues || []);
+  const { i18n } = useTranslation();
 
   const addEmptyTrainerReservation = () => {
     setTrainerReservations((prev) => {
@@ -44,7 +46,7 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
       trainers.map((trainer) => {
         return {
           label: trainer.first_name,
-          trainer: formatObjectIn(trainer),
+          trainer: formatObjectIn(trainer, i18n.language),
         };
       }),
     );
@@ -104,7 +106,12 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
     fetchAndSetOptions();
   }, []);
 
+  const clearAll = () => {
+    setTrainerReservations([])
+  }
+
   return {
+    clearAll,
     options,
     trainerReservations,
     addEmptyTrainerReservation,

@@ -116,7 +116,10 @@ export const transformWorkingHours = <T extends WeekWorkingHours>(
   const initialWorkingHours = {} as T;
 
   Object.entries(initialValues).forEach(([key, value]) => {
-    if (key.includes('hours')) {
+    if (
+      key.includes('hours') &&
+      (key.includes('start') || key.includes('end'))
+    ) {
       initialWorkingHours[key as keyof T] = value;
     }
   });

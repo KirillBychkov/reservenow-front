@@ -18,17 +18,13 @@ const OpenRequest: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
-  const {
-    data: initialValues,
-    errorMsg,
-    isLoading,
-  } = useFetch<PlainSupportRecordInfo>(() => {
-    return supportRecordsStore.getPlainSupportRecordInfo(parseInt(id || '0'));
-  }, [id]);
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
+  const { data: initialValues, isLoading } = useFetch<PlainSupportRecordInfo>(
+    () => {
+      return supportRecordsStore.getPlainSupportRecordInfo(parseInt(id || '0'));
+    },
+    [id],
+    { onError: showError },
+  );
 
   const requestInfoList = useMemo(() => {
     if (!initialValues) return null;

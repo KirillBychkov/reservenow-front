@@ -1,10 +1,11 @@
-export const formatDate = (dateString: string | Date, lang: string) => {
+export const formatDate = (language: string) => (dateString: string | Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   };
   const date = new Date(dateString);
-  const formattedDate = new Intl.DateTimeFormat(lang, options).format(date);
+  const formattedDate = new Intl.DateTimeFormat(language, options).format(date);
+
   return formattedDate;
 };

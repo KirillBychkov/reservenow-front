@@ -26,18 +26,19 @@ import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 const ClientPage = observer(() => {
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { data: client, errorMsg } = useFetch<Client>(
+  const { data: client } = useFetch<Client>(
     () => clientStore.getClientById(parseInt(id || '0')),
     [id],
+    { onError: showError },
   );
   const [search, setSearch] = useState('');
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(
     clientStore.ordersFilters,
   );
-  const { data: orders } = useFetch<Order[]>(
+  const { data: orders, isLoading: ordersLoading } = useFetch<Order[]>(
     () =>
       clientStore.getClientOrders(parseInt(id || '0'), {
         limit,
@@ -46,11 +47,8 @@ const ClientPage = observer(() => {
         sort,
       }),
     [limit, skip, search, sort],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   if (!client) {
     return <ProgressSpinner />;
@@ -90,7 +88,7 @@ const ClientPage = observer(() => {
 
       <ViewStatsLayout
         LeftSideComponent={
-          <LeftSideComponent client={formatObjectIn(client)} />
+          <LeftSideComponent client={formatObjectIn(client, i18n.language)} />
         }
         RightSideComponent={
           <RightSide
@@ -101,7 +99,7 @@ const ClientPage = observer(() => {
         }
         Table={
           <div className={styles.tableBg}>
-            {orders ? (
+            {orders && !ordersLoading && (
               <ClientOrdersTable
                 sortField={sortField}
                 first={first}
@@ -110,7 +108,8 @@ const ClientPage = observer(() => {
                 onSortChange={handleSort}
                 orders={orders}
               />
-            ) : (
+            )}
+            {orders?.length === 0 && (
               <Flex
                 className={styles.notFoundContainer}
                 options={{ justify: 'center', align: 'center' }}
@@ -120,6 +119,8 @@ const ClientPage = observer(() => {
                 </h2>
               </Flex>
             )}
+
+            {ordersLoading && <ProgressSpinner />}
           </div>
         }
       />

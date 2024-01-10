@@ -21,28 +21,25 @@ import { observer } from 'mobx-react-lite';
 const ReservationPage = observer(() => {
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const {
-    data: order,
-    errorMsg,
-    isLoading,
-  } = useFetch<Order>(
+  const { data: order, isLoading } = useFetch<Order>(
     () => ordersStore.getOrderById(parseInt(id || '0')),
     [id],
+    {
+      onError(err) {
+        showError(err);
+        navigate('/booking');
+      },
+    },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-    navigate('/booking');
-  }
 
   const formattedOrder = useMemo(() => {
     if (!order) {
       return null;
     }
 
-    return formatObjectIn(order);
+    return formatObjectIn(order, i18n.language);
   }, [order]);
 
   return (

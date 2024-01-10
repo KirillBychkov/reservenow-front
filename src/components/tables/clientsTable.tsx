@@ -32,7 +32,7 @@ const ClientsTable = observer(
     first,
     onPageChange,
   }: Props) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const filters = clientStore.getFilters();
 
@@ -40,8 +40,8 @@ const ClientsTable = observer(
       navigate(`${id}`);
     };
 
-    const formattedClients: Client[] = useMemo(() => {
-      return clients.map((client) => formatObjectIn(client));
+    const formattedClients: Client[] = useMemo<Client[]>(() => {
+      return clients.map((client) => formatObjectIn(client, i18n.language));
     }, [clients]);
 
     return (
@@ -71,7 +71,7 @@ const ClientsTable = observer(
       >
         <Column field='id' header={t('clients.idColumn')} sortable />
         <Column
-          field='first_name'
+          sortField='first_name'
           header={t('clients.nameColumn')}
           body={({ first_name, last_name }: Client) =>
             `${first_name} ${last_name}`
@@ -84,7 +84,7 @@ const ClientsTable = observer(
           header={t('clients.reservationColumn')}
         />
         <Column
-          field='total_reservation_sum'
+          sortField='total_reservation_sum'
           header={t('clients.moneyColumn')}
           sortable
           body={({ total_reservation_sum }: Client) =>

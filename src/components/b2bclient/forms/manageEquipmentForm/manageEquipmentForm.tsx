@@ -26,7 +26,7 @@ type Props = {
 };
 
 export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showModal } = useContext(ModalContext);
   const navigate = useNavigate();
   const { showError, showSuccess } = useContext(ToastContext);
@@ -57,11 +57,14 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
     navigate('/equipment');
   };
 
-  const formData: EquipmentFormData = formatObjectIn({
-    name: initialValues?.name || '',
-    description: initialValues?.description || '',
-    price: initialValues?.price || 0,
-  });
+  const formData: EquipmentFormData = formatObjectIn(
+    {
+      name: initialValues?.name || '',
+      description: initialValues?.description || '',
+      price: initialValues?.price || 0,
+    },
+    i18n.language,
+  );
 
   const validationSchema = yup.object({
     name: yup.string().required(t('invalid.required')),
@@ -126,9 +129,7 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
         <div className={styles.formSection}>
           <FormField
             label={t('forms.equipmentPrice')}
-            isValid={
-              !(formik.touched.price && formik.errors.price)
-            }
+            isValid={!(formik.touched.price && formik.errors.price)}
             invalidMessage={formik.errors.price}
           >
             <InputNumber
@@ -173,7 +174,9 @@ export const ManageEquipmentForm = observer(({ initialValues }: Props) => {
             fill
             className={styles.btn}
           >
-            {initialValues?.id ? t('actions.editEquipment') : t('actions.addEquipment')}
+            {initialValues?.id
+              ? t('actions.editEquipment')
+              : t('actions.addEquipment')}
           </Button>
         </Flex>
       </Flex>

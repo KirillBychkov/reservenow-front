@@ -26,11 +26,7 @@ const Users: React.FC = observer(() => {
 
   const { limit, skip, first, onPageChange } = usePaginate(usersStore.filters);
 
-  const {
-    data: users,
-    errorMsg,
-    isLoading,
-  } = useFetch<User[]>(
+  const { data: users, isLoading } = useFetch<User[]>(
     () =>
       usersStore.getUsers({
         limit,
@@ -39,11 +35,8 @@ const Users: React.FC = observer(() => {
         sort,
       }),
     [limit, skip, search, sort],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.users}>

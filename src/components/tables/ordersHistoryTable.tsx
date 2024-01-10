@@ -25,7 +25,7 @@ type Props = {
 const OrdersHistoryTable: React.FC<Props> = observer(
   ({ orders, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const filters = ordersStore.filters;
 
     const handleNavigateToOrderPage = (id: number) => {
@@ -34,8 +34,8 @@ const OrdersHistoryTable: React.FC<Props> = observer(
 
     const formattedOrders = orders.map((order) => {
       return {
-        ...formatObjectIn(order),
-        client: formatObjectIn(order.client),
+        ...formatObjectIn(order, i18n.language),
+        client: formatObjectIn(order.client, i18n.language),
       };
     });
 
@@ -88,9 +88,7 @@ const OrdersHistoryTable: React.FC<Props> = observer(
           <Column
             style={{ maxWidth: '450px' }}
             header={t('reservationHistory.table.reservations')}
-            body={(order: Order) =>
-              getAllObjectsNamesInOrder(order).join(', ')
-            }
+            body={(order: Order) => getAllObjectsNamesInOrder(order).join(', ')}
           />
           <Column
             style={{ maxWidth: '120px' }}

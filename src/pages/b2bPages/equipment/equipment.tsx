@@ -24,19 +24,12 @@ const Equipment: React.FC = observer(() => {
   const { limit, skip, first, onPageChange } = usePaginate(
     equipmentStore.filters,
   );
-  const {
-    data: equipment,
-    isLoading,
-    errorMsg,
-  } = useFetch<Equipment[]>(
+  const { data: equipment, isLoading } = useFetch<Equipment[]>(
     () => equipmentStore.getEquipment({ limit, skip, search, sort }),
     [limit, skip, search, sort],
+    { onError: showError },
   );
   const isEquipmentEmpty = equipment && equipment.length === 0 && !isLoading;
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.equipment}>

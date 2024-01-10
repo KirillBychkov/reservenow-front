@@ -22,7 +22,7 @@ interface Props {
 }
 
 const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showError, showSuccess } = useContext(ToastContext);
 
   const validationSchema = Yup.object({
@@ -36,7 +36,7 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
   });
 
   if (initialValues) {
-    initialValues = formatObjectIn(initialValues);
+    initialValues = formatObjectIn(initialValues, i18n.language);
   }
 
   const formData: ManagerFormData = {

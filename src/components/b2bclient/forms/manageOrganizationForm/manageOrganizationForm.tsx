@@ -23,11 +23,12 @@ interface Props {
 
 const ManageOrganizationForm: React.FC<Props> = observer(
   ({ initialValues }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
     const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
 
-    if (initialValues) initialValues = formatObjectIn(initialValues);
+    if (initialValues)
+      initialValues = formatObjectIn(initialValues, i18n.language);
 
     const validationSchema = Yup.object({
       name: Yup.string().required(t('invalid.required')),

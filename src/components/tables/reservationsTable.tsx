@@ -37,10 +37,12 @@ const TableFooter = ({ total }: { total: number }) => {
 };
 
 const ReservationsTable = ({ reservations, total }: Props) => {
+  const { t, i18n } = useTranslation();
   const formattedReservations = useMemo(() => {
-    return reservations.map((reservation) => formatObjectIn(reservation));
+    return reservations.map((reservation) =>
+      formatObjectIn(reservation, i18n.language),
+    );
   }, [reservations]);
-  const { t } = useTranslation();
 
   return (
     <DataTable

@@ -27,7 +27,7 @@ enum Events {
 }
 
 const Schedule = observer(() => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentEventType, setCurrentEventType] = useState<Events>(
     Events.Organizations,
   );
@@ -44,7 +44,7 @@ const Schedule = observer(() => {
   const orgOptions = useMemo(() => {
     return organizations?.map((org) => ({
       label: org.name,
-      organization: formatObjectIn(org),
+      organization: formatObjectIn(org, i18n.language),
     }));
   }, [organizations]);
 
@@ -58,7 +58,7 @@ const Schedule = observer(() => {
   const objOptions = useMemo(() => {
     return objects?.map((obj) => ({
       label: obj.name,
-      object: formatObjectIn(obj),
+      object: formatObjectIn(obj, i18n.language),
     }));
   }, [objects]);
 
@@ -72,7 +72,7 @@ const Schedule = observer(() => {
     currentObj === null,
     (orders) => {
       const objectReservations = collectAllReservations(orders || []);
-      const events: Event[] = createEventsFromReservations(objectReservations)
+      const events: Event[] = createEventsFromReservations(objectReservations);
 
       setEvents(events);
     },
@@ -84,7 +84,7 @@ const Schedule = observer(() => {
     currentEventType !== Events.Trainers,
     (orders) => {
       const trainerReservations = collectAllReservations(orders || []);
-      const events: Event[] = createEventsFromReservations(trainerReservations)
+      const events: Event[] = createEventsFromReservations(trainerReservations);
 
       setEvents(events);
     },

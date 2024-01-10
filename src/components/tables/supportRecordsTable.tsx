@@ -6,12 +6,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './status.module.scss';
 import { Button } from 'primereact/button';
-import { formatDate } from '@/utils/formatters/formatDate';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import supportRecordsStore from '@/store/supportRecordsStore';
 import { SortField, SortOrder } from '@/hooks/useSort';
+import { formatObjectIn } from '@/utils/formatters/formatObject';
 
 interface Props {
   supportRecords: Support[];
@@ -39,10 +39,9 @@ const SupportRecordsTable: React.FC<Props> = observer(
       navigate(`${id}`);
     };
 
-    const supportRecordsData = supportRecords.map((supportRecord) => ({
-      ...supportRecord,
-      created_at: formatDate(supportRecord.created_at, i18n.language),
-    }));
+    const supportRecordsData = supportRecords.map((supportRecord) =>
+      formatObjectIn(supportRecord, i18n.language),
+    );
 
     return (
       <div>

@@ -39,10 +39,11 @@ type Props = {
 };
 
 const ManageReservationForm = ({ initialOrder }: Props) => {
-  const { t } = useTranslation();
-  const { showError, showSuccess } = useContext(ToastContext);
+  const { t, i18n } = useTranslation();
+  const { showError, showSuccess, showWarn } = useContext(ToastContext);
   const { equipment, objects, trainers } = getInitialReservationValues(
     initialOrder?.reservations || [],
+    i18n.language,
   );
 
   const {

@@ -7,7 +7,6 @@ import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Button from '../UI/buttons/button';
-import { useMemo } from 'react';
 import classNames from 'classnames';
 import styles from './status.module.scss';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
@@ -32,15 +31,14 @@ const ClientOrdersTable = ({
   onSortChange,
 }: Props) => {
   const filters = clientStore.getOrdersFilters();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const handleNavigateToOrder = (id: number) => {
     navigate(`/booking/${id}`);
   };
 
-  const formattedOrders: Order[] = useMemo(
-    () => orders.map((order) => formatObjectIn(order)),
-    [orders],
+  const formattedOrders: Order[] = orders.map((order) =>
+    formatObjectIn(order, i18n.language),
   );
 
   return (

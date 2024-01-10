@@ -24,11 +24,11 @@ interface Props {
 }
 
 const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showError, showSuccess } = useContext(ToastContext);
 
   if (initialValues) {
-    initialValues = formatObjectIn(initialValues);
+    initialValues = formatObjectIn(initialValues, i18n.language);
   }
 
   const validationSchema = Yup.object({

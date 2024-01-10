@@ -26,30 +26,21 @@ const OrdersTable: React.FC<Props> = observer(
   ({ orders, first, onPageChange, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
-    // const [selectedObject, setSelectedObject] = useState<RentalObject | null>(null);
     const filters = ordersStore.filters;
 
-    // const handleViewObject = (object: RentalObject) => {
-    //   setSelectedObject(object);
-    //   navigate(`objects/${object.id}`);
-    // };
+    const handleViewOrder = (object: Order) => {
+      navigate(`/booking/${object.id}`);
+    };
 
-    // const handleEditObject = (object: RentalObject) => {
-    //   navigate(`objects/${object.id}/edit`);
-    // };
-
-    const formattedObjects = orders.map((order) => formatObjectIn(order));
+    const formattedObjects = orders.map((order) =>
+      formatObjectIn(order, i18n.language),
+    );
 
     return (
       <DataTable
         className='tableWithHeader'
         removableSort
         value={formattedObjects}
-        selectionMode='single'
-        // selection={selectedObject}
-        // onSelectionChange={(e) => {
-        //   handleViewObject(e.value as RentalObject);
-        // }}
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSortChange}
@@ -98,7 +89,7 @@ const OrdersTable: React.FC<Props> = observer(
               size='small'
               rounded
               severity='secondary'
-              // onClick={() => handleEditObject(rowData)}
+              onClick={() => handleViewOrder(rowData)}
             />
           )}
         />

@@ -11,9 +11,9 @@ interface Props {
 }
 
 const TrainerInfo: React.FC<Props> = ({ data }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  data = formatObjectIn(data);
+  data = formatObjectIn(data, i18n.language);
 
   return (
     <div className={styles.container}>

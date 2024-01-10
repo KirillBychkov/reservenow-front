@@ -8,7 +8,6 @@ import styles from './status.module.scss';
 import classNames from 'classnames';
 import { User } from '@/models/User';
 import { useState } from 'react';
-import { formatDate } from '@/utils/formatters/formatDate';
 import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 import usersStore from '@/store/usersStore';
 import { observer } from 'mobx-react-lite';
@@ -28,6 +27,9 @@ const UsersTable: React.FC<Props> = observer(
   ({ users, onPageChange, first, sortField, sortOrder, onSortChange }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
+
+    console.log(i18n.language);
+
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const filters = usersStore.getFilters();
 
@@ -40,7 +42,9 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: User[] = users.map((user) => formatObjectIn(user));
+    const formattedUsers: User[] = users.map((user) =>
+      formatObjectIn(user, i18n.language),
+    );
 
     return (
       <div>
@@ -89,14 +93,7 @@ const UsersTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column
-            header={t('dates.createdAt')}
-            sortable
-            sortField='created_at'
-            body={({ created_at }: User) =>
-              formatDate(created_at, i18n.language)
-            }
-          />
+          <Column header={t('dates.createdAt')} field='created_at' sortable />
           <Column
             header={t('actions.actions')}
             body={(rowData: Account) => (

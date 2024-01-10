@@ -26,7 +26,7 @@ import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 const ClientPage = observer(() => {
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { data: client } = useFetch<Client>(
     () => clientStore.getClientById(parseInt(id || '0')),
@@ -88,7 +88,7 @@ const ClientPage = observer(() => {
 
       <ViewStatsLayout
         LeftSideComponent={
-          <LeftSideComponent client={formatObjectIn(client)} />
+          <LeftSideComponent client={formatObjectIn(client, i18n.language)} />
         }
         RightSideComponent={
           <RightSide

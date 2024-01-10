@@ -17,15 +17,11 @@ const Organizations: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
 
-  const {
-    data: organizations,
-    isLoading,
-    errorMsg,
-  } = useFetch<Organization[]>(organizationStore.getOrganizations);
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
+  const { data: organizations, isLoading } = useFetch<Organization[]>(
+    organizationStore.getOrganizations,
+    [],
+    { onError: showError },
+  );
 
   const organizationList = organizations?.map((org: Organization) => (
     <OrganizationCard organization={org} key={org.id} />

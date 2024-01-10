@@ -18,21 +18,14 @@ const ManageUser: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const {
-    data: initialValues,
-    isLoading,
-    errorMsg,
-  } = useFetch<PlainUserInfo>(
+  const { data: initialValues, isLoading } = useFetch<PlainUserInfo>(
     () =>
       id
         ? usersStore.getPlainUserInfo(parseInt(id)) // if id is defined, get user info (Update mode)
         : Promise.resolve({ data: {} as PlainUserInfo, error: '' }), // else, return empty object (Add mode)
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.manageUser}>

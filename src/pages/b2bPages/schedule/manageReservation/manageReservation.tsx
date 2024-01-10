@@ -15,29 +15,28 @@ import ManageReservationForm from '@/components/b2bclient/forms/manageReservatio
 const ManageReservation = observer(() => {
   const { t } = useTranslation();
   const { id } = useParams();
-  const {
-    data: order,
-    isLoading,
-    errorMsg,
-  } = useFetch(
+  const { showError } = useContext(ToastContext);
+  const { data: order, isLoading } = useFetch(
     () =>
       id
         ? ordersStore.getOrderById(parseInt(id || '0'))
         : Promise.resolve({ data: null, error: '' }),
     [id],
+    {
+      onError(err) {
+        showError(err);
+        navigate('/schedule');
+      },
+    },
   );
-  const { showError } = useContext(ToastContext);
-  const navigate = useNavigate()
-
-  if (errorMsg) {
-    showError(errorMsg);
-    navigate('/schedule');
-  }
+  const navigate = useNavigate();
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.pageBody}>
       <Flex options={{ direction: 'column', gap: 0.625 }}>
-        <h3 className='heading heading-3'>{id ? t('schedule.editReservation') : t('schedule.addReservation')}</h3>
+        <h3 className='heading heading-3'>
+          {id ? t('schedule.editReservation') : t('schedule.addReservation')}
+        </h3>
         <BreadCrumb
           home={{ icon: <Home color='gray' />, url: '/' }}
           model={[

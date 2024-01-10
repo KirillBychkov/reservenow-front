@@ -23,18 +23,11 @@ const Requests: React.FC = observer(() => {
 
   const { sortField, sortOrder, handleSort, sort } = useSort();
 
-  const {
-    data: supportRecords,
-    isLoading,
-    errorMsg,
-  } = useFetch<Support[]>(
+  const { data: supportRecords, isLoading } = useFetch<Support[]>(
     () => supportRecordsStore.getSupportRecords({ limit, skip, search, sort }),
     [limit, skip, search, sort],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.requests}>

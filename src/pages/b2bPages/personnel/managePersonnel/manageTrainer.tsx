@@ -18,21 +18,14 @@ const ManageTrainer: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const {
-    data: trainer,
-    isLoading,
-    errorMsg,
-  } = useFetch<Trainer>(
+  const { data: trainer, isLoading } = useFetch<Trainer>(
     () =>
       id
         ? personnelStore.getTrainer(parseInt(id))
         : Promise.resolve({ data: {} as Trainer, error: '' }),
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.addPersonnel}>

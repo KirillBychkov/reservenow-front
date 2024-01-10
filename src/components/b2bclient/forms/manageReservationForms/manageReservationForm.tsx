@@ -103,11 +103,9 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
   };
 
   const { data, invokeFunction } = useFetch(
-    () =>
-      clientStore.getClientByPhone(formatPhoneOut(formik.values.phone)),
+    () => clientStore.getClientByPhone(formatPhoneOut(formik.values.phone)),
     [],
-    true,
-    setClientValues,
+    { disabled: true, onSuccess: setClientValues },
   );
 
   const formattedPaymentMethod = useMemo(() => {

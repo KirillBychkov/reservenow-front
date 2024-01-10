@@ -28,18 +28,11 @@ const ViewClient: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const {
-    data: initialValues,
-    isLoading,
-    errorMsg,
-  } = useFetch<PlainUserInfo>(
+  const { data: initialValues, isLoading } = useFetch<PlainUserInfo>(
     () => usersStore.getPlainUserInfo(parseInt(id || '0')),
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   const userInfoList = useMemo(() => {
     if (!initialValues) return null;

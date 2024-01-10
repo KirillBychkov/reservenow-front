@@ -18,21 +18,14 @@ const ManageObject: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id, objectId } = useParams();
 
-  const {
-    data: object,
-    isLoading,
-    errorMsg,
-  } = useFetch(
+  const { data: object, isLoading } = useFetch(
     () =>
       objectId
         ? objectsStore.getRentalObject(parseInt(objectId || '0'))
         : Promise.resolve({ data: {} as RentalObject, error: '' }),
     [objectId],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.addObject}>

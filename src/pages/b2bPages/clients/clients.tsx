@@ -1,19 +1,19 @@
-import ToastContext from "@/context/toast";
-import useFetch from "@/hooks/useFetch";
-import usePaginate from "@/hooks/usePaginate";
-import { useSort } from "@/hooks/useSort";
-import { Client } from "@/models/Client";
-import clientStore from "@/store/ClientStore";
-import { observer } from "mobx-react-lite"
-import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import ToastContext from '@/context/toast';
+import useFetch from '@/hooks/useFetch';
+import usePaginate from '@/hooks/usePaginate';
+import { useSort } from '@/hooks/useSort';
+import { Client } from '@/models/Client';
+import clientStore from '@/store/ClientStore';
+import { observer } from 'mobx-react-lite';
+import { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import styles from './clients.module.scss';
-import Searchbar from "@/components/searchbar/searchbar";
-import Button from "@/components/UI/buttons/button";
-import { Plus } from "@blueprintjs/icons";
-import { ProgressSpinner } from "primereact/progressspinner";
-import ClientsTable from "@/components/tables/clientsTable";
+import Searchbar from '@/components/searchbar/searchbar';
+import Button from '@/components/UI/buttons/button';
+import { Plus } from '@blueprintjs/icons';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import ClientsTable from '@/components/tables/clientsTable';
 
 const Clients = observer(() => {
   const { t } = useTranslation();
@@ -21,22 +21,13 @@ const Clients = observer(() => {
   const { showError } = useContext(ToastContext);
   const [search, setSearch] = useState('');
   const { sort, sortField, sortOrder, handleSort } = useSort();
-  const { limit, skip, first, onPageChange } = usePaginate(
-    clientStore.filters,
-  );
-  const {
-    data: clients,
-    isLoading,
-    errorMsg,
-  } = useFetch<Client[]>(
+  const { limit, skip, first, onPageChange } = usePaginate(clientStore.filters);
+  const { data: clients, isLoading } = useFetch<Client[]>(
     () => clientStore.getClients({ limit, skip, search, sort }),
     [limit, skip, search, sort],
+    { onError: showError },
   );
   const isClientsEmpty = clients && clients.length === 0 && !isLoading;
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.pageBody}>
@@ -47,7 +38,7 @@ const Clients = observer(() => {
           {t('clients.add')}
         </Button>
       </div>
-    
+
       {isLoading && (
         <div className={styles.content}>
           <ProgressSpinner />
@@ -77,6 +68,6 @@ const Clients = observer(() => {
       )}
     </div>
   );
-})
+});
 
-export default Clients
+export default Clients;

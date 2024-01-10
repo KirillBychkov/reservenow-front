@@ -18,21 +18,14 @@ const ManageManager: React.FC = observer(() => {
   const { showError } = useContext(ToastContext);
   const { id } = useParams();
 
-  const {
-    data: manager,
-    isLoading,
-    errorMsg,
-  } = useFetch<Manager>(
+  const { data: manager, isLoading } = useFetch<Manager>(
     () =>
       id
         ? personnelStore.getManager(parseInt(id))
         : Promise.resolve({ data: {} as Manager, error: '' }),
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.addPersonnel}>

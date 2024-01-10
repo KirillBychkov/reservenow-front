@@ -17,22 +17,15 @@ const ManageEquipment = observer(() => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const {
-    data: initialValues,
-    isLoading,
-    errorMsg,
-  } = useFetch<Equipment>(
+  const { data: initialValues, isLoading } = useFetch<Equipment>(
     () =>
       id
         ? equipmentStore.getEquipmentById(parseInt(id))
         : Promise.resolve({ data: {} as Equipment, error: '' }),
     [id],
+    { onError: showError },
   );
   const isEditingMode = id && initialValues;
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <Flex

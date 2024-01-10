@@ -13,11 +13,16 @@ interface UseFetchResult<T> {
   invokeFunction: () => void,
 }
 
+interface Options<T> {
+  disabled?: boolean,
+  onSuccess?: (data: T) => void
+  onError?: (err: string) => void
+}
+
 function useFetch<T>(
   fetchFunction: FetchFunction<T>,
   dependencies?: any[],
-  disabled?: boolean,
-  onSuccess?: (data: T) => void
+  options?: Options<T>
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,16 +34,17 @@ function useFetch<T>(
     fetchFunction().then((data) => {
       if (data.error) {
         setError(data.error);
+        options?.onError && options.onError(data.error);
       } else {
         setData(data.data);
-        onSuccess && onSuccess(data.data);
+        options?.onSuccess && options.onSuccess(data.data);
       }
       setIsLoading(false);
     });
   }
 
   useEffect(() => {
-    if (disabled) {
+    if (options?.disabled) {
       return;
     }
     invokeFunction()

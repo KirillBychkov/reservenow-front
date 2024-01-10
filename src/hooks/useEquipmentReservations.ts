@@ -79,7 +79,12 @@ export const useEquipmentReservations = (
     });
   };
 
+  const clearAll = () => {
+    setEquipmentReservations([])
+  }
+
   return {
+    clearAll,
     options,
     handleDeleteReservation,
     handleChangeReservationData,

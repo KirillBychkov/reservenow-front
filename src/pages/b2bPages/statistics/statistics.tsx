@@ -97,11 +97,14 @@ const Statistics = observer(() => {
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
     [],
-    false,
-    (data) => data[0]?.id && setSelectedOrganizationId(data[0]?.id),
+    {
+      disabled: false,
+      onSuccess: (data) =>
+        data[0]?.id && setSelectedOrganizationId(data[0]?.id),
+    },
   );
 
-  const { data: statistics, errorMsg } = useFetch<OrganizationStatistics[]>(
+  const { data: statistics } = useFetch<OrganizationStatistics[]>(
     () =>
       selectedOrganizationId
         ? organizationStore.getOrganizationStatistics(
@@ -114,11 +117,8 @@ const Statistics = observer(() => {
             error: '',
           }),
     [selectedOrganizationId, startDate, endDate],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   if (!organizations || (selectedOrganizationId && !statistics)) {
     return <ProgressSpinner />;

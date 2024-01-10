@@ -19,18 +19,11 @@ const ViewManager: React.FC = observer(() => {
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
 
-  const {
-    data: manager,
-    isLoading,
-    errorMsg,
-  } = useFetch<Manager>(
+  const { data: manager, isLoading } = useFetch<Manager>(
     () => personnelStore.getManager(parseInt(id || '0')),
     [id],
+    { onError: showError },
   );
-
-  if (errorMsg) {
-    showError(errorMsg);
-  }
 
   return (
     <div className={styles.viewManager}>
@@ -38,17 +31,17 @@ const ViewManager: React.FC = observer(() => {
         {`${manager?.first_name || ''} ${manager?.last_name || ''}`}
       </h3>
       <div className={styles.heading}>
-      <BreadCrumb
-        home={{ icon: <Home color='gray' />, url: '/' }}
-        model={[
-          { label: t('personnel.personnel'), url: '/personnel' },
-          {
-            label: `${manager?.id}`,
-            url: `/personnel/manager/${manager?.id}`,
-          },
-        ]}
-      />
-      <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
+        <BreadCrumb
+          home={{ icon: <Home color='gray' />, url: '/' }}
+          model={[
+            { label: t('personnel.personnel'), url: '/personnel' },
+            {
+              label: `${manager?.id}`,
+              url: `/personnel/manager/${manager?.id}`,
+            },
+          ]}
+        />
+        <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
       </div>
       {isLoading || !manager ? (
         <ProgressSpinner />

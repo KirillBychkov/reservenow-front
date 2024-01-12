@@ -172,6 +172,37 @@ class ClientStore {
       };
     }
   };
+
+  exportClients = async (
+    filters: Omit<Filters, 'total'>,
+  ): Promise<ResponseOrError<string>> => {
+    try {
+      const response = await ClientService.exportClient(filters);
+
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return { data: '', error: 'An error occurred while exporting clients.' };
+    }
+  };
+
+  initiateExport = async (filters: Omit<Filters, 'total'>) => {
+    try {
+      const response = await this.exportClients(filters);
+
+      const blobUrl = URL.createObjectURL(new Blob([response.data]));
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = 'clients.xlsx'; // Provide a default file name
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
 }
 
 const clientStore = new ClientStore();

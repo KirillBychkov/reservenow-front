@@ -66,4 +66,20 @@ export class OrderService {
   static async getOrdersWithTrainers(): Promise<AxiosResponse<Order[]>> {
     return $api.get('order/withTrainer');
   }
+
+  static async exportOrder({
+    limit,
+    skip,
+    search,
+    sort,
+  }: Omit<Filters, 'total'>): Promise<AxiosResponse> {
+    return $api.get(
+      `/order/export?limit=${limit}&skip=${skip}${
+        search ? `&search=${search}` : ''
+      }${sort ? `&sort=${sort}` : ''}`,
+      {
+        responseType: 'blob',
+      },
+    );
+  }
 }

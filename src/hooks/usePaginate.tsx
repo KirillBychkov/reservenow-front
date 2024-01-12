@@ -17,7 +17,7 @@ const usePaginate = ({ limit }: Pick<Filters, 'limit'>) => {
     setFirst(event.first);
   };
 
-  return { limit: fallBackLimit, skip, setSkip, first, onPageChange };
+  return { limit: fallBackLimit, skip, first, onPageChange };
 };
 
 export default usePaginate;

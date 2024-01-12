@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import styles from './clients.module.scss';
 import Searchbar from '@/components/searchbar/searchbar';
 import Button from '@/components/UI/buttons/button';
-import { Plus } from '@blueprintjs/icons';
+import { Export, Plus } from '@blueprintjs/icons';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ClientsTable from '@/components/tables/clientsTable';
+import Flex from '@/components/UI/layout/flex';
 
 const Clients = observer(() => {
   const { t } = useTranslation();
@@ -34,9 +35,20 @@ const Clients = observer(() => {
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
         <Searchbar setSearch={setSearch} />
-        <Button onClick={() => navigate('add')} icon={<Plus color='white' />}>
-          {t('clients.add')}
-        </Button>
+        <Flex options={{ gap: 1 }}>
+          <Button
+            icon={<Export color='white' />}
+            severity='secondary'
+            onClick={() =>
+              clientStore.initiateExport({ limit, skip, search, sort })
+            }
+          >
+            {t('actions.export')}
+          </Button>
+          <Button onClick={() => navigate('add')} icon={<Plus color='white' />}>
+            {t('clients.add')}
+          </Button>
+        </Flex>
       </div>
 
       {isLoading && (

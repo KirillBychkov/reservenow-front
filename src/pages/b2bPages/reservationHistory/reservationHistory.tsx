@@ -15,6 +15,7 @@ import ToastContext from '@/context/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
+import { Export } from '@blueprintjs/icons';
 
 const ReservationHistory = observer(() => {
   const navigate = useNavigate();
@@ -86,9 +87,20 @@ const ReservationHistory = observer(() => {
             />
             <Searchbar setSearch={setSearch} />
           </Flex>
-          <Button onClick={() => navigate('/schedule/add')}>
-            {t('reservationHistory.addReservation')}
-          </Button>
+          <Flex options={{ gap: 1 }}>
+            <Button
+              icon={<Export color='white' />}
+              severity='secondary'
+              onClick={() =>
+                ordersStore.initiateExport({ limit, skip, search, sort })
+              }
+            >
+              {t('actions.export')}
+            </Button>
+            <Button onClick={() => navigate('/schedule/add')}>
+              {t('reservationHistory.addReservation')}
+            </Button>
+          </Flex>
         </Flex>
       </Flex>
 

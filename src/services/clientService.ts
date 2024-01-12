@@ -48,6 +48,22 @@ export default class ClientService {
     return $api.patch(`/client/${id}`, client);
   }
 
+  static async exportClient({
+    limit,
+    skip,
+    search,
+    sort,
+  }: Omit<Filters, 'total'>): Promise<AxiosResponse> {
+    return $api.get(
+      `/client/export?limit=${limit}&skip=${skip}${
+        search ? `&search=${search}` : ''
+      }${sort ? `&sort=${sort}` : ''}`,
+      {
+        responseType: 'blob',
+      },
+    );
+  }
+
   static deleteClient(id: number): Promise<AxiosResponse> {
     return $api.delete(`/client/${id}`);
   }

@@ -44,7 +44,6 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
     address: Yup.string().required(t('invalid.required')),
     price: Yup.number().required(t('invalid.required')),
   });
-  // console.log(initialValues);
 
   const workingHours = transformWorkingHours<RentalObject>(initialValues);
 

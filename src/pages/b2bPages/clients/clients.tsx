@@ -5,7 +5,7 @@ import { useSort } from '@/hooks/useSort';
 import { Client } from '@/models/Client';
 import clientStore from '@/store/ClientStore';
 import { observer } from 'mobx-react-lite';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './clients.module.scss';
@@ -15,14 +15,17 @@ import { Export, Plus } from '@blueprintjs/icons';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import ClientsTable from '@/components/tables/clientsTable';
 import Flex from '@/components/UI/layout/flex';
+import useSearch from '@/hooks/useSearch';
 
 const Clients = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { showError } = useContext(ToastContext);
-  const [search, setSearch] = useState('');
+
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(clientStore.filters);
+  const { search, handleSearch } = useSearch(onPageChange);
+
   const { data: clients, isLoading } = useFetch<Client[]>(
     () => clientStore.getClients({ limit, skip, search, sort }),
     [limit, skip, search, sort],
@@ -34,7 +37,7 @@ const Clients = observer(() => {
     <div className={styles.pageBody}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={setSearch} />
+        <Searchbar setSearch={handleSearch} />
         <Flex options={{ gap: 1 }}>
           <Button
             icon={<Export color='white' />}

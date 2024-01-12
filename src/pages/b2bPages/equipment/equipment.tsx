@@ -3,7 +3,7 @@ import { Equipment } from '@/models/Equipment';
 import styles from './equipment.module.scss';
 import equipmentStore from '@/store/equipmentStore';
 import { useTranslation } from 'react-i18next';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Searchbar from '@/components/searchbar/searchbar';
 import { Plus } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -14,16 +14,19 @@ import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
 import { EquipmentTable } from '@/components/tables/equipmentTable';
 import ToastContext from '@/context/toast';
+import useSearch from '@/hooks/useSearch';
 
 const Equipment: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { showError } = useContext(ToastContext);
-  const [search, setSearch] = useState('');
+
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(
     equipmentStore.filters,
   );
+  const { search, handleSearch } = useSearch(onPageChange);
+
   const { data: equipment, isLoading } = useFetch<Equipment[]>(
     () => equipmentStore.getEquipment({ limit, skip, search, sort }),
     [limit, skip, search, sort],
@@ -35,7 +38,7 @@ const Equipment: React.FC = observer(() => {
     <div className={styles.equipment}>
       <h3 className='heading heading-3'>{t('equipment.equipment')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={setSearch} />
+        <Searchbar setSearch={handleSearch} />
         <Button onClick={() => navigate('add')} icon={<Plus color='white' />}>
           {t('actions.addEquipment')}
         </Button>

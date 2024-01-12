@@ -28,8 +28,6 @@ const UsersTable: React.FC<Props> = observer(
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 
-    console.log(i18n.language);
-
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const filters = usersStore.getFilters();
 

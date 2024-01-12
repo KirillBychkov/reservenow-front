@@ -10,12 +10,14 @@ const usePaginate = ({ limit }: Pick<Filters, 'limit'>) => {
     setSkip(page * fallBackLimit);
   };
 
-  const onPageChange = (event: PaginatorPageChangeEvent) => {
+  const onPageChange = (
+    event: Pick<PaginatorPageChangeEvent, 'page' | 'first'>,
+  ) => {
     handleSetPage(event.page);
     setFirst(event.first);
   };
 
-  return { limit: fallBackLimit, skip, first, onPageChange };
+  return { limit: fallBackLimit, skip, setSkip, first, onPageChange };
 };
 
 export default usePaginate;

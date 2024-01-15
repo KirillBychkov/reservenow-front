@@ -4,7 +4,7 @@ import useFetch from '@/hooks/useFetch';
 import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './viewObject.module.scss';
@@ -21,15 +21,17 @@ import { observer } from 'mobx-react-lite';
 import { useSort } from '@/hooks/useSort';
 import getObjectsStatsData from './getObjectsStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
+import useSearch from '@/hooks/useSearch';
 
 const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
-  const [search, setSearch] = useState('');
+
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
+  const { search, handleSearch } = useSearch(onPageChange);
 
   const { data: object, isLoading } = useFetch<RentalObject>(
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
@@ -89,7 +91,7 @@ const ViewObject: React.FC = observer(() => {
               <RightSide
                 statCardsData={statsData}
                 heading={t('orders.reservationHistory')}
-                setSearch={setSearch}
+                setSearch={handleSearch}
               />
             }
             Table={

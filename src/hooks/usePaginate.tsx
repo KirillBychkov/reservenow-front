@@ -10,7 +10,9 @@ const usePaginate = ({ limit }: Pick<Filters, 'limit'>) => {
     setSkip(page * fallBackLimit);
   };
 
-  const onPageChange = (event: PaginatorPageChangeEvent) => {
+  const onPageChange = (
+    event: Pick<PaginatorPageChangeEvent, 'page' | 'first'>,
+  ) => {
     handleSetPage(event.page);
     setFirst(event.first);
   };

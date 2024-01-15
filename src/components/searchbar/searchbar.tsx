@@ -7,9 +7,10 @@ import { Button } from 'primereact/button';
 
 interface Props {
   setSearch: (value: string) => void;
+  searchPlaceholder?: string;
 }
 
-const Searchbar: React.FC<Props> = ({ setSearch }) => {
+const Searchbar: React.FC<Props> = ({ setSearch, searchPlaceholder }) => {
   const { t } = useTranslation();
   const [value, setValue] = React.useState('');
 
@@ -26,7 +27,7 @@ const Searchbar: React.FC<Props> = ({ setSearch }) => {
           <Search color='gray'></Search>
         </i>
         <InputText
-          placeholder={t('actions.search')}
+          placeholder={searchPlaceholder || t('actions.search')}
           className={styles.input}
           value={value}
           onChange={(e) => setValue(e.target.value)}

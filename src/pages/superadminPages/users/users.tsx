@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './users.module.scss';
 import { Plus, Export } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
@@ -14,17 +14,16 @@ import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import usePaginate from '@/hooks/usePaginate';
 import { useSort } from '@/hooks/useSort';
+import useSearch from '@/hooks/useSearch';
 
 const Users: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
 
-  const [search, setSearch] = useState('');
-
   const { sortField, sortOrder, handleSort, sort } = useSort();
-
   const { limit, skip, first, onPageChange } = usePaginate(usersStore.filters);
+  const { search, handleSearch } = useSearch(onPageChange);
 
   const { data: users, isLoading } = useFetch<User[]>(
     () =>
@@ -42,7 +41,7 @@ const Users: React.FC = observer(() => {
     <div className={styles.users}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={setSearch} />
+        <Searchbar setSearch={handleSearch} />
         <div className={styles.buttonGroup}>
           <Button
             icon={<Export color='white' />}

@@ -5,7 +5,7 @@ import { Home } from '@blueprintjs/icons';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -21,15 +21,17 @@ import usePaginate from '@/hooks/usePaginate';
 import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 import Button from '@/components/UI/buttons/button';
 import getTrainersStatsData from './getTrainersStatsData';
+import useSearch from '@/hooks/useSearch';
 
 const ViewTrainer: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const [search, setSearch] = useState('');
+
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
+  const { search, handleSearch } = useSearch(onPageChange);
 
   const { data: trainer, isLoading } = useFetch<Trainer>(
     () => personnelStore.getTrainer(parseInt(id || '0')),
@@ -79,7 +81,7 @@ const ViewTrainer: React.FC = observer(() => {
           RightSideComponent={
             <RightSide
               heading={t('orders.reservationHistory')}
-              setSearch={setSearch}
+              setSearch={handleSearch}
               statCardsData={statsData}
             />
           }

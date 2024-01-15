@@ -6,7 +6,7 @@ import { Client } from '@/models/Client';
 import clientStore from '@/store/ClientStore';
 import { Home } from '@blueprintjs/icons';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './clientPage.module.scss';
@@ -22,6 +22,7 @@ import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
 import getClientStatsData from './getClientStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
+import useSearch from '@/hooks/useSearch';
 
 const ClientPage = observer(() => {
   const { id } = useParams();
@@ -33,11 +34,12 @@ const ClientPage = observer(() => {
     [id],
     { onError: showError },
   );
-  const [search, setSearch] = useState('');
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(
     clientStore.ordersFilters,
   );
+  const { search, handleSearch } = useSearch(onPageChange);
+
   const { data: orders, isLoading: ordersLoading } = useFetch<Order[]>(
     () =>
       clientStore.getClientOrders(parseInt(id || '0'), {
@@ -93,7 +95,7 @@ const ClientPage = observer(() => {
         RightSideComponent={
           <RightSide
             heading={t('clients.ordersHistory')}
-            setSearch={setSearch}
+            setSearch={handleSearch}
             statCardsData={clientStatsData}
           />
         }

@@ -16,14 +16,17 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { Export } from '@blueprintjs/icons';
+import useSearch from '@/hooks/useSearch';
 
 const ReservationHistory = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
-  const [search, setSearch] = useState('');
+
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
+  const { search, handleSearch } = useSearch(onPageChange);
+
   const [startDate, setStartDate] = useState('');
   const [endDate] = useState(new Date(new Date().getTime()).toISOString());
   const { data: orders, isLoading } = useFetch<Order[]>(
@@ -85,7 +88,7 @@ const ReservationHistory = observer(() => {
               }}
               options={dateSpanOptions}
             />
-            <Searchbar setSearch={setSearch} />
+            <Searchbar setSearch={handleSearch} />
           </Flex>
           <Flex options={{ gap: 1 }}>
             <Button

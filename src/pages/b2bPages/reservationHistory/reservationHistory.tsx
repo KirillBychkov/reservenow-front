@@ -17,6 +17,7 @@ import { observer } from 'mobx-react-lite';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { Export } from '@blueprintjs/icons';
 import useSearch from '@/hooks/useSearch';
+import { Calendar } from '@/components/UI/calendar/calendar';
 
 const ReservationHistory = observer(() => {
   const navigate = useNavigate();
@@ -26,9 +27,15 @@ const ReservationHistory = observer(() => {
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);
-
-  const [startDate, setStartDate] = useState('');
-  const [endDate] = useState(new Date(new Date().getTime()).toISOString());
+  const [dates, setDates] = useState<Date[] | null>(null);
+  const { startDate, endDate } = useMemo(() => {
+    const isFirstDateNotNull = dates !== null && dates[0] !== null;
+    const isSecondDateNotNull = dates !== null && dates[1] !== null;
+    return {
+      startDate: isFirstDateNotNull ? dates[0].toISOString() : undefined,
+      endDate: isSecondDateNotNull ? dates[1].toISOString() : undefined,
+    };
+  }, [dates]);
   const { data: orders, isLoading } = useFetch<Order[]>(
     () =>
       ordersStore.getOrders(
@@ -52,24 +59,18 @@ const ReservationHistory = observer(() => {
 
   const dateSpanOptions = useMemo(
     () => [
-      { label: t('timeRanges.allTime'), value: '' },
+      { label: t('timeRanges.allTime'), value: null },
       {
         label: t('timeRanges.30days'),
-        value: new Date(
-          new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
-        ).toISOString(),
+        value: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
       },
       {
         label: t('timeRanges.7days'),
-        value: new Date(
-          new Date().getTime() - 7 * 24 * 60 * 60 * 1000,
-        ).toISOString(),
+        value: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
       },
       {
         label: t('timeRanges.24hours'),
-        value: new Date(
-          new Date().getTime() - 24 * 60 * 60 * 1000,
-        ).toISOString(),
+        value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
       },
     ],
     [t],
@@ -82,11 +83,20 @@ const ReservationHistory = observer(() => {
         <Flex options={{ align: 'center', justify: 'space-between' }}>
           <Flex options={{ align: 'center', gap: 1 }}>
             <SelectButton
-              value={startDate}
+              value={dates ? dates[0] : null}
               onChange={(e) => {
-                setStartDate(e.value);
+                if (e.value === null) {
+                  setDates(null);
+                } else {
+                  setDates([e.value, new Date()]);
+                }
               }}
               options={dateSpanOptions}
+            />
+            <Calendar
+              placeholder={t('timeRanges.chooseDates')}
+              value={dates}
+              onChange={(e) => setDates(e.value as Date[])}
             />
             <Searchbar setSearch={handleSearch} />
           </Flex>

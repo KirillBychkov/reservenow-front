@@ -12,11 +12,15 @@ import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 import { useNavigate } from 'react-router-dom';
-import passwordStore from '@/store/passwordStore';
+import authStore from '@/store/authStore';
 
 const ActivateAccountForm: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const verifyToken = new URLSearchParams(window.location.search).get(
+    'verify_token',
+  );
 
   const validationSchema = Yup.object({
     password: Yup.string()
@@ -28,19 +32,30 @@ const ActivateAccountForm: React.FC = observer(() => {
       .required(t('invalid.required')),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      password: '',
-      confirmPassword: '',
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      const { confirmPassword } = values;
+  const initialValues = {
+    password: '',
+    confirmPassword: '',
+  };
 
-      await passwordStore.confirmPassword(confirmPassword);
-      passwordStore.isSuccess ? navigate('/signin') : null;
+  const resetForm = () => {
+    formik.resetForm();
+  };
+
+  const onSubmit = async (values: typeof initialValues) => {
+    const { confirmPassword } = values;
+
+    const res = await authStore.verify(confirmPassword, verifyToken);
+    if (res.successMsg) {
+      navigate('/signin');
       resetForm();
-    },
+      return;
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
   });
 
   return (

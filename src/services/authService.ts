@@ -18,8 +18,21 @@ export default class AuthService {
     return $api.get('/auth/user');
   }
 
-  static async verify(): Promise<AxiosResponse> {
-    return $api.get('/auth/verify');
+  static async verify(
+    new_password: string,
+    verify_token: string,
+  ): Promise<AxiosResponse> {
+    const headers = {
+      Authorization: `Bearer ${verify_token}`,
+    };
+
+    return $api.post(
+      '/auth/verify',
+      {
+        new_password,
+      },
+      { headers },
+    );
   }
 
   static async logout(): Promise<void> {

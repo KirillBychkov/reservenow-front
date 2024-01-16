@@ -38,7 +38,7 @@ const Schedule = observer(() => {
   const { data: organizations } = useFetch(
     () => organizationStore.getOrganizations(),
     [currentEventType],
-    currentEventType !== Events.Organizations,
+    { disabled: currentEventType !== Events.Organizations },
   );
 
   const orgOptions = useMemo(() => {
@@ -52,7 +52,7 @@ const Schedule = observer(() => {
     () =>
       objectsStore.getRentalObjects({ limit: 1000, skip: 0 }, currentOrg?.id),
     [currentOrg],
-    currentOrg === null,
+    { disabled: currentOrg === null },
   );
 
   const objOptions = useMemo(() => {
@@ -69,26 +69,27 @@ const Schedule = observer(() => {
         { rentalObjectId: currentObj?.id },
       ),
     [currentObj],
-    currentObj === null,
-    (orders) => {
-      const objectReservations = collectAllReservations(orders || []);
-      const events: Event[] = createEventsFromReservations(objectReservations);
+    {
+      disabled: currentObj === null,
+      onSuccess: (orders) => {
+        const objectReservations = collectAllReservations(orders || []);
+        const events: Event[] =
+          createEventsFromReservations(objectReservations);
 
-      setEvents(events);
+        setEvents(events);
+      },
     },
   );
 
-  useFetch(
-    () => ordersStore.getOrdersWithTrainers(),
-    [currentEventType],
-    currentEventType !== Events.Trainers,
-    (orders) => {
+  useFetch(() => ordersStore.getOrdersWithTrainers(), [currentEventType], {
+    disabled: currentEventType !== Events.Trainers,
+    onSuccess: (orders) => {
       const trainerReservations = collectAllReservations(orders || []);
       const events: Event[] = createEventsFromReservations(trainerReservations);
 
       setEvents(events);
     },
-  );
+  });
 
   const components = useMemo(
     () => ({

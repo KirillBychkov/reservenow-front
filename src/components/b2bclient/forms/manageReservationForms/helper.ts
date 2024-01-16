@@ -1,12 +1,12 @@
 import { EquipmentReservation } from '@/hooks/useEquipmentReservations';
 import { ObjectReservation } from '@/hooks/useObjectReservation';
 import { TrainerReservation } from '@/hooks/useTrainerReservation';
-import { Equipment } from '@/models/Equipment';
-import { RentalObject } from '@/models/RentalObject';
-import { Reservation } from '@/models/Reservation';
-import { Trainer } from '@/models/Trainer';
-import { CreateReservationDTO } from '@/models/requests/OrderRequests';
-import { formatObjectIn } from '@/utils/formatters/formatObject';
+import { checkErrorsInReservations } from '@/utils/reservations/checkErrors';
+import {
+  objectsOverlap,
+  trainersOverlap,
+} from '@/utils/reservations/checkTimeOverlap';
+import { getReservations } from '@/utils/reservations/getReservations';
 
 const getRentalTime = (startISO: string, endISO: string) => {
   const startDate = new Date(startISO);
@@ -60,184 +60,31 @@ export const getTotalSum = (
   return totalTrainersPrice + totalEquipmentPrice + totalObjectsPrice;
 };
 
-const isAnyEquipmentReservationErrors = (
-  equipmentReservation: EquipmentReservation[],
-) => {
-  for (let i = 0; i < equipmentReservation.length; i++) {
-    if (equipmentReservation[i].equipment === null) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-const isAnyTrainersReservationErrors = (
-  trainersReservation: TrainerReservation[],
-) => {
-  for (let i = 0; i < trainersReservation.length; i++) {
-    const { trainer, reservation_time_end, reservation_time_start } =
-      trainersReservation[i];
-
-    if (trainer === null) {
-      return true;
-    }
-
-    if (reservation_time_start === null || reservation_time_end === null) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-const isAnyObjectsReservationErrors = (
-  objectsReservation: ObjectReservation[],
-) => {
-  for (let i = 0; i < objectsReservation.length; i++) {
-    const { rental_object, reservation_time_end, reservation_time_start } =
-      objectsReservation[i];
-
-    if (rental_object === null) {
-      return true;
-    }
-
-    if (reservation_time_start === null || reservation_time_end === null) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-export const checkErrorsInReservations = (
+export const isAllReservationsValid = async (
   equipment: EquipmentReservation[],
   trainers: TrainerReservation[],
   objects: ObjectReservation[],
+  onOverlapError: (error: string) => void,
 ) => {
-  return (
-    isAnyEquipmentReservationErrors(equipment) ||
-    isAnyObjectsReservationErrors(objects) ||
-    isAnyTrainersReservationErrors(trainers)
-  );
-};
+  const reservations = getReservations(equipment, trainers, objects);
 
-export const getReservations = (
-  equipment: EquipmentReservation[],
-  trainers: TrainerReservation[],
-  objects: ObjectReservation[],
-): CreateReservationDTO[] => {
-  const formattedEquipmentReservations = equipment.map(
-    ({ equipment, description }) => ({
-      equipment_id: equipment?.id,
-      description,
-    }),
+  const isReservationErrors = checkErrorsInReservations(
+    equipment,
+    trainers,
+    objects,
   );
 
-  const formattedTrainerReservations: CreateReservationDTO[] = trainers.map(
-    ({
-      trainer,
-      reservation_time_end,
-      reservation_time_start,
-      description,
-    }) => ({
-      trainer_id: trainer?.id,
-      description: description || '',
-      reservation_time_end: reservation_time_end as string,
-      reservation_time_start: reservation_time_start as string,
-    }),
-  );
+  if (!reservations || isReservationErrors) {
+    return false;
+  }
 
-  const formattedObjectsReservations: CreateReservationDTO[] = objects.map(
-    ({
-      rental_object,
-      reservation_time_end,
-      reservation_time_start,
-      description,
-    }) => ({
-      rental_object_id: rental_object?.id,
-      description: description || '',
-      reservation_time_end: reservation_time_end as string,
-      reservation_time_start: reservation_time_start as string,
-    }),
-  );
+  const objMessage = await objectsOverlap(objects);
+  const trainersMessage = await trainersOverlap(trainers);
 
-  return [
-    ...formattedTrainerReservations,
-    ...formattedEquipmentReservations,
-    ...formattedObjectsReservations,
-  ];
-};
+  if (objMessage || trainersMessage) {
+    onOverlapError((objMessage || trainersMessage) as string);
+    return false;
+  }
 
-type ReservationsObject = {
-  equipment: EquipmentReservation[];
-  trainers: TrainerReservation[];
-  objects: ObjectReservation[];
-};
-
-const formatEquipmentReservationIn = (
-  reservation: Reservation,
-  language: string,
-): EquipmentReservation => {
-  return {
-    id: crypto.randomUUID(),
-    equipment: formatObjectIn(reservation.equipment as Equipment, language),
-    description: reservation.description,
-  };
-};
-
-const formatTrainerReservationIn = (
-  reservation: Reservation,
-  language: string,
-): TrainerReservation => {
-  return {
-    id: crypto.randomUUID(),
-    trainer: formatObjectIn(reservation.trainer as Trainer, language),
-    description: reservation.description || '',
-    reservation_time_end: reservation.reservation_time_end as string,
-    reservation_time_start: reservation.reservation_time_start as string,
-  };
-};
-
-const formatObjectReservationIn = (
-  reservation: Reservation,
-  language: string,
-): ObjectReservation => {
-  return {
-    id: crypto.randomUUID(),
-    rental_object: formatObjectIn(
-      reservation.rental_object as RentalObject,
-      language,
-    ),
-    description: reservation.description || '',
-    reservation_time_end: reservation.reservation_time_end as string,
-    reservation_time_start: reservation.reservation_time_start as string,
-  };
-};
-
-export const getInitialReservationValues = (
-  reservation: Reservation[],
-  language: string,
-) => {
-  const initialReservationsObject: ReservationsObject = {
-    equipment: [],
-    trainers: [],
-    objects: [],
-  };
-
-  return reservation.reduce((prev, current) => {
-    if (current.equipment) {
-      prev.equipment.push(formatEquipmentReservationIn(current, language));
-    }
-
-    if (current.rental_object) {
-      prev.objects.push(formatObjectReservationIn(current, language));
-    }
-
-    if (current.trainer) {
-      prev.trainers.push(formatTrainerReservationIn(current, language));
-    }
-
-    return prev;
-  }, initialReservationsObject);
+  return true;
 };

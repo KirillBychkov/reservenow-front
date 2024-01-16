@@ -125,7 +125,7 @@ const ObjectReservationSection = ({
   const { data: objects, isLoading } = useFetch(
     () => objectsStore.getRentalObjects({}, formik.values.organization?.id),
     [formik.values.organization],
-    formik.values.organization === null,
+    { disabled: formik.values.organization === null },
   );
 
   const objectOptions = useMemo(() => {
@@ -166,11 +166,11 @@ const ObjectReservationSection = ({
     const fromHours = e.target.value as number;
     const { date, endHours } = formik.values;
     const start = new Date(date?.setHours(fromHours) as number).toISOString();
+    onReservationTimeChange(id, {
+      start,
+      end: fromHours >= (endHours as number) ? null : undefined,
+    });
     if (fromHours >= (endHours as number)) {
-      onReservationTimeChange(id, {
-        start,
-        end: null,
-      });
       formik.setFieldValue('endHours', null);
     }
   };
@@ -291,7 +291,7 @@ const ObjectReservationSection = ({
               placeholder={t('schedule.form.chooseTime')}
               disabled={formik.values.date === null || isEditingMode}
               value={formik.values.startHours}
-              emptyMessage={t("schedule.organizationWorkingHoursNull")}
+              emptyMessage={t('schedule.organizationWorkingHoursNull')}
               options={
                 isWorkingDay
                   ? generateDropdownOptions(

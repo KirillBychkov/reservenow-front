@@ -76,6 +76,21 @@ class AuthStore {
     }
   }
 
+  async verify(
+    new_password: string,
+    verify_token: string | null,
+  ): Promise<SuccessOrError> {
+    if (!verify_token) {
+      return { successMsg: '', errorMsg: 'Error while changing password' };
+    }
+    try {
+      await AuthService.verify(new_password, verify_token);
+      return { successMsg: 'Password was successfully changed', errorMsg: '' };
+    } catch {
+      return { successMsg: '', errorMsg: 'Error while changing password' };
+    }
+  }
+
   /*
     UTILS 
   */

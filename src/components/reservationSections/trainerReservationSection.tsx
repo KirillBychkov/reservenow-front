@@ -135,11 +135,11 @@ const TrainerReservationSection = ({
     const { date, endHours } = formik.values;
     const start = new Date(date?.setHours(fromHours) as number).toISOString();
 
+    onReservationTimeChange(id, {
+      start,
+      end: fromHours >= (endHours as number) ? null : undefined,
+    });
     if (fromHours >= (endHours as number)) {
-      onReservationTimeChange(id, {
-        start,
-        end: null,
-      });
       formik.setFieldValue('endHours', null);
     }
   };

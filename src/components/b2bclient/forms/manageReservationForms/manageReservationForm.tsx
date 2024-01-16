@@ -24,23 +24,22 @@ import { OrderStatusOptions } from '@/types/enums/order';
 import ToastContext from '@/context/toast';
 import TrainerReservationSection from '@/components/reservationSections/trainerReservationSection';
 import useTrainerReservation from '@/hooks/useTrainerReservation';
-import {
-  checkErrorsInReservations,
-  getInitialReservationValues,
-  getReservations,
-  getTotalSum,
-} from './helper';
 import ObjectReservationSection from '@/components/reservationSections/objectReservationSection';
 import useObjectReservation from '@/hooks/useObjectReservation';
 import { Order } from '@/models/Order';
 import { createOrder, editOrder } from './submitHandlers';
+import {
+  getInitialReservationValues,
+  getReservations,
+} from '@/utils/reservations/getReservations';
+import { getTotalSum, isAllReservationsValid } from './helper';
 type Props = {
   initialOrder: Order | null;
 };
 
 const ManageReservationForm = ({ initialOrder }: Props) => {
   const { t, i18n } = useTranslation();
-  const { showError, showSuccess, showWarn } = useContext(ToastContext);
+  const { showError, showSuccess } = useContext(ToastContext);
   const { equipment, objects, trainers } = getInitialReservationValues(
     initialOrder?.reservations || [],
     i18n.language,
@@ -145,29 +144,27 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
     validationSchema,
     initialValues,
     onSubmit: async (values) => {
-      const reservations = getReservations(
+      const isValid = await isAllReservationsValid(
         equipmentReservations,
         trainerReservations,
         objectReservations,
+        showError,
       );
 
-      if (!reservations) {
-        return;
-      }
-
-      const reservationsErrorMessage = checkErrorsInReservations(
-        equipmentReservations,
-        trainerReservations,
-        objectReservations,
-      );
-
-      if (reservationsErrorMessage) {
+      if (!isValid) {
         return;
       }
 
       const { successMsg, errorMsg } = initialOrder?.id
         ? await editOrder(initialOrder.id, values)
-        : await createOrder(values, reservations);
+        : await createOrder(
+            values,
+            getReservations(
+              equipmentReservations,
+              trainerReservations,
+              objectReservations,
+            ),
+          );
 
       if (errorMsg) {
         showError(errorMsg);

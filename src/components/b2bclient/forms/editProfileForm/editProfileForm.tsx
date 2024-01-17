@@ -1,4 +1,3 @@
-import ModalContext from '@/context/modal';
 import { useFormik } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,17 +24,15 @@ type FormType = User & {
 };
 
 export const EditProfileForm = observer(({ initialValues }: Props) => {
-  const { showModal } = useContext(ModalContext);
+  const initialImage = initialValues.user?.image;
   const { t } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
-  const [image, setImage] = useState<string | null>(
-    initialValues.user?.image || null,
-  );
+  const [image, setImage] = useState<string | null>(initialImage || null);
   const [visible, setVisible] = useState(false);
 
   const handleReset = () => {
     formik.resetForm();
-    setImage(null);
+    setImage(initialImage || null);
   };
 
   const handleClose = () => {
@@ -44,13 +41,6 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
 
   const handleOpen = () => {
     setVisible(true);
-  };
-
-  const handleShowModalAndSubmit = async () => {
-    const res = await showModal(t('forms.areYouSure'));
-    if (res) {
-      formik.handleSubmit();
-    }
   };
 
   const validationSchema = Yup.object({
@@ -73,8 +63,8 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const file = await imageStringToFile(image);
-
+      const isAvatarChanged = image !== initialImage
+    
       const { successMsg, errorMsg } = await usersStore.updateUserFull(
         initialValues.user?.id as number,
         {
@@ -82,7 +72,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
           last_name: values.last_name,
           phone: values.phone,
         },
-        file,
+        isAvatarChanged ? await imageStringToFile(image) : undefined,
       );
 
       if (errorMsg) {
@@ -100,7 +90,8 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         {t('forms.overallInfo')}
       </h4>
 
-      <FormField label={t('forms.profilePhoto')}>
+      <Flex options={{direction: 'column', gap: 0.25}}>
+        <p className='heading heading-6'>{t('forms.profilePhoto')}</p>
         <Flex
           className={styles.photoContainer}
           options={{ direction: 'column', gap: 0.75 }}
@@ -120,7 +111,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
             </Button>
           )}
         </Flex>
-      </FormField>
+      </Flex>
 
       <FormField
         label={t('forms.firstName')}
@@ -184,12 +175,11 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         >
           {t('actions.cancel')}
         </Button>
-        <Button onClick={handleShowModalAndSubmit} fill className={styles.btn}>
+        <Button type='submit' fill className={styles.btn}>
           {t('actions.save')}
         </Button>
       </Flex>
 
-      {/* Fix cors */}
       <CroppImageModal
         visible={visible}
         onHide={handleClose}

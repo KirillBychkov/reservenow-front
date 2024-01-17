@@ -46,7 +46,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   return (
     <ModalContext.Provider value={{ showModal }}>
       <Dialog
-        header='Header'
+        header={t('forms.confirmation')}
         visible={visible}
         style={{ maxWidth: '38rem', width: '100%' }}
         onHide={onDeny}

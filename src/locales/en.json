@@ -112,7 +112,7 @@
   },
   "objects": {
     "objects": "Objects",
-    "id": "Number",
+    "id": "ID",
     "sportType": "Sport",
     "add": "Add object",
     "edit": "Edit object",
@@ -137,12 +137,12 @@
     "from": "From",
     "to": "To"
   },
-  "staff": {
-    "personnel": "staff",
+  "personnel": {
+    "personnel": "Personnel",
     "add": "Add personnel",
     "edit": "Edit personnel",
-    "select": "Select which staff you want to add",
-    "null": "There are currently no staff.",
+    "select": "Select which personnel you want to add",
+    "null": "There are currently no personnel.",
     "role": "Staffing role",
     "manager": "Manager",
     "trainer": "Trainer"
@@ -159,7 +159,7 @@
     "nonexistentEmail": "The user with this email does not exist"
   },
   "dates": {
-    "date": "date",
+    "date": "Date",
     "createdAt": "Date created",
     "updatedAt": "Date updated",
     "days": {
@@ -177,7 +177,7 @@
     "thisMonth": "This month"
   },
   "status": {
-    "pending": "pending",
+    "pending": "Pending",
     "active": "Active",
     "blocked": "Blocked",
     "deleted": "Deleted",
@@ -298,7 +298,7 @@
     "organizationLoad": "Organization load"
   },
   "schedule": {
-    "addReservation": "addReservation",
+    "addReservation": "Add reservation",
     "organizationsNull": "No organizations found",
     "trainersNull": "No trainers found",
     "objectsNull": "No objects found",
@@ -350,7 +350,7 @@
     "card": "Card"
   },
   "lang": {
-    "month": "month",
+    "month": "Month",
     "week": "Week",
     "day": "Day"
   },
@@ -368,7 +368,7 @@
       "status": "Status"
     },
     "reservationTable": {
-      "object": "object",
+      "object": "Object",
       "createdAt": "Date",
       "rentalTime": "Time",
       "total": "Total",
@@ -393,11 +393,11 @@
     }
   },
   "timeRanges": {
-    "allTime": "alltime",
+    "allTime": "All time",
     "30days": "30 days",
     "7days": "7 days",
     "24hours": "24 hours",
-    "chooseDates": "selectDates"
+    "chooseDates": "Select dates"
   },
   "faqBanner": {
     "faq": "FAQ",

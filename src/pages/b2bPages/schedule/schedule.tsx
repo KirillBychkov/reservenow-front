@@ -127,7 +127,7 @@ const Schedule = observer(() => {
             <CustomDropdown
               placeholder={
                 currentOrg?.name ||
-                t('schedule.form.objectSection.chooseObject')
+                t('schedule.form.objectSection.chooseOrganization')
               }
               onChange={(e) => {
                 setCurrentOrg(e.target.value.organization);
@@ -140,7 +140,7 @@ const Schedule = observer(() => {
             <CustomDropdown
               placeholder={
                 currentObj?.name ||
-                t('schedule.form.objectSection.chooseOrganization')
+                t('schedule.form.objectSection.chooseObject')
               }
               className={styles.dropdown}
               options={objOptions}

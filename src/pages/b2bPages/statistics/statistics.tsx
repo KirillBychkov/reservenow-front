@@ -9,7 +9,7 @@ import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TFunction, t } from 'i18next';
+import { TFunction } from 'i18next';
 import styles from './statistics.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -33,6 +33,7 @@ import TopObjectsTable from '@/components/b2bclient/tables/statisticsTables/topO
 import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topClientsTable';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
+import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
 
 type CustomTooltipProps = {
   payload?: any[];
@@ -63,22 +64,6 @@ function CustomTooltip({
   }
 }
 
-const dateSpanOptions = [
-  { label: t('timeRanges.allTime'), value: null },
-  {
-    label: t('timeRanges.30days'),
-    value: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
-  },
-  {
-    label: t('timeRanges.7days'),
-    value: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-  },
-  {
-    label: t('timeRanges.24hours'),
-    value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
-  },
-];
-
 const Statistics = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
@@ -97,8 +82,11 @@ const Statistics = observer(() => {
       disabled: false,
       onSuccess: (data) =>
         data[0]?.id && setSelectedOrganizationId(data[0]?.id),
+      onError: showError,
     },
   );
+
+  const dateSpanOptions = generateTimeSpanOptions(t);
 
   const { data: statistics } = useFetch<OrganizationStatistics[]>(
     () =>

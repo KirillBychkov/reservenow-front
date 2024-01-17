@@ -51,7 +51,7 @@
     "ordersNull": "Unfortunately, there is no customer reservation history yet"
   },
   "requests": {
-    "requests": "requests",
+    "requests": "Requests",
     "request": "Request",
     "null": "The request list is empty",
     "response": "Decision on the request",
@@ -220,8 +220,8 @@
     "create": "Create"
   },
   "states": {
-    "shown": "shown",
-    "of": "з",
+    "shown": "Shown",
+    "of": "of",
     "entries": "entries"
   },
   "contact-us": {

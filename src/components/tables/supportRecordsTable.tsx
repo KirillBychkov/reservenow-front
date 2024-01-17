@@ -8,10 +8,11 @@ import styles from './status.module.scss';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import supportRecordsStore from '@/store/supportRecordsStore';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import Paginator from '../UI/paginator/paginator';
 
 interface Props {
   supportRecords: Support[];
@@ -54,14 +55,6 @@ const SupportRecordsTable: React.FC<Props> = observer(
           lazy={true}
           footer={
             <Paginator
-              template={{
-                layout:
-                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-              }}
-              currentPageReportTemplate={`${t(
-                'states.showed',
-              )} {first} - {last} ${t('states.of')} {totalRecords}`}
-              style={{ justifyContent: 'flex-end' }}
               first={first}
               rows={supportRecordsStore.filters.limit}
               totalRecords={filters.total}

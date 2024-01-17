@@ -63,8 +63,8 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const isAvatarChanged = image !== initialImage
-    
+      const isAvatarChanged = image !== initialImage;
+
       const { successMsg, errorMsg } = await usersStore.updateUserFull(
         initialValues.user?.id as number,
         {
@@ -90,7 +90,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         {t('forms.overallInfo')}
       </h4>
 
-      <Flex options={{direction: 'column', gap: 0.25}}>
+      <Flex options={{ direction: 'column', gap: 0.25 }}>
         <p className='heading heading-6'>{t('forms.profilePhoto')}</p>
         <Flex
           className={styles.photoContainer}

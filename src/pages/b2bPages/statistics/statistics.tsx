@@ -9,7 +9,7 @@ import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
+import { TFunction, t } from 'i18next';
 import styles from './statistics.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -64,22 +64,18 @@ function CustomTooltip({
 }
 
 const dateSpanOptions = [
-  { label: 'Весь час', value: '' },
+  { label: t('timeRanges.allTime'), value: null },
   {
-    label: '30 днів',
-    value: new Date(
-      new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    label: t('timeRanges.30days'),
+    value: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
   },
   {
-    label: '7днів',
-    value: new Date(
-      new Date().getTime() - 7 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    label: t('timeRanges.7days'),
+    value: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
   },
   {
-    label: '24 години',
-    value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString(),
+    label: t('timeRanges.24hours'),
+    value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   },
 ];
 

@@ -29,6 +29,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const [image, setImage] = useState<string | null>(initialImage || null);
   const [visible, setVisible] = useState(false);
+  const isAvatarChanged = image !== initialImage;
 
   const handleReset = () => {
     formik.resetForm();
@@ -63,7 +64,6 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const isAvatarChanged = image !== initialImage;
 
       const { successMsg, errorMsg } = await usersStore.updateUserFull(
         initialValues.user?.id as number,
@@ -84,6 +84,8 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
     },
   });
 
+  const imgUrl = isAvatarChanged ? image : `${image}?${new Date().getTime()}`
+
   return (
     <form onSubmit={formik.handleSubmit} className={styles.formSection}>
       <h4 className='heading heading-4 heading-primary'>
@@ -96,10 +98,10 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
           className={styles.photoContainer}
           options={{ direction: 'column', gap: 0.75 }}
         >
-          {image ? (
+          {imgUrl ? (
             <>
               <div className={styles.photoBg}>
-                <img className={styles.photo} src={image} />
+                <img className={styles.photo} src={imgUrl} />
               </div>
               <Button onClick={handleOpen} outlined>
                 {t('profile.updatePhoto')}

@@ -21,7 +21,6 @@ import { RentalObject } from '@/models/RentalObject';
 import { useSort } from '@/hooks/useSort';
 import getOrganizationsStatsData from './getOrganizationsStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
-import Flex from '@/components/UI/layout/flex';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -98,7 +97,7 @@ const ViewOrganization: React.FC = observer(() => {
             }
             Table={
               <ObjectsTable
-                objects={[]}
+                objects={objects}
                 first={first}
                 onPageChange={onPageChange}
                 sortField={sortField}

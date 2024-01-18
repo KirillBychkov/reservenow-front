@@ -6,7 +6,7 @@ import { makeAutoObservable } from 'mobx';
 
 class OrganizationStore {
   errorMessage: string = '';
-  organizations: Organization[] | null = null;
+  organizations: Organization[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -39,6 +39,16 @@ class OrganizationStore {
         data: [],
         error: 'Error getting organization statistics',
       };
+    }
+  };
+
+  deleteOrganization = async (id: number): Promise<SuccessOrError> => {
+    try {
+      await OrganizationService.deleteOrganization(id);
+      this.organizations = this.organizations.filter(organization => organization.id !== id)
+      return { successMsg: 'Organization deleted successfully', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error deleting organization' };
     }
   };
 

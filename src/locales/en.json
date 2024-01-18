@@ -95,7 +95,7 @@
     "address": "Address",
     "enterAddress": "Enter the address",
     "equipmentName": "Equipment name",
-    "equipmentPrice": "price",
+    "equipmentPrice": "Price",
     "enterEquipmentName": "Enter the name of the equipment",
     "profilePhoto": "Profile photo",
     "confirmation": "Confirmation"
@@ -163,12 +163,12 @@
     "createdAt": "Date created",
     "updatedAt": "Date updated",
     "days": {
-      "Monday": "Monday",
-      "Tuesday": "Tue",
-      "Wednesday": "Wed",
-      "thursday": "Thur",
-      "friday": "Fri",
-      "saturday": "Sat",
+      "monday": "Mo",
+      "tuesday": "Tu",
+      "wednesday": "We",
+      "thursday": "Th",
+      "friday": "Fr",
+      "saturday": "Sa",
       "sunday": "Su",
       "dayOff": "Day Off"
     },
@@ -256,7 +256,7 @@
     }
   },
   "equipment": {
-    "equipment": "goods",
+    "equipment": "Goods",
     "empty": "Sorry, you have not created any products yet.",
     "nameColumn": "Product name",
     "priceColumn": "Price"
@@ -292,7 +292,7 @@
     "status": "Status"
   },
   "statistics": {
-    "statistics": "statistics",
+    "statistics": "Statistics",
     "pickOrganization": "Pick an organization",
     "notSelected": "You have not selected an organization",
     "organizationLoad": "Organization load"
@@ -312,26 +312,26 @@
         "organizationDescription": "Enter the organization description here. . ."
       },
       "equipmentSection": {
-        "header": "Booking information for reservation number {{reservationNumber}} (product)",
+        "header": "Booking information for reservation № {{reservationNumber}} (product)",
         "chooseEquipment": "Select equipment"
       },
       "trainerSection": {
-        "header": "Reservation information for {{reservationNumber}} (trainer)",
-        "trainerName": "Trainer Name",
-        "chooseTrainer": "Select Staff"
+        "header": "Booking information for reservation № {{reservationNumber}} (trainer)",
+        "trainerName": "Trainer name",
+        "chooseTrainer": "Select staff"
       },
       "objectSection": {
-        "header": "Booking information for reservation number {{reservationNumber}}",
+        "header": "Booking information for reservation № {{reservationNumber}}",
         "organization": "Organization",
         "chooseOrganization": "Select an organization",
         "object": "Object",
         "chooseObject": "Choose an object"
       },
       "addToOrder": "Add to order:",
-      "trainer": "trainer",
+      "trainer": "Trainer",
       "reservation": "Reservation",
       "equipment": "Goods",
-      "paymentMethod": "PaymentMethod",
+      "paymentMethod": "Payment method",
       "choosePaymentMethod": "Choose a payment method",
       "totalSum": "Total amount",
       "dateAndTime": "Date and time",
@@ -345,8 +345,8 @@
     "organizations": "organizations",
     "trainers": "Trainers"
   },
-  "en-US": {
-    "cash": "cash",
+  "payment": {
+    "cash": "Cash",
     "card": "Card"
   },
   "lang": {

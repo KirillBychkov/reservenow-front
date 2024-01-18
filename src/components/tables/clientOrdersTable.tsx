@@ -3,7 +3,7 @@ import { Order } from '@/models/Order';
 import clientStore from '@/store/ClientStore';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Button from '../UI/buttons/button';
@@ -12,6 +12,7 @@ import styles from './status.module.scss';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { formatPhoneIn } from '@/utils/formatters/formatPhone';
 import { getAllObjectsNamesInOrder } from './helper';
+import Paginator from '../UI/paginator/paginator';
 
 type Props = {
   orders: Order[];
@@ -51,14 +52,6 @@ const ClientOrdersTable = ({
       lazy
       footer={
         <Paginator
-          template={{
-            layout:
-              'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-          }}
-          currentPageReportTemplate={`${t(
-            'states.showed',
-          )} {first} - {last} ${t('states.of')} {totalRecords}`}
-          style={{ justifyContent: 'flex-end' }}
           first={first}
           rows={filters.limit}
           totalRecords={filters.total}

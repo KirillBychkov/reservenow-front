@@ -1,0 +1,408 @@
+{
+  "header": {},
+  "home": {
+    "clients": "clients",
+    "requests": "Requests"
+  },
+  "sidebar": {
+    "home": "Home",
+    "clients": "Customers",
+    "requests": "Requests",
+    "b2bsidebar": {
+      "home": "Home",
+      "schedule": "Schedule",
+      "booking": "Booking",
+      "clients": "Customers",
+      "organizations": "Organizations",
+      "products": "Products",
+      "personnel": "Personnel",
+      "statistics": "Statistics"
+    }
+  },
+  "signin": {
+    "heading": "Sign in to ReservNow",
+    "subheading": "Enter your email address and password to sign in!"
+  },
+  "b2bsignup": {
+    "heading": "Create a password",
+    "subheading": "Enter your new password to sign in"
+  },
+  "clients": {
+    "topClients": "Top clients",
+    "clients": "Customers",
+    "add": "Add client",
+    "edit": "Edit client",
+    "null": "There are currently no clients",
+    "idColumn": "ID",
+    "nameColumn": "Customer name",
+    "phoneColumn": "Phone",
+    "createdColumn": "Created",
+    "reservationColumn": "Reservation",
+    "moneyColumn": "Money spent",
+    "status": "Status",
+    "id": "Customer ID",
+    "first_name": "Name",
+    "last_name": "Last name",
+    "phone": "Phone",
+    "createdAt": "Created",
+    "total_reservation_sum": "Money spent",
+    "total_reservation_amount": "Total reservations",
+    "ordersHistory": "Booking history",
+    "ordersNull": "Unfortunately, there is no customer reservation history yet"
+  },
+  "requests": {
+    "requests": "Requests",
+    "request": "Request",
+    "null": "The request list is empty",
+    "response": "Decision on the request",
+    "openImage": "Open image"
+  },
+  "forms": {
+    "id": "ID",
+    "info": "Information",
+    "overallInfo": "General Information",
+    "email": "Email",
+    "enterEmail": "Enter your email address",
+    "password": "Password*",
+    "enterPassword": "Enter the password",
+    "b2benterPassword": "Your password",
+    "b2bconfirmPassword": "Confirm password*",
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "firstName": "First name",
+    "enterFirstName": "Enter first name",
+    "lastName": "Last Name",
+    "enterLastName": "Enter last name",
+    "phone": "Phone number",
+    "enterPhone": "Enter the phone number",
+    "companyName": "Company name",
+    "enterCompanyName": "Enter the company name",
+    "description": "Description",
+    "enterDescription": "Enter a description",
+    "status": "Status",
+    "enterStatus": "Select status",
+    "clientDescription": "Description",
+    "resultDescription": "Description",
+    "areYouSure": "Are you sure?",
+    "enterMessage": "Message:",
+    "chooseFile": "Files:",
+    "price": "Price",
+    "enterPrice": "Enter price",
+    "sum": "Amount",
+    "total": "Total",
+    "name": "Name",
+    "enterName": "Enter the name",
+    "address": "Address",
+    "enterAddress": "Enter the address",
+    "equipmentName": "Equipment name",
+    "equipmentPrice": "price",
+    "enterEquipmentName": "Enter the name of the equipment",
+    "profilePhoto": "Profile photo",
+    "confirmation": "Confirmation"
+  },
+  "organizations": {
+    "organizationId": "Organization ID",
+    "name": "Organization name",
+    "organizations": "Organizations",
+    "add": "Add Organization",
+    "edit": "Edit Organization",
+    "null": "Unfortunately you have not created any organizations yet",
+    "location": "Location",
+    "workHours": "Hours of operation"
+  },
+  "objects": {
+    "objects": "Objects",
+    "id": "ID",
+    "sportType": "Sport",
+    "add": "Add object",
+    "edit": "Edit object",
+    "name": "Object name",
+    "enterName": "Enter the name of the object",
+    "description": "Description",
+    "enterDescription": "Enter the description of the object",
+    "price": "Price",
+    "enterPrice": "Enter the price",
+    "image": "Image of the object",
+    "null": "No objects currently available",
+    "topObjects": "Top objects",
+    "load": "Load"
+  },
+  "addOrganizationForm": {
+    "enterName": "Enter the name of the organization here. . .",
+    "enterDescription": "Enter a description of the organization here. . .",
+    "phone": "Phone",
+    "enterLocation": "Organization location",
+    "image": "Organization image",
+    "full": "Twenty-four hours a day, including weekends",
+    "from": "From",
+    "to": "To"
+  },
+  "personnel": {
+    "personnel": "Personnel",
+    "add": "Add personnel",
+    "edit": "Edit personnel",
+    "select": "Select which personnel you want to add",
+    "null": "There are currently no personnel.",
+    "role": "Staffing role",
+    "manager": "Manager",
+    "trainer": "Trainer"
+  },
+  "invalid": {
+    "required": "Required field",
+    "email": "Invalid email format",
+    "passwordLength": "Password must be at least 6 characters long.",
+    "passwordMatch": "Invalid password",
+    "confirmPasswordMustMatch": "Passwords must match",
+    "phone": "Invalid phone number format",
+    "positiveOnly": "Positive values only",
+    "invalidCredentials": "Password or email is invalid",
+    "nonexistentEmail": "The user with this email does not exist"
+  },
+  "dates": {
+    "date": "Date",
+    "createdAt": "Date created",
+    "updatedAt": "Date updated",
+    "days": {
+      "Monday": "Monday",
+      "Tuesday": "Tue",
+      "Wednesday": "Wed",
+      "thursday": "Thur",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Su",
+      "dayOff": "Day Off"
+    },
+    "week": "Week",
+    "month": "Month",
+    "thisMonth": "This month"
+  },
+  "status": {
+    "pending": "Pending",
+    "active": "Active",
+    "blocked": "Blocked",
+    "deleted": "Deleted",
+    "new": "New",
+    "in_progress": "Processing",
+    "fixed": "Fixed",
+    "rejected": "Rejected",
+    "undefined": "Unknown",
+    "inactive": "Inactive",
+    "not_paid": "Not paid",
+    "paid": "Paid",
+    "processing": "Processing"
+  },
+  "actions": {
+    "action": "Action",
+    "actions": "Actions",
+    "add": "Add",
+    "open": "Open",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "send": "Send",
+    "close": "Close",
+    "search": "Search",
+    "clear": "Clear",
+    "export": "Export",
+    "signin": "Sign in",
+    "b2bsignup": "Create",
+    "signout": "Logout",
+    "back": "Back",
+    "goBack": "Go back",
+    "addClient": "Add client",
+    "editClient": "Edit client",
+    "editEquipment": "Edit equipment",
+    "addEquipment": "Add equipment",
+    "addImage": "Add image",
+    "chooseOption": "Choose an option",
+    "create": "Create"
+  },
+  "states": {
+    "shown": "Shown",
+    "of": "of",
+    "entries": "entries"
+  },
+  "contact-us": {
+    "heading": "Contact Us",
+    "howToAddFile": "Drag and drop a file here or click 'Add File'.",
+    "addFile": "Add File"
+  },
+  "faq": {
+    "howToUse": "How to use ReservNow",
+    "hosToUseAnswer": "Lorem Ipsum is simply the dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "questions": {
+      "first": {
+        "question": "Lorem Ipsum is a pseudo Latin text used in web design.",
+        "answer": "Lorem Ipsum is a pseudo-Latin text used in web design, typography, layout, and print instead of English to emphasize design elements over content. It is also called placeholder (or filler) text. Lorem Ipsum is a pseudo-Latin text used in web design, typography, layout, and print instead of English to emphasize design elements over content. It is a pseudo-Latin text used in web design, typography, layout, and print instead of English to emphasize design elements over content. It is also called placeholder (or filler) text. "
+      },
+      "second": {
+        "question": "Second question",
+        "answer": "Second answer"
+      },
+      "third": {
+        "question": "Third question",
+        "answer": "Third answer"
+      },
+      "fourth": {
+        "question": "Fourth question",
+        "answer": "Fourth answer"
+      },
+      "fifth": {
+        "question": "Fifth question",
+        "answer": "Fifth answer"
+      }
+    }
+  },
+  "equipment": {
+    "equipment": "goods",
+    "empty": "Sorry, you have not created any products yet.",
+    "nameColumn": "Product name",
+    "priceColumn": "Price"
+  },
+  "reservations": {
+    "reservations": "Reservation",
+    "history": "Reservation history"
+  },
+  "profile": {
+    "heading": "Profile",
+    "changePassword": "Change password",
+    "changeEmail": "Email (Please contact us to change)",
+    "passwordChanged": "Password changed",
+    "passwordChangedMessage": "Lorem Ipsum is a pseudo-Latin text used in web design, typography, layout, and print instead of English.",
+    "addPhoto": "Add a profile photo",
+    "updatePhoto": "Change profile photo",
+    "chooseFile": "Choose a file",
+    "chooseProfilePhoto": "Select the desired profile photo",
+    "goBack": "Go back to the main page"
+  },
+  "orders": {
+    "reservationHistory": "Reservation history",
+    "orderHistory": "Order history",
+    "totalReservationsSum": "Total reservations ₴",
+    "totalReservations": "Total reservations",
+    "totalClients": "Total clients",
+    "totalHours": "Total hours",
+    "id": "Res. ID",
+    "objectNames": "Object",
+    "clientPhone": "Phone number",
+    "create_at": "Date",
+    "totalOrderSum": "Total ₴",
+    "status": "Status"
+  },
+  "statistics": {
+    "statistics": "statistics",
+    "pickOrganization": "Pick an organization",
+    "notSelected": "You have not selected an organization",
+    "organizationLoad": "Organization load"
+  },
+  "schedule": {
+    "addReservation": "Add reservation",
+    "organizationsNull": "No organizations found",
+    "trainersNull": "No trainers found",
+    "objectsNull": "No objects found",
+    "organizationWorkingHoursNull": "The organization is not open on this day",
+    "trainerWorkingHoursNull": "The trainer is not working on this day",
+    "editReservation": "Edit reservation",
+    "schedule": "Schedule",
+    "form": {
+      "clientSection": {
+        "clientInfo": "Client information",
+        "organizationDescription": "Enter the organization description here. . ."
+      },
+      "equipmentSection": {
+        "header": "Booking information for reservation number {{reservationNumber}} (product)",
+        "chooseEquipment": "Select equipment"
+      },
+      "trainerSection": {
+        "header": "Reservation information for {{reservationNumber}} (trainer)",
+        "trainerName": "Trainer Name",
+        "chooseTrainer": "Select Staff"
+      },
+      "objectSection": {
+        "header": "Booking information for reservation number {{reservationNumber}}",
+        "organization": "Organization",
+        "chooseOrganization": "Select an organization",
+        "object": "Object",
+        "chooseObject": "Choose an object"
+      },
+      "addToOrder": "Add to order:",
+      "trainer": "trainer",
+      "reservation": "Reservation",
+      "equipment": "Goods",
+      "paymentMethod": "PaymentMethod",
+      "choosePaymentMethod": "Choose a payment method",
+      "totalSum": "Total amount",
+      "dateAndTime": "Date and time",
+      "chooseDate": "Select the date of the reservation",
+      "timeFrom": "From",
+      "timeTo": "To",
+      "chooseTime": "Select time"
+    }
+  },
+  "events": {
+    "organizations": "organizations",
+    "trainers": "Trainers"
+  },
+  "en-US": {
+    "cash": "cash",
+    "card": "Card"
+  },
+  "lang": {
+    "month": "Month",
+    "week": "Week",
+    "day": "Day"
+  },
+  "reservationHistory": {
+    "reservationDetails": "Reservation details",
+    "addReservation": "Add Reservation",
+    "table": {
+      "id": "ID",
+      "clientName": "Client Name",
+      "phone": "Phone",
+      "reservations": "Reservations",
+      "createdAt": "Created",
+      "orderSum": "Amount",
+      "manager": "Manager",
+      "status": "Status"
+    },
+    "reservationTable": {
+      "object": "Object",
+      "createdAt": "Date",
+      "rentalTime": "Time",
+      "total": "Total",
+      "totalPrice": "Total Price"
+    },
+    "details": {
+      "title": "Reservation #{{id}}",
+      "createdAt": "Added",
+      "paymentMethod": "Payment method",
+      "organization": "Organization",
+      "customer": "Customer",
+      "phone": "Phone number",
+      "createdBy": "Created by",
+      "creatorDescription": "Description",
+      "info": "Information"
+    },
+    "status": {
+      "status": "Booking status",
+      "created": "Booking created",
+      "processing": "Processing",
+      "completed": "Completion status (completed/canceled)"
+    }
+  },
+  "timeRanges": {
+    "allTime": "All time",
+    "30days": "30 days",
+    "7days": "7 days",
+    "24hours": "24 hours",
+    "chooseDates": "Select dates"
+  },
+  "faqBanner": {
+    "faq": "FAQ",
+    "needHelp": "Need help?",
+    "pleaseContactUs": "Please contact us",
+    "contactUs": "Contact Us"
+  }
+}

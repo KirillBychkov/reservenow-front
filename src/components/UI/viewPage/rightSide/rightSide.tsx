@@ -4,37 +4,17 @@ import StatsCard from '../statsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';
 import Searchbar from '@/components/searchbar/searchbar';
-import { BankAccount, Endorsed, ShoppingCart } from '@blueprintjs/icons';
-
 export interface StatsCardsData {
   icon: React.ReactNode;
   heading: string;
   subheading: string;
 }
 
-const mockCardData: StatsCardsData[] = [
-  {
-    icon: <BankAccount />,
-    heading: `UAH 26 124,12`,
-    subheading: 'organizations.totalSales',
-  },
-  {
-    icon: <ShoppingCart />,
-    heading: `135`,
-    subheading: 'organizations.totalBookings',
-  },
-  {
-    icon: <Endorsed />,
-    heading: `235`,
-    subheading: 'organizations.totalClients',
-  },
-];
-
 interface Props {
   heading: string;
   buttonText?: string;
   setSearch?: (search: string) => void;
-  statCardsData?: StatsCardsData[];
+  statCardsData: StatsCardsData[];
 }
 
 const RightSide: React.FC<Props> = ({
@@ -45,12 +25,10 @@ const RightSide: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
 
-  const cardsData = statCardsData || mockCardData;
-
   return (
     <div className={styles.RightSide}>
       <div className={styles.TopCards}>
-        {cardsData.map((card, index) => (
+        {statCardsData.map((card, index) => (
           <StatsCard
             key={index}
             icon={card.icon}

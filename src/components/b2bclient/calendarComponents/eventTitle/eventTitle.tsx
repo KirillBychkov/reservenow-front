@@ -3,11 +3,10 @@ type Props = {
   description: string;
 };
 
-export const EventTitle = ({ title, description }: Props) => {
+export const EventTitle = ({ title }: Props) => {
   return (
     <div>
       <h4>{title}</h4>
-      <p>{description}</p>
     </div>
   );
 };

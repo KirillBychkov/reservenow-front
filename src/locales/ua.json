@@ -343,7 +343,8 @@
     "events": {
       "organizations": "Організації",
       "trainers": "Тренера"
-    }
+    },
+    "week": "Тиждень"
   },
   "payment": {
     "cash": "Готівка",

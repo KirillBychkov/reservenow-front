@@ -8,11 +8,12 @@ import styles from './status.module.scss';
 import classNames from 'classnames';
 import { User } from '@/models/User';
 import { useState } from 'react';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import usersStore from '@/store/usersStore';
 import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import Paginator from '../UI/paginator/paginator';
 
 interface Props {
   users: User[];
@@ -58,14 +59,6 @@ const UsersTable: React.FC<Props> = observer(
           lazy={true}
           footer={
             <Paginator
-              template={{
-                layout:
-                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-              }}
-              currentPageReportTemplate={`${t(
-                'states.showed',
-              )} {first} - {last} ${t('states.of')} {totalRecords}`}
-              style={{ justifyContent: 'flex-end' }}
               first={first}
               rows={usersStore.filters.limit}
               totalRecords={filters.total}

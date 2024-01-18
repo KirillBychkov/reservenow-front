@@ -7,11 +7,12 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './status.module.scss';
 import { getAllObjectsNamesInOrder } from './helper';
+import Paginator from '../UI/paginator/paginator';
 
 type Props = {
   orders: Order[];
@@ -50,14 +51,6 @@ const OrdersHistoryTable: React.FC<Props> = observer(
           lazy={true}
           footer={
             <Paginator
-              template={{
-                layout:
-                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-              }}
-              currentPageReportTemplate={`${t(
-                'states.showed',
-              )} {first} - {last} ${t('states.of')} {totalRecords}`}
-              style={{ justifyContent: 'flex-end' }}
               first={first}
               rows={ordersStore.filters.limit}
               totalRecords={filters.total}

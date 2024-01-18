@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import uaJSON from './locales/ua.json';
+import enJSON from './locales/en.json';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
@@ -11,8 +12,11 @@ i18n
       ua: {
         translation: uaJSON,
       },
+      en: {
+        translation: enJSON,
+      },
     },
-    lng: 'uk-UA',
-    fallbackLng: 'ua',
+    lng: 'en-US',
+    fallbackLng: 'en-US',
     debug: true,
   });

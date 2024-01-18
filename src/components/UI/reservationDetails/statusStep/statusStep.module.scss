@@ -4,7 +4,7 @@
 }
 
 .time {
-  color: var(--text_muted, #5F6B7C);
+  color: var(--text_muted, #5f6b7c);
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
@@ -12,4 +12,18 @@
 
 .tickWrapper {
   width: 40px;
+  position: relative;
+}
+
+.track {
+  &::before {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 50%;
+    bottom: -50%;
+    transform: translateX(-50%);
+    height: 20px;
+    border-right: 1px dashed #e0e2e7;
+  }
 }

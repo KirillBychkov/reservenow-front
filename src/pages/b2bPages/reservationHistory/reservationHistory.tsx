@@ -18,6 +18,7 @@ import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { Export } from '@blueprintjs/icons';
 import useSearch from '@/hooks/useSearch';
 import { Calendar } from '@/components/UI/calendar/calendar';
+import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
 
 const ReservationHistory = observer(() => {
   const navigate = useNavigate();
@@ -57,24 +58,7 @@ const ReservationHistory = observer(() => {
     },
   );
 
-  const dateSpanOptions = useMemo(
-    () => [
-      { label: t('timeRanges.allTime'), value: null },
-      {
-        label: t('timeRanges.30days'),
-        value: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
-      },
-      {
-        label: t('timeRanges.7days'),
-        value: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-      },
-      {
-        label: t('timeRanges.24hours'),
-        value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
-      },
-    ],
-    [t],
-  );
+  const dateSpanOptions = generateTimeSpanOptions(t);
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>

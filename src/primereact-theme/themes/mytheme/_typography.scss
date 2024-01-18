@@ -25,6 +25,13 @@
     font-weight: 500;
     line-height: normal;
   }
+
+  &-5 {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: normal;
+  }
+
   &-6 {
     font-size: 0.875rem;
     font-weight: 500;
@@ -72,7 +79,7 @@
     color: var(--text-color-muted);
   }
   &-white {
-    color: var(--primary-color-text)
+    color: var(--primary-color-text);
   }
 }
 

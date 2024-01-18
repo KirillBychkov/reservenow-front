@@ -9,9 +9,10 @@ import { Order } from '@/models/Order';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import styles from '@/components/tables/status.module.scss';
 import classNames from 'classnames';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import ordersStore from '@/store/ordersStore';
+import Paginator from '@/components/UI/paginator/paginator';
 
 type Props = {
   orders: Order[];
@@ -47,14 +48,6 @@ const OrdersTable: React.FC<Props> = observer(
         lazy={true}
         footer={
           <Paginator
-            template={{
-              layout:
-                'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-            }}
-            currentPageReportTemplate={`${t(
-              'states.showed',
-            )} {first} - {last} ${t('states.of')} {totalRecords}`}
-            style={{ justifyContent: 'flex-end' }}
             first={first}
             rows={ordersStore.filters.limit}
             totalRecords={filters.total}

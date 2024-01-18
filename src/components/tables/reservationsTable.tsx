@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import * as dayjs from 'dayjs';
 import { getNameFromReservation } from './helper';
 import { Minus } from '@blueprintjs/icons';
+import { formatDate } from '@/utils/formatters/formatDate';
 type Props = {
   reservations: Reservation[];
   total: number;
@@ -59,7 +60,9 @@ const ReservationsTable = ({ reservations, total }: Props) => {
 
       <Column
         header={t('reservationHistory.reservationTable.createdAt')}
-        field='created_at'
+        body={({ reservation_time_start }: Reservation) =>
+          formatDate(i18n.language)(reservation_time_start as string)
+        }
       />
 
       <Column
@@ -78,9 +81,7 @@ const ReservationsTable = ({ reservations, total }: Props) => {
 
       <Column
         header={t('reservationHistory.reservationTable.total')}
-        body={({ price }: Reservation) => {
-          return `₴${price}`;
-        }}
+        body={({ price }: Reservation) => `₴${price}`}
       />
     </DataTable>
   );

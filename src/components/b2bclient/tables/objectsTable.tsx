@@ -5,12 +5,13 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { observer } from 'mobx-react-lite';
 import objectsStore from '@/store/objectsStore';
 import { RentalObject } from '@/models/RentalObject';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import Paginator from '@/components/UI/paginator/paginator';
 
 type Props = {
   objects: RentalObject[];
@@ -60,14 +61,6 @@ const ObjectsTable: React.FC<Props> = observer(
           lazy={true}
           footer={
             <Paginator
-              template={{
-                layout:
-                  'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-              }}
-              currentPageReportTemplate={`${t(
-                'states.showed',
-              )} {first} - {last} ${t('states.of')} {totalRecords}`}
-              style={{ justifyContent: 'flex-end' }}
               first={first}
               rows={objectsStore.filters.limit}
               totalRecords={filters.total}

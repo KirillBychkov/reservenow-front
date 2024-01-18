@@ -1,4 +1,5 @@
 import { Day, Week, WeekWorkingHours } from '@/types/weekWorkingHours';
+import { TFunction } from 'i18next';
 
 export const daysOfWeek = [
   'monday',
@@ -8,6 +9,22 @@ export const daysOfWeek = [
   'friday',
   'saturday',
   'sunday',
+];
+
+export const generateTimeSpanOptions = (t: TFunction) => [
+  { label: t('timeRanges.allTime'), value: null },
+  {
+    label: t('timeRanges.30days'),
+    value: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
+  },
+  {
+    label: t('timeRanges.7days'),
+    value: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
+  },
+  {
+    label: t('timeRanges.24hours'),
+    value: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+  },
 ];
 
 const generateDropdownOptions = () => {

@@ -5,13 +5,14 @@ import { observer } from 'mobx-react-lite';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { useTranslation } from 'react-i18next';
 import Flex from '../UI/layout/flex';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useMemo } from 'react';
 import ToastContext from '@/context/toast';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import Paginator from '../UI/paginator/paginator';
 
 type TableProps = {
   equipment: Equipment[];
@@ -59,14 +60,6 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         lazy
         footer={
           <Paginator
-            template={{
-              layout:
-                'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-            }}
-            currentPageReportTemplate={`${t(
-              'states.showed',
-            )} {first} - {last} ${t('states.of')} {totalRecords}`}
-            style={{ justifyContent: 'flex-end' }}
             first={first}
             rows={filters.limit}
             totalRecords={filters.total}

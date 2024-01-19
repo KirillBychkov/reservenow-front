@@ -101,7 +101,7 @@ const initializeWorkingHours = (
     const day = key.split('_')[0];
     const time = key.split('_')[1];
     const value = initialWorkingHours[key as keyof WeekWorkingHours];
-    if (!value) continue;
+    if (value === null) continue;
     workingHours[day as keyof Week].enabled = true;
     if (time === 'start') {
       workingHours[day as keyof Week].start = value;

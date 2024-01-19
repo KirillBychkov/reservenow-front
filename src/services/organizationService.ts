@@ -1,6 +1,7 @@
 import $api from '@/http';
 import { Organization } from '@/models/Organization';
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
+import { SuccessOrError } from '@/types/store';
 import { AxiosResponse } from 'axios';
 
 export default class OrganizationService {
@@ -18,6 +19,12 @@ export default class OrganizationService {
     id: number,
   ): Promise<AxiosResponse<Organization>> {
     return $api.get(`/organization/${id}`);
+  }
+
+  static async deleteOrganization(
+    id: number,
+  ): Promise<AxiosResponse<SuccessOrError>> {
+    return $api.delete(`/organization/${id}`);
   }
 
   static async uploadImage(id: number, file: File): Promise<AxiosResponse> {

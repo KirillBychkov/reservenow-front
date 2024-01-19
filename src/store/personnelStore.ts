@@ -75,6 +75,18 @@ class PersonnelStore {
     }
   };
 
+  deleteManager = async (id: number): Promise<SuccessOrError> => {
+    try {
+      await ManagerService.deleteManager(id);
+      this.personnel.managers = this.personnel.managers.filter(
+        (manager) => manager.id === id,
+      );
+      return { successMsg: 'Deleted manager successfully', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error deleting manager' };
+    }
+  };
+
   // Trainers
   setTrainers(trainers: Trainer[]) {
     this.personnel.trainers = trainers;
@@ -120,6 +132,18 @@ class PersonnelStore {
       return { data: res.data, error: '' };
     } catch (e) {
       return { data: {} as Trainer, error: 'Error getting trainer' };
+    }
+  };
+
+  deleteTrainer = async (id: number): Promise<SuccessOrError> => {
+    try {
+      await TrainerService.deleteTrainer(id);
+      this.personnel.trainers = this.personnel.trainers.filter(
+        (trainer) => trainer.id === id,
+      );
+      return { successMsg: 'Deleted trainer successfully', errorMsg: '' };
+    } catch (e) {
+      return { successMsg: '', errorMsg: 'Error deleting trainer' };
     }
   };
 

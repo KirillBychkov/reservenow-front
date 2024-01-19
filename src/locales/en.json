@@ -113,7 +113,6 @@
   "objects": {
     "objects": "Objects",
     "id": "ID",
-    "sportType": "Sport",
     "add": "Add object",
     "edit": "Edit object",
     "name": "Object name",

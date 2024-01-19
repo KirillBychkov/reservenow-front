@@ -26,7 +26,7 @@ class OrganizationStore {
     id: number,
     start_date?: string,
     end_date?: string,
-  ): Promise<ResponseOrError<OrganizationStatistics[]>> => {
+  ): Promise<ResponseOrError<OrganizationStatistics>> => {
     try {
       const response = await OrganizationService.getOrganizationStatistics(
         id,
@@ -36,7 +36,7 @@ class OrganizationStore {
       return { data: response.data, error: '' };
     } catch (e) {
       return {
-        data: [],
+        data: {} as OrganizationStatistics,
         error: 'Error getting organization statistics',
       };
     }

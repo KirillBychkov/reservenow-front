@@ -70,7 +70,6 @@ const ObjectsTable: React.FC<Props> = observer(
         >
           <Column field='id' header={t('objects.id')} sortable />
           <Column field='name' header={t('objects.name')} sortable />
-          <Column field='type' header={t('objects.sportType')} />
           <Column field='created_at' header={t('dates.date')} sortable />
 
           <Column

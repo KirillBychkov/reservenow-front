@@ -38,7 +38,7 @@ const ViewOrganization: React.FC = observer(() => {
     [id],
   );
 
-  const { data: organizationStatistics } = useFetch<OrganizationStatistics[]>(
+  const { data: organizationStatistics } = useFetch<OrganizationStatistics>(
     () => organizationStore.getOrganizationStatistics(parseInt(id || '0')),
     [id],
   );
@@ -74,7 +74,7 @@ const ViewOrganization: React.FC = observer(() => {
         />
         <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
       </div>
-      {/* <MetricsOrganization /> */}
+
       {isLoading ? (
         <div
           style={{

@@ -16,6 +16,8 @@ import { createOrganization, updateOrganization } from './submitHandlers';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import organizationStore from '@/store/organizationsStore';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   initialValues?: Organization;
@@ -26,6 +28,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
     const { t, i18n } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
     const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+    const navigate = useNavigate();
 
     if (initialValues)
       initialValues = formatObjectIn(initialValues, i18n.language);
@@ -45,6 +48,22 @@ const ManageOrganizationForm: React.FC<Props> = observer(
       phone: initialValues?.phone || '',
       address: initialValues?.address || '',
       workingHours,
+    };
+
+    const handleDelete = async () => {
+      if (!initialValues) {
+        return;
+      }
+      const { successMsg, errorMsg } =
+        await organizationStore.deleteOrganization(initialValues?.id);
+
+      if (errorMsg) {
+        showError(errorMsg);
+        return;
+      }
+
+      showSuccess(successMsg);
+      navigate('/organizations');
     };
 
     const formik = useFormik({
@@ -86,6 +105,17 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         </div>
         <WorkingHours<OrganizationFormData> formik={formik} />
         <div className={styles.Controls}>
+          {initialValues?.id && (
+            <Button
+              severity='secondary'
+              fill
+              className={styles.Button}
+              outlined
+              onClick={handleDelete}
+            >
+              {t('actions.delete')}
+            </Button>
+          )}
           <Button
             severity='danger'
             fill

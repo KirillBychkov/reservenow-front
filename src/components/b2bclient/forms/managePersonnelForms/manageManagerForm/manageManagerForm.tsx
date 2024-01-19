@@ -16,6 +16,8 @@ import { ManagerFormData } from '@/types/manager';
 import { createManager, updateManager } from './submitHandlers';
 import ToastContext from '@/context/toast';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import personnelStore from '@/store/personnelStore';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   initialValues?: Manager;
@@ -24,6 +26,7 @@ interface Props {
 const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t, i18n } = useTranslation();
   const { showError, showSuccess } = useContext(ToastContext);
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required(t('invalid.required')),
@@ -65,6 +68,24 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
     validationSchema,
     onSubmit,
   });
+
+  const handleDelete = async () => {
+    if (!initialValues) {
+      return;
+    }
+
+    const { successMsg, errorMsg } = await personnelStore.deleteManager(
+      initialValues.id,
+    );
+
+    if (errorMsg) {
+      showError(errorMsg);
+      return;
+    }
+
+    showSuccess(successMsg);
+    navigate('/personnel');
+  };
 
   return (
     <form className={styles.form} onSubmit={formik.handleSubmit}>
@@ -125,8 +146,8 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
         >
           <InputMask
             name='phone'
-            mask='+38 (999) 999-9999'
-            placeholder='+38 (___) ___-____'
+            mask='+38 (099) 999-9999'
+            placeholder='+38 (0__) ___-____'
             value={formik.values.phone}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -145,6 +166,17 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
         </FormField>
       </div>
       <div className={styles.Controls}>
+        {initialValues?.id && (
+          <Button
+            severity='secondary'
+            fill
+            className={styles.Button}
+            outlined
+            onClick={handleDelete}
+          >
+            {t('actions.delete')}
+          </Button>
+        )}
         <Button
           severity='danger'
           fill

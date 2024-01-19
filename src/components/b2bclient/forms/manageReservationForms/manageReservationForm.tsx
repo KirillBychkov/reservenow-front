@@ -309,7 +309,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
           <Flex options={{ justify: 'space-between', gap: 1 }}>
             <Button
               style={{ backgroundColor: '#fff' }}
-              className={styles.addReservationBtn}
+              className='addReservationBtn'
               icon={<Plus color='#000' />}
               onClick={addEmptyObjectReservation}
               fill
@@ -321,7 +321,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
             </Button>
             <Button
               style={{ backgroundColor: '#fff' }}
-              className={styles.addReservationBtn}
+              className='addReservationBtn'
               icon={<Plus color='#000' />}
               fill
               outlined
@@ -333,7 +333,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
             </Button>
             <Button
               style={{ backgroundColor: '#fff' }}
-              className={styles.addReservationBtn}
+              className='addReservationBtn'
               icon={<Plus color='#000' />}
               onClick={handleAddEmptyReservation}
               fill

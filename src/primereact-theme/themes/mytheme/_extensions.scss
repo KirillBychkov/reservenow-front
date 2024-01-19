@@ -61,6 +61,30 @@
   font-size: 0.875rem;
 }
 
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  height: 62px;
+  font-size: 22px;
+  background-color: #fff;
+}
+
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  h3 {
+    transition: color 0.3s ease-out;
+  }
+  &:hover h3 {
+    color: var(--Indigo-3, #7961db);
+  }
+}
+
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  span svg {
+    transition: fill 0.3s ease-out;
+  }
+  &:hover span svg {
+    fill: #7961db;
+  }
+}
+
 .p-dialog {
   .p-dialog-content {
     padding: 20px 20px 30px;

@@ -60,7 +60,7 @@
   "forms": {
     "id": "ID",
     "info": "Information",
-    "overallInfo": "General Information",
+    "overallInfo": "General information",
     "email": "Email",
     "enterEmail": "Enter your email address",
     "password": "Password*",
@@ -71,7 +71,7 @@
     "newPassword": "New password",
     "firstName": "First name",
     "enterFirstName": "Enter first name",
-    "lastName": "Last Name",
+    "lastName": "Last name",
     "enterLastName": "Enter last name",
     "phone": "Phone number",
     "enterPhone": "Enter the phone number",
@@ -95,7 +95,7 @@
     "address": "Address",
     "enterAddress": "Enter the address",
     "equipmentName": "Equipment name",
-    "equipmentPrice": "price",
+    "equipmentPrice": "Price",
     "enterEquipmentName": "Enter the name of the equipment",
     "profilePhoto": "Profile photo",
     "confirmation": "Confirmation"
@@ -104,8 +104,8 @@
     "organizationId": "Organization ID",
     "name": "Organization name",
     "organizations": "Organizations",
-    "add": "Add Organization",
-    "edit": "Edit Organization",
+    "add": "Add organization",
+    "edit": "Edit organization",
     "null": "Unfortunately you have not created any organizations yet",
     "location": "Location",
     "workHours": "Hours of operation"
@@ -163,12 +163,12 @@
     "createdAt": "Date created",
     "updatedAt": "Date updated",
     "days": {
-      "Monday": "Monday",
-      "Tuesday": "Tue",
-      "Wednesday": "Wed",
-      "thursday": "Thur",
-      "friday": "Fri",
-      "saturday": "Sat",
+      "monday": "Mo",
+      "tuesday": "Tu",
+      "wednesday": "We",
+      "thursday": "Th",
+      "friday": "Fr",
+      "saturday": "Sa",
       "sunday": "Su",
       "dayOff": "Day Off"
     },
@@ -226,8 +226,8 @@
   },
   "contact-us": {
     "heading": "Contact Us",
-    "howToAddFile": "Drag and drop a file here or click 'Add File'.",
-    "addFile": "Add File"
+    "howToAddFile": "Drag and drop a file here or click 'Add file'.",
+    "addFile": "Add file"
   },
   "faq": {
     "howToUse": "How to use ReservNow",
@@ -256,7 +256,7 @@
     }
   },
   "equipment": {
-    "equipment": "goods",
+    "equipment": "Goods",
     "empty": "Sorry, you have not created any products yet.",
     "nameColumn": "Product name",
     "priceColumn": "Price"
@@ -292,7 +292,7 @@
     "status": "Status"
   },
   "statistics": {
-    "statistics": "statistics",
+    "statistics": "Statistics",
     "pickOrganization": "Pick an organization",
     "notSelected": "You have not selected an organization",
     "organizationLoad": "Organization load"
@@ -312,26 +312,26 @@
         "organizationDescription": "Enter the organization description here. . ."
       },
       "equipmentSection": {
-        "header": "Booking information for reservation number {{reservationNumber}} (product)",
+        "header": "Booking information for reservation № {{reservationNumber}} (product)",
         "chooseEquipment": "Select equipment"
       },
       "trainerSection": {
-        "header": "Reservation information for {{reservationNumber}} (trainer)",
-        "trainerName": "Trainer Name",
-        "chooseTrainer": "Select Staff"
+        "header": "Booking information for reservation № {{reservationNumber}} (trainer)",
+        "trainerName": "Trainer name",
+        "chooseTrainer": "Select staff"
       },
       "objectSection": {
-        "header": "Booking information for reservation number {{reservationNumber}}",
+        "header": "Booking information for reservation № {{reservationNumber}}",
         "organization": "Organization",
         "chooseOrganization": "Select an organization",
         "object": "Object",
         "chooseObject": "Choose an object"
       },
       "addToOrder": "Add to order:",
-      "trainer": "trainer",
+      "trainer": "Trainer",
       "reservation": "Reservation",
       "equipment": "Goods",
-      "paymentMethod": "PaymentMethod",
+      "paymentMethod": "Payment method",
       "choosePaymentMethod": "Choose a payment method",
       "totalSum": "Total amount",
       "dateAndTime": "Date and time",
@@ -339,27 +339,28 @@
       "timeFrom": "From",
       "timeTo": "To",
       "chooseTime": "Select time"
-    }
+    },
+    "events": {
+      "organizations": "Organizations",
+      "trainers": "Trainers"
+    },
+    "week": "Week"
   },
-  "events": {
-    "organizations": "organizations",
-    "trainers": "Trainers"
-  },
-  "en-US": {
-    "cash": "cash",
+  "payment": {
+    "cash": "Cash",
     "card": "Card"
   },
-  "lang": {
+  "view": {
     "month": "Month",
     "week": "Week",
     "day": "Day"
   },
   "reservationHistory": {
     "reservationDetails": "Reservation details",
-    "addReservation": "Add Reservation",
+    "addReservation": "Add reservation",
     "table": {
       "id": "ID",
-      "clientName": "Client Name",
+      "clientName": "Client name",
       "phone": "Phone",
       "reservations": "Reservations",
       "createdAt": "Created",
@@ -372,7 +373,7 @@
       "createdAt": "Date",
       "rentalTime": "Time",
       "total": "Total",
-      "totalPrice": "Total Price"
+      "totalPrice": "Total price"
     },
     "details": {
       "title": "Reservation #{{id}}",
@@ -403,6 +404,6 @@
     "faq": "FAQ",
     "needHelp": "Need help?",
     "pleaseContactUs": "Please contact us",
-    "contactUs": "Contact Us"
+    "contactUs": "Contact us"
   }
 }

@@ -58,7 +58,7 @@ const ReservationHistory = observer(() => {
     },
   );
 
-  const dateSpanOptions = generateTimeSpanOptions(t);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>

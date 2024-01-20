@@ -348,3 +348,29 @@ div .rbc-events-container div.rbc-event {
 .rbc-time-slot:nth-child(2) {
   border: none;
 }
+
+.p-selectbutton .p-button {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+  color: #000;
+
+  &:hover {
+    .p-button-label {
+      color: #7961db;
+    }
+  }
+}
+
+.p-selectbutton .p-button.p-highlight {
+  border-radius: 6px;
+  background-color: #edeff2;
+  color: #7961db;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #edeff2;
+    color: inherit;
+  }
+}

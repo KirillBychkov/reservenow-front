@@ -7,7 +7,7 @@ import {
 } from '@/models/Organization';
 import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import styles from './statistics.module.scss';
@@ -86,7 +86,7 @@ const Statistics = observer(() => {
     },
   );
 
-  const dateSpanOptions = generateTimeSpanOptions(t);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
   const { data: statistics } = useFetch<OrganizationStatistics[]>(
     () =>

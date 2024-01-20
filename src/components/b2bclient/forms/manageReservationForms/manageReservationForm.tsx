@@ -362,6 +362,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
           <FormField label={t('forms.status')}>
             <CustomDropdown
               name='status.value'
+              className='reservationDropdown'
               value={formik.values.status.value}
               onChange={formik.handleChange}
               options={formattedOrderStatus}

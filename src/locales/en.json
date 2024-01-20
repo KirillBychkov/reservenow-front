@@ -278,6 +278,7 @@
   },
   "orders": {
     "reservationHistory": "Reservation history",
+    "reservationList": "Reservation list",
     "orderHistory": "Order history",
     "totalReservationsSum": "Total reservations ₴",
     "totalReservations": "Total reservations",

@@ -45,7 +45,7 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
     setOptions(
       trainers.map((trainer) => {
         return {
-          label: trainer.first_name,
+          label: `${trainer.first_name} ${trainer.last_name}`,
           trainer: formatObjectIn(trainer, i18n.language),
         };
       }),
@@ -89,11 +89,15 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
   ) => {
     setTrainerReservations((prev) => {
       return prev.map((trainerReservation) => {
+        const { trainer, description } = data;
         if (trainerReservation.id === id) {
           return {
             ...trainerReservation,
-            trainer: data.trainer || trainerReservation.trainer,
-            description: data.description || trainerReservation.description,
+            trainer: trainer || trainerReservation.trainer,
+            description:
+              description !== undefined
+                ? description
+                : trainerReservation.description,
           };
         }
 
@@ -107,8 +111,8 @@ const useTrainerReservation = (initialValues: TrainerReservation[]) => {
   }, []);
 
   const clearAll = () => {
-    setTrainerReservations([])
-  }
+    setTrainerReservations([]);
+  };
 
   return {
     clearAll,

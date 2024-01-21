@@ -348,3 +348,7 @@ div .rbc-events-container div.rbc-event {
 .rbc-time-slot:nth-child(2) {
   border: none;
 }
+
+.p-inputtext.p-component.p-disabled.p-inputnumber-input {
+  color: var(--text-body-color);
+}

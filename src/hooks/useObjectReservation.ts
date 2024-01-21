@@ -83,7 +83,8 @@ const useObjectReservation = (initialValues?: ObjectReservation[]) => {
               rental_object !== undefined
                 ? rental_object
                 : reservation.rental_object,
-            description: description || reservation.description,
+            description:
+              description !== undefined ? description : reservation.description,
           };
         }
 
@@ -115,8 +116,8 @@ const useObjectReservation = (initialValues?: ObjectReservation[]) => {
   };
 
   const clearAll = () => {
-    setObjectReservations([])
-  }
+    setObjectReservations([]);
+  };
 
   return {
     objectReservations,

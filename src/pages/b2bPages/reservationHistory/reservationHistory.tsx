@@ -60,11 +60,6 @@ const ReservationHistory = observer(() => {
 
   const dateSpanOptions = generateTimeSpanOptions(t);
 
-  console.log(dateSpanOptions);
-  if (dates) {
-    console.log(dates[0]);
-  }
-
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>
       <Flex options={{ direction: 'column', gap: 1.25 }}>

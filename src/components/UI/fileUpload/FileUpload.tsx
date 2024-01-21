@@ -22,6 +22,7 @@ type Props = {
     | ReactNode
     | ((file: object, options: ItemTemplateOptions) => ReactNode);
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onDrop: (e: DragEvent) => void;
   onClear: () => void;
   fileName: string;
 };
@@ -33,6 +34,7 @@ export const FileUpload = ({
   buttonText,
   onChange,
   onClear,
+  onDrop,
   fileName,
 }: Props) => {
   const { t } = useTranslation();
@@ -47,7 +49,9 @@ export const FileUpload = ({
               <div className={styles.icon}>
                 <Media color='white' size={22} />
               </div>
-              <p>{t('contact-us.howToAddFile')}</p>
+              <p className='heading heading-6 heading-disabled'>
+                {t('contact-us.howToAddFile')}
+              </p>
               <Button type='button' className={styles.btn} outlined>
                 {buttonText || t('contact-us.addFile')}
               </Button>
@@ -63,15 +67,14 @@ export const FileUpload = ({
       <PrFileUpload
         headerTemplate={() => null}
         emptyTemplate={template}
+        onBeforeDrop={onDrop}
         itemTemplate={template || itemTemplate}
         ref={fileUploadRef}
       />
       {fileName && (
         <div className={styles.fileContainer}>
-          <p className="paragraph paragraph--normal">
-            {fileName}
-          </p>
-          <Cross color="#7961db" className={styles.cross} onClick={onClear} />
+          <p className='paragraph paragraph--normal'>{fileName}</p>
+          <Cross color='#7961db' className={styles.cross} onClick={onClear} />
         </div>
       )}
     </div>

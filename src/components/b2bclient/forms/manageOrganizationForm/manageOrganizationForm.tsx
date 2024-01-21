@@ -27,7 +27,8 @@ const ManageOrganizationForm: React.FC<Props> = observer(
   ({ initialValues }) => {
     const { t, i18n } = useTranslation();
     const { showSuccess, showError } = useContext(ToastContext);
-    const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+    const { ref, handleSelect, handleClearFile, fileName, handleDrop } =
+      useFileUpload();
     const navigate = useNavigate();
 
     if (initialValues)
@@ -96,6 +97,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         <SecondaryInfo formik={formik} />
         <div className={styles.section}>
           <FileUpload
+            onDrop={handleDrop}
             fileUploadRef={ref}
             onChange={handleSelect}
             onClear={handleClearFile}

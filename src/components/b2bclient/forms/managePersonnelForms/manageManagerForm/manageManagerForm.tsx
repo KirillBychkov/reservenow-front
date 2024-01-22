@@ -94,7 +94,9 @@ const ManageManagerForm: React.FC<Props> = observer(({ initialValues }) => {
           {t('forms.overallInfo')}
         </h4>
         <FormField label={t('personnel.role')}>
-          <p className='paragraph-muted'>{t('personnel.manager')}</p>
+          <p className={classNames('paragraph-muted', styles.role)}>
+            {t('personnel.manager')}
+          </p>
         </FormField>
         <FormField
           label={t('forms.firstName')}

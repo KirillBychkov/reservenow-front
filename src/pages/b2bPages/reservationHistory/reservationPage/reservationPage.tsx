@@ -74,6 +74,9 @@ const ReservationPage = observer(() => {
           <ReservationDetailsSection order={formattedOrder} />
           <Flex options={{ gap: 1.5 }}>
             <div className={styles.reservationList}>
+              <div className={styles.tableHeader}>
+                <h2 className='heading heading-4'>{t('orders.reservationList')}</h2>
+              </div>
               <ReservationsTable
                 total={formattedOrder?.order_sum}
                 reservations={formattedOrder.reservations}
@@ -91,6 +94,7 @@ const ReservationPage = observer(() => {
 
                 <Dropdown
                   disabled
+                  className='reservationDropdown'
                   style={{ width: '100%' }}
                   placeholder={t(`status.${order?.status}`)}
                 />

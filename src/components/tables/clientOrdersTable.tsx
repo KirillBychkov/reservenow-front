@@ -48,6 +48,7 @@ const ClientOrdersTable = ({
       value={formattedOrders}
       sortField={sortField}
       sortOrder={sortOrder}
+      className='tableWithHeader'
       onSort={onSortChange}
       lazy
       footer={

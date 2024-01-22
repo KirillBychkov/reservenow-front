@@ -140,6 +140,7 @@ const Statistics = observer(() => {
     <div className={styles.statistics}>
       <Flex options={{ gap: 1.25, align: 'center' }} style={{ height: '40px' }}>
         <Dropdown
+          className='organizationDropdown'
           options={dropdownOptions}
           value={selectedOrganizationId}
           onChange={(e: DropdownChangeEvent) =>

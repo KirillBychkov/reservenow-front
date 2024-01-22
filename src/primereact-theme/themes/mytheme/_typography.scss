@@ -50,6 +50,12 @@
   &-white {
     color: var(--primary-color-text)
   }
+  &-body {
+    color: var(--text-body-color);
+  }
+  &-disabled {
+    color: var(--text-disabled);
+  }
 }
 
 .paragraph {

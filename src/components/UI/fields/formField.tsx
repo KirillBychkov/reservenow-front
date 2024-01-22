@@ -17,9 +17,9 @@ const FormField: React.FC<FormFieldProps> = ({
   return (
     <label>
       <div className={styles.label}>
-        <span className='paragraph paragraph=small'>{label}</span>
+        <span className='heading heading-6'>{label}</span>
         {!isValid && (
-          <span className='paragraph paragraph=small paragraph-error'>
+          <span className='paragraph paragraph--normal paragraph-error'>
             {invalidMessage}
           </span>
         )}

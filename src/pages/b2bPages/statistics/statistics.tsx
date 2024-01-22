@@ -88,7 +88,7 @@ const Statistics = observer(() => {
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
-  const { data: statistics } = useFetch<OrganizationStatistics[]>(
+  const { data: statistics } = useFetch<OrganizationStatistics>(
     () =>
       selectedOrganizationId
         ? organizationStore.getOrganizationStatistics(
@@ -97,7 +97,7 @@ const Statistics = observer(() => {
             endDate,
           )
         : Promise.resolve({
-            data: {} as OrganizationStatistics[],
+            data: {} as OrganizationStatistics,
             error: '',
           }),
     [selectedOrganizationId, startDate, endDate],
@@ -114,7 +114,7 @@ const Statistics = observer(() => {
   }));
 
   const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(
-    statistics?.[0]?.statistics_per_period ?? '[]',
+    statistics?.statistics_per_period ?? '[]',
   );
 
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
@@ -128,18 +128,15 @@ const Statistics = observer(() => {
     week: item.week,
   }));
 
-  const topObjects: TopObject[] = JSON.parse(
-    statistics?.[0]?.top_objects ?? '[]',
-  );
+  const topObjects: TopObject[] = JSON.parse(statistics?.top_objects ?? '[]');
 
-  const topClients: TopClient[] = JSON.parse(
-    statistics?.[0]?.top_clients ?? '[]',
-  );
+  const topClients: TopClient[] = JSON.parse(statistics?.top_clients ?? '[]');
 
   return (
     <div className={styles.statistics}>
       <Flex options={{ gap: 1.25, align: 'center' }} style={{ height: '40px' }}>
         <Dropdown
+          className='organizationDropdown'
           options={dropdownOptions}
           value={selectedOrganizationId}
           onChange={(e: DropdownChangeEvent) =>
@@ -170,19 +167,17 @@ const Statistics = observer(() => {
             <Flex options={{ justify: 'space-between', gap: 1.5 }}>
               <StatisticsCard
                 icon={<BankAccount />}
-                heading={`${formatToUpperUnit(
-                  statistics[0]?.total_revenue || 0,
-                )}`}
+                heading={`${formatToUpperUnit(statistics?.total_revenue || 0)}`}
                 subheading={t('orders.totalReservationsSum')}
               />
               <StatisticsCard
                 icon={<ShoppingCart />}
-                heading={`${statistics[0]?.total_reservations || 0}`}
+                heading={`${statistics?.total_reservations || 0}`}
                 subheading={t('orders.totalReservations')}
               />
               <StatisticsCard
                 icon={<Endorsed />}
-                heading={`${statistics[0]?.total_hours || 0}`}
+                heading={`${statistics?.total_hours || 0}`}
                 subheading={t('orders.totalHours')}
               />
             </Flex>
@@ -195,7 +190,7 @@ const Statistics = observer(() => {
                 <Flex options={{ justify: 'center' }}>
                   <Knob
                     readOnly
-                    value={Math.floor(statistics[0]?.organization_load) || 0}
+                    value={Math.floor(statistics?.organization_load) || 0}
                     valueTemplate='{value}%'
                     size={200}
                     pt={{

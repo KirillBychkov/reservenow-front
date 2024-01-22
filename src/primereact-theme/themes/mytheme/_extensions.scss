@@ -56,7 +56,33 @@
 .p-paginator .p-paginator-current {
   margin-right: auto;
   color: #111418;
+  font-weight: 500;
+  line-height: normal;
   font-size: 0.875rem;
+}
+
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  height: 62px;
+  font-size: 22px;
+  background-color: #fff;
+}
+
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  h3 {
+    transition: color 0.3s ease-out;
+  }
+  &:hover h3 {
+    color: var(--Indigo-3, #7961db);
+  }
+}
+
+.p-button.p-component.addReservationBtn.p-button-outlined {
+  span svg {
+    transition: fill 0.3s ease-out;
+  }
+  &:hover span svg {
+    fill: #7961db;
+  }
 }
 
 .p-dialog {
@@ -323,6 +349,10 @@ div .rbc-events-container div.rbc-event {
   font-size: 18px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 1440px) {
+    font-size: 14px;
+  }
 }
 
 .rbc-calendar .p-dropdown .p-dropdown-label.p-placeholder,
@@ -373,4 +403,52 @@ div .rbc-events-container div.rbc-event {
     background-color: #edeff2;
     color: inherit;
   }
+}
+
+.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text {
+  color: var(--text-color-muted);
+  line-height: normal;
+}
+
+.p-breadcrumb .p-breadcrumb-list li:last-child .p-menuitem-text {
+  color: var(--text-heading-color);
+  line-height: normal;
+}
+
+.p-inputtext {
+  color: var(--text-body-color);
+  line-height: normal;
+
+  &::placeholder {
+    color: var(--text-disabled);
+  }
+}
+
+.organizationDropdown .p-dropdown-label {
+  font-weight: 500;
+}
+
+.largeRowsTables.p-datatable .p-datatable-tbody > tr {
+  height: 80px;
+}
+
+.reservationDropdown.p-dropdown .p-dropdown-trigger {
+  display: none;
+}
+
+.reservationDropdown.p-dropdown .p-dropdown-label.p-placeholder {
+  color: var(--text-heading-color);
+  font-weight: 500;
+}
+
+.p-inputtext.p-component.p-disabled {
+  color: #858d9d;
+}
+
+.p-button.p-component {
+  font-weight: 500;
+}
+
+label .p-button.p-component {
+  font-weight: 600;
 }

@@ -122,7 +122,6 @@ const ReservationHistory = observer(() => {
         <Flex
           className={styles.notFoundContainer}
           options={{
-            justify: 'center',
             align: 'center',
             direction: 'column',
             gap: 2,

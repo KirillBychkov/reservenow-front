@@ -28,16 +28,16 @@ const LeftSide: React.FC<Props> = ({ data }) => {
         <img src={data.photo || FootballField} alt={data.name} />
       </div>
       <div className={styles.infoItem}>
-        <p className={'heading heading-6'}>{t('forms.id')}</p>
-        <h6 className={'heading heading-muted heading-6'}>{id}</h6>
+        <p className={'heading heading-muted heading-6'}>{t('forms.id')}</p>
+        <h6 className={'heading heading-6'}>{id}</h6>
       </div>
       <div className={styles.infoItem}>
-        <h6 className={'heading heading-6'}>{t('forms.name')}</h6>
-        <h6 className={'heading heading-muted heading-6'}>{name}</h6>
+        <h6 className={'heading heading-muted heading-6'}>{t('forms.name')}</h6>
+        <h6 className={'heading heading-6'}>{name}</h6>
       </div>
       <div className={styles.infoItem}>
-        <h6 className={'heading heading-6'}>{t('organizations.location')}</h6>
-        <h6 className={'heading heading-muted heading-6'}>{address}</h6>
+        <h6 className={'heading heading-muted heading-6'}>{t('organizations.location')}</h6>
+        <h6 className={'heading heading-6'}>{address}</h6>
       </div>
       <div>
         <h6 className={'heading heading-6'}>{t('organizations.workHours')}</h6>

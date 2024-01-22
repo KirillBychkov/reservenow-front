@@ -13,6 +13,7 @@ import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { formatPhoneIn } from '@/utils/formatters/formatPhone';
 import { getAllObjectsNamesInOrder } from './helper';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 
 type Props = {
   orders: Order[];
@@ -44,6 +45,10 @@ const ClientOrdersTable = ({
 
   return (
     <DataTable
+      className={classNames('tableWithHeader', {
+        emptyTable: formattedOrders.length === 0,
+      })}
+      emptyMessage={<TableEmptyMessage text={t('clients.ordersNull')} />}
       removableSort
       value={formattedOrders}
       sortField={sortField}

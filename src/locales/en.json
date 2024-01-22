@@ -125,7 +125,7 @@
     "null": "No objects currently available",
     "topObjects": "Top objects",
     "load": "Load",
-    "empty":"Sorry, you have not created any object yet.",
+    "empty": "Sorry, you have not created any object yet.",
     "reservationEmpty": "Unfortunately, there is no history of object reservations yet"
   },
   "addOrganizationForm": {
@@ -176,7 +176,9 @@
     },
     "week": "Week",
     "month": "Month",
-    "thisMonth": "This month"
+    "thisMonth": "This month",
+    "from": "From",
+    "to": "To"
   },
   "status": {
     "pending": "Pending",

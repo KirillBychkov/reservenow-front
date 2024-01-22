@@ -379,6 +379,10 @@ div .rbc-events-container div.rbc-event {
   border: none;
 }
 
+.p-inputtext.p-component.p-disabled.p-inputnumber-input {
+  color: var(--text-body-color);
+}
+
 .p-datatable .p-datatable-thead > tr > th {
   font-size: 14px;
 }

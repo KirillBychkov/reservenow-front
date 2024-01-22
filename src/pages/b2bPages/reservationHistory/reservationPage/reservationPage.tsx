@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './reservationPage.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Home } from '@blueprintjs/icons';
+import { Export, Home } from '@blueprintjs/icons';
 import Button from '@/components/UI/buttons/button';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import { Dropdown } from 'primereact/dropdown';
@@ -60,13 +60,25 @@ const ReservationPage = observer(() => {
             ]}
           />
         </Flex>
-        <Button
-          onClick={() => navigate(`/schedule/${id}/edit`)}
-          fill
-          className={styles.button}
-        >
-          {t('actions.edit')}
-        </Button>
+
+        <Flex options={{ gap: 1 }}>
+          <Button
+            fill
+            icon={<Export color='white' />}
+            severity='secondary'
+            className={styles.button}
+            onClick={() => ordersStore.initiateExport(parseInt(id || '0'))}
+          >
+            {t('actions.export')}
+          </Button>
+          <Button
+            onClick={() => navigate(`/schedule/${id}/edit`)}
+            fill
+            className={styles.button}
+          >
+            {t('actions.edit')}
+          </Button>
+        </Flex>
       </Flex>
 
       {formattedOrder && !isLoading ? (
@@ -75,7 +87,9 @@ const ReservationPage = observer(() => {
           <Flex options={{ gap: 1.5 }}>
             <div className={styles.reservationList}>
               <div className={styles.tableHeader}>
-                <h2 className='heading heading-4'>{t('orders.reservationList')}</h2>
+                <h2 className='heading heading-4'>
+                  {t('orders.reservationList')}
+                </h2>
               </div>
               <ReservationsTable
                 total={formattedOrder?.order_sum}

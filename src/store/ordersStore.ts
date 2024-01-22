@@ -101,7 +101,7 @@ class OrdersStore {
     filters: Omit<Filters, 'total'>,
   ): Promise<ResponseOrError<string>> => {
     try {
-      const response = await OrderService.exportOrder(filters);
+      const response = await OrderService.exportOrders(filters);
 
       return { data: response.data, error: '' };
     } catch (e) {
@@ -109,15 +109,28 @@ class OrdersStore {
     }
   };
 
-  initiateExport = async (filters: Omit<Filters, 'total'>) => {
+  exportOrder = async (id: number): Promise<ResponseOrError<string>> => {
     try {
-      const response = await this.exportOrders(filters);
+      const response = await OrderService.exportOrder(id);
+
+      return { data: response.data, error: '' };
+    } catch (e) {
+      return { data: '', error: 'An error occurred while exporting client' };
+    }
+  };
+
+  initiateExport = async (options: Omit<Filters, 'total'> | number) => {
+    const isExportById = typeof options === 'number';
+    try {
+      const response = isExportById
+        ? await this.exportOrder(options)
+        : await this.exportOrders(options);
 
       const blobUrl = URL.createObjectURL(new Blob([response.data]));
 
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'orders.xlsx'; // Provide a default file name
+      downloadLink.download = `order${isExportById ? options : 's'}.xlsx`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

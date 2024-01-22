@@ -13,6 +13,7 @@ import { PaginatorPageChangeEvent } from 'primereact/paginator';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import ordersStore from '@/store/ordersStore';
 import Paginator from '@/components/UI/paginator/paginator';
+import { formatPhoneIn } from '@/utils/formatters/formatPhone';
 
 type Props = {
   orders: Order[];
@@ -74,7 +75,11 @@ const OrdersTable: React.FC<Props> = observer(
             <>{`${client.first_name} ${client.last_name}`}</>
           )}
         />
-        <Column field='client.phone' header={t('forms.phone')} />
+        <Column
+          field='client.phone'
+          header={t('forms.phone')}
+          body={({ client }: Order) => formatPhoneIn(client.phone)}
+        />
         <Column field='order_sum' header={t('forms.total')} sortable />
         <Column
           header={t('forms.status')}

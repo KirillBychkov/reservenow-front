@@ -21,30 +21,44 @@ const UserProfile: React.FC = observer(() => {
     navigate('/signin');
   };
 
-  const items = [
-    {
-      label: t('profile.heading'),
-      command: () => {
-        navigate('/profile');
-      },
-    },
-    {
-      label: t('contact-us.heading'),
-      command: () => {
-        navigate('/contact-us');
-      },
-    },
-    {
-      template: () => {
-        return (
-          <div className='p-menuitem-link' onClick={logout}>
-            <p className='p-menuitem-text'>{t('actions.signout')}</p>
-            <LogOut color='#7961DB' />
-          </div>
-        );
-      },
-    },
-  ];
+  const items =
+    userRole !== UserRole.Superuser
+      ? [
+          {
+            label: t('profile.heading'),
+            command: () => {
+              navigate('/profile');
+            },
+          },
+          {
+            label: t('contact-us.heading'),
+            command: () => {
+              navigate('/contact-us');
+            },
+          },
+          {
+            template: () => {
+              return (
+                <div className='p-menuitem-link' onClick={logout}>
+                  <p className='p-menuitem-text'>{t('actions.signout')}</p>
+                  <LogOut color='#7961DB' />
+                </div>
+              );
+            },
+          },
+        ]
+      : [
+          {
+            template: () => {
+              return (
+                <div className='p-menuitem-link' onClick={logout}>
+                  <p className='p-menuitem-text'>{t('actions.signout')}</p>
+                  <LogOut color='#7961DB' />
+                </div>
+              );
+            },
+          },
+        ];
 
   useEffect(() => {
     (async () => {

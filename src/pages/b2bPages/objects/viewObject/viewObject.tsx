@@ -23,12 +23,17 @@ import getObjectsStatsData from './getObjectsStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 import useSearch from '@/hooks/useSearch';
 import { TableEmptyMessage } from '@/components/UI/tableEmptyMessage/tableEmptyMessage';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
+import Flex from '@/components/UI/layout/flex';
 
 const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
+
+  console.log(id, objectId);
+  
 
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
@@ -37,20 +42,25 @@ const ViewObject: React.FC = observer(() => {
   const { data: object, isLoading } = useFetch<RentalObject>(
     () => objectsStore.getRentalObject(parseInt(objectId || '0')),
     [objectId],
-    { onError: showError },
+    {
+      onError: (err) => {
+        showError(err);
+        navigate(`/organizations/${id}`)
+      },
+    },
   );
 
-  const { data: orders } = useFetch<Order[]>(
+  const { data: orders, isLoading: ordersLoading } = useFetch<Order[]>(
     () =>
       ordersStore.getOrders(
-        { limit, skip, sort, search },
+        { limit, skip, sort, search: formatPhoneOut(search) },
         { rentalObjectId: parseInt(objectId || '') },
       ),
     [limit, skip, objectId, sort, search],
     { onError: showError },
   );
 
-  if (!object || !orders) {
+  if (!object) {
     return <ProgressSpinner />;
   }
 
@@ -96,17 +106,26 @@ const ViewObject: React.FC = observer(() => {
               />
             }
             Table={
-              <OrdersTable
-                emptyMessage={
-                  <TableEmptyMessage text={t('objects.reservationEmpty')} />
-                }
-                orders={orders}
-                first={first}
-                onPageChange={onPageChange}
-                sortField={sortField}
-                sortOrder={sortOrder}
-                onSortChange={handleSort}
-              />
+              !ordersLoading ? (
+                <OrdersTable
+                  emptyMessage={
+                    <TableEmptyMessage text={t('objects.reservationEmpty')} />
+                  }
+                  orders={orders || []}
+                  first={first}
+                  onPageChange={onPageChange}
+                  sortField={sortField}
+                  sortOrder={sortOrder}
+                  onSortChange={handleSort}
+                />
+              ) : (
+                <Flex
+                  className={styles.loaderContainer}
+                  options={{ justify: 'center', align: 'center' }}
+                >
+                  <ProgressSpinner />
+                </Flex>
+              )
             }
           />
         </>

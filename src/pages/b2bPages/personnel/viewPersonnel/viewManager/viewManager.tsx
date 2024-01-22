@@ -49,7 +49,7 @@ const ViewManager: React.FC = observer(() => {
         <div className={styles.manager}>
           <a
             className={classNames(
-              'heading heading-4 heading-primary',
+              'heading heading-5 heading-primary',
               styles.back,
             )}
             onClick={() => navigate(-1)}
@@ -68,29 +68,29 @@ const ViewManager: React.FC = observer(() => {
               {t('forms.overallInfo')}
             </h4>
             <div className={styles.managerInfoItem}>
-              <h4 className='heading heading-4'>{t(`personnel.role`)}</h4>
-              <p className='paragraph'>{t('personnel.manager')}</p>
+              <h4 className='heading heading-6'>{t(`personnel.role`)}</h4>
+              <p className='paragraph paragraph--normal'>{t('personnel.manager')}</p>
             </div>
             <div className={styles.managerInfoItem}>
-              <h4 className='heading heading-4'>{t(`forms.firstName`)}</h4>
-              <p className='paragraph'>{manager.first_name}</p>
+              <h4 className='heading heading-6'>{t(`forms.firstName`)}</h4>
+              <p className='paragraph paragraph--normal'>{manager.first_name}</p>
             </div>
             <div className={styles.managerInfoItem}>
-              <h4 className='heading heading-4'>{t(`forms.lastName`)}</h4>
-              <p className='paragraph'>{manager.last_name}</p>
+              <h4 className='heading heading-6'>{t(`forms.lastName`)}</h4>
+              <p className='paragraph paragraph--normal'>{manager.last_name}</p>
             </div>
             <div className={styles.managerInfoItem}>
-              <h4 className='heading heading-4'>{t(`forms.email`)}</h4>
-              <p className='paragraph'>{manager.account?.email || ''}</p>
+              <h4 className='heading heading-6'>{t(`forms.email`)}</h4>
+              <p className='paragraph paragraph--normal'>{manager.account?.email || ''}</p>
             </div>
             <div className={styles.managerInfoItem}>
-              <h4 className='heading heading-4'>{t(`forms.phone`)}</h4>
-              <p className='paragraph'>{manager.phone}</p>
+              <h4 className='heading heading-6'>{t(`forms.phone`)}</h4>
+              <p className='paragraph paragraph--normal'>{manager.phone}</p>
             </div>
             {manager.description && (
               <div className={styles.managerInfoItem}>
-                <h4 className='heading heading-4'>{t(`forms.description`)}</h4>
-                <p className='paragraph'>{manager.description}</p>
+                <h4 className='heading heading-6'>{t(`forms.description`)}</h4>
+                <p className='paragraph paragraph--normal'>{manager.description}</p>
               </div>
             )}
           </div>

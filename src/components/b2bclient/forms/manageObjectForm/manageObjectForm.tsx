@@ -31,7 +31,8 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { t, i18n } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
   const { id: organizationId, objectId } = useParams();
-  const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+  const { ref, handleSelect, handleClearFile, fileName, handleDrop } =
+    useFileUpload();
 
   if (initialValues) {
     initialValues = formatObjectIn(initialValues, i18n.language);
@@ -157,6 +158,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
       </div>
       <div className={styles.formSection}>
         <FileUpload
+          onDrop={handleDrop}
           fileUploadRef={ref}
           onChange={handleSelect}
           onClear={handleClearFile}

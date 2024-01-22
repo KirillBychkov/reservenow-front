@@ -105,7 +105,9 @@ const ManageTrainerForm: React.FC<Props> = ({ initialValues }) => {
           {t('forms.overallInfo')}
         </h4>
         <FormField label={t('personnel.role')}>
-          <p className='paragraph-muted'>{t('personnel.trainer')}</p>
+          <p className={classNames('paragraph-muted', styles.role)}>
+            {t('personnel.trainer')}
+          </p>
         </FormField>
         <FormField
           label={t('forms.firstName')}

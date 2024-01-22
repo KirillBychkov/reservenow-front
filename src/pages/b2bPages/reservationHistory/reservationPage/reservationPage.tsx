@@ -17,6 +17,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import ReservationDetailsSection from '@/components/reservationDetailsSections/reservationDetailsSection';
 import ReservationStatusCard from '@/components/reservationDetailsSections/reservationStatusCard';
 import { observer } from 'mobx-react-lite';
+import classNames from 'classnames';
 
 const ReservationPage = observer(() => {
   const { id } = useParams();
@@ -46,7 +47,7 @@ const ReservationPage = observer(() => {
     <Flex options={{ direction: 'column', gap: 1.5 }} className={styles.page}>
       <Flex options={{ justify: 'space-between' }} className={styles.title}>
         <Flex options={{ direction: 'column' }}>
-          <h3 className='heading heading-3'>
+          <h3 className={classNames('heading heading-3', styles.heading)}>
             {t('reservationHistory.reservationDetails')}
           </h3>
           <BreadCrumb

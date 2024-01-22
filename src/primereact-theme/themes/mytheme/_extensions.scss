@@ -1,4 +1,5 @@
 /* Customizations to the designer theme should be defined here */
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
 
 .p-datatable .p-datatable-thead > tr > th:first-child {
   border-top-left-radius: 8px;
@@ -176,6 +177,10 @@
   background-color: #fff;
   border: none;
   padding: 0px;
+
+  @include mixins.onLaptop {
+    border-radius: 8px;
+  }
 }
 
 .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn.p-calendar-w-btn-left {
@@ -184,6 +189,10 @@
   border-radius: 8px;
   border: 1px solid #e0e2e7;
   background-color: #fff;
+
+  @include mixins.onLaptop {
+    width: auto;
+  }
 }
 
 .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn.p-calendar-w-btn-left
@@ -195,6 +204,10 @@
   font-family: Inter;
   font-weight: 500;
   letter-spacing: 0.07px;
+
+  @include mixins.onLaptop {
+    display: none;
+  }
 
   &::placeholder {
     color: inherit;
@@ -238,6 +251,7 @@ div .rbc-events-container div.rbc-event {
 
 .rbc-day-slot .rbc-event-content {
   flex: 0;
+  min-height: auto;
 }
 
 .rbc-calendar {

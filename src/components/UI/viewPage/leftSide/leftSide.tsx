@@ -24,26 +24,37 @@ const LeftSide: React.FC<Props> = ({ data }) => {
 
   return (
     <div className={styles.container}>
-      <div className={classNames(styles.image, styles.infoItem)}>
+      <div className={classNames(styles.image)}>
         <img src={data.photo || FootballField} alt={data.name} />
       </div>
-      <div className={styles.infoItem}>
-        <p className={'heading heading-6'}>{t('forms.id')}</p>
-        <h6 className={'heading heading-muted heading-6'}>{id}</h6>
-      </div>
-      <div className={styles.infoItem}>
-        <h6 className={'heading heading-6'}>{t('forms.name')}</h6>
-        <h6 className={'heading heading-muted heading-6'}>{name}</h6>
-      </div>
-      <div className={styles.infoItem}>
-        <h6 className={'heading heading-6'}>{t('organizations.location')}</h6>
-        <h6 className={'heading heading-muted heading-6'}>{address}</h6>
-      </div>
-      <div>
-        <h6 className={'heading heading-6'}>{t('organizations.workHours')}</h6>
-        {daysOfWeek.map((day, i) => (
-          <RenderWorkingHours data={data} day={day} key={i} />
-        ))}
+      <div className={styles.infoContainer}>
+        <div>
+          <div className={styles.infoItem}>
+            <p className={'heading heading-muted heading-6'}>{t('forms.id')}</p>
+            <h6 className={'heading heading-6'}>{id}</h6>
+          </div>
+          <div className={styles.infoItem}>
+            <h6 className={'heading heading-muted heading-6'}>
+              {t('forms.name')}
+            </h6>
+            <h6 className={'heading heading-6'}>{name}</h6>
+          </div>
+          <div className={styles.infoItem}>
+            <h6 className={'heading heading-muted heading-6'}>
+              {t('organizations.location')}
+            </h6>
+            <h6 className={'heading heading-6'}>{address}</h6>
+          </div>
+        </div>
+
+        <div>
+          <h6 className={classNames('heading', 'heading-6', styles.hoursHeading)}>
+            {t('organizations.workHours')}
+          </h6>
+          {daysOfWeek.map((day, i) => (
+            <RenderWorkingHours data={data} day={day} key={i} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
 import Button from '@/components/UI/buttons/button';
 import getTrainersStatsData from './getTrainersStatsData';
 import useSearch from '@/hooks/useSearch';
+import { TableEmptyMessage } from '@/components/UI/tableEmptyMessage/tableEmptyMessage';
 
 const ViewTrainer: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -87,6 +88,9 @@ const ViewTrainer: React.FC = observer(() => {
           }
           Table={
             <OrdersTable
+              emptyMessage={
+                <TableEmptyMessage text={t('personnel.reservationsNull')} />
+              }
               first={first}
               onPageChange={onPageChange}
               onSortChange={handleSort}

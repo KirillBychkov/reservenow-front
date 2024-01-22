@@ -22,6 +22,7 @@ import { useSort } from '@/hooks/useSort';
 import getObjectsStatsData from './getObjectsStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 import useSearch from '@/hooks/useSearch';
+import { TableEmptyMessage } from '@/components/UI/tableEmptyMessage/tableEmptyMessage';
 
 const ViewObject: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -96,6 +97,9 @@ const ViewObject: React.FC = observer(() => {
             }
             Table={
               <OrdersTable
+                emptyMessage={
+                  <TableEmptyMessage text={t('objects.reservationEmpty')} />
+                }
                 orders={orders}
                 first={first}
                 onPageChange={onPageChange}

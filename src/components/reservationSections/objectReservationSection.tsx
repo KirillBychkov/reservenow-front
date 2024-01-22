@@ -215,10 +215,11 @@ const ObjectReservationSection = ({
               disabled={isEditingMode}
               options={orgOptions}
               onChange={handleOrgChange}
-              placeholder={
-                formik.values.organization?.name ||
-                t('schedule.form.objectSection.chooseOrganization')
-              }
+              value={{
+                label: formik.values.organization?.name,
+                organization: formik.values.organization,
+              }}
+              placeholder={t('schedule.form.objectSection.chooseOrganization')}
               onBlur={formik.handleBlur}
               emptyMessage={t('schedule.organizationsNull')}
               className={classNames(isValidClassname(formik, 'organization'))}
@@ -238,10 +239,11 @@ const ObjectReservationSection = ({
               name='rental_object'
               options={objectOptions}
               disabled={isEditingMode}
-              placeholder={
-                rental_object?.name ||
-                t('schedule.form.objectSection.chooseObject')
-              }
+              value={{
+                label: rental_object?.name,
+                object: rental_object,
+              }}
+              placeholder={t('schedule.form.objectSection.chooseObject')}
               onChange={handleObjectChange}
               emptyMessage={
                 isLoading && formik.values.organization ? (

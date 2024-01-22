@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { DropdownChangeEvent } from 'primereact/dropdown';
 import { ChangeEvent, useEffect } from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup'
+import * as yup from 'yup';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 
@@ -25,7 +25,7 @@ type Props = {
   ) => void;
   reservationNumber: number;
   isEditingMode: boolean;
-  isSubmitting: boolean,
+  isSubmitting: boolean;
 };
 
 export const EquipmentReservationSection = ({
@@ -56,18 +56,18 @@ export const EquipmentReservationSection = ({
 
   const handleChangeEquipment = (e: DropdownChangeEvent) => {
     onChange(id, { equipment: e.target.value.equipment as Equipment });
-    formik.setFieldValue('equipmentName', e.target.value.equipment.name)
+    formik.setFieldValue('equipmentName', e.target.value.equipment.name);
   };
 
   const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
     onChange(id, { description: e.target.value });
   };
-  
+
   useEffect(() => {
     if (isSubmitting) {
-      formik.submitForm()
+      formik.submitForm();
     }
-  }, [isSubmitting])
+  }, [isSubmitting]);
 
   return (
     <div className={styles.formSection}>
@@ -93,10 +93,11 @@ export const EquipmentReservationSection = ({
         <CustomDropdown
           name='equipmentName'
           disabled={isEditingMode}
-          placeholder={
-            formik.values.equipmentName ||
-            t('schedule.form.equipmentSection.chooseEquipment')
-          }
+          value={{
+            label: formik.values.equipmentName,
+            equipment,
+          }}
+          placeholder={t('schedule.form.equipmentSection.chooseEquipment')}
           options={options}
           onChange={handleChangeEquipment}
           onBlur={formik.handleBlur}

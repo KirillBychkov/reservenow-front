@@ -405,6 +405,27 @@ div .rbc-events-container div.rbc-event {
   }
 }
 
+.p-inputtext.p-component.p-disabled.p-inputnumber-input {
+  color: var(--text-body-color);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  font-size: 14px;
+}
+
+.emptyTable {
+  & .p-datatable-thead {
+    display: none;
+  }
+
+  & .p-datatable-footer {
+    height: 87px;
+  }
+
+  & .p-paginator {
+    display: none;
+  }
+}
 .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text {
   color: var(--text-color-muted);
   line-height: normal;

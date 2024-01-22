@@ -12,6 +12,8 @@ import { RentalObject } from '@/models/RentalObject';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '@/components/UI/paginator/paginator';
+import classNames from 'classnames';
+import { TableEmptyMessage } from '@/components/UI/tableEmptyMessage/tableEmptyMessage';
 
 type Props = {
   objects: RentalObject[];
@@ -47,8 +49,16 @@ const ObjectsTable: React.FC<Props> = observer(
     return (
       <div>
         <DataTable
-          className='tableWithHeader'
+          className={classNames('tableWithHeader', {
+            emptyTable: formattedObjects.length === 0,
+          })}
           removableSort
+          emptyMessage={
+            <TableEmptyMessage
+              text={t('objects.empty')}
+              buttonData={{ text: t('objects.add'), to: 'objects/add' }}
+            />
+          }
           value={formattedObjects}
           selectionMode='single'
           selection={selectedObject}

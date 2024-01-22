@@ -22,7 +22,7 @@ const StatsCard: React.FC<CardProps> = ({ icon, heading, subheading }) => {
       >
         {t(`${subheading}`)}
       </p>
-      <h4 className='heading-3'>{heading}</h4>
+      <h4 className='heading heading-3'>{heading}</h4>
     </div>
   );
 };

@@ -21,10 +21,19 @@ type Props = {
   sortField: SortField;
   sortOrder: SortOrder;
   onSortChange: (e: DataTableStateEvent) => void;
+  emptyMessage?: React.ReactNode;
 };
 
 const OrdersTable: React.FC<Props> = observer(
-  ({ orders, first, onPageChange, sortField, sortOrder, onSortChange }) => {
+  ({
+    orders,
+    first,
+    onPageChange,
+    sortField,
+    sortOrder,
+    onSortChange,
+    emptyMessage,
+  }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const filters = ordersStore.filters;
@@ -39,9 +48,12 @@ const OrdersTable: React.FC<Props> = observer(
 
     return (
       <DataTable
-        className='tableWithHeader'
+        className={classNames('tableWithHeader', {
+          emptyTable: formattedObjects.length === 0,
+        })}
         removableSort
         value={formattedObjects}
+        emptyMessage={emptyMessage}
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSortChange}

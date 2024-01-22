@@ -13,7 +13,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ path, icon, heading }) => {
     <div className={styles.card}>
       <NavLink to={path}>
         <div className={styles.icon}>{icon}</div>
-        <h3 className='heading heading-3'>{heading}</h3>
+        <h3 className='heading heading-body heading-3'>{heading}</h3>
       </NavLink>
     </div>
   );

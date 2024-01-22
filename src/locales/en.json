@@ -14,7 +14,7 @@
       "booking": "Booking",
       "clients": "Customers",
       "organizations": "Organizations",
-      "products": "Products",
+      "products": "Equipments",
       "personnel": "Personnel",
       "statistics": "Statistics"
     }
@@ -255,9 +255,9 @@
     }
   },
   "equipment": {
-    "equipment": "Goods",
-    "empty": "Sorry, you have not created any products yet.",
-    "nameColumn": "Product name",
+    "equipment": "Equipments",
+    "empty": "Sorry, you have not created any equipment yet.",
+    "nameColumn": "Equipment name",
     "priceColumn": "Price"
   },
   "reservations": {
@@ -312,7 +312,7 @@
         "organizationDescription": "Enter the organization description here. . ."
       },
       "equipmentSection": {
-        "header": "Booking information for reservation № {{reservationNumber}} (product)",
+        "header": "Booking information for reservation № {{reservationNumber}} (equipment)",
         "chooseEquipment": "Select equipment"
       },
       "trainerSection": {
@@ -330,7 +330,7 @@
       "addToOrder": "Add to order:",
       "trainer": "Trainer",
       "reservation": "Reservation",
-      "equipment": "Goods",
+      "equipment": "Equipment",
       "paymentMethod": "Payment method",
       "choosePaymentMethod": "Choose a payment method",
       "totalSum": "Total amount",

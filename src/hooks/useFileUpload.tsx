@@ -12,6 +12,27 @@ export const useFileUpload = () => {
       return;
     }
 
+    if (ref.current?.getFiles()) {
+      handleClearFile();
+    }
+
+    ref.current?.setFiles([file]);
+    setFileName(file.name);
+  };
+
+  const handleDrop = (e: DragEvent) => {
+    e.preventDefault();
+
+    if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
+      return;
+    }
+
+    if (ref.current?.getFiles()) {
+      handleClearFile();
+    }
+
+    const file = e.dataTransfer.files[0];
+
     ref.current?.setFiles([file]);
     setFileName(file.name);
   };
@@ -24,6 +45,7 @@ export const useFileUpload = () => {
   return {
     ref,
     handleSelect,
+    handleDrop,
     handleClearFile,
     fileName,
   };

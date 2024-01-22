@@ -15,7 +15,7 @@ import { useFileUpload } from '@/hooks/useFileUpload';
 const ContactUs = observer(() => {
   const { t } = useTranslation();
   const { showSuccess, showError } = useContext(ToastContext);
-  const { ref, handleSelect, handleClearFile, fileName } = useFileUpload();
+  const { ref, handleSelect, handleClearFile, fileName, handleDrop } = useFileUpload();
 
   const formik = useFormik<CreateSupportDTO>({
     initialValues: {
@@ -71,6 +71,7 @@ const ContactUs = observer(() => {
             <Flex options={{ direction: 'column', gap: 0.25 }}>
               <h6 className='heading heading-6'>{t('forms.chooseFile')}</h6>
               <FileUpload
+                onDrop={handleDrop}
                 fileUploadRef={ref}
                 onChange={handleSelect}
                 onClear={handleClearFile}

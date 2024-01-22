@@ -96,6 +96,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         <MainInfo formik={formik} />
         <SecondaryInfo formik={formik} />
         <div className={styles.section}>
+          <h4 className='heading heading-4 '>{t('addOrganizationForm.image')}</h4>
           <FileUpload
             onDrop={handleDrop}
             fileUploadRef={ref}

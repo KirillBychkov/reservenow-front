@@ -12,7 +12,7 @@ const getClientStatsData = ({
   return [
     {
       icon: <CreditCard />,
-      heading: `${total_reservation_sum}`,
+      heading: `UAH ${total_reservation_sum}`,
       subheading: 'clients.total_reservation_sum',
     },
     {

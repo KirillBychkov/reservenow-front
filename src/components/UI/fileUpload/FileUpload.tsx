@@ -49,9 +49,7 @@ export const FileUpload = ({
               <div className={styles.icon}>
                 <Media color='white' size={22} />
               </div>
-              <p className='heading heading-6 heading-disabled'>
-                {t('contact-us.howToAddFile')}
-              </p>
+              <p className='heading heading-6 heading-disabled '>{t('contact-us.howToAddFile')}</p>
               <Button type='button' className={styles.btn} outlined>
                 {buttonText || t('contact-us.addFile')}
               </Button>

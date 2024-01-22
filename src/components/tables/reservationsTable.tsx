@@ -48,6 +48,7 @@ const ReservationsTable = ({ reservations, total }: Props) => {
   return (
     <DataTable
       removableSort
+      className='tableWithHeader largeRowsTables'
       value={formattedReservations}
       lazy={true}
       footer={<TableFooter total={total} />}

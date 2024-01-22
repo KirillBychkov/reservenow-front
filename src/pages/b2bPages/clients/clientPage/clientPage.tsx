@@ -78,13 +78,7 @@ const ClientPage = observer(() => {
             ]}
           />
 
-          <Button
-            className={styles.headerBtn}
-            fill
-            onClick={() => navigate('edit')}
-          >
-            {t('actions.edit')}
-          </Button>
+          <Button onClick={() => navigate('edit')}>{t('actions.edit')}</Button>
         </div>
       </Flex>
 

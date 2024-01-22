@@ -278,6 +278,7 @@
   },
   "orders": {
     "reservationHistory": "Історія бронювань",
+    "reservationList": "Список бронюваннь",
     "orderHistory": "Історія замовлень",
     "totalReservationsSum": "Всього бронювань ₴",
     "totalReservations": "Всього бронювань",

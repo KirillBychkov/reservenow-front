@@ -33,7 +33,10 @@ const Requests: React.FC = observer(() => {
     <div className={styles.requests}>
       <h3 className='heading heading-3'>{t('requests.requests')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={handleSearch} />
+        <Searchbar
+          searchPlaceholder={t('requests.searchPlaceholder')}
+          setSearch={handleSearch}
+        />
       </div>
       {isLoading ? (
         <ProgressSpinner />

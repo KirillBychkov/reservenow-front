@@ -48,14 +48,17 @@
     "total_reservation_sum": "Money spent",
     "total_reservation_amount": "Total reservations",
     "ordersHistory": "Booking history",
-    "ordersNull": "Unfortunately, there is no customer reservation history yet"
+    "ordersNull": "Unfortunately, there is no customer reservation history yet",
+    "searchPlaceholder": "Name of the user",
+    "customerSearchPlaceholder": "Name of the client"
   },
   "requests": {
     "requests": "Requests",
     "request": "Request",
     "null": "The request list is empty",
     "response": "Decision on the request",
-    "openImage": "Open image"
+    "openImage": "Open image",
+    "searchPlaceholder": "ID of request"
   },
   "forms": {
     "id": "ID",
@@ -263,7 +266,8 @@
     "equipment": "Equipments",
     "empty": "Sorry, you have not created any equipment yet.",
     "nameColumn": "Equipment name",
-    "priceColumn": "Price"
+    "priceColumn": "Price",
+    "searchPlaceholder": "Name of the equipment"
   },
   "reservations": {
     "reservations": "Reservation",
@@ -363,6 +367,7 @@
   "reservationHistory": {
     "reservationDetails": "Reservation details",
     "addReservation": "Add reservation",
+    "searchPlaceholder": "ID or client's phone number",
     "table": {
       "id": "ID",
       "clientName": "Client name",

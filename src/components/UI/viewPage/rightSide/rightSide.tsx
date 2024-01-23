@@ -4,6 +4,7 @@ import StatsCard from '../statsCard';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from '@blueprintjs/icons';
 import Searchbar from '@/components/searchbar/searchbar';
+import { useTranslation } from 'react-i18next';
 export interface StatsCardsData {
   icon: React.ReactNode;
   heading: string;
@@ -24,6 +25,7 @@ const RightSide: React.FC<Props> = ({
   statCardsData,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className={styles.RightSide}>
@@ -48,7 +50,12 @@ const RightSide: React.FC<Props> = ({
               {buttonText}
             </Button>
           )}
-          {setSearch && <Searchbar setSearch={setSearch} />}
+          {setSearch && (
+            <Searchbar
+              searchPlaceholder={t('reservationHistory.searchPlaceholder')}
+              setSearch={setSearch}
+            />
+          )}
         </div>
       </div>
     </div>

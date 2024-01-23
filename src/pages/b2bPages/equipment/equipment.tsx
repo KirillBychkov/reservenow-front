@@ -39,7 +39,10 @@ const Equipment: React.FC = observer(() => {
     <div className={styles.equipment}>
       <h3 className='heading heading-3'>{t('equipment.equipment')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={handleSearch} />
+        <Searchbar
+          searchPlaceholder={t('equipment.searchPlaceholder')}
+          setSearch={handleSearch}
+        />
         <Button onClick={() => navigate('add')} icon={<Plus color='white' />}>
           {t('actions.addEquipment')}
         </Button>

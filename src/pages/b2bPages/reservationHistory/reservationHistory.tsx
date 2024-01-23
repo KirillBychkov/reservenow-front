@@ -19,6 +19,7 @@ import { Export } from '@blueprintjs/icons';
 import useSearch from '@/hooks/useSearch';
 import { Calendar } from '@/components/UI/calendar/calendar';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const ReservationHistory = observer(() => {
@@ -45,7 +46,7 @@ const ReservationHistory = observer(() => {
         {
           limit,
           skip,
-          search,
+          search: formatPhoneOut(search),
           sort,
         },
         {},
@@ -55,12 +56,17 @@ const ReservationHistory = observer(() => {
     {
       onError: (err) => {
         showError(err);
+
+        if (search) {
+          return;
+        }
         navigate('/');
       },
     },
   );
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const isOrdersEmpty = (orders?.length === 0 || orders === null) && !isLoading;
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>
@@ -142,7 +148,7 @@ const ReservationHistory = observer(() => {
         />
       )}
 
-      {orders?.length === 0 && (
+      {isOrdersEmpty && (
         <Flex
           className={styles.notFoundContainer}
           options={{

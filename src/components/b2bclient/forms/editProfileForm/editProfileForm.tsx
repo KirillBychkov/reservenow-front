@@ -14,6 +14,7 @@ import usersStore from '@/store/usersStore';
 import ToastContext from '@/context/toast';
 import { imageStringToFile } from '@/utils/cropImage';
 import { Account, User } from '@/models/User';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
 
 type Props = {
   initialValues: Account;
@@ -70,7 +71,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
         {
           first_name: values.first_name,
           last_name: values.last_name,
-          phone: values.phone,
+          phone: formatPhoneOut(values.phone),
         },
         isAvatarChanged ? await imageStringToFile(image) : undefined,
       );
@@ -160,8 +161,8 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
       >
         <InputMask
           name='phone'
-          mask='+38 (999) 999-9999'
-          placeholder='+38 (___) ___-____'
+          mask='+38 (099) 999-9999'
+          placeholder='+38 (0__) ___-____'
           value={formik.values.phone}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

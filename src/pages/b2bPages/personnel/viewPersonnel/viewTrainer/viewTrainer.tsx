@@ -23,6 +23,8 @@ import Button from '@/components/UI/buttons/button';
 import getTrainersStatsData from './getTrainersStatsData';
 import useSearch from '@/hooks/useSearch';
 import { TableEmptyMessage } from '@/components/UI/tableEmptyMessage/tableEmptyMessage';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
+import Flex from '@/components/UI/layout/flex';
 
 const ViewTrainer: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -40,17 +42,17 @@ const ViewTrainer: React.FC = observer(() => {
     { onError: showError },
   );
 
-  const { data: orders } = useFetch<Order[]>(
+  const { data: orders, isLoading: ordersLoading } = useFetch<Order[]>(
     () =>
       ordersStore.getOrders(
-        { limit, skip, search, sort },
+        { limit, skip, search: formatPhoneOut(search), sort },
         { trainerId: parseInt(id || '0') },
       ),
     [limit, skip, search, sort, id],
     { onError: showError },
   );
 
-  if (!trainer || !orders) {
+  if (!trainer) {
     return <ProgressSpinner />;
   }
 
@@ -87,17 +89,26 @@ const ViewTrainer: React.FC = observer(() => {
             />
           }
           Table={
-            <OrdersTable
-              emptyMessage={
-                <TableEmptyMessage text={t('personnel.reservationsNull')} />
-              }
-              first={first}
-              onPageChange={onPageChange}
-              onSortChange={handleSort}
-              sortField={sortField}
-              sortOrder={sortOrder}
-              orders={orders}
-            />
+            !ordersLoading ? (
+              <OrdersTable
+                emptyMessage={
+                  <TableEmptyMessage text={t('personnel.reservationsNull')} />
+                }
+                first={first}
+                onPageChange={onPageChange}
+                onSortChange={handleSort}
+                sortField={sortField}
+                sortOrder={sortOrder}
+                orders={orders || []}
+              />
+            ) : (
+              <Flex
+                className={styles.loaderContainer}
+                options={{ justify: 'center', align: 'center' }}
+              >
+                <ProgressSpinner />
+              </Flex>
+            )
           }
         />
       )}

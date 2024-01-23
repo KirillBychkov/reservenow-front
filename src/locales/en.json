@@ -101,7 +101,8 @@
     "equipmentPrice": "Price",
     "enterEquipmentName": "Enter the name of the equipment",
     "profilePhoto": "Profile photo",
-    "confirmation": "Confirmation"
+    "confirmation": "Confirmation",
+    "deleteImage": "Delete image"
   },
   "organizations": {
     "organizationId": "Organization ID",

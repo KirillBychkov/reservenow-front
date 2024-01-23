@@ -101,7 +101,8 @@
     "equipmentPrice": "Ціна",
     "enterEquipmentName": "Введіть назву товару",
     "profilePhoto": "Фото профiля",
-    "confirmation": "Підтвердження"
+    "confirmation": "Підтвердження",
+    "deleteImage": "Видалити зображення"
   },
   "organizations": {
     "organizationId": "ID організації",

@@ -1,7 +1,27 @@
 @use '../manageOrganizationForm/manageOrganizationForm.module.scss' as
   manageOrganizationForm;
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
 .form {
   &Section {
     @include manageOrganizationForm.form-section;
+  }
+}
+
+.imageContainer {
+  width: 332px;
+
+  @include mixins.onLaptopL {
+    width: 385px;
+  }
+}
+
+.image {
+  height: 231px;
+  border-radius: 10px;
+  object-fit: cover;
+
+  @include mixins.onLaptopL {
+    height: 190px;
   }
 }

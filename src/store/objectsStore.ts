@@ -93,6 +93,19 @@ class ObjectsStore {
     }
   };
 
+  deleteImage = async (id: number): Promise<SuccessOrError> => {
+    try {
+      await ObjectService.deleteImage(id);
+
+      return { successMsg: 'Image deleted successfully', errorMsg: '' };
+    } catch (e) {
+      return {
+        successMsg: '',
+        errorMsg: 'Error while uploading image',
+      };
+    }
+  };
+
   /*
     UTILS 
   */

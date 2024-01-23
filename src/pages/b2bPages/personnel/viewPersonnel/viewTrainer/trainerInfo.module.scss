@@ -1,9 +1,23 @@
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
+
 .container {
   padding: 20px;
   border-radius: 10px;
   background-color: var(--neutral-white, #fff);
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.onLaptopL {
+    max-width: 495px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  } 
 
   .infoItem {
     margin-bottom: 1rem;
   }
+}
+
+.hours {
+  align-self: flex-start;
 }

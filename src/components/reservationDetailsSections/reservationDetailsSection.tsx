@@ -4,6 +4,7 @@ import { formatPhoneIn } from '@/utils/formatters/formatPhone';
 import { useTranslation } from 'react-i18next';
 import { Reservation } from '@/models/Reservation';
 import { ReservationDetailCard } from '../UI/reservationDetails/reservationDetailCard/reservationDetailCard';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 type Props = {
   order: Order;
@@ -22,6 +23,7 @@ const ReservationDetailsSection = ({ order }: Props) => {
   const { t } = useTranslation();
   const { created_at, id, payment_method, reservations, client, user } = order;
   const objectNames = getObjectNames(reservations);
+  const isLaptop = useMediaQuery('(max-width:1200px)');
 
   return (
     <Flex options={{ gap: 1.5, justify: 'space-between' }}>
@@ -43,7 +45,6 @@ const ReservationDetailsSection = ({ order }: Props) => {
           },
         ]}
       />
-
       <ReservationDetailCard
         title={t('reservationHistory.details.customer')}
         details={[
@@ -57,20 +58,22 @@ const ReservationDetailsSection = ({ order }: Props) => {
           },
         ]}
       />
-
-      <ReservationDetailCard
-        title={t('reservationHistory.details.info')}
-        details={[
-          {
-            label: t('reservationHistory.details.createdBy'),
-            value: `${user.first_name} ${user.last_name}`,
-          },
-          {
-            label: t('reservationHistory.details.creatorDescription'),
-            value: user.description,
-          },
-        ]}
-      />
+      
+      {!isLaptop && (
+        <ReservationDetailCard
+          title={t('reservationHistory.details.info')}
+          details={[
+            {
+              label: t('reservationHistory.details.createdBy'),
+              value: `${user.first_name} ${user.last_name}`,
+            },
+            {
+              label: t('reservationHistory.details.creatorDescription'),
+              value: user.description,
+            },
+          ]}
+        />
+      )}
     </Flex>
   );
 };

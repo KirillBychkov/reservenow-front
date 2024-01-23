@@ -8,21 +8,16 @@
   max-width: 146px;
 }
 
-.card {
-  border-radius: 8px;
-  border: 1px solid var(--Neutral-Gray-Gray-100, #e0e2e7);
-  background: var(--Neutral-White, #fff);
-  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
-  padding: 24px;
-  width: 100%;
-}
-
-.statusSection {
-  flex: 1;
+.heading {
+  margin-bottom: 0.63rem;
 }
 
 .reservationList {
   flex: 3.5
+}
+
+.section {
+  flex: 1;
 }
 
 .tableHeader {

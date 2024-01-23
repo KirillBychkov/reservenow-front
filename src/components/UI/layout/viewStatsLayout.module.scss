@@ -1,15 +1,29 @@
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
+
 .FlexContainer {
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  height: 100%;
   gap: 24px;
+  padding-bottom: 25px;
+
+  @include mixins.onLaptopL {
+    flex-direction: column;
+  }
 
   .LeftSide {
     max-width: 360px;
     width: 100%;
     border-radius: 10px;
     height: fit-content;
+
+    @include mixins.onLaptopL {
+      max-width: 782px;
+    }
+
+    @include mixins.onLaptop {
+      max-width: 742px;
+    }
 
     .OrgDetails {
       width: 100%;

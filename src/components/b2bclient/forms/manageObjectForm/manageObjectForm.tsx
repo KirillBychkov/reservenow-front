@@ -119,8 +119,8 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
         >
           <InputMask
             name='phone'
-            mask='+38 (999) 999-9999'
-            placeholder='+38 (___) ___-____'
+            mask='+38 (099) 999-9999'
+            placeholder='+38 (0__) ___-____'
             value={formik.values.phone}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

@@ -171,6 +171,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
       }
 
       showSuccess(successMsg);
+      resetForm();
     },
   });
 
@@ -205,8 +206,8 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
           >
             <InputMask
               name='phone'
-              mask='+38 (999) 999-9999'
-              placeholder='+38 (___) ___-____'
+              mask='+38 (099) 999-9999'
+              placeholder='+38 (0__) ___-____'
               disabled={isInputsBlocked}
               value={formik.values.phone}
               onChange={handlePhoneChange}

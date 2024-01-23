@@ -19,6 +19,8 @@ import { Export } from '@blueprintjs/icons';
 import useSearch from '@/hooks/useSearch';
 import { Calendar } from '@/components/UI/calendar/calendar';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const ReservationHistory = observer(() => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const ReservationHistory = observer(() => {
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);
   const [dates, setDates] = useState<Date[] | null>(null);
+  const isLaptopL = useMediaQuery('(max-width:1440px)');
   const { startDate, endDate } = useMemo(() => {
     const isFirstDateNotNull = dates !== null && dates[0] !== null;
     const isSecondDateNotNull = dates !== null && dates[1] !== null;
@@ -43,7 +46,7 @@ const ReservationHistory = observer(() => {
         {
           limit,
           skip,
-          search,
+          search: formatPhoneOut(search),
           sort,
         },
         {},
@@ -53,51 +56,78 @@ const ReservationHistory = observer(() => {
     {
       onError: (err) => {
         showError(err);
+
+        if (search) {
+          return;
+        }
         navigate('/');
       },
     },
   );
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const isOrdersEmpty = (orders?.length === 0 || orders === null) && !isLoading;
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>
       <Flex options={{ direction: 'column', gap: 1.25 }}>
-        <h3 className='heading heading-3'>{t('clients.ordersHistory')}</h3>
-        <Flex options={{ align: 'center', justify: 'space-between' }}>
-          <Flex options={{ align: 'center', gap: 1 }}>
-            <SelectButton
-              value={dates ? dates[0] : null}
-              onChange={(e) => {
-                if (e.value === null) {
-                  setDates(null);
-                } else {
-                  setDates([e.value, new Date()]);
+        <Flex options={{ justify: 'space-between', align: 'center' }}>
+          <h3 className='heading heading-3'>{t('clients.ordersHistory')}</h3>
+          {isLaptopL && (
+            <Flex options={{ gap: 1 }}>
+              <Button
+                icon={<Export color='white' />}
+                severity='secondary'
+                onClick={() =>
+                  ordersStore.initiateExport({ limit, skip, search, sort })
                 }
-              }}
-              options={dateSpanOptions}
-            />
-            <Calendar
-              placeholder={t('timeRanges.chooseDates')}
-              value={dates}
-              onChange={(e) => setDates(e.value as Date[])}
-            />
+              >
+                {t('actions.export')}
+              </Button>
+              <Button onClick={() => navigate('/schedule/add')}>
+                {t('reservationHistory.addReservation')}
+              </Button>
+            </Flex>
+          )}
+        </Flex>
+        <Flex options={{ align: 'center', justify: 'space-between' }}>
+          <div className={styles.controls}>
+            <Flex options={{ align: 'center', gap: 1 }}>
+              <SelectButton
+                value={dates ? dates[0] : null}
+                onChange={(e) => {
+                  if (e.value === null) {
+                    setDates(null);
+                  } else {
+                    setDates([e.value, new Date()]);
+                  }
+                }}
+                options={dateSpanOptions}
+              />
+              <Calendar
+                placeholder={t('timeRanges.chooseDates')}
+                value={dates}
+                onChange={(e) => setDates(e.value as Date[])}
+              />
+            </Flex>
             <Searchbar setSearch={handleSearch} />
-          </Flex>
-          <Flex options={{ gap: 1 }}>
-            <Button
-              icon={<Export color='white' />}
-              severity='secondary'
-              onClick={() =>
-                ordersStore.initiateExport({ limit, skip, search, sort })
-              }
-            >
-              {t('actions.export')}
-            </Button>
-            <Button onClick={() => navigate('/schedule/add')}>
-              {t('reservationHistory.addReservation')}
-            </Button>
-          </Flex>
+          </div>
+          {!isLaptopL && (
+            <Flex className={styles.buttonControls} options={{ gap: 1 }}>
+              <Button
+                icon={<Export color='white' />}
+                severity='secondary'
+                onClick={() =>
+                  ordersStore.initiateExport({ limit, skip, search, sort })
+                }
+              >
+                {t('actions.export')}
+              </Button>
+              <Button fill onClick={() => navigate('/schedule/add')}>
+                {t('reservationHistory.addReservation')}
+              </Button>
+            </Flex>
+          )}
         </Flex>
       </Flex>
 
@@ -118,7 +148,7 @@ const ReservationHistory = observer(() => {
         />
       )}
 
-      {orders?.length === 0 && (
+      {isOrdersEmpty && (
         <Flex
           className={styles.notFoundContainer}
           options={{

@@ -1,3 +1,5 @@
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
+
 .page {
   padding: 25px 25px 0px 0px;
   width: 100%;
@@ -6,4 +8,20 @@
 .notFoundContainer {
   height: 100%;
   margin-top: 188px;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @include mixins.onLaptopL {
+    gap: 0;
+    justify-content: space-between;
+  }
+}
+
+.buttonControls {
+  width: 400px;
 }

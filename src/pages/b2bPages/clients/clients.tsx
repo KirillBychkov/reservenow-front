@@ -31,7 +31,8 @@ const Clients = observer(() => {
     [limit, skip, search, sort],
     { onError: showError },
   );
-  const isClientsEmpty = clients && clients.length === 0 && !isLoading;
+  const isClientsEmpty =
+    (clients === null || clients.length === 0) && !isLoading;
 
   return (
     <div className={styles.pageBody}>

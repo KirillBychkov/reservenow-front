@@ -32,7 +32,8 @@ const Equipment: React.FC = observer(() => {
     [limit, skip, search, sort],
     { onError: showError },
   );
-  const isEquipmentEmpty = equipment && equipment.length === 0 && !isLoading;
+  const isEquipmentEmpty =
+    (equipment === null || equipment.length === 0) && !isLoading;
 
   return (
     <div className={styles.equipment}>

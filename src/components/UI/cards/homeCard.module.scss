@@ -1,3 +1,5 @@
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
+
 .card {
   padding: 20px;
   border-radius: 15px;
@@ -9,6 +11,14 @@
   transition: all 0.1s ease-out;
   max-width: 24.3125rem;
   width: 100%;
+
+  @include mixins.onLaptopL {
+    max-width: 22.875rem;
+  }
+
+  @include mixins.onLaptop {
+    max-width: 18.1875rem;
+  }
   height: min-content;
   .icon {
     width: 40px;

@@ -23,6 +23,7 @@ import getClientStatsData from './getClientStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
 import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 import useSearch from '@/hooks/useSearch';
+import { formatPhoneOut } from '@/utils/formatters/formatPhone';
 
 const ClientPage = observer(() => {
   const { id } = useParams();
@@ -45,7 +46,7 @@ const ClientPage = observer(() => {
       clientStore.getClientOrders(parseInt(id || '0'), {
         limit,
         skip,
-        search,
+        search: formatPhoneOut(search),
         sort,
       }),
     [limit, skip, search, sort],
@@ -95,28 +96,23 @@ const ClientPage = observer(() => {
         }
         Table={
           <div className={styles.tableBg}>
-            {orders && !ordersLoading && (
+            {!ordersLoading ? (
               <ClientOrdersTable
                 sortField={sortField}
                 first={first}
                 sortOrder={sortOrder}
                 onPageChange={onPageChange}
                 onSortChange={handleSort}
-                orders={orders}
+                orders={orders || []}
               />
-            )}
-            {orders?.length === 0 && (
+            ) : (
               <Flex
-                className={styles.notFoundContainer}
+                className={styles.loaderContainer}
                 options={{ justify: 'center', align: 'center' }}
               >
-                <h2 className='heading heading-2 heading-primary'>
-                  {t('clients.ordersNull')}
-                </h2>
+                <ProgressSpinner />
               </Flex>
             )}
-
-            {ordersLoading && <ProgressSpinner />}
           </div>
         }
       />

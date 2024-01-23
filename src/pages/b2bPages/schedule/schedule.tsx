@@ -16,6 +16,9 @@ import { EventButton } from '@/components/b2bclient/calendarComponents/eventButt
 import { Calendar } from '@/components/b2bclient/calendarComponents/customCalendar/customCalendar';
 import { Events, ObjOption, OrgOption } from '@/types/schedule';
 import { DropdownChangeEvent } from 'primereact/dropdown';
+import Button from '@/components/UI/buttons/button';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const Schedule = observer(() => {
   const { t, i18n } = useTranslation();
@@ -25,6 +28,8 @@ const Schedule = observer(() => {
   const [currentOrg, setCurrentOrg] = useState<Organization | null>(null);
   const [currentObj, setCurrentObj] = useState<RentalObject | null>(null);
   const [event, setEvents] = useState<Event[] | null>(null);
+  const navigate = useNavigate();
+  const isLaptop = useMediaQuery('(max-width: 1300px)');
 
   const { data: organizations } = useFetch(
     () => organizationStore.getOrganizations(),
@@ -100,7 +105,7 @@ const Schedule = observer(() => {
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.body}>
-      <Flex options={{ align: 'center', gap: 2 }}>
+      <Flex options={{ align: 'center', gap: 2, justify: 'space-between' }}>
         <Flex options={{ gap: 1 }}>
           {Object.values(Events).map((event) => {
             return (
@@ -114,6 +119,12 @@ const Schedule = observer(() => {
             );
           })}
         </Flex>
+
+        {isLaptop && (
+          <Button onClick={() => navigate('add')}>
+            {t('schedule.addReservation')}
+          </Button>
+        )}
       </Flex>
 
       <Calendar

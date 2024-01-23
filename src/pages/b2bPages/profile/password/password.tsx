@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 const PasswordPage = () => {
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
@@ -23,7 +24,7 @@ const PasswordPage = () => {
       className={styles.passwordPage}
     >
       <article>
-        <h3 className='heading heading-3'>{t('profile.heading')}</h3>
+        <h3 className={classNames('heading heading-3', styles.heading)}>{t('profile.heading')}</h3>
         <BreadCrumb
           home={{ icon: <Home color='gray' />, url: '/' }}
           model={[

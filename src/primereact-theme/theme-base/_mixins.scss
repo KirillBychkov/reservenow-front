@@ -215,3 +215,15 @@
   background: var(--neutral-white, #fff);
   box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
 }
+
+@mixin onLaptopL {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+
+@mixin onLaptop {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}

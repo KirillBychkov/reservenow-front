@@ -1,20 +1,66 @@
+@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
+
 .container {
   padding: 20px;
   border-radius: 10px;
   background-color: var(--neutral-white, #fff);
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.onLaptopL {
+    flex-direction: row;
+    gap: 50px;
+  }
+
+  @include mixins.onLaptopL {
+    max-width: 782px;
+  }
+
+  @include mixins.onLaptop {
+    max-width: 742px;
+  }
 
   .image {
     width: 100%;
+    margin-bottom: 16px;
     & img {
       width: 100%;
       border-radius: 10px;
       max-height: 231px;
       object-fit: cover;
       object-position: center;
+
+      @include mixins.onLaptopL {
+        width: 385px;
+        height: 190px;
+      }
+    }
+
+    @include mixins.onLaptopL {
+      width: auto;
+      margin-bottom: 0;
     }
   }
 
   .infoItem {
     margin-bottom: 1rem;
   }
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.onLaptopL {
+    flex-direction: row-reverse;
+    gap: 60px;
+  }
+
+  @include mixins.onLaptop {
+    gap: 40px;
+  }
+}
+
+.hoursHeading {
+  margin-bottom: 4px;
 }

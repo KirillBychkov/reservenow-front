@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './toolbar.module.scss';
 import { ToolbarProps } from 'react-big-calendar';
 import { Events, ObjectUtils, OrganizationUtils } from '@/types/schedule';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 type Props = {
   orgUtils: OrganizationUtils;
@@ -33,6 +34,7 @@ export const Toolbar = ({
   const navigate = useNavigate();
   const { onObjChange, objOptions, objectName } = objUtils;
   const { orgName, onOrgChange, orgOptions } = orgUtils;
+  const isLaptop = useMediaQuery('(max-width:1300px)');
 
   const handleNext = () => {
     onNavigate('NEXT');
@@ -103,9 +105,12 @@ export const Toolbar = ({
           options={ViewOptions}
           className={styles.viewDropdown}
         />
-        <Button onClick={() => navigate('add')}>
-          {t('schedule.addReservation')}
-        </Button>
+
+        {!isLaptop && (
+          <Button onClick={() => navigate('add')}>
+            {t('schedule.addReservation')}
+          </Button>
+        )}
       </Flex>
     </Flex>
   );

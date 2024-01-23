@@ -38,7 +38,10 @@ const Clients = observer(() => {
     <div className={styles.pageBody}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={handleSearch} />
+        <Searchbar
+          searchPlaceholder={t('clients.customerSearchPlaceholder')}
+          setSearch={handleSearch}
+        />
         <Flex options={{ gap: 1 }}>
           <Button
             icon={<Export color='white' />}

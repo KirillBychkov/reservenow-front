@@ -48,14 +48,17 @@
     "total_reservation_sum": "Витрачені гроші",
     "total_reservation_amount": "Всього бронюваннь",
     "ordersHistory": "Історія бронювання",
-    "ordersNull": "Нажаль ще не має iсторіi бронюваннь клієнта"
+    "ordersNull": "Нажаль ще не має iсторіi бронюваннь клієнта",
+    "searchPlaceholder": "Ім'я користувача",
+    "customerSearchPlaceholder": "Ім'я клієнта"
   },
   "requests": {
     "requests": "Запити",
     "request": "Запит",
     "null": "Список запитів порожній",
     "response": "Рішення по запиту",
-    "openImage": "Відкрити зображення"
+    "openImage": "Відкрити зображення",
+    "searchPlaceholder":"ID запиту"
   },
   "forms": {
     "id": "ID",
@@ -263,7 +266,8 @@
     "equipment": "Товари",
     "empty": "Нажаль ви ще не створили жодного товара",
     "nameColumn": "Найменування товара",
-    "priceColumn": "Ціна"
+    "priceColumn": "Ціна",
+    "searchPlaceholder": "Назва товару"
   },
   "reservations": {
     "reservations": "Бронювання",
@@ -363,6 +367,7 @@
   "reservationHistory": {
     "reservationDetails": "Деталі бронювання",
     "addReservation": "Додати бронювання",
+    "searchPlaceholder": "ID або телефон клієнта",
     "table": {
       "id": "ID",
       "clientName": "Ім'я клієнта",

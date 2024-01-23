@@ -110,7 +110,10 @@ const ReservationHistory = observer(() => {
                 onChange={(e) => setDates(e.value as Date[])}
               />
             </Flex>
-            <Searchbar setSearch={handleSearch} />
+            <Searchbar
+              searchPlaceholder={t('reservationHistory.searchPlaceholder')}
+              setSearch={handleSearch}
+            />
           </div>
           {!isLaptopL && (
             <Flex className={styles.buttonControls} options={{ gap: 1 }}>

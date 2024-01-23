@@ -41,7 +41,10 @@ const Users: React.FC = observer(() => {
     <div className={styles.users}>
       <h3 className='heading heading-3'>{t('clients.clients')}</h3>
       <div className={styles.controls}>
-        <Searchbar setSearch={handleSearch} />
+        <Searchbar
+          searchPlaceholder={t('clients.searchPlaceholder')}
+          setSearch={handleSearch}
+        />
         <div className={styles.buttonGroup}>
           <Button
             icon={<Export color='white' />}

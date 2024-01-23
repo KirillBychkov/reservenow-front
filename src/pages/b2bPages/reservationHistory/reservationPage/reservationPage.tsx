@@ -76,6 +76,7 @@ const ReservationPage = observer(() => {
       {formattedOrder && !isLoading ? (
         <>
           <ReservationDetailsSection order={formattedOrder} />
+
           {isLaptop && (
             <Flex options={{ justify: 'space-between', gap: 1.25 }}>
               <Flex
@@ -106,6 +107,9 @@ const ReservationPage = observer(() => {
           )}
           <Flex options={{ gap: 1.5 }}>
             <div className={styles.reservationList}>
+              <div className={styles.tableHeader}>
+                <h2 className='heading heading-4'>{t('orders.reservationList')}</h2>
+              </div>
               <ReservationsTable
                 total={formattedOrder?.order_sum}
                 reservations={formattedOrder.reservations}
@@ -115,7 +119,7 @@ const ReservationPage = observer(() => {
             {!isLaptop && (
               <Flex
                 options={{ gap: 1, direction: 'column' }}
-                className={styles.statusSection}
+                className={styles.section}
               >
                 <ReservationStatusDropdown order={formattedOrder} />
                 <ReservationStatusCard order={formattedOrder} />

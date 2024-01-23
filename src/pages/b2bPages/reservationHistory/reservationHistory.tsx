@@ -60,7 +60,7 @@ const ReservationHistory = observer(() => {
     },
   );
 
-  const dateSpanOptions = generateTimeSpanOptions(t);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
   return (
     <Flex options={{ direction: 'column', gap: 2 }} className={styles.page}>
@@ -146,7 +146,6 @@ const ReservationHistory = observer(() => {
         <Flex
           className={styles.notFoundContainer}
           options={{
-            justify: 'center',
             align: 'center',
             direction: 'column',
             gap: 2,

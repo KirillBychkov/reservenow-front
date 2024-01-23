@@ -66,11 +66,15 @@ export const useEquipmentReservations = (
   ) => {
     setEquipmentReservations((prev) => {
       return prev.map((equipmentReservation) => {
+        const { equipment, description } = data;
         if (equipmentReservation.id === id) {
           return {
             id,
-            equipment: data.equipment || equipmentReservation.equipment,
-            description: data.description || equipmentReservation.description,
+            equipment: equipment || equipmentReservation.equipment,
+            description:
+              description !== undefined
+                ? description
+                : equipmentReservation.description,
           };
         }
 
@@ -80,8 +84,8 @@ export const useEquipmentReservations = (
   };
 
   const clearAll = () => {
-    setEquipmentReservations([])
-  }
+    setEquipmentReservations([]);
+  };
 
   return {
     clearAll,

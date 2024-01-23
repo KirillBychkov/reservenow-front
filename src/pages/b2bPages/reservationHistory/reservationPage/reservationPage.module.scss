@@ -8,10 +8,6 @@
   max-width: 146px;
 }
 
-.statusSection {
-  flex: 1;
-}
-
 .heading {
   margin-bottom: 0.63rem;
 }
@@ -22,4 +18,13 @@
 
 .section {
   flex: 1;
+}
+
+.tableHeader {
+  padding: 1.125rem 1.5rem;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  border: 1px solid #f0f1f3;
+  border-bottom: none;
+  background-color: white;
 }

@@ -18,13 +18,7 @@ const FAQPage: React.FC = () => {
           <h3 className='heading heading-3 heading-primary'>
             {t('faq.howToUse')}
           </h3>
-          <p
-            className={classNames(
-              'text',
-              'text-medium-muted',
-              styles.headerText,
-            )}
-          >
+          <p className={classNames('paragraph-muted', styles.headerText)}>
             {t('faq.hosToUseAnswer')}
           </p>
         </Flex>

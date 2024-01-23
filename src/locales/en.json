@@ -124,7 +124,9 @@
     "image": "Image of the object",
     "null": "No objects currently available",
     "topObjects": "Top objects",
-    "load": "Load"
+    "load": "Load",
+    "empty": "Sorry, you have not created any object yet.",
+    "reservationEmpty": "Unfortunately, there is no history of object reservations yet"
   },
   "addOrganizationForm": {
     "enterName": "Enter the name of the organization here. . .",
@@ -144,7 +146,8 @@
     "null": "There are currently no personnel.",
     "role": "Staffing role",
     "manager": "Manager",
-    "trainer": "Trainer"
+    "trainer": "Trainer",
+    "reservationsNull": "Unfortunately, there is no history of staff reservations yet"
   },
   "invalid": {
     "required": "Required field",
@@ -173,7 +176,9 @@
     },
     "week": "Week",
     "month": "Month",
-    "thisMonth": "This month"
+    "thisMonth": "This month",
+    "from": "From",
+    "to": "To"
   },
   "status": {
     "pending": "Pending",
@@ -278,6 +283,7 @@
   },
   "orders": {
     "reservationHistory": "Reservation history",
+    "reservationList": "Reservation list",
     "orderHistory": "Order history",
     "totalReservationsSum": "Total reservations ₴",
     "totalReservations": "Total reservations",

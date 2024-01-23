@@ -1,9 +1,16 @@
 .header {
-  max-height: 78px;
+  height: 78px;
+  background-color: #edeff2;
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
   &__logo {
     display: flex;
     align-items: center;

@@ -36,6 +36,7 @@ import { TopClient } from '@/models/Client';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
 import { TimeFrame } from '@/types/enums/timeFrame';
 import dayjs from 'dayjs';
+import { Calendar } from '@/components/UI/calendar/calendar';
 
 type CustomTooltipProps = {
   payload?: any[];
@@ -85,7 +86,8 @@ const Statistics: React.FC = observer(() => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState<
     number | null
   >(null);
-  const [timeFrame, setTimeFrame] = useState(TimeFrame.ALL);
+  const [timeFrame, setTimeFrame] = useState<TimeFrame | null>(TimeFrame.ALL);
+  const [dates, setDates] = useState<Date[] | null>(null);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -99,23 +101,28 @@ const Statistics: React.FC = observer(() => {
   );
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const isStartDayNotNull = dates && dates[0];
+  const isEndDayNotNull = dates && dates[0];
 
-  let { data: statistics } = useFetch<OrganizationStatistics>(
-    () =>
-      selectedOrganizationId
-        ? organizationStore.getOrganizationStatistics(
-            selectedOrganizationId,
-            timeFrame,
-          )
-        : Promise.resolve({
-            data: {} as OrganizationStatistics,
-            error: '',
-          }),
-    [selectedOrganizationId, timeFrame],
-    { onError: showError },
-  );
+  let { data: statistics, isLoading: statisticsLoading } =
+    useFetch<OrganizationStatistics>(
+      () =>
+        selectedOrganizationId
+          ? organizationStore.getOrganizationStatistics(
+              selectedOrganizationId,
+              timeFrame || undefined,
+              isStartDayNotNull ? dates[0].toISOString() : undefined,
+              isEndDayNotNull ? dates[1].toISOString() : undefined,
+            )
+          : Promise.resolve({
+              data: {} as OrganizationStatistics,
+              error: '',
+            }),
+      [selectedOrganizationId, timeFrame, dates],
+      { onError: showError },
+    );
 
-  if (!organizations || (selectedOrganizationId && !statistics)) {
+  if (!organizations) {
     return <ProgressSpinner />;
   }
 
@@ -161,11 +168,28 @@ const Statistics: React.FC = observer(() => {
           onChange={(e) => {
             if (!e.value) return;
             setTimeFrame(e.value);
+            setDates(null);
           }}
           options={dateSpanOptions}
         />
+
+        <Calendar
+          placeholder={t('timeRanges.chooseDates')}
+          value={dates}
+          onChange={(e) => {
+            const eventDates = e.value as Date[];
+            const isBothDates = eventDates && eventDates[0] && eventDates[1];
+
+            if (timeFrame && isBothDates) {
+              setTimeFrame(null);
+            } else {
+              setTimeFrame(TimeFrame.ALL);
+            }
+            setDates(e.value as Date[]);
+          }}
+        />
       </Flex>
-      {!selectedOrganizationId ? (
+      {!selectedOrganizationId && (
         <h2
           className={classNames(
             'heading heading-2 heading-primary text-center',
@@ -174,7 +198,8 @@ const Statistics: React.FC = observer(() => {
         >
           {t('statistics.notSelected')}
         </h2>
-      ) : (
+      )}
+      {selectedOrganizationId && !statisticsLoading && (
         <div className={styles.statisticsContent}>
           <Flex options={{ justify: 'space-between', gap: 1.5 }}>
             <StatisticsCard
@@ -266,6 +291,15 @@ const Statistics: React.FC = observer(() => {
           />
           <TopClientsTable topClients={topClients} />
         </div>
+      )}
+
+      {statisticsLoading && (
+        <Flex
+          className={styles.loader}
+          options={{ justify: 'center', align: 'center' }}
+        >
+          <ProgressSpinner />
+        </Flex>
       )}
     </div>
   );

@@ -25,7 +25,7 @@ class OrganizationStore {
 
   getOrganizationStatistics = async (
     id: number,
-    time_frame: TimeFrame,
+    time_frame?: TimeFrame,
     start_date?: string,
     end_date?: string,
   ): Promise<ResponseOrError<OrganizationStatistics>> => {

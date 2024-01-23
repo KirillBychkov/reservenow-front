@@ -67,7 +67,7 @@ export class OrderService {
     return $api.get('order/withTrainer');
   }
 
-  static async exportOrder({
+  static async exportOrders({
     limit,
     skip,
     search,
@@ -81,5 +81,11 @@ export class OrderService {
         responseType: 'blob',
       },
     );
+  }
+
+  static async exportOrder(id: number): Promise<AxiosResponse> {
+    return $api.get(`/order/${id}/export`, {
+      responseType: 'blob',
+    });
   }
 }

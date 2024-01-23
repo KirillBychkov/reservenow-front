@@ -1,6 +1,7 @@
 import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
+import { TimeFrame } from '@/types/enums/timeFrame';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
@@ -24,12 +25,14 @@ class OrganizationStore {
 
   getOrganizationStatistics = async (
     id: number,
+    time_frame: TimeFrame,
     start_date?: string,
     end_date?: string,
   ): Promise<ResponseOrError<OrganizationStatistics>> => {
     try {
       const response = await OrganizationService.getOrganizationStatistics(
         id,
+        time_frame,
         start_date,
         end_date,
       );
@@ -45,7 +48,9 @@ class OrganizationStore {
   deleteOrganization = async (id: number): Promise<SuccessOrError> => {
     try {
       await OrganizationService.deleteOrganization(id);
-      this.organizations = this.organizations.filter(organization => organization.id !== id)
+      this.organizations = this.organizations.filter(
+        (organization) => organization.id !== id,
+      );
       return { successMsg: 'Organization deleted successfully', errorMsg: '' };
     } catch (e) {
       return { successMsg: '', errorMsg: 'Error deleting organization' };

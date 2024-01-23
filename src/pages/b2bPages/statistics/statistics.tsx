@@ -159,6 +159,7 @@ const Statistics: React.FC = observer(() => {
         <SelectButton
           value={timeFrame}
           onChange={(e) => {
+            if (!e.value) return;
             setTimeFrame(e.value);
           }}
           options={dateSpanOptions}

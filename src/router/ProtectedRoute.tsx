@@ -1,4 +1,3 @@
-import Flex from '@/components/UI/layout/flex';
 import Header from '@/components/header/header';
 import Sidebar from '@/components/sidebar/sidebar';
 import authStore from '@/store/authStore';
@@ -33,16 +32,12 @@ const ProtectedRoute: React.FC<ProtectedRoute> = observer(
 
     // Render the protected route with Header and Sidebar if applicable
     return isProtected ? (
-      // <Flex className='page' options={{ direction: 'column' }}>
       <div>
         <Header />
-        {/* // <Flex className='main'> */}
         <Sidebar />
         <div className='content'>{children}</div>
       </div>
     ) : (
-      // </Flex>
-      // </Flex>
       <>{children}</>
     );
   },

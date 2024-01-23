@@ -34,6 +34,8 @@ import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topC
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
+import { TimeFrame } from '@/types/enums/timeFrame';
+import dayjs from 'dayjs';
 
 type CustomTooltipProps = {
   payload?: any[];
@@ -41,6 +43,7 @@ type CustomTooltipProps = {
   active?: boolean;
   t: TFunction;
   data: any;
+  type?: TimeFrame;
 };
 
 function CustomTooltip({
@@ -49,31 +52,40 @@ function CustomTooltip({
   active,
   t,
   data,
+  type,
 }: CustomTooltipProps) {
   if (payload == null) return null;
   if (active) {
+    const dateString = data[Number(label) - 1].period;
+    const [startDate, endDate] = dateString.split('/');
+
+    const formattedStartDate =
+      type === TimeFrame.DAY
+        ? dayjs(startDate).format('DD.MM.YYYY, HH:mm')
+        : dayjs(startDate).format('DD.MM.YYYY');
+
+    const formattedEndDate =
+      type === TimeFrame.DAY
+        ? dayjs(endDate).format('DD.MM.YYYY, HH:mm')
+        : dayjs(endDate).format('DD.MM.YYYY');
+
     return (
-      <div className='custom-tooltip'>
-        <p className='label'>{`${t('dates.week')}: ${label}`}</p>
-        <p className='label'>{data[Number(label) - 1].week}</p>
-        <p className='intro'>{`${t('orders.totalReservationsSum')}: ${
-          payload[0].value
-        }`}</p>
+      <div>
+        <p>{`${t('dates.from')}: ${formattedStartDate}`}</p>
+        <p>{`${t('dates.to')}: ${formattedEndDate}`}</p>
+        <p>{`${t('orders.totalReservationsSum')}: ${payload[0].value}`}</p>
       </div>
     );
   }
 }
 
-const Statistics = observer(() => {
+const Statistics: React.FC = observer(() => {
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
-  const [selectedOrganizationId, setSelectedOrganizationId] = React.useState<
+  const [selectedOrganizationId, setSelectedOrganizationId] = useState<
     number | null
   >(null);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState(
-    new Date(new Date().getTime()).toISOString(),
-  );
+  const [timeFrame, setTimeFrame] = useState(TimeFrame.ALL);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -88,19 +100,18 @@ const Statistics = observer(() => {
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
-  const { data: statistics } = useFetch<OrganizationStatistics>(
+  let { data: statistics } = useFetch<OrganizationStatistics>(
     () =>
       selectedOrganizationId
         ? organizationStore.getOrganizationStatistics(
             selectedOrganizationId,
-            startDate,
-            endDate,
+            timeFrame,
           )
         : Promise.resolve({
             data: {} as OrganizationStatistics,
             error: '',
           }),
-    [selectedOrganizationId, startDate, endDate],
+    [selectedOrganizationId, timeFrame],
     { onError: showError },
   );
 
@@ -113,9 +124,10 @@ const Statistics = observer(() => {
     value: organization.id,
   }));
 
-  const statisticsPerPeriod: StatisticsPerPeriod[] = JSON.parse(
-    statistics?.statistics_per_period ?? '[]',
-  );
+  statistics = Array.isArray(statistics) ? statistics[0] : statistics;
+
+  const statisticsPerPeriod: StatisticsPerPeriod[] =
+    statistics?.statistics_per_period || [];
 
   const formattedStatisticsPerPeriod = statisticsPerPeriod.map((obj) => ({
     ...obj,
@@ -123,14 +135,14 @@ const Statistics = observer(() => {
   }));
 
   const data = formattedStatisticsPerPeriod.map((item: any, i: number) => ({
-    weekNumber: i + 1,
+    number: i + 1,
     totalRevenue: item.total_revenue,
-    week: item.week,
+    period: item.period,
   }));
 
-  const topObjects: TopObject[] = JSON.parse(statistics?.top_objects ?? '[]');
+  const topObjects: TopObject[] = statistics?.top_objects ?? [];
 
-  const topClients: TopClient[] = JSON.parse(statistics?.top_clients ?? '[]');
+  const topClients: TopClient[] = statistics?.top_clients ?? [];
 
   return (
     <div className={styles.statistics}>
@@ -145,9 +157,9 @@ const Statistics = observer(() => {
           placeholder='Select an organization'
         />
         <SelectButton
-          value={startDate}
+          value={timeFrame}
           onChange={(e) => {
-            setStartDate(e.value);
+            setTimeFrame(e.value);
           }}
           options={dateSpanOptions}
         />
@@ -162,95 +174,97 @@ const Statistics = observer(() => {
           {t('statistics.notSelected')}
         </h2>
       ) : (
-        statistics && (
-          <div className={styles.statisticsContent}>
-            <Flex options={{ justify: 'space-between', gap: 1.5 }}>
-              <StatisticsCard
-                icon={<BankAccount />}
-                heading={`${formatToUpperUnit(statistics?.total_revenue || 0)}`}
-                subheading={t('orders.totalReservationsSum')}
-              />
-              <StatisticsCard
-                icon={<ShoppingCart />}
-                heading={`${statistics?.total_reservations || 0}`}
-                subheading={t('orders.totalReservations')}
-              />
-              <StatisticsCard
-                icon={<Endorsed />}
-                heading={`${statistics?.total_hours || 0}`}
-                subheading={t('orders.totalHours')}
-              />
-            </Flex>
-            <Flex options={{ justify: 'space-between', gap: 1.5 }}>
-              <div className={styles.card}>
-                <h2 className={styles.heading}>
-                  {t('statistics.organizationLoad')}
-                </h2>
-                <p className={styles.subheading}>{t('dates.thisMonth')}</p>
-                <Flex options={{ justify: 'center' }}>
-                  <Knob
-                    readOnly
-                    value={Math.floor(statistics?.organization_load) || 0}
-                    valueTemplate='{value}%'
-                    size={200}
-                    pt={{
-                      value: {
-                        style: { strokeLinecap: 'round', strokeWidth: '16px ' },
-                      },
-                      range: {
-                        style: {
-                          strokeWidth: '8px',
-                          stroke: '#DCE0E5',
-                          strokeLinecap: 'round',
-                        },
-                      },
-                      svg: {
-                        style: {},
-                      },
-                    }}
-                  />
-                </Flex>
-              </div>
-              <div className={styles.card} style={{ width: '100%' }}>
-                <h2 className={styles.heading}>{t('statistics.statistics')}</h2>
-                <p className={styles.subheading}>
-                  {t('orders.totalReservations')}
-                </p>
-                <ResponsiveContainer width='100%' maxHeight={300}>
-                  <AreaChart data={data}>
-                    <defs>
-                      <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
-                        <stop
-                          offset='5%'
-                          stopColor='#47C8FF'
-                          stopOpacity={0.3}
-                        />
-                        <stop offset='95%' stopColor='white' stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <XAxis dataKey='weekNumber' />
-                    <YAxis />
-                    <CartesianGrid vertical={false} />
-                    <Tooltip content={<CustomTooltip t={t} data={data} />} />
-                    <Area
-                      type='monotone'
-                      dataKey='totalRevenue'
-                      strokeWidth={2}
-                      stroke='#7961DB'
-                      fillOpacity={1}
-                      fill='url(#colorUv)'
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </Flex>
-            <TopObjectsTable
-              topObjects={topObjects}
-              organizationId={selectedOrganizationId}
+        <div className={styles.statisticsContent}>
+          <Flex options={{ justify: 'space-between', gap: 1.5 }}>
+            <StatisticsCard
+              icon={<BankAccount />}
+              heading={`${formatToUpperUnit(statistics?.total_revenue || 0)}`}
+              subheading={t('orders.totalReservationsSum')}
             />
-            <TopClientsTable topClients={topClients} />
-          </div>
-        )
+            <StatisticsCard
+              icon={<ShoppingCart />}
+              heading={`${statistics?.total_reservations || 0}`}
+              subheading={t('orders.totalReservations')}
+            />
+            <StatisticsCard
+              icon={<Endorsed />}
+              heading={`${statistics?.total_hours || 0}`}
+              subheading={t('orders.totalHours')}
+            />
+          </Flex>
+          <Flex options={{ justify: 'space-between', gap: 1.5 }}>
+            <div className={styles.card}>
+              <h2 className={styles.heading}>
+                {t('statistics.organizationLoad')}
+              </h2>
+              <p className={styles.subheading}>{t('dates.thisMonth')}</p>
+              <Flex options={{ justify: 'center' }}>
+                <Knob
+                  readOnly
+                  value={Math.floor(statistics?.organization_load || 0)}
+                  valueTemplate='{value}%'
+                  size={200}
+                  pt={{
+                    value: {
+                      style: { strokeLinecap: 'round', strokeWidth: '16px ' },
+                    },
+                    range: {
+                      style: {
+                        strokeWidth: '8px',
+                        stroke: '#DCE0E5',
+                        strokeLinecap: 'round',
+                      },
+                    },
+                    svg: {
+                      style: {},
+                    },
+                  }}
+                />
+              </Flex>
+            </div>
+            <div className={styles.card} style={{ width: '100%' }}>
+              <h2 className={styles.heading}>{t('statistics.statistics')}</h2>
+              <p className={styles.subheading}>
+                {t('orders.totalReservations')}
+              </p>
+              <ResponsiveContainer width='100%' maxHeight={300}>
+                <AreaChart data={data}>
+                  <defs>
+                    <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
+                      <stop offset='5%' stopColor='#47C8FF' stopOpacity={0.3} />
+                      <stop offset='95%' stopColor='white' stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey='number' />
+                  <YAxis />
+                  <CartesianGrid vertical={false} />
+                  <Tooltip
+                    content={
+                      <CustomTooltip
+                        t={t}
+                        data={data}
+                        type={statistics?.period}
+                      />
+                    }
+                  />
+                  <Area
+                    type='monotone'
+                    dataKey='totalRevenue'
+                    strokeWidth={2}
+                    stroke='#7961DB'
+                    fillOpacity={1}
+                    fill='url(#colorUv)'
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </Flex>
+          <TopObjectsTable
+            topObjects={topObjects}
+            organizationId={selectedOrganizationId}
+          />
+          <TopClientsTable topClients={topClients} />
+        </div>
       )}
     </div>
   );

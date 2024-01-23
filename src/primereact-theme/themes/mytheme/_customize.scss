@@ -1,5 +1,6 @@
 .App {
-  height: 100vh;
+  overflow: scroll;
+  scroll-margin: 78px;
 }
 
 .page {
@@ -25,6 +26,19 @@
   }
   .p-datatable-table .p-datatable-tbody > tr:last-child > td:last-child {
     border-bottom-right-radius: 8px;
+  }
+}
+
+.content {
+  margin-top: 78px;
+  margin-left: 275px;
+  padding-left: 0;
+  overflow: hidden;
+  scroll-margin: 78px;
+}
+@media (max-width: 1200px) {
+  .content {
+    margin-left: 100px;
   }
 }
 

@@ -1,5 +1,12 @@
 .sidebar {
-  height: 100%;
+  height: calc(100vh - 78px);
+  margin-top: 78px;
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  overflow: hidden;
+  background-color: #edeff2;
   .separator {
     height: 1px;
     background: linear-gradient(

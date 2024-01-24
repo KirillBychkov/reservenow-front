@@ -77,7 +77,7 @@ export const Toolbar = ({
           <Flex options={{ gap: 1 }}>
             <CustomDropdown
               placeholder={
-                orgName || t('schedule.form.objectSection.chooseObject')
+                orgName || t('schedule.form.objectSection.chooseOrganization')
               }
               onChange={onOrgChange}
               className={styles.dropdown}
@@ -86,8 +86,7 @@ export const Toolbar = ({
             />
             <CustomDropdown
               placeholder={
-                objectName ||
-                t('schedule.form.objectSection.chooseOrganization')
+                objectName || t('schedule.form.objectSection.chooseObject')
               }
               className={styles.dropdown}
               options={objOptions}

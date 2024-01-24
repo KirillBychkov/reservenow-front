@@ -18,10 +18,10 @@ type FormType = IChangePasswordDTO & {
 };
 
 type Props = {
-  onSubmit?: (formData?: Partial<FormType>) => void;
+  onSuccess: () => void;
 };
 
-const PasswordChangeForm = ({ onSubmit }: Props) => {
+const PasswordChangeForm = ({ onSuccess }: Props) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const { t } = useTranslation();
 
@@ -46,7 +46,7 @@ const PasswordChangeForm = ({ onSubmit }: Props) => {
   const formik = useFormik<FormType>({
     validationSchema,
     initialValues,
-    onSubmit: async ({ old_password, new_password }, { resetForm }) => {
+    onSubmit: async ({ old_password, new_password }) => {
       const { successMsg, errorMsg } = await passwordStore.changePassword({
         old_password,
         new_password,
@@ -54,17 +54,11 @@ const PasswordChangeForm = ({ onSubmit }: Props) => {
 
       if (errorMsg) {
         showError(errorMsg);
+        return;
       }
 
-      if (successMsg) {
-        showSuccess(successMsg);
-      }
-
-      if (onSubmit) {
-        onSubmit({ old_password, new_password });
-      }
-
-      resetForm();
+      showSuccess(successMsg);
+      onSuccess()
     },
   });
 

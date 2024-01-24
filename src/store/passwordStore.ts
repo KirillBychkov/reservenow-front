@@ -2,6 +2,7 @@ import { IChangePasswordDTO } from '@/models/requests/PasswordRequests';
 import PasswordService from '@/services/passwordService';
 import { CatchError } from '@/types/errors';
 import { SuccessOrError } from '@/types/store';
+import { AxiosError } from 'axios';
 import { makeAutoObservable } from 'mobx';
 
 class PasswordStore {
@@ -30,9 +31,14 @@ class PasswordStore {
   }: IChangePasswordDTO): Promise<SuccessOrError> {
     try {
       await PasswordService.passwordChange({ old_password, new_password });
-      return { successMsg: "Password was successfully changed", errorMsg: "" };
-    } catch {
-      return { successMsg: "", errorMsg: "Error while changing password" };
+      return { successMsg: 'Password was successfully changed', errorMsg: '' };
+    } catch (e) {
+      const axiosErrorMessage = (e as AxiosError<{ message: string }>).response
+        ?.data.message;
+      return {
+        successMsg: '',
+        errorMsg: axiosErrorMessage || 'Error while changing password',
+      };
     }
   }
 

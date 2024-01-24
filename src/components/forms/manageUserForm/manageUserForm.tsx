@@ -26,13 +26,6 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const { showModal } = useContext(ModalContext);
 
-  const handleShowModalAndSubmit = async () => {
-    const res = await showModal(t('forms.areYouSure'));
-    if (res) {
-      formik.handleSubmit();
-    }
-  };
-
   const handleShowModalAndDelete = async () => {
     const res = await showModal(t('forms.areYouSure'));
     if (res) {
@@ -84,6 +77,11 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
   };
 
   const onSubmit = async (values: UserFormData) => {
+    const confirmed = await showModal(t('forms.areYouSure'));
+    if (!confirmed) {
+      return;
+    }
+
     const { successMsg, errorMsg } = initialValues?.id
       ? await updateUser(values, initialValues.id)
       : await createUser(values, handleClearForm);
@@ -211,11 +209,7 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
         >
           {t('actions.clear')}
         </Button>
-        <Button
-          onClick={handleShowModalAndSubmit}
-          fill
-          className={styles.button}
-        >
+        <Button type='submit' fill className={styles.button}>
           {t('actions.submit')}
         </Button>
       </div>

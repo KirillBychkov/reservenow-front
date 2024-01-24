@@ -42,11 +42,15 @@ export default class ObjectService {
   static async uploadImage(id: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    const response = $api.put(`/rental_object/upload/image/${id}`, formData, {
+    const response = $api.put(`/rental_object/${id}/upload/image/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
     return response;
+  }
+
+  static async deleteImage(id: number): Promise<AxiosResponse> {
+    return $api.put(`/rental_object/${id}/delete/image/`);
   }
 }

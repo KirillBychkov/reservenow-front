@@ -487,3 +487,18 @@ div .rbc-events-container div.rbc-event {
 label .p-button.p-component {
   font-weight: 600;
 }
+
+.p-button.imageButton {
+  border-radius: 8px;
+  border: 1px solid var(--neutral-gray-100);
+  background-color: var(--neutral-gray);
+  color: var(--text-heading-color);
+  font-weight: 400;
+  transition: background-color 0.3s ease-out;
+
+  &:hover {
+    background-color: var(--surface-100);
+    border-color: var(--neutral-gray-100);
+    color: inherit;
+  }
+}

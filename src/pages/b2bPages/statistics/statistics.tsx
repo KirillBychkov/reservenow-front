@@ -87,7 +87,8 @@ const Statistics: React.FC = observer(() => {
     number | null
   >(null);
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
-  const [dates, setDates] = useState<Date[] | null>([dateSpanOptions[0].value, new Date()]);
+  const initialDatesValue = [dateSpanOptions[0].value, new Date()];
+  const [dates, setDates] = useState<Date[] | null>(initialDatesValue);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -100,8 +101,16 @@ const Statistics: React.FC = observer(() => {
     },
   );
 
-  const isStartDayNotNull = dates && dates[0];
-  const isEndDayNotNull = dates && dates[0];
+  const isBothDates = dates && dates[0] && dates[1];
+  const datesToSend = isBothDates
+    ? {
+        start_date: dates[0].toISOString(),
+        end_date: dates[1].toISOString(),
+      }
+    : {
+        start_date: initialDatesValue[0].toISOString(),
+        end_date: initialDatesValue[1].toISOString(),
+      };
 
   let { data: statistics, isLoading: statisticsLoading } =
     useFetch<OrganizationStatistics>(
@@ -109,8 +118,7 @@ const Statistics: React.FC = observer(() => {
         selectedOrganizationId
           ? organizationStore.getOrganizationStatistics(
               selectedOrganizationId,
-              isStartDayNotNull ? dates[0].toISOString() : undefined,
-              isEndDayNotNull ? dates[1].toISOString() : undefined,
+              datesToSend,
             )
           : Promise.resolve({
               data: {} as OrganizationStatistics,
@@ -156,10 +164,10 @@ const Statistics: React.FC = observer(() => {
           className='organizationDropdown'
           options={dropdownOptions}
           value={selectedOrganizationId}
-          onChange={(e: DropdownChangeEvent) =>
-            setSelectedOrganizationId(e.value)
-          }
-          placeholder='Select an organization'
+          onChange={(e: DropdownChangeEvent) => {
+            setSelectedOrganizationId(e.value);
+            setDates(initialDatesValue);
+          }}
         />
         <SelectButton
           value={dates ? dates[0] : null}

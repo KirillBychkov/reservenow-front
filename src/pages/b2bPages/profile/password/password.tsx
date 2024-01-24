@@ -14,7 +14,7 @@ const PasswordPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handlePasswordChange = () => {
+  const handleIsPasswordChange = () => {
     setIsPasswordChanged(true);
   };
 
@@ -54,7 +54,7 @@ const PasswordPage = () => {
             </Button>
           </Flex>
         ) : (
-          <PasswordChangeForm onSubmit={handlePasswordChange} />
+          <PasswordChangeForm onSuccess={handleIsPasswordChange} />
         )}
       </article>
     </Flex>

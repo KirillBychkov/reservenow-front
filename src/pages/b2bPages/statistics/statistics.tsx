@@ -9,7 +9,6 @@ import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 import styles from './statistics.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -34,50 +33,13 @@ import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topC
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
-import { TimeFrame } from '@/types/enums/timeFrame';
 import dayjs from 'dayjs';
+import { Calendar } from '@/components/UI/calendar/calendar';
+import { CustomTooltip } from '@/components/UI/charts/customTooltip';
 
-type CustomTooltipProps = {
-  payload?: any[];
-  label?: string;
-  active?: boolean;
-  t: TFunction;
-  data: any;
-  type?: TimeFrame;
+const getDayDifference = (start: Date, end: Date) => {
+  return Math.abs(dayjs(end).diff(dayjs(start), 'day'));
 };
-
-function CustomTooltip({
-  payload,
-  label,
-  active,
-  t,
-  data,
-  type,
-}: CustomTooltipProps) {
-  if (payload == null) return null;
-  if (active) {
-    const dateString = data[Number(label) - 1].period;
-    const [startDate, endDate] = dateString.split('/');
-
-    const formattedStartDate =
-      type === TimeFrame.DAY
-        ? dayjs(startDate).format('DD.MM.YYYY, HH:mm')
-        : dayjs(startDate).format('DD.MM.YYYY');
-
-    const formattedEndDate =
-      type === TimeFrame.DAY
-        ? dayjs(endDate).format('DD.MM.YYYY, HH:mm')
-        : dayjs(endDate).format('DD.MM.YYYY');
-
-    return (
-      <div>
-        <p>{`${t('dates.from')}: ${formattedStartDate}`}</p>
-        <p>{`${t('dates.to')}: ${formattedEndDate}`}</p>
-        <p>{`${t('orders.totalReservationsSum')}: ${payload[0].value}`}</p>
-      </div>
-    );
-  }
-}
 
 const Statistics: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -85,7 +47,9 @@ const Statistics: React.FC = observer(() => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState<
     number | null
   >(null);
-  const [timeFrame, setTimeFrame] = useState(TimeFrame.ALL);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const initialDatesValue = [dateSpanOptions[0].value, new Date()];
+  const [dates, setDates] = useState<Date[]>(initialDatesValue);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -98,26 +62,39 @@ const Statistics: React.FC = observer(() => {
     },
   );
 
-  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const isBothDates = dates && dates[0] && dates[1];
+  const datesToSend = isBothDates
+    ? {
+        start_date: dates[0].toISOString(),
+        end_date: dates[1].toISOString(),
+      }
+    : {
+        start_date: initialDatesValue[0].toISOString(),
+        end_date: initialDatesValue[1].toISOString(),
+      };
 
-  let { data: statistics } = useFetch<OrganizationStatistics>(
-    () =>
-      selectedOrganizationId
-        ? organizationStore.getOrganizationStatistics(
-            selectedOrganizationId,
-            timeFrame,
-          )
-        : Promise.resolve({
-            data: {} as OrganizationStatistics,
-            error: '',
-          }),
-    [selectedOrganizationId, timeFrame],
-    { onError: showError },
-  );
+  let { data: statistics, isLoading: statisticsLoading } =
+    useFetch<OrganizationStatistics>(
+      () =>
+        selectedOrganizationId
+          ? organizationStore.getOrganizationStatistics(
+              selectedOrganizationId,
+              datesToSend,
+            )
+          : Promise.resolve({
+              data: {} as OrganizationStatistics,
+              error: '',
+            }),
+      [selectedOrganizationId, dates],
+      { onError: showError },
+    );
 
-  if (!organizations || (selectedOrganizationId && !statistics)) {
+  if (!organizations) {
     return <ProgressSpinner />;
   }
+
+  console.log(statistics);
+  
 
   const dropdownOptions = organizations?.map((organization) => ({
     label: organization.name,
@@ -151,21 +128,30 @@ const Statistics: React.FC = observer(() => {
           className='organizationDropdown'
           options={dropdownOptions}
           value={selectedOrganizationId}
-          onChange={(e: DropdownChangeEvent) =>
-            setSelectedOrganizationId(e.value)
-          }
-          placeholder='Select an organization'
+          onChange={(e: DropdownChangeEvent) => {
+            setSelectedOrganizationId(e.value);
+            setDates(initialDatesValue);
+          }}
         />
         <SelectButton
-          value={timeFrame}
+          value={dates ? dates[0] : null}
           onChange={(e) => {
-            if (!e.value) return;
-            setTimeFrame(e.value);
+            if (e.value === null) {
+              setDates(initialDatesValue);
+            } else {
+              setDates([e.value, new Date()]);
+            }
           }}
           options={dateSpanOptions}
         />
+
+        <Calendar
+          placeholder={t('timeRanges.chooseDates')}
+          value={dates}
+          onChange={(e) => setDates(e.value as Date[])}
+        />
       </Flex>
-      {!selectedOrganizationId ? (
+      {!selectedOrganizationId && (
         <h2
           className={classNames(
             'heading heading-2 heading-primary text-center',
@@ -174,7 +160,8 @@ const Statistics: React.FC = observer(() => {
         >
           {t('statistics.notSelected')}
         </h2>
-      ) : (
+      )}
+      {selectedOrganizationId && !statisticsLoading && (
         <div className={styles.statisticsContent}>
           <Flex options={{ justify: 'space-between', gap: 1.5 }}>
             <StatisticsCard
@@ -242,9 +229,8 @@ const Statistics: React.FC = observer(() => {
                   <Tooltip
                     content={
                       <CustomTooltip
-                        t={t}
                         data={data}
-                        type={statistics?.period}
+                        dayDifference={getDayDifference(dates[1], dates[0])}
                       />
                     }
                   />
@@ -266,6 +252,15 @@ const Statistics: React.FC = observer(() => {
           />
           <TopClientsTable topClients={topClients} />
         </div>
+      )}
+
+      {statisticsLoading && (
+        <Flex
+          className={styles.loader}
+          options={{ justify: 'center', align: 'center' }}
+        >
+          <ProgressSpinner />
+        </Flex>
       )}
     </div>
   );

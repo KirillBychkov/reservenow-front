@@ -23,7 +23,7 @@ const SigninForm: React.FC = observer(() => {
       .email(t('invalid.email'))
       .required(t('invalid.required')),
     password: Yup.string()
-      .min(4, t('invalid.passwordLength'))
+      .min(4, t('invalid.passwordLength', { length: 4 }))
       .required(t('invalid.required')),
   });
 

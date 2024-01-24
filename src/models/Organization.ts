@@ -2,7 +2,6 @@ import { WeekWorkingHours } from '@/types/weekWorkingHours';
 import { User } from './User';
 import { RentalObject, TopObject } from './RentalObject';
 import { TopClient } from './Client';
-import { TimeFrame } from '@/types/enums/timeFrame';
 
 export interface Organization extends WeekWorkingHours {
   id: number;
@@ -21,7 +20,6 @@ export interface Organization extends WeekWorkingHours {
 export interface OrganizationStatistics {
   id: number;
   organization: Organization;
-  period: TimeFrame;
   total_revenue: number;
   total_reservations: number;
   total_hours: number;

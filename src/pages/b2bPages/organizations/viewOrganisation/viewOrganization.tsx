@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './viewOrganization.module.scss';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
@@ -21,6 +21,7 @@ import { RentalObject } from '@/models/RentalObject';
 import { useSort } from '@/hooks/useSort';
 import getOrganizationsStatsData from './getOrganizationsStatsData';
 import RightSide from '@/components/UI/viewPage/rightSide/rightSide';
+import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
 
 const ViewOrganization: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -38,8 +39,12 @@ const ViewOrganization: React.FC = observer(() => {
     [id],
   );
 
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
   const { data: organizationStatistics } = useFetch<OrganizationStatistics>(
-    () => organizationStore.getOrganizationStatistics(parseInt(id || '0')),
+    () => organizationStore.getOrganizationStatistics(parseInt(id || '0'), {
+      start_date: dateSpanOptions[0].value.toISOString(),
+      end_date: new Date().toISOString()
+    }),
     [id],
   );
 

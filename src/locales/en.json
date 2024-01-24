@@ -156,7 +156,7 @@
   "invalid": {
     "required": "Required field",
     "email": "Invalid email format",
-    "passwordLength": "Password must be at least 6 characters long.",
+    "passwordLength": "Password must be at least {{length}} characters long.",
     "passwordMatch": "Invalid password",
     "confirmPasswordMustMatch": "Passwords must match",
     "phone": "Invalid phone number format",
@@ -284,7 +284,7 @@
     "updatePhoto": "Change profile photo",
     "chooseFile": "Choose a file",
     "chooseProfilePhoto": "Select the desired profile photo",
-    "goBack": "Go back to the main page"
+    "goBack": "Main page"
   },
   "orders": {
     "reservationHistory": "Reservation history",

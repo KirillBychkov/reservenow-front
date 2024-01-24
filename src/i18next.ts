@@ -9,14 +9,14 @@ i18n
   .use(LanguageDetector)
   .init({
     resources: {
-      ua: {
+      'uk-UA': {
         translation: uaJSON,
       },
-      en: {
+      'en-US': {
         translation: enJSON,
       },
     },
-    lng: 'en-US',
-    fallbackLng: 'en-US',
+    lng: 'uk-UA',
+    fallbackLng: 'uk-UA',
     debug: true,
   });

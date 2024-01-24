@@ -42,7 +42,7 @@ export default class SupportService {
   static async uploadImageForRecord(id: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    const response = $api.put(`/support/upload/image/${id}`, formData, {
+    const response = $api.put(`/support/${id}/upload/image/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

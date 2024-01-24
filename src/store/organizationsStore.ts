@@ -1,7 +1,6 @@
 import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
 import OrganizationService from '@/services/organizationService';
-import { TimeFrame } from '@/types/enums/timeFrame';
 import { ResponseOrError, SuccessOrError } from '@/types/store';
 import { makeAutoObservable } from 'mobx';
 
@@ -25,14 +24,12 @@ class OrganizationStore {
 
   getOrganizationStatistics = async (
     id: number,
-    time_frame: TimeFrame,
-    start_date?: string,
-    end_date?: string,
+    dates: { start_date: string; end_date: string },
   ): Promise<ResponseOrError<OrganizationStatistics>> => {
+    const { start_date, end_date } = dates;
     try {
       const response = await OrganizationService.getOrganizationStatistics(
         id,
-        time_frame,
         start_date,
         end_date,
       );
@@ -94,7 +91,10 @@ class OrganizationStore {
     try {
       await OrganizationService.editOrganization(id, organization);
       if (!file) {
-        return { successMsg: 'Updated organization successfully', errorMsg: '' };
+        return {
+          successMsg: 'Updated organization successfully',
+          errorMsg: '',
+        };
       }
       const uploadRes = await this.uploadOrgImage(id, file);
       return uploadRes;

@@ -53,7 +53,7 @@ export default class UserService {
   static async uploadImageForUser(id: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    const response = $api.put(`/users/upload/image/${id}`, formData, {
+    const response = $api.put(`/users/${id}/upload/image/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

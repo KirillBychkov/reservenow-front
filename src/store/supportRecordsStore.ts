@@ -9,7 +9,7 @@ import { makeAutoObservable } from 'mobx';
 
 class SupportRecordsStore {
   supportRecords: Support[] = [];
-  filters: Filters = { total: 0, limit: 1 };
+  filters: Filters = { total: 0, limit: 4 };
 
   constructor() {
     makeAutoObservable(this);
@@ -100,8 +100,9 @@ class SupportRecordsStore {
     file?: File,
   ): Promise<SuccessOrError> => {
     try {
-      const { data: createdRecord } =
-        await SupportService.createSupportRecord(client_description);
+      const { data: createdRecord } = await SupportService.createSupportRecord(
+        client_description,
+      );
 
       if (!file) {
         return { successMsg: 'Record created successfully', errorMsg: '' };

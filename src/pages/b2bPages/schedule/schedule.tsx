@@ -19,6 +19,7 @@ import { DropdownChangeEvent } from 'primereact/dropdown';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { Plus } from '@blueprintjs/icons';
 
 const Schedule = observer(() => {
   const { t, i18n } = useTranslation();
@@ -121,7 +122,7 @@ const Schedule = observer(() => {
         </Flex>
 
         {isLaptop && (
-          <Button onClick={() => navigate('add')}>
+          <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
             {t('schedule.addReservation')}
           </Button>
         )}

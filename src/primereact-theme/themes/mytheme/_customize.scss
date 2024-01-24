@@ -1,14 +1,6 @@
 .App {
-  overflow: scroll;
-  scroll-margin: 78px;
-}
-
-.page {
+  overflow: hidden;
   height: 100%;
-}
-
-.main {
-  flex-grow: 1;
 }
 
 // classes to customize the table
@@ -33,7 +25,8 @@
   margin-top: 78px;
   margin-left: 275px;
   padding-left: 0;
-  overflow: hidden;
+  height: calc(100vh - 78px);
+  overflow: scroll;
   scroll-margin: 78px;
 }
 @media (max-width: 1200px) {

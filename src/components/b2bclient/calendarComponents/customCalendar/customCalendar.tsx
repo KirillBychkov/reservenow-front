@@ -85,6 +85,7 @@ export const Calendar = ({
       formats={formats}
       view={view}
       onView={setView}
+      style={{ height: view === 'month' ? '100%' : 'max-content' }}
     />
   );
 };

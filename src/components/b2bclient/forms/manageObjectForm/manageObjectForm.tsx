@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './manageObjectForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
@@ -22,6 +22,8 @@ import { useFileUpload } from '@/hooks/useFileUpload';
 import classNames from 'classnames';
 import isValidClassname from '@/utils/isValidClassname';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
+import objectsStore from '@/store/objectsStore';
+import Flex from '@/components/UI/layout/flex';
 
 interface Props {
   initialValues?: RentalObject;
@@ -33,6 +35,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
   const { id: organizationId, objectId } = useParams();
   const { ref, handleSelect, handleClearFile, fileName, handleDrop } =
     useFileUpload();
+  const [image, setImage] = useState(initialValues?.photo || null);
 
   if (initialValues) {
     initialValues = formatObjectIn(initialValues, i18n.language);
@@ -75,9 +78,32 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
         showError(res.errorMsg);
         return;
       }
+
+      if (file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () =>
+          setImage(reader.result as string),
+        );
+        reader.readAsDataURL(file);
+      }
+
       showSuccess(res.successMsg);
     },
   });
+
+  const handleImageDelete = async () => {
+    const { successMsg, errorMsg } = await objectsStore.deleteImage(
+      initialValues?.id as number,
+    );
+
+    if (errorMsg) {
+      showError(errorMsg);
+      return;
+    }
+
+    showSuccess(successMsg);
+    setImage(null);
+  };
 
   return (
     <form className={styles.form} onSubmit={formik.handleSubmit}>
@@ -157,13 +183,30 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
         </FormField>
       </div>
       <div className={styles.formSection}>
-        <FileUpload
-          onDrop={handleDrop}
-          fileUploadRef={ref}
-          onChange={handleSelect}
-          onClear={handleClearFile}
-          fileName={fileName}
-        />
+        <h4 className='heading heading-4 '>{t('objects.image')}</h4>
+        {image ? (
+          <Flex
+            className={styles.imageContainer}
+            options={{ direction: 'column', gap: 0.625 }}
+          >
+            <img
+              className={styles.image}
+              src={image}
+              alt={`${initialValues?.name} image`}
+            />
+            <Button className='imageButton' onClick={handleImageDelete}>
+              {t('forms.deleteImage')}
+            </Button>
+          </Flex>
+        ) : (
+          <FileUpload
+            onDrop={handleDrop}
+            fileUploadRef={ref}
+            onChange={handleSelect}
+            onClear={handleClearFile}
+            fileName={fileName}
+          />
+        )}
       </div>
       <WorkingHours<ObjectFormData> formik={formik} />
       <div className={styles.Controls}>

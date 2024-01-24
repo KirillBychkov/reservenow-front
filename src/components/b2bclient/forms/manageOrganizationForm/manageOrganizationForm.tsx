@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@/components/UI/buttons/button';
@@ -18,6 +18,7 @@ import { FileUpload } from '@/components/UI/fileUpload/FileUpload';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import organizationStore from '@/store/organizationsStore';
 import { useNavigate } from 'react-router-dom';
+import Flex from '@/components/UI/layout/flex';
 
 interface Props {
   initialValues?: Organization;
@@ -30,6 +31,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
     const { ref, handleSelect, handleClearFile, fileName, handleDrop } =
       useFileUpload();
     const navigate = useNavigate();
+    const [image, setImage] = useState(initialValues?.photo || null);
 
     if (initialValues)
       initialValues = formatObjectIn(initialValues, i18n.language);
@@ -67,6 +69,20 @@ const ManageOrganizationForm: React.FC<Props> = observer(
       navigate('/organizations');
     };
 
+    const handleImageDelete = async () => {
+      const { successMsg, errorMsg } = await organizationStore.deleteImage(
+        initialValues?.id as number,
+      );
+
+      if (errorMsg) {
+        showError(errorMsg);
+        return;
+      }
+
+      showSuccess(successMsg);
+      setImage(null);
+    };
+
     const formik = useFormik({
       initialValues: formData,
       validationSchema: validationSchema,
@@ -82,6 +98,14 @@ const ManageOrganizationForm: React.FC<Props> = observer(
           showError(res.errorMsg);
           return;
         }
+
+        if (file) {
+          const reader = new FileReader();
+          reader.addEventListener('load', () =>
+            setImage(reader.result as string),
+          );
+          reader.readAsDataURL(file);
+        }
         showSuccess(res.successMsg);
       },
     });
@@ -96,14 +120,32 @@ const ManageOrganizationForm: React.FC<Props> = observer(
         <MainInfo formik={formik} />
         <SecondaryInfo formik={formik} />
         <div className={styles.section}>
-          <h4 className='heading heading-4 '>{t('addOrganizationForm.image')}</h4>
-          <FileUpload
-            onDrop={handleDrop}
-            fileUploadRef={ref}
-            onChange={handleSelect}
-            onClear={handleClearFile}
-            fileName={fileName}
-          />
+          <h4 className='heading heading-4 '>
+            {t('addOrganizationForm.image')}
+          </h4>
+          {image ? (
+            <Flex
+              className={styles.imageContainer}
+              options={{ direction: 'column', gap: 0.625 }}
+            >
+              <img
+                className={styles.image}
+                src={image}
+                alt={`${initialValues?.name} image`}
+              />
+              <Button className='imageButton' onClick={handleImageDelete}>
+                {t('forms.deleteImage')}
+              </Button>
+            </Flex>
+          ) : (
+            <FileUpload
+              onDrop={handleDrop}
+              fileUploadRef={ref}
+              onChange={handleSelect}
+              onClear={handleClearFile}
+              fileName={fileName}
+            />
+          )}
         </div>
         <WorkingHours<OrganizationFormData> formik={formik} />
         <div className={styles.Controls}>

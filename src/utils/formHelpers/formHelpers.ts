@@ -1,5 +1,5 @@
-import { TimeFrame } from '@/types/enums/timeFrame';
 import { Day, Week, WeekWorkingHours } from '@/types/weekWorkingHours';
+import dayjs from 'dayjs';
 import { TFunction } from 'i18next';
 
 export const daysOfWeek = [
@@ -13,18 +13,21 @@ export const daysOfWeek = [
 ];
 
 export const generateTimeSpanOptions = (t: TFunction) => [
-  { label: t('timeRanges.allTime'), value: TimeFrame.ALL },
+  {
+    label: t('timeRanges.allTime'),
+    value: new Date(dayjs().subtract(1, 'year').valueOf()),
+  },
   {
     label: t('timeRanges.30days'),
-    value: TimeFrame.MONTH,
+    value: new Date(dayjs().subtract(1, 'month').valueOf()),
   },
   {
     label: t('timeRanges.7days'),
-    value: TimeFrame.WEEK,
+    value: new Date(dayjs().subtract(1, 'week').valueOf()),
   },
   {
     label: t('timeRanges.24hours'),
-    value: TimeFrame.DAY,
+    value: new Date(dayjs().subtract(24, 'hour').valueOf()),
   },
 ];
 

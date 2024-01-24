@@ -25,14 +25,12 @@ class OrganizationStore {
 
   getOrganizationStatistics = async (
     id: number,
-    time_frame?: TimeFrame,
     start_date?: string,
     end_date?: string,
   ): Promise<ResponseOrError<OrganizationStatistics>> => {
     try {
       const response = await OrganizationService.getOrganizationStatistics(
         id,
-        time_frame,
         start_date,
         end_date,
       );

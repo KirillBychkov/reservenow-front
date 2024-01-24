@@ -52,18 +52,13 @@ export default class OrganizationService {
 
   static async getOrganizationStatistics(
     id: number,
-    time_frame?: TimeFrame,
     start_date?: string,
     end_date?: string,
   ): Promise<AxiosResponse> {
     let path = `/organization/${id}/statistics?`;
 
-    if (time_frame) {
-      path += `time_frame=${time_frame}`
-    }
-
     if (start_date && end_date) {
-      path += `&start_date=${start_date}&end_date=${end_date}`;
+      path += `start_date=${start_date}&end_date=${end_date}`;
     }
     return $api.get(path);
   }

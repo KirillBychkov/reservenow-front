@@ -26,11 +26,12 @@ const ReservationHistory = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showError } = useContext(ToastContext);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
 
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);
-  const [dates, setDates] = useState<Date[] | null>(null);
+  const [dates, setDates] = useState<Date[] | null>([dateSpanOptions[0].value, new Date()]);
   const isLaptopL = useMediaQuery('(max-width:1440px)');
   const { startDate, endDate } = useMemo(() => {
     const isFirstDateNotNull = dates !== null && dates[0] !== null;
@@ -65,7 +66,6 @@ const ReservationHistory = observer(() => {
     },
   );
 
-  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
   const isOrdersEmpty = (orders?.length === 0 || orders === null) && !isLoading;
 
   return (

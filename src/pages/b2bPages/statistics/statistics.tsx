@@ -86,8 +86,8 @@ const Statistics: React.FC = observer(() => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState<
     number | null
   >(null);
-  const [timeFrame, setTimeFrame] = useState<TimeFrame | null>(TimeFrame.ALL);
-  const [dates, setDates] = useState<Date[] | null>(null);
+  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
+  const [dates, setDates] = useState<Date[] | null>([dateSpanOptions[0].value, new Date()]);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -100,7 +100,6 @@ const Statistics: React.FC = observer(() => {
     },
   );
 
-  const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
   const isStartDayNotNull = dates && dates[0];
   const isEndDayNotNull = dates && dates[0];
 
@@ -110,7 +109,6 @@ const Statistics: React.FC = observer(() => {
         selectedOrganizationId
           ? organizationStore.getOrganizationStatistics(
               selectedOrganizationId,
-              timeFrame || undefined,
               isStartDayNotNull ? dates[0].toISOString() : undefined,
               isEndDayNotNull ? dates[1].toISOString() : undefined,
             )
@@ -118,7 +116,7 @@ const Statistics: React.FC = observer(() => {
               data: {} as OrganizationStatistics,
               error: '',
             }),
-      [selectedOrganizationId, timeFrame, dates],
+      [selectedOrganizationId, dates],
       { onError: showError },
     );
 
@@ -164,11 +162,13 @@ const Statistics: React.FC = observer(() => {
           placeholder='Select an organization'
         />
         <SelectButton
-          value={timeFrame}
+          value={dates ? dates[0] : null}
           onChange={(e) => {
-            if (!e.value) return;
-            setTimeFrame(e.value);
-            setDates(null);
+            if (e.value === null) {
+              setDates(null);
+            } else {
+              setDates([e.value, new Date()]);
+            }
           }}
           options={dateSpanOptions}
         />
@@ -176,17 +176,7 @@ const Statistics: React.FC = observer(() => {
         <Calendar
           placeholder={t('timeRanges.chooseDates')}
           value={dates}
-          onChange={(e) => {
-            const eventDates = e.value as Date[];
-            const isBothDates = eventDates && eventDates[0] && eventDates[1];
-
-            if (timeFrame && isBothDates) {
-              setTimeFrame(null);
-            } else {
-              setTimeFrame(TimeFrame.ALL);
-            }
-            setDates(e.value as Date[]);
-          }}
+          onChange={(e) => setDates(e.value as Date[])}
         />
       </Flex>
       {!selectedOrganizationId && (

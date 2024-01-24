@@ -1,7 +1,6 @@
 import $api from '@/http';
 import { Organization } from '@/models/Organization';
 import { CreateOrganizationDTO } from '@/models/requests/OrganizationRequests';
-import { TimeFrame } from '@/types/enums/timeFrame';
 import { SuccessOrError } from '@/types/store';
 import { AxiosResponse } from 'axios';
 

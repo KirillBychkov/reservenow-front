@@ -9,7 +9,6 @@ import organizationStore from '@/store/organizationsStore';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 import styles from './statistics.module.scss';
 import Flex from '@/components/UI/layout/flex';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -34,51 +33,13 @@ import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topC
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
-import { TimeFrame } from '@/types/enums/timeFrame';
 import dayjs from 'dayjs';
 import { Calendar } from '@/components/UI/calendar/calendar';
+import { CustomTooltip } from '@/components/UI/charts/customTooltip';
 
-type CustomTooltipProps = {
-  payload?: any[];
-  label?: string;
-  active?: boolean;
-  t: TFunction;
-  data: any;
-  type?: TimeFrame;
+const getDayDifference = (start: Date, end: Date) => {
+  return Math.abs(dayjs(end).diff(dayjs(start), 'day'));
 };
-
-function CustomTooltip({
-  payload,
-  label,
-  active,
-  t,
-  data,
-  type,
-}: CustomTooltipProps) {
-  if (payload == null) return null;
-  if (active) {
-    const dateString = data[Number(label) - 1].period;
-    const [startDate, endDate] = dateString.split('/');
-
-    const formattedStartDate =
-      type === TimeFrame.DAY
-        ? dayjs(startDate).format('DD.MM.YYYY, HH:mm')
-        : dayjs(startDate).format('DD.MM.YYYY');
-
-    const formattedEndDate =
-      type === TimeFrame.DAY
-        ? dayjs(endDate).format('DD.MM.YYYY, HH:mm')
-        : dayjs(endDate).format('DD.MM.YYYY');
-
-    return (
-      <div>
-        <p>{`${t('dates.from')}: ${formattedStartDate}`}</p>
-        <p>{`${t('dates.to')}: ${formattedEndDate}`}</p>
-        <p>{`${t('orders.totalReservationsSum')}: ${payload[0].value}`}</p>
-      </div>
-    );
-  }
-}
 
 const Statistics: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -88,7 +49,7 @@ const Statistics: React.FC = observer(() => {
   >(null);
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
   const initialDatesValue = [dateSpanOptions[0].value, new Date()];
-  const [dates, setDates] = useState<Date[] | null>(initialDatesValue);
+  const [dates, setDates] = useState<Date[]>(initialDatesValue);
 
   const { data: organizations } = useFetch<Organization[]>(
     organizationStore.getOrganizations,
@@ -132,6 +93,9 @@ const Statistics: React.FC = observer(() => {
     return <ProgressSpinner />;
   }
 
+  console.log(statistics);
+  
+
   const dropdownOptions = organizations?.map((organization) => ({
     label: organization.name,
     value: organization.id,
@@ -173,7 +137,7 @@ const Statistics: React.FC = observer(() => {
           value={dates ? dates[0] : null}
           onChange={(e) => {
             if (e.value === null) {
-              setDates(null);
+              setDates(initialDatesValue);
             } else {
               setDates([e.value, new Date()]);
             }
@@ -265,9 +229,8 @@ const Statistics: React.FC = observer(() => {
                   <Tooltip
                     content={
                       <CustomTooltip
-                        t={t}
                         data={data}
-                        type={statistics?.period}
+                        dayDifference={getDayDifference(dates[1], dates[0])}
                       />
                     }
                   />

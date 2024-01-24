@@ -31,12 +31,16 @@ export default class OrganizationService {
   static async uploadImage(id: number, file: File): Promise<AxiosResponse> {
     const formData = new FormData();
     formData.append('file', file);
-    const reponse = $api.put(`/organization/upload/image/${id}`, formData, {
+    const reponse = $api.put(`/organization/${id}/upload/image/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
     return reponse;
+  }
+
+  static async deleteImage(id: number): Promise<AxiosResponse> {
+    return $api.put(`/organization/${id}/delete/image/`);
   }
 
   static async editOrganization(

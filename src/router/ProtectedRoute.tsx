@@ -32,11 +32,11 @@ const ProtectedRoute: React.FC<ProtectedRoute> = observer(
 
     // Render the protected route with Header and Sidebar if applicable
     return isProtected ? (
-      <div>
+      <>
         <Header />
         <Sidebar />
         <div className='content'>{children}</div>
-      </div>
+      </>
     ) : (
       <>{children}</>
     );

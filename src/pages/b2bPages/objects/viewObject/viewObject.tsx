@@ -31,10 +31,6 @@ const ViewObject: React.FC = observer(() => {
   const { t } = useTranslation();
   const { id, objectId } = useParams();
   const { showError } = useContext(ToastContext);
-
-  console.log(id, objectId);
-  
-
   const { sortField, sortOrder, handleSort, sort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);

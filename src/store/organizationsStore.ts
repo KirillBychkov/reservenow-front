@@ -94,7 +94,7 @@ class OrganizationStore {
     try {
       await OrganizationService.editOrganization(id, organization);
       if (!file) {
-        return { successMsg: 'Updated organization succesfully', errorMsg: '' };
+        return { successMsg: 'Updated organization successfully', errorMsg: '' };
       }
       const uploadRes = await this.uploadOrgImage(id, file);
       return uploadRes;
@@ -110,7 +110,20 @@ class OrganizationStore {
     try {
       await OrganizationService.uploadImage(id, file);
 
-      return { successMsg: '', errorMsg: '' };
+      return { successMsg: 'Image uploaded', errorMsg: '' };
+    } catch (e) {
+      return {
+        successMsg: '',
+        errorMsg: 'Error while uploading image',
+      };
+    }
+  };
+
+  deleteImage = async (id: number): Promise<SuccessOrError> => {
+    try {
+      await OrganizationService.deleteImage(id);
+
+      return { successMsg: 'Image deleted successfully', errorMsg: '' };
     } catch (e) {
       return {
         successMsg: '',

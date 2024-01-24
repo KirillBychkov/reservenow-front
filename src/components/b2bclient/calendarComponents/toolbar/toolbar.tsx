@@ -1,7 +1,7 @@
 import Button from '@/components/UI/buttons/button';
 import CustomDropdown from '@/components/UI/dropdown/customDropdown';
 import Flex from '@/components/UI/layout/flex';
-import { ChevronLeft, ChevronRight } from '@blueprintjs/icons';
+import { ChevronLeft, ChevronRight, Plus } from '@blueprintjs/icons';
 import { DropdownChangeEvent } from 'primereact/dropdown';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -106,7 +106,7 @@ export const Toolbar = ({
         />
 
         {!isLaptop && (
-          <Button onClick={() => navigate('add')}>
+          <Button icon={<Plus color='white' />} onClick={() => navigate('add')}>
             {t('schedule.addReservation')}
           </Button>
         )}

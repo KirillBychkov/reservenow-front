@@ -156,7 +156,7 @@
   "invalid": {
     "required": "Required field",
     "email": "Invalid email format",
-    "passwordLength": "Password must be at least 6 characters long.",
+    "passwordLength": "Password must be at least {{length}} characters long.",
     "passwordMatch": "Invalid password",
     "confirmPasswordMustMatch": "Passwords must match",
     "phone": "Invalid phone number format",

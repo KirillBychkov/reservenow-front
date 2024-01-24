@@ -15,7 +15,7 @@ import ToastContext from '@/context/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { observer } from 'mobx-react-lite';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
-import { Export } from '@blueprintjs/icons';
+import { Export, Plus } from '@blueprintjs/icons';
 import useSearch from '@/hooks/useSearch';
 import { Calendar } from '@/components/UI/calendar/calendar';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
@@ -84,7 +84,10 @@ const ReservationHistory = observer(() => {
               >
                 {t('actions.export')}
               </Button>
-              <Button onClick={() => navigate('/schedule/add')}>
+              <Button
+                icon={<Plus color='white' />}
+                onClick={() => navigate('/schedule/add')}
+              >
                 {t('reservationHistory.addReservation')}
               </Button>
             </Flex>
@@ -126,7 +129,10 @@ const ReservationHistory = observer(() => {
               >
                 {t('actions.export')}
               </Button>
-              <Button fill onClick={() => navigate('/schedule/add')}>
+              <Button
+                icon={<Plus color='white' />}
+                onClick={() => navigate('/schedule/add')}
+              >
                 {t('reservationHistory.addReservation')}
               </Button>
             </Flex>
@@ -163,7 +169,10 @@ const ReservationHistory = observer(() => {
           <h2 className='heading heading-2 heading-primary'>
             {t('clients.ordersNull')}
           </h2>
-          <Button onClick={() => navigate('/schedule/add')}>
+          <Button
+            icon={<Plus color='white' />}
+            onClick={() => navigate('/schedule/add')}
+          >
             {t('reservationHistory.addReservation')}
           </Button>
         </Flex>

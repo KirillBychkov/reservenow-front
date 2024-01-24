@@ -12,6 +12,9 @@
 .openRequest {
   padding: 25px 25px 25px 0;
   width: 100%;
+  .heading {
+    margin-bottom: 0.63rem;
+  }
   .request {
     @include card();
     max-width: 40.625rem;

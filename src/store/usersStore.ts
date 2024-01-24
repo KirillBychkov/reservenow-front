@@ -8,7 +8,7 @@ import { Filters } from '@/models/Filters';
 
 class UsersStore {
   users: User[] = [];
-  filters: Filters = { total: 0, limit: 8 };
+  filters: Filters = { total: 0, limit: 4 };
 
   constructor() {
     makeAutoObservable(this);

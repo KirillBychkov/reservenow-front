@@ -58,7 +58,7 @@
     "null": "Список запитів порожній",
     "response": "Рішення по запиту",
     "openImage": "Відкрити зображення",
-    "searchPlaceholder":"ID запиту"
+    "searchPlaceholder": "ID запиту"
   },
   "forms": {
     "id": "ID",
@@ -156,7 +156,7 @@
   "invalid": {
     "required": "Обов'язкове поле",
     "email": "Невірний формат електронної пошти",
-    "passwordLength": "Пароль повинен містити не менше 6 символів",
+    "passwordLength": "Пароль повинен містити не менше {{length}} символів",
     "passwordMatch": "Невірний пароль",
     "confirmPasswordMustMatch": "Паролі повинні співпадати",
     "phone": "Невірний формат номеру телефону",

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { MainInfo } from './mainInfo';
 import { SecondaryInfo } from './secondaryInfo';
 import { transformWorkingHours } from '@/utils/formHelpers/formHelpers';
-import { WorkingHours } from '../../../UI/workingHours/workingHours';
+import { WorkingHours } from '@/components/UI/workingHours/workingHours';
 import { observer } from 'mobx-react-lite';
 import ToastContext from '@/context/toast';
 import { OrganizationFormData } from '@/types/organization';

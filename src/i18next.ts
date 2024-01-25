@@ -18,5 +18,5 @@ i18n
     },
     lng: 'uk-UA',
     fallbackLng: 'uk-UA',
-    debug: true,
+    debug: false,
   });

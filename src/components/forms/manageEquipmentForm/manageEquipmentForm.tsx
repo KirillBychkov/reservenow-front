@@ -1,10 +1,10 @@
-import FormField from '../../../UI/fields/formField';
+import FormField from '@/components/UI/fields/formField';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import * as yup from 'yup';
 import styles from './manageEquipmentForm.module.scss';
-import Flex from '../../../UI/layout/flex';
-import Button from '../../../UI/buttons/button';
+import Flex from '@/components/UI/layout/flex';
+import Button from '@/components/UI/buttons/button';
 import { InputNumber } from 'primereact/inputnumber';
 import { observer } from 'mobx-react-lite';
 import { Equipment } from '@/models/Equipment';

@@ -3,7 +3,7 @@ import { Home } from '@blueprintjs/icons';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import styles from './manageClient.module.scss';
 import { observer } from 'mobx-react-lite';
-import ManageClientForm from '@/components/b2bclient/forms/manageClientForm/manageClientForm';
+import ManageClientForm from '@/components/forms/manageClientForm/manageClientForm';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
@@ -17,10 +17,7 @@ const ManageClient = observer(() => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { showError } = useContext(ToastContext);
-  const {
-    data: initialValues,
-    isLoading,
-  } = useFetch<Client>(
+  const { data: initialValues, isLoading } = useFetch<Client>(
     () =>
       id
         ? clientStore.getClientById(parseInt(id))

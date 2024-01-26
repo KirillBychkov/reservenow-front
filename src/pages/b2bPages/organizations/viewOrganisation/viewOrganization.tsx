@@ -15,7 +15,7 @@ import usePaginate from '@/hooks/usePaginate';
 import useFetch from '@/hooks/useFetch';
 import ToastContext from '@/context/toast';
 import LeftSideComponent from '@/components/UI/viewPage/leftSide/leftSide';
-import ObjectsTable from '@/components/b2bclient/tables/objectsTable';
+import ObjectsTable from '@/components/tables/objectsTable';
 import { Organization, OrganizationStatistics } from '@/models/Organization';
 import { RentalObject } from '@/models/RentalObject';
 import { useSort } from '@/hooks/useSort';
@@ -41,10 +41,11 @@ const ViewOrganization: React.FC = observer(() => {
 
   const dateSpanOptions = useMemo(() => generateTimeSpanOptions(t), [t]);
   const { data: organizationStatistics } = useFetch<OrganizationStatistics>(
-    () => organizationStore.getOrganizationStatistics(parseInt(id || '0'), {
-      start_date: dateSpanOptions[0].value.toISOString(),
-      end_date: new Date().toISOString()
-    }),
+    () =>
+      organizationStore.getOrganizationStatistics(parseInt(id || '0'), {
+        start_date: dateSpanOptions[0].value.toISOString(),
+        end_date: new Date().toISOString(),
+      }),
     [id],
   );
 

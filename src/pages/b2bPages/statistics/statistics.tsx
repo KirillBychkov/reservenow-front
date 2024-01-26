@@ -28,8 +28,8 @@ import {
   YAxis,
 } from 'recharts';
 import { TopObject } from '@/models/RentalObject';
-import TopObjectsTable from '@/components/b2bclient/tables/statisticsTables/topObjectsTable';
-import TopClientsTable from '@/components/b2bclient/tables/statisticsTables/topClientsTable';
+import TopObjectsTable from '@/components/tables/statisticsTables/topObjectsTable';
+import TopClientsTable from '@/components/tables/statisticsTables/topClientsTable';
 import SelectButton from '@/components/UI/buttons/selectButton/selectButton';
 import { TopClient } from '@/models/Client';
 import { generateTimeSpanOptions } from '@/utils/formHelpers/formHelpers';
@@ -93,9 +93,6 @@ const Statistics: React.FC = observer(() => {
     return <ProgressSpinner />;
   }
 
-  console.log(statistics);
-  
-
   const dropdownOptions = organizations?.map((organization) => ({
     label: organization.name,
     value: organization.id,
@@ -136,11 +133,8 @@ const Statistics: React.FC = observer(() => {
         <SelectButton
           value={dates ? dates[0] : null}
           onChange={(e) => {
-            if (e.value === null) {
-              setDates(initialDatesValue);
-            } else {
-              setDates([e.value, new Date()]);
-            }
+            if (!e.value) return;
+            setDates([e.value, new Date()]);
           }}
           options={dateSpanOptions}
         />

@@ -18,7 +18,7 @@ import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
 import { useSort } from '@/hooks/useSort';
 import usePaginate from '@/hooks/usePaginate';
-import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
+import OrdersTable from '@/components/tables/ordersTable';
 import Button from '@/components/UI/buttons/button';
 import getTrainersStatsData from './getTrainersStatsData';
 import useSearch from '@/hooks/useSearch';

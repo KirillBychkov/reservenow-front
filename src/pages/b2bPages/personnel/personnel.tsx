@@ -7,7 +7,7 @@ import personnelStore, { Personnel } from '@/store/personnelStore';
 import useFetch from '@/hooks/useFetch';
 import { observer } from 'mobx-react-lite';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import PersonnelTable from '@/components/b2bclient/tables/personnelTable';
+import PersonnelTable from '@/components/tables/personnelTable';
 import ToastContext from '@/context/toast';
 import SelectPersonnelModal from '@/components/selectPersonnelModal/selectPersonnelModal';
 

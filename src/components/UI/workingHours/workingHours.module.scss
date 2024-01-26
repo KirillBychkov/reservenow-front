@@ -1,5 +1,5 @@
-@use '../../b2bclient/forms/manageOrganizationForm/manageOrganizationForm.module.scss'
-  as manageOrganizationForm;
+@use '../../forms/manageOrganizationForm/manageOrganizationForm.module.scss' as
+  manageOrganizationForm;
 .form {
   &Section {
     @include manageOrganizationForm.form-section;

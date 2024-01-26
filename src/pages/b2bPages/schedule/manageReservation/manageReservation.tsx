@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import ToastContext from '@/context/toast';
-import ManageReservationForm from '@/components/b2bclient/forms/manageReservationForms/manageReservationForm';
+import ManageReservationForm from '@/components/forms/manageReservationForms/manageReservationForm';
 
 const ManageReservation = observer(() => {
   const { t } = useTranslation();

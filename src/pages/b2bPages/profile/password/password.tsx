@@ -2,7 +2,7 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import styles from './password.module.scss';
 import { Home, TickCircle } from '@blueprintjs/icons';
 import Flex from '@/components/UI/layout/flex';
-import PasswordChangeForm from '@/components/forms/passwordChangeForm';
+import PasswordChangeForm from '@/components/forms/passwordChangeForm/passwordChangeForm';
 import { useState } from 'react';
 import Button from '@/components/UI/buttons/button';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,9 @@ const PasswordPage = () => {
       className={styles.passwordPage}
     >
       <article>
-        <h3 className={classNames('heading heading-3', styles.heading)}>{t('profile.heading')}</h3>
+        <h3 className={classNames('heading heading-3', styles.heading)}>
+          {t('profile.heading')}
+        </h3>
         <BreadCrumb
           home={{ icon: <Home color='gray' />, url: '/' }}
           model={[

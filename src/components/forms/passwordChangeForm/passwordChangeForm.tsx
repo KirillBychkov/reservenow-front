@@ -1,8 +1,8 @@
 import { Password } from 'primereact/password';
-import FormField from '../UI/fields/formField';
+import FormField from '@/components/UI/fields/formField';
 import styles from './passwordChangeForm.module.scss';
-import Button from '../UI/buttons/button';
-import Flex from '../UI/layout/flex';
+import Button from '@/components/UI/buttons/button';
+import Flex from '@/components/UI/layout/flex';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import passwordStore from '@/store/passwordStore';
@@ -58,7 +58,7 @@ const PasswordChangeForm = ({ onSuccess }: Props) => {
       }
 
       showSuccess(successMsg);
-      onSuccess()
+      onSuccess();
     },
   });
 

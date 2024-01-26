@@ -65,7 +65,12 @@ export const isAllReservationsValid = async (
   trainers: TrainerReservation[],
   objects: ObjectReservation[],
   onOverlapError: (error: string) => void,
+  isEditingMode: boolean,
 ) => {
+  if (isEditingMode) {
+    return true;
+  }
+
   const reservations = getReservations(equipment, trainers, objects);
 
   const isReservationErrors = checkErrorsInReservations(

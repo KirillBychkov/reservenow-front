@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import { useParams } from 'react-router-dom';
-import ManageObjectForm from '@/components/b2bclient/forms/manageObjectForm/manageObjectForm';
+import ManageObjectForm from '@/components/forms/manageObjectForm/manageObjectForm';
 import useFetch from '@/hooks/useFetch';
 import { observer } from 'mobx-react-lite';
 import objectsStore from '@/store/objectsStore';

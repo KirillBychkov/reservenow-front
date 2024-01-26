@@ -14,9 +14,10 @@ import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 
 interface Props {
-  users: User[];
+  users: User[] | null;
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -41,7 +42,7 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: User[] = users.map((user) =>
+    const formattedUsers = users?.map((user) =>
       formatObjectIn(user, i18n.language),
     );
 
@@ -50,6 +51,7 @@ const UsersTable: React.FC<Props> = observer(
         <DataTable
           removableSort
           value={formattedUsers}
+          emptyMessage={<TableEmptyMessage text={t('invalid.search')} />}
           selectionMode='single'
           selection={selectedUser!}
           onSelectionChange={(e) => handleViewUser(e.value)}

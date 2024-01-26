@@ -162,7 +162,8 @@
     "phone": "Invalid phone number format",
     "positiveOnly": "Positive values only",
     "invalidCredentials": "Password or email is invalid",
-    "nonexistentEmail": "The user with this email does not exist"
+    "nonexistentEmail": "The user with this email does not exist",
+    "search": "No results found"
   },
   "dates": {
     "date": "Date",

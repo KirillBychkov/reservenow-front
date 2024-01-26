@@ -24,7 +24,7 @@ const ActivateAccountForm: React.FC = observer(() => {
 
   const validationSchema = Yup.object({
     password: Yup.string()
-      .min(4, t('invalid.passwordLength'))
+      .min(4, t('invalid.passwordLength', { length: 4 }))
       .required(t('invalid.required')),
     confirmPassword: Yup.string()
       .min(1, t('invalid.required'))

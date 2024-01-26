@@ -116,9 +116,6 @@ class UsersStore {
   ): Promise<ResponseOrError<User[]>> => {
     try {
       const response = await UserService.getUsers(filters);
-      if (response.data.data.length === 0) {
-        return { data: [], error: 'No clients found' };
-      }
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };

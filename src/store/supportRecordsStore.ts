@@ -32,9 +32,6 @@ class SupportRecordsStore {
   ): Promise<ResponseOrError<Support[]>> => {
     try {
       const response = await SupportService.getAllSupportRecords(filters);
-      if (response.data.data.length === 0) {
-        return { data: [], error: 'No records found' };
-      }
       this.setSupportRecords(response.data.data);
       this.setFilters(response.data.filters);
       return { data: response.data.data, error: '' };

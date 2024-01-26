@@ -3,7 +3,7 @@ import Flex from '@/components/UI/layout/flex';
 import ToastContext from '@/context/toast';
 import useFetch from '@/hooks/useFetch';
 import { Client } from '@/models/Client';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { Home } from '@blueprintjs/icons';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { useContext } from 'react';

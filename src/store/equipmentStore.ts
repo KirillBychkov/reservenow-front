@@ -32,8 +32,9 @@ class EquipmentStore {
     equipment: CreateEquipmentDTO,
   ): Promise<SuccessOrError> => {
     try {
-      const { data: createdEquipment } =
-        await EquipmentService.createEquipment(equipment);
+      const { data: createdEquipment } = await EquipmentService.createEquipment(
+        equipment,
+      );
       this.equipment.push(createdEquipment);
       return { successMsg: 'Equipment was created', errorMsg: '' };
     } catch {
@@ -46,11 +47,6 @@ class EquipmentStore {
   ): Promise<ResponseOrError<Equipment[]>> => {
     try {
       const { data } = await EquipmentService.getEquipment(filters);
-
-      if (!data.data.length) {
-        return { data: [], error: 'No equipment found' };
-      }
-
       this.setEquipment(data.data);
       this.setFilters(data.filters);
       return { data: data.data, error: '' };

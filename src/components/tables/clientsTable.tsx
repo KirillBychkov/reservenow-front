@@ -1,11 +1,10 @@
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { Client } from '@/models/Client';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { observer } from 'mobx-react-lite';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { PaginatorPageChangeEvent } from 'primereact/paginator';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './status.module.scss';
@@ -14,9 +13,10 @@ import Button from '../UI/buttons/button';
 import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 
 type Props = {
-  clients: Client[];
+  clients: Client[] | null;
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -41,9 +41,9 @@ const ClientsTable = observer(
       navigate(`${id}`);
     };
 
-    const formattedClients: Client[] = useMemo<Client[]>(() => {
-      return clients.map((client) => formatObjectIn(client, i18n.language));
-    }, [clients]);
+    const formattedClients = clients?.map((client) =>
+      formatObjectIn(client, i18n.language),
+    );
 
     return (
       <DataTable
@@ -53,6 +53,7 @@ const ClientsTable = observer(
         sortOrder={sortOrder}
         onSort={onSortChange}
         lazy
+        emptyMessage={<TableEmptyMessage text={t('invalid.search')} />}
         footer={
           <Paginator
             first={first}

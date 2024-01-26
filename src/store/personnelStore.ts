@@ -148,17 +148,15 @@ class PersonnelStore {
   };
 
   // General
-  getPersonnel = async (): Promise<ResponseOrError<Personnel>> => {
-    try {
-      const managers = await this.getManagers();
-      const trainers = await this.getTrainers();
-      if (managers.error || trainers.error) {
-        return { data: {} as Personnel, error: 'Error getting personnel' };
-      }
-      return { data: this.personnel, error: '' };
-    } catch (e) {
-      return { data: {} as Personnel, error: 'Error getting personnel' };
+  getPersonnel = async (): Promise<ResponseOrError<Personnel | null>> => {
+    const managers = await this.getManagers();
+    const trainers = await this.getTrainers();
+    if (managers.error || trainers.error) {
+      return { data: null, error: 'Error getting personnel' };
+    } else if (!managers.data.length && !trainers.data.length) {
+      return { data: null, error: '' };
     }
+    return { data: this.personnel, error: '' };
   };
 }
 

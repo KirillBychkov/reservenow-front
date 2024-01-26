@@ -17,7 +17,7 @@ const Personnel: React.FC = observer(() => {
   const [isSelectPersonnelModalOpen, setIsSelectPersonnelModalOpen] =
     useState<boolean>(false);
 
-  const { data: personnel, isLoading } = useFetch<Personnel>(
+  const { data: personnel, isLoading } = useFetch<Personnel | null>(
     personnelStore.getPersonnel,
     [],
     { onError: showError },

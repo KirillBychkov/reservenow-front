@@ -41,7 +41,7 @@ const ViewObject: React.FC = observer(() => {
     {
       onError: (err) => {
         showError(err);
-        navigate(`/organizations/${id}`)
+        navigate(`/organizations/${id}`);
       },
     },
   );

@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './clientPage.module.scss';
-import LeftSideComponent from '@/components/b2bclient/clients/leftSideComponent';
+import LeftSideComponent from './leftSideComponent';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useSort } from '@/hooks/useSort';
 import usePaginate from '@/hooks/usePaginate';

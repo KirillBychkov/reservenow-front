@@ -1,4 +1,4 @@
-import { EventTitle } from '@/components/b2bclient/calendarComponents/eventTitle/eventTitle';
+import { EventTitle } from '@/components/calendarComponents/eventTitle/eventTitle';
 import { Order } from '@/models/Order';
 import { Reservation } from '@/models/Reservation';
 

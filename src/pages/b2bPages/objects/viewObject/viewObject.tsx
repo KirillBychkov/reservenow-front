@@ -15,7 +15,7 @@ import ViewStatsLayout from '@/components/UI/layout/viewStatsLayout';
 import LeftSide from '@/components/UI/viewPage/leftSide/leftSide';
 import { Order } from '@/models/Order';
 import ordersStore from '@/store/ordersStore';
-import OrdersTable from '@/components/b2bclient/tables/reservationsTable';
+import OrdersTable from '@/components/tables/ordersTable';
 import usePaginate from '@/hooks/usePaginate';
 import { observer } from 'mobx-react-lite';
 import { useSort } from '@/hooks/useSort';

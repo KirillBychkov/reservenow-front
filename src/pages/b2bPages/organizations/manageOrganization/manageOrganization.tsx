@@ -10,7 +10,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import useFetch from '@/hooks/useFetch';
 import organizationStore from '@/store/organizationsStore';
 import ToastContext from '@/context/toast';
-import ManageOrganizationForm from '@/components/b2bclient/forms/manageOrganizationForm/manageOrganizationForm';
+import ManageOrganizationForm from '@/components/forms/manageOrganizationForm/manageOrganizationForm';
 import { Organization } from '@/models/Organization';
 
 const ManageOrganisation: React.FC = observer(() => {

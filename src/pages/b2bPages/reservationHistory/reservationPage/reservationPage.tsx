@@ -136,7 +136,7 @@ const ReservationPage = observer(() => {
                 className={styles.section}
               >
                 <ReservationStatusDropdown order={formattedOrder} />
-                <ReservationStatusCard order={formattedOrder} />
+                <ReservationStatusCard order={order as Order} />
               </Flex>
             )}
           </Flex>

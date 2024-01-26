@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { Home } from '@blueprintjs/icons';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import ManageTrainerForm from '@/components/b2bclient/forms/managePersonnelForms/manageTrainerForm/manageTrainerForm';
+import ManageTrainerForm from '@/components/forms/managePersonnelForms/manageTrainerForm/manageTrainerForm';
 import { observer } from 'mobx-react-lite';
 import useFetch from '@/hooks/useFetch';
 import personnelStore from '@/store/personnelStore';

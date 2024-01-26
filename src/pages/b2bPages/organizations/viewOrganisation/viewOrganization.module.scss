@@ -2,9 +2,14 @@
   padding: 19px 28px 0px 0px;
   width: 100%;
 
+  .heading {
+    margin-bottom: 0.625rem;
+  }
+
   .Heading {
     margin-bottom: 0.63rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 }

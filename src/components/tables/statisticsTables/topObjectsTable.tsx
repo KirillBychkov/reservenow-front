@@ -37,6 +37,7 @@ const TopObjectsTable: React.FC<Props> = ({ topObjects, organizationId }) => {
         className={classNames('tableWithHeader tableWithoutFooter')}
         removableSort
         value={formattedObjects}
+        emptyMessage={t('invalid.search')}
       >
         <Column field='id' header={t('objects.id')} sortable />
         <Column field='name' header={t('objects.name')} sortable />

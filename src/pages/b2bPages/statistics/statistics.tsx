@@ -73,7 +73,7 @@ const Statistics: React.FC = observer(() => {
         end_date: initialDatesValue[1].toISOString(),
       };
 
-  let { data: statistics, isLoading: statisticsLoading } =
+  const { data: statistics, isLoading: statisticsLoading } =
     useFetch<OrganizationStatistics>(
       () =>
         selectedOrganizationId
@@ -97,8 +97,6 @@ const Statistics: React.FC = observer(() => {
     label: organization.name,
     value: organization.id,
   }));
-
-  statistics = Array.isArray(statistics) ? statistics[0] : statistics;
 
   const statisticsPerPeriod: StatisticsPerPeriod[] =
     statistics?.statistics_per_period || [];
@@ -129,6 +127,8 @@ const Statistics: React.FC = observer(() => {
             setSelectedOrganizationId(e.value);
             setDates(initialDatesValue);
           }}
+          placeholder={t('statistics.selectOrganization')}
+          emptyMessage={t('invalid.search')}
         />
         <SelectButton
           value={dates ? dates[0] : null}

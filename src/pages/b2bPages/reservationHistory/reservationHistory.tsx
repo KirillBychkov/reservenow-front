@@ -32,7 +32,7 @@ const ReservationHistory = observer(() => {
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);
   const [dates, setDates] = useState<Date[] | null>([dateSpanOptions[0].value, new Date()]);
-  const isLaptopL = useMediaQuery('(max-width:1440px)');
+  const isLaptopL = useMediaQuery('(max-width:1560px)');
   const { startDate, endDate } = useMemo(() => {
     const isFirstDateNotNull = dates !== null && dates[0] !== null;
     const isSecondDateNotNull = dates !== null && dates[1] !== null;

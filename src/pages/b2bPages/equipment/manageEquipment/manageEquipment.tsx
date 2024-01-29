@@ -44,7 +44,7 @@ const ManageEquipment = observer(() => {
             { label: t('equipment.equipment'), url: '/equipment' },
             {
               label: isEditingMode
-                ? `${initialValues.id}`
+                ? `${initialValues?.name ?? id}`
                 : t('actions.addEquipment'),
               url: '/equipment/add',
             },

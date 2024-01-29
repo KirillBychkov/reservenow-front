@@ -12,6 +12,7 @@ import objectsStore from '@/store/objectsStore';
 import ToastContext from '@/context/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { RentalObject } from '@/models/RentalObject';
+import organizationStore from '@/store/organizationsStore';
 
 const ManageObject: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -27,6 +28,10 @@ const ManageObject: React.FC = observer(() => {
     { onError: showError },
   );
 
+  const organization =
+    object?.organization ||
+    organizationStore.getOrganizationByIdFromStore(parseInt(id || '0'));
+
   return (
     <div className={styles.addObject}>
       <h3 className={classNames('heading heading-3', styles.heading)}>
@@ -40,11 +45,11 @@ const ManageObject: React.FC = observer(() => {
             url: `/organizations`,
           },
           {
-            label: id,
+            label: organization?.name ?? id,
             url: `/organizations/${id}`,
           },
           {
-            label: objectId ? `${objectId}` : t('objects.add'),
+            label: objectId ? `${object?.name ?? objectId}` : t('objects.add'),
             url: objectId ? `edit` : 'add',
           },
         ]}

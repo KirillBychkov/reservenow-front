@@ -39,7 +39,7 @@ const ManageClient = observer(() => {
             { label: t('clients.clients'), url: '/clients' },
             {
               label: isEditingMode
-                ? String(initialValues.id)
+                ? `${initialValues?.first_name} ${initialValues?.last_name}`
                 : t('clients.add'),
               disabled: true,
             },

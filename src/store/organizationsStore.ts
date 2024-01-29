@@ -76,7 +76,7 @@ class OrganizationStore {
   ): Promise<ResponseOrError<Organization>> => {
     try {
       const res = await OrganizationService.getOrganizationById(id);
-
+      this.setOrganizations([...this.organizations, res.data]);
       return { data: res.data, error: '' };
     } catch (e) {
       return { data: {} as Organization, error: 'Error getting organization' };
@@ -138,6 +138,10 @@ class OrganizationStore {
 
   setOrganizations(organizations: Organization[]) {
     this.organizations = organizations;
+  }
+
+  getOrganizationByIdFromStore(id: number): Organization | undefined {
+    return this.organizations.find((organization) => organization.id === id);
   }
 }
 

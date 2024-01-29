@@ -37,7 +37,12 @@ const ManageManager: React.FC = observer(() => {
         model={[
           { label: t('personnel.personnel'), url: '/personnel' },
           id
-            ? { label: t('actions.edit'), url: 'edit' }
+            ? {
+                label: `${manager?.first_name || ''} ${
+                  manager?.last_name || ''
+                }`,
+                url: 'edit',
+              }
             : { label: t('actions.add'), url: 'add' },
         ]}
       />

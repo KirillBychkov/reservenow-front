@@ -26,7 +26,7 @@ const ReservationPage = observer(() => {
   const { showError } = useContext(ToastContext);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const isLaptop = useMediaQuery('(max-width:1200px)');
+  const isLaptop = useMediaQuery('(max-width:1300px)');
   const { data: order, isLoading } = useFetch<Order>(
     () => ordersStore.getOrderById(parseInt(id || '0')),
     [id],

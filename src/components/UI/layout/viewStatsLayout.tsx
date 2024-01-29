@@ -17,7 +17,7 @@ const ViewStatsLayout: React.FC<ViewStatsLayoutProps> = ({
       <div className={styles.LeftSide}>{LeftSideComponent}</div>
       <div className={styles.RightSide}>
         {RightSideComponent}
-        {Table}
+        <div className={styles.BottomTable}>{Table}</div>
       </div>
     </div>
   );

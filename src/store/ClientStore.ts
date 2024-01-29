@@ -60,10 +60,6 @@ class ClientStore {
     try {
       const { data } = await ClientService.getClients(filters);
 
-      if (!data.data.length) {
-        return { data: [], error: 'No clients found' };
-      }
-
       this.setClients(data.data);
       this.setFilters(data.filters);
       return { data: data.data, error: '' };
@@ -131,10 +127,6 @@ class ClientStore {
     try {
       const { data } = await ClientService.getClientOrders(id, filters);
 
-      if (!data.data.length) {
-        return { data: [], error: 'No orders found' };
-      }
-
       this.setClientOrders(data.data);
       this.setOrdersFilters(data.filters);
       return { data: data.data, error: '' };
@@ -156,14 +148,11 @@ class ClientStore {
     }
 
     try {
-      const { data } = await ClientService.getClientByPhone(encodeURIComponent(phone));
-
-      if (!data) {
-        return { data: {} as Client, error: 'Client not found' };
-      }
+      const { data } = await ClientService.getClientByPhone(
+        encodeURIComponent(phone),
+      );
 
       this.clients.push(data);
-
       return { data: data, error: '' };
     } catch {
       return {
@@ -193,7 +182,7 @@ class ClientStore {
 
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'clients.xlsx'; // Provide a default file name
+      downloadLink.download = 'clients.xlsx';
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

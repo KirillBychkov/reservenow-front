@@ -148,7 +148,7 @@ class UsersStore {
       // Create a link element and trigger the download
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'users.xlsx'; // Provide a default file name
+      downloadLink.download = 'users.xlsx';
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

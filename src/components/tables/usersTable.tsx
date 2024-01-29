@@ -15,6 +15,7 @@ import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
 import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
+import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 interface Props {
   users: User[] | null;
@@ -71,7 +72,11 @@ const UsersTable: React.FC<Props> = observer(
           <Column field='id' header='ID' sortable />
           <Column field='first_name' header={t('forms.firstName')} sortable />
           <Column field='last_name' header={t('forms.lastName')} sortable />
-          <Column field='phone' header={t('forms.phone')} />
+          <Column
+            style={{ minWidth: '155px' }}
+            field='phone'
+            header={t('forms.phone')}
+          />
           <Column field='account.email' header={t('forms.email')} />
           <Column
             header={t('forms.status')}
@@ -86,7 +91,15 @@ const UsersTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column header={t('dates.createdAt')} field='created_at' sortable />
+          <Column
+            style={{ minWidth: '170px' }}
+            header={t('dates.createdAt')}
+            sortField='created_at'
+            sortable
+            body={({ created_at }: User) => (
+              <p>{formatCreatedAtTable({ created_at }, i18n.language)}</p>
+            )}
+          />
           <Column
             header={t('actions.actions')}
             body={(rowData: Account) => (

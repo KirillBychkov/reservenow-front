@@ -38,6 +38,10 @@
   border-radius: 8px;
 }
 
+.p-dropdown.p-disabled span {
+  color: var(--text-disabled)
+}
+
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
   transform: translateX(1.65rem);
 }
@@ -75,6 +79,10 @@
   &:hover h3 {
     color: var(--Indigo-3, #7961db);
   }
+}
+
+.p-button:disabled.p-component.addReservationBtn.p-button-outlined h3 {
+  color: var(--text-disabled)
 }
 
 .p-button.p-component.addReservationBtn.p-button-outlined {

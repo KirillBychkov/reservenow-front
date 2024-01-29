@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './status.module.scss';
 import { getAllObjectsNamesInOrder } from './helper';
 import Paginator from '../UI/paginator/paginator';
+import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 type Props = {
   orders: Order[];
@@ -37,6 +38,7 @@ const OrdersHistoryTable: React.FC<Props> = observer(
       return {
         ...formatObjectIn(order, i18n.language),
         client: formatObjectIn(order.client, i18n.language),
+        created_at: formatCreatedAtTable(order, i18n.language),
       };
     });
 
@@ -59,14 +61,14 @@ const OrdersHistoryTable: React.FC<Props> = observer(
           }
         >
           <Column
-            style={{ maxWidth: '60px' }}
+            style={{ minWidth: '40px' }}
             field='id'
             header={t('reservationHistory.table.id')}
             sortable
           />
           <Column
             field='name'
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '170px' }}
             header={t('reservationHistory.table.clientName')}
             body={({ client }: Order) => {
               return `${client.first_name} ${client.last_name}`;
@@ -74,36 +76,37 @@ const OrdersHistoryTable: React.FC<Props> = observer(
             sortable
           />
           <Column
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '157px' }}
             field='client.phone'
             header={t('reservationHistory.table.phone')}
           />
           <Column
-            style={{ maxWidth: '450px' }}
+            style={{ minWidth: '200px' }}
             header={t('reservationHistory.table.reservations')}
             body={(order: Order) => getAllObjectsNamesInOrder(order).join(', ')}
           />
           <Column
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '130px' }}
             field='created_at'
             header={t('reservationHistory.table.createdAt')}
             sortable
           />
           <Column
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '112px' }}
             field='order_sum'
             header={t('reservationHistory.table.orderSum')}
+            body={({ order_sum }: Order) => `₴${order_sum}`}
             sortable
           />
           <Column
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '117px' }}
             header={t('reservationHistory.table.manager')}
             body={({ user }: Order) => {
               return `${user.first_name} ${user.last_name}`;
             }}
           />
           <Column
-            style={{ maxWidth: '120px' }}
+            style={{ minWidth: '125px' }}
             header={t('reservationHistory.table.status')}
             body={({ status }: Order) => (
               <div className={classNames(styles.status, styles[status])}>

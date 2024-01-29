@@ -77,6 +77,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         />
         <Column
           field='price'
+          style={{minWidth: '204px'}}
           header={t('equipment.priceColumn')}
           body={(rowData: Equipment) => (
             <p className='text-medium'>UAH {rowData.price}</p>

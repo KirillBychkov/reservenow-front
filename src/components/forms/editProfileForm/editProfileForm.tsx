@@ -99,7 +99,7 @@ export const EditProfileForm = observer(({ initialValues }: Props) => {
           className={styles.photoContainer}
           options={{ direction: 'column', gap: 0.75 }}
         >
-          {imgUrl ? (
+          {imgUrl && image ? (
             <>
               <div className={styles.photoBg}>
                 <img className={styles.photo} src={imgUrl} />

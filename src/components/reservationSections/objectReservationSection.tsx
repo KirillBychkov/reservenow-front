@@ -74,7 +74,7 @@ const ObjectReservationSection = ({
 
   const initialValues = {
     organization: rental_object?.organization || null,
-    rental_object: rental_object?.name || null,
+    rental_object: rental_object || null,
     date: dateOfStart ? new Date(dateOfStart) : null,
     startHours: dateOfStart?.getHours() || null,
     endHours: reservation_time_end
@@ -219,7 +219,10 @@ const ObjectReservationSection = ({
                 label: formik.values.organization?.name,
                 organization: formik.values.organization,
               }}
-              placeholder={t('schedule.form.objectSection.chooseOrganization')}
+              placeholder={
+                formik.values.organization?.name ||
+                t('schedule.form.objectSection.chooseOrganization')
+              }
               onBlur={formik.handleBlur}
               emptyMessage={t('schedule.organizationsNull')}
               className={classNames(isValidClassname(formik, 'organization'))}
@@ -243,7 +246,10 @@ const ObjectReservationSection = ({
                 label: rental_object?.name,
                 object: rental_object,
               }}
-              placeholder={t('schedule.form.objectSection.chooseObject')}
+              placeholder={
+                rental_object?.name ||
+                t('schedule.form.objectSection.chooseObject')
+              }
               onChange={handleObjectChange}
               emptyMessage={
                 isLoading && formik.values.organization ? (

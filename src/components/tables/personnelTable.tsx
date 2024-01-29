@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Button from '@/components/UI/buttons/button';
+import dayjs from 'dayjs';
+import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 type Props = {
   personnel: Personnel;
@@ -28,22 +30,25 @@ const getPersonnelTableData = (
   language: string,
 ): PersonnelTableData => {
   const { managers, trainers } = personnel;
-  const res = [];
+
   const formattedManagers = managers.map((manager) => ({
     ...formatObjectIn(manager, language),
     type: 'manager',
+    created_at: formatCreatedAtTable(manager, language)
   }));
   const formattedTrainers = trainers.map((trainer) => ({
     ...formatObjectIn(trainer, language),
     type: 'trainer',
+    created_at: formatCreatedAtTable(trainer, language),
   }));
-  res.push(...formattedManagers, ...formattedTrainers);
-  return res;
+
+  return [...formattedManagers, ...formattedTrainers];
 };
 
 const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  dayjs.locale(i18n.language);
 
   const formattedPersonnel = getPersonnelTableData(personnel, i18n.language);
 
@@ -62,21 +67,32 @@ const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
       className='tableWithoutFooter'
       emptyMessage={t('invalid.search')}
     >
-      <Column field='id' header={t('objects.id')} />
       <Column
+        field='id'
+        header={t('objects.id')}
+        style={{ minWidth: '80px' }}
+      />
+      <Column
+        style={{ minWidth: '200px' }}
         header={t('forms.firstName')}
         body={(rowData: ManagerWithTypeName | TrainerWithTypeName) => (
           <>{`${rowData.first_name} ${rowData.last_name}`}</>
         )}
       />
-      <Column field='phone' header={t('forms.phone')} />
       <Column
+        style={{ minWidth: '177px' }}
+        field='phone'
+        header={t('forms.phone')}
+      />
+      <Column
+        style={{ minWidth: '200px' }}
         header={t('forms.email')}
         body={(rowData: ManagerWithTypeName | TrainerWithTypeName) => (
           <>{`${rowData.account?.email || ''}`}</>
         )}
       />
       <Column
+        style={{ minWidth: '170px' }}
         header={t('personnel.role')}
         body={(rowData: ManagerWithTypeName | TrainerWithTypeName) => (
           <>{`${t(`personnel.${rowData.type}`)}`}</>
@@ -84,7 +100,12 @@ const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
         sortable
         sortField='type'
       />
-      <Column field='created_at' header={t('dates.date')} sortable />
+      <Column
+        style={{ minWidth: '160px' }}
+        field='created_at'
+        header={t('dates.date')}
+        sortable
+      />
       <Column
         header={t('actions.open')}
         body={(rowData: ManagerWithTypeName | TrainerWithTypeName) => (

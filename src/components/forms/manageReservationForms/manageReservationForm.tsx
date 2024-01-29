@@ -149,6 +149,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
         trainerReservations,
         objectReservations,
         showError,
+        !!initialOrder,
       );
 
       if (!isValid) {
@@ -171,7 +172,10 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
       }
 
       showSuccess(successMsg);
-      resetForm();
+
+      if (initialOrder === null) {
+        resetForm();
+      }
     },
   });
 
@@ -313,6 +317,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
               className='addReservationBtn'
               icon={<Plus color='#000' />}
               onClick={addEmptyObjectReservation}
+              disabled={!!initialOrder}
               fill
               outlined
             >
@@ -323,6 +328,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
             <Button
               style={{ backgroundColor: '#fff' }}
               className='addReservationBtn'
+              disabled={!!initialOrder}
               icon={<Plus color='#000' />}
               fill
               outlined
@@ -337,6 +343,7 @@ const ManageReservationForm = ({ initialOrder }: Props) => {
               className='addReservationBtn'
               icon={<Plus color='#000' />}
               onClick={handleAddEmptyReservation}
+              disabled={!!initialOrder}
               fill
               outlined
             >

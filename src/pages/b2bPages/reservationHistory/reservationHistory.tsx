@@ -35,7 +35,7 @@ const ReservationHistory = observer(() => {
     dateSpanOptions[0].value,
     new Date(),
   ]);
-  const isLaptopL = useMediaQuery('(max-width:1440px)');
+  const isLaptopL = useMediaQuery('(max-width:1560px)');
   const { startDate, endDate } = useMemo(() => {
     const isFirstDateNotNull = dates !== null && dates[0] !== null;
     const isSecondDateNotNull = dates !== null && dates[1] !== null;

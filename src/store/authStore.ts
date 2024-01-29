@@ -129,6 +129,10 @@ class AuthStore {
     return this.userRole as UserRole;
   }
 
+  get getUserDomain() {
+    return this.user.user?.domain_url;
+  }
+
   get getUserName(): string {
     return this.userName;
   }

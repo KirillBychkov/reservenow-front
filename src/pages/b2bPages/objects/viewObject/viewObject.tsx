@@ -72,9 +72,9 @@ const ViewObject: React.FC = observer(() => {
           home={{ icon: <Home color='gray' />, url: '/' }}
           model={[
             { label: t('organizations.organizations'), url: '/organizations' },
-            { label: `${id}`, url: '../' },
+            { label: `${object.organization.name ?? id}`, url: '../' },
             {
-              label: `${object?.name}`,
+              label: `${object.name ?? objectId}`,
               url: `${objectId}`,
             },
           ]}

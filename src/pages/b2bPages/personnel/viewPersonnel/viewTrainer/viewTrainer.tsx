@@ -69,7 +69,7 @@ const ViewTrainer: React.FC = observer(() => {
           model={[
             { label: t('personnel.personnel'), url: '/personnel' },
             {
-              label: `${trainer?.first_name} ${trainer?.last_name}`,
+              label: `${trainer?.first_name || ''} ${trainer?.last_name || ''}`,
               url: `/personnel/trainer/${trainer?.id}`,
             },
           ]}

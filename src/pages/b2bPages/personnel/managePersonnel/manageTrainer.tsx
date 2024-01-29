@@ -37,7 +37,12 @@ const ManageTrainer: React.FC = observer(() => {
         model={[
           { label: t('personnel.personnel'), url: '/personnel' },
           id
-            ? { label: t('actions.edit'), url: 'edit' }
+            ? {
+                label: `${trainer?.first_name || ''} ${
+                  trainer?.last_name || ''
+                }`,
+                url: 'edit',
+              }
             : { label: t('actions.add'), url: 'add' },
         ]}
       />

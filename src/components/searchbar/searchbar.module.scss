@@ -1,6 +1,12 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
 .search {
   display: flex;
   gap: 30px;
+
+  @include mixins.onLaptopL {
+    gap: 15px;
+  }
   .input {
     height: 100%;
     padding: 0.5rem 1rem;
@@ -13,4 +19,8 @@
 .buttonGroup {
   display: flex;
   gap: 12px;
+
+  @include mixins.onLaptopL {
+    gap: 6px;
+  }
 }

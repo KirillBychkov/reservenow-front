@@ -97,7 +97,10 @@ export const EquipmentReservationSection = ({
             label: formik.values.equipmentName,
             equipment,
           }}
-          placeholder={t('schedule.form.equipmentSection.chooseEquipment')}
+          placeholder={
+            formik.values.equipmentName ||
+            t('schedule.form.equipmentSection.chooseEquipment')
+          }
           options={options}
           onChange={handleChangeEquipment}
           onBlur={formik.handleBlur}

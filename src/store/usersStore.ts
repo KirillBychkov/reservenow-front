@@ -116,9 +116,7 @@ class UsersStore {
   ): Promise<ResponseOrError<User[]>> => {
     try {
       const response = await UserService.getUsers(filters);
-      if (response.data.data.length === 0) {
-        return { data: [], error: 'No clients found' };
-      }
+
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };
@@ -151,7 +149,7 @@ class UsersStore {
       // Create a link element and trigger the download
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'users.xlsx'; // Provide a default file name
+      downloadLink.download = 'users.xlsx';
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

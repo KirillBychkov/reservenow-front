@@ -14,6 +14,8 @@ import Button from '../UI/buttons/button';
 import { formatToUpperUnit } from '@/utils/formatters/formatPrice';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import dayjs from 'dayjs';
+import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 type Props = {
   clients: Client[];
@@ -34,6 +36,7 @@ const ClientsTable = observer(
     onPageChange,
   }: Props) => {
     const { t, i18n } = useTranslation();
+    dayjs.locale(i18n.language)
     const navigate = useNavigate();
     const filters = clientStore.getFilters();
 
@@ -42,7 +45,10 @@ const ClientsTable = observer(
     };
 
     const formattedClients: Client[] = useMemo<Client[]>(() => {
-      return clients.map((client) => formatObjectIn(client, i18n.language));
+      return clients.map((client) => ({
+        ...formatObjectIn(client, i18n.language),
+        created_at: formatCreatedAtTable(client, i18n.language)
+      }));
     }, [clients]);
 
     return (
@@ -52,6 +58,7 @@ const ClientsTable = observer(
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSortChange}
+        scrollable
         lazy
         footer={
           <Paginator
@@ -62,8 +69,14 @@ const ClientsTable = observer(
           />
         }
       >
-        <Column field='id' header={t('clients.idColumn')} sortable />
         <Column
+          field='id'
+          style={{ minWidth: '80px' }}
+          header={t('clients.idColumn')}
+          sortable
+        />
+        <Column
+          style={{ minWidth: '167px' }}
           sortField='first_name'
           header={t('clients.nameColumn')}
           body={({ first_name, last_name }: Client) =>
@@ -71,12 +84,18 @@ const ClientsTable = observer(
           }
           sortable
         />
-        <Column field='phone' header={t('clients.phoneColumn')} />
         <Column
+          style={{ minWidth: '166px' }}
+          field='phone'
+          header={t('clients.phoneColumn')}
+        />
+        <Column
+          style={{ minWidth: '112px' }}
           field='total_reservation_amount'
           header={t('clients.reservationColumn')}
         />
         <Column
+          style={{ minWidth: '204px' }}
           sortField='total_reservation_sum'
           header={t('clients.moneyColumn')}
           sortable
@@ -86,6 +105,7 @@ const ClientsTable = observer(
         />
 
         <Column
+          style={{ minWidth: '128px' }}
           header={t('forms.status')}
           body={({ status }: Client) => (
             <div className={classNames(styles.status, styles[status])}>
@@ -95,6 +115,7 @@ const ClientsTable = observer(
         />
 
         <Column
+          style={{ minWidth: '140px' }}
           field='created_at'
           sortable
           header={t('clients.createdColumn')}

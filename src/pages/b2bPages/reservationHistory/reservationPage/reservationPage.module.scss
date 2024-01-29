@@ -1,3 +1,5 @@
+@use 'src/primereact-theme/theme-base/mixins.scss';
+
 .page {
   padding: 25px 25px 0px 0px;
   width: 100%;
@@ -13,7 +15,10 @@
 }
 
 .reservationList {
-  flex: 3.5
+  flex: 3;
+  @include mixins.onLaptopL {
+    flex: 2;
+  }
 }
 
 .section {

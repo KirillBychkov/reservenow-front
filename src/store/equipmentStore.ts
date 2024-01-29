@@ -47,10 +47,6 @@ class EquipmentStore {
     try {
       const { data } = await EquipmentService.getEquipment(filters);
 
-      if (!data.data.length) {
-        return { data: [], error: 'No equipment found' };
-      }
-
       this.setEquipment(data.data);
       this.setFilters(data.filters);
       return { data: data.data, error: '' };

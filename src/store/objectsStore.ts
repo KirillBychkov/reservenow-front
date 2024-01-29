@@ -22,9 +22,7 @@ class ObjectsStore {
   ): Promise<ResponseOrError<RentalObject[]>> => {
     try {
       const response = await ObjectService.getObjects(filters, organizationId);
-      if (response.data.length === 0) {
-        return { data: [], error: 'No objects found' };
-      }
+
       this.setFilters(response.data.filters);
       this.setObjects(response.data.data);
       return { data: response.data.data, error: '' };

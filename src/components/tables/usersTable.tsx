@@ -14,6 +14,7 @@ import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 interface Props {
   users: User[];
@@ -41,9 +42,10 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: User[] = users.map((user) =>
-      formatObjectIn(user, i18n.language),
-    );
+    const formattedUsers: User[] = users.map((user) => ({
+      ...formatObjectIn(user, i18n.language),
+      created_at: formatCreatedAtTable(user, i18n.language),
+    }));
 
     return (
       <div>
@@ -69,7 +71,11 @@ const UsersTable: React.FC<Props> = observer(
           <Column field='id' header='ID' sortable />
           <Column field='first_name' header={t('forms.firstName')} sortable />
           <Column field='last_name' header={t('forms.lastName')} sortable />
-          <Column field='phone' header={t('forms.phone')} />
+          <Column
+            style={{ minWidth: '155px' }}
+            field='phone'
+            header={t('forms.phone')}
+          />
           <Column field='account.email' header={t('forms.email')} />
           <Column
             header={t('forms.status')}
@@ -84,7 +90,12 @@ const UsersTable: React.FC<Props> = observer(
               </div>
             )}
           />
-          <Column header={t('dates.createdAt')} field='created_at' sortable />
+          <Column
+            style={{ minWidth: '170px' }}
+            header={t('dates.createdAt')}
+            field='created_at'
+            sortable
+          />
           <Column
             header={t('actions.actions')}
             body={(rowData: Account) => (

@@ -69,16 +69,7 @@ const Users: React.FC = observer(() => {
         >
           <ProgressSpinner />
         </div>
-      ) : users?.length ? (
-        <UsersTable
-          users={users}
-          onPageChange={onPageChange}
-          first={first}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          onSortChange={handleSort}
-        />
-      ) : (
+      ) : !users?.length && !search ? (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>
             {t('clients.null')}
@@ -87,6 +78,15 @@ const Users: React.FC = observer(() => {
             {t('clients.add')}
           </Button>
         </div>
+      ) : (
+        <UsersTable
+          users={users}
+          onPageChange={onPageChange}
+          first={first}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={handleSort}
+        />
       )}
     </div>
   );

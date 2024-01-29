@@ -65,6 +65,7 @@ const PersonnelTable: React.FC<Props> = observer(({ personnel }) => {
       removableSort
       value={formattedPersonnel}
       className='tableWithoutFooter'
+      emptyMessage={t('invalid.search')}
     >
       <Column
         field='id'

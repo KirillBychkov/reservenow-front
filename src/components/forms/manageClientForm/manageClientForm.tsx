@@ -16,7 +16,7 @@ import { useContext, useMemo } from 'react';
 import ModalContext from '@/context/modal';
 import { useNavigate } from 'react-router-dom';
 import ToastContext from '@/context/toast';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { observer } from 'mobx-react-lite';
 import { ClientStatusOption } from '@/types/enums/client';
 import { ClientFormData } from '@/types/client';

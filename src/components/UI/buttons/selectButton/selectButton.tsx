@@ -12,9 +12,6 @@ const SelectButton: React.FC<Props> = (props) => {
     <PrSelectButton
       {...props}
       pt={{
-        button: {
-          className: styles.button,
-        },
         root: {
           className: styles.root,
         },

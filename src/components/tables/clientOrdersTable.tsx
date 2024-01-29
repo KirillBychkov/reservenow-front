@@ -1,6 +1,6 @@
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { Order } from '@/models/Order';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableStateEvent } from 'primereact/datatable';
 import { PaginatorPageChangeEvent } from 'primereact/paginator';

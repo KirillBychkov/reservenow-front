@@ -59,7 +59,6 @@ class ClientStore {
   ): Promise<ResponseOrError<Client[]>> => {
     try {
       const { data } = await ClientService.getClients(filters);
-
       this.setClients(data.data);
       this.setFilters(data.filters);
       return { data: data.data, error: '' };
@@ -151,7 +150,6 @@ class ClientStore {
       const { data } = await ClientService.getClientByPhone(
         encodeURIComponent(phone),
       );
-
       this.clients.push(data);
       return { data: data, error: '' };
     } catch {

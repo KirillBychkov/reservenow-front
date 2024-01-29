@@ -38,6 +38,7 @@ const TopClientsTable: React.FC<Props> = ({ topClients }) => {
         )}
         removableSort
         value={formattedClients}
+        emptyMessage={t('invalid.search')}
       >
         <Column field='id' header={t('objects.id')} sortable />
         <Column field='name' header={t('forms.firstName')} sortable />

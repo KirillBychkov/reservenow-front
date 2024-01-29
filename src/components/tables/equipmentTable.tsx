@@ -13,9 +13,10 @@ import { useContext, useMemo } from 'react';
 import ToastContext from '@/context/toast';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 
 type TableProps = {
-  equipment: Equipment[];
+  equipment: Equipment[] | null;
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -46,7 +47,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
     };
 
     const formattedEquipment = useMemo(
-      () => equipment.map((eq) => formatObjectIn(eq, i18n.language)),
+      () => equipment?.map((eq) => formatObjectIn(eq, i18n.language)),
       [equipment],
     );
 
@@ -58,6 +59,7 @@ export const EquipmentTable: React.FC<TableProps> = observer(
         sortOrder={sortOrder}
         onSort={onSortChange}
         lazy
+        emptyMessage={<TableEmptyMessage text={t('invalid.search')} />}
         footer={
           <Paginator
             first={first}

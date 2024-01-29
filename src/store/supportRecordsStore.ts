@@ -32,7 +32,6 @@ class SupportRecordsStore {
   ): Promise<ResponseOrError<Support[]>> => {
     try {
       const response = await SupportService.getAllSupportRecords(filters);
-
       this.setSupportRecords(response.data.data);
       this.setFilters(response.data.filters);
       return { data: response.data.data, error: '' };

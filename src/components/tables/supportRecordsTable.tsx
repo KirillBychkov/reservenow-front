@@ -13,9 +13,10 @@ import supportRecordsStore from '@/store/supportRecordsStore';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 
 interface Props {
-  supportRecords: Support[];
+  supportRecords: Support[] | null;
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -40,7 +41,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
       navigate(`${id}`);
     };
 
-    const supportRecordsData = supportRecords.map((supportRecord) =>
+    const supportRecordsData = supportRecords?.map((supportRecord) =>
       formatObjectIn(supportRecord, i18n.language),
     );
 
@@ -52,6 +53,7 @@ const SupportRecordsTable: React.FC<Props> = observer(
           sortField={sortField}
           sortOrder={sortOrder}
           onSort={onSortChange}
+          emptyMessage={<TableEmptyMessage text={t('invalid.search')} />}
           lazy={true}
           footer={
             <Paginator

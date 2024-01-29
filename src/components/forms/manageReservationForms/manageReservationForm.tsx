@@ -16,7 +16,7 @@ import * as yup from 'yup';
 import isValidClassname from '@/utils/isValidClassname';
 import classNames from 'classnames';
 import useFetch from '@/hooks/useFetch';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { formatPhoneOut } from '@/utils/formatters/formatPhone';
 import { Client } from '@/models/Client';
 import { PaymentTypeOptions } from '@/types/enums/payment';

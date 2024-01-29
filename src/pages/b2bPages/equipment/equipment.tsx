@@ -32,8 +32,6 @@ const Equipment: React.FC = observer(() => {
     [limit, skip, search, sort],
     { onError: showError },
   );
-  const isEquipmentEmpty =
-    (equipment === null || equipment.length === 0) && !isLoading;
 
   return (
     <div className={styles.equipment}>
@@ -47,24 +45,11 @@ const Equipment: React.FC = observer(() => {
           {t('actions.addEquipment')}
         </Button>
       </div>
-      {isLoading && (
+      {isLoading ? (
         <div className={styles.content}>
           <ProgressSpinner />
         </div>
-      )}
-
-      {equipment?.length && (
-        <EquipmentTable
-          equipment={equipment}
-          onPageChange={onPageChange}
-          onSortChange={handleSort}
-          first={first}
-          sortField={sortField}
-          sortOrder={sortOrder}
-        />
-      )}
-
-      {isEquipmentEmpty && (
+      ) : !equipment?.length && !search ? (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>
             {t('equipment.empty')}
@@ -73,6 +58,15 @@ const Equipment: React.FC = observer(() => {
             {t('actions.addEquipment')}
           </Button>
         </div>
+      ) : (
+        <EquipmentTable
+          equipment={equipment}
+          onPageChange={onPageChange}
+          onSortChange={handleSort}
+          first={first}
+          sortField={sortField}
+          sortOrder={sortOrder}
+        />
       )}
     </div>
   );

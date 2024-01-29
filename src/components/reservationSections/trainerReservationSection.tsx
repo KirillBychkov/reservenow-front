@@ -176,7 +176,10 @@ const TrainerReservationSection = ({
         <CustomDropdown
           name='trainerName'
           disabled={isEditingMode}
-          placeholder={t('schedule.form.trainerSection.chooseTrainer')}
+          placeholder={
+            formik.values.trainerName ||
+            t('schedule.form.trainerSection.chooseTrainer')
+          }
           value={{
             label: formik.values.trainerName,
             trainer,

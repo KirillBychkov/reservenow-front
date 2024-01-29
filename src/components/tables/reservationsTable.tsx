@@ -63,12 +63,16 @@ const ReservationsTable = ({ reservations, total }: Props) => {
         style={{ width: '25%', minWidth: '190px' }}
         header={t('reservationHistory.reservationTable.createdAt')}
         body={({ reservation_time_start }: Reservation) =>
-          formatDate(i18n.language)(reservation_time_start as string)
+          reservation_time_start ? (
+            formatDate(i18n.language)(reservation_time_start as string)
+          ) : (
+            <Minus />
+          )
         }
       />
 
       <Column
-       style={{ width: '25%', minWidth: '200px' }}
+        style={{ width: '25%', minWidth: '200px' }}
         header={t('reservationHistory.reservationTable.rentalTime')}
         body={({ reservation_time_start, reservation_time_end }: Reservation) =>
           reservation_time_start ? (
@@ -83,7 +87,7 @@ const ReservationsTable = ({ reservations, total }: Props) => {
       />
 
       <Column
-      style={{ width: '25%', minWidth: '100px' }}
+        style={{ width: '25%', minWidth: '100px' }}
         header={t('reservationHistory.reservationTable.total')}
         body={({ price }: Reservation) => `₴${price}`}
       />

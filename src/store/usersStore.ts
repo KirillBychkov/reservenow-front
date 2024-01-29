@@ -116,7 +116,6 @@ class UsersStore {
   ): Promise<ResponseOrError<User[]>> => {
     try {
       const response = await UserService.getUsers(filters);
-
       this.setFilters(response.data.filters);
       this.setClients(response.data.data);
       return { data: response.data.data, error: '' };

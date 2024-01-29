@@ -31,7 +31,10 @@ const ReservationHistory = observer(() => {
   const { sort, sortField, sortOrder, handleSort } = useSort();
   const { limit, skip, first, onPageChange } = usePaginate(ordersStore.filters);
   const { search, handleSearch } = useSearch(onPageChange);
-  const [dates, setDates] = useState<Date[] | null>([dateSpanOptions[0].value, new Date()]);
+  const [dates, setDates] = useState<Date[] | null>([
+    dateSpanOptions[0].value,
+    new Date(),
+  ]);
   const isLaptopL = useMediaQuery('(max-width:1560px)');
   const { startDate, endDate } = useMemo(() => {
     const isFirstDateNotNull = dates !== null && dates[0] !== null;
@@ -99,11 +102,8 @@ const ReservationHistory = observer(() => {
               <SelectButton
                 value={dates ? dates[0] : null}
                 onChange={(e) => {
-                  if (e.value === null) {
-                    setDates(null);
-                  } else {
-                    setDates([e.value, new Date()]);
-                  }
+                  if (!e.value) return;
+                  setDates([e.value, new Date()]);
                 }}
                 options={dateSpanOptions}
               />

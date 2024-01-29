@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import ToastContext from '@/context/toast';
 import useFetch from '@/hooks/useFetch';
 import { Client } from '@/models/Client';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 const ManageClient = observer(() => {

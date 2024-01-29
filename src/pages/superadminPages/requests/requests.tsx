@@ -40,7 +40,13 @@ const Requests: React.FC = observer(() => {
       </div>
       {isLoading ? (
         <ProgressSpinner />
-      ) : supportRecords?.length ? (
+      ) : !supportRecords?.length && !search ? (
+        <div className={styles.content}>
+          <h2 className='heading heading-2 heading-primary text-center'>
+            {t('requests.null')}
+          </h2>
+        </div>
+      ) : (
         <SupportRecordsTable
           supportRecords={supportRecords}
           first={first}
@@ -49,12 +55,6 @@ const Requests: React.FC = observer(() => {
           sortOrder={sortOrder}
           onSortChange={handleSort}
         />
-      ) : (
-        <div className={styles.content}>
-          <h2 className='heading heading-2 heading-primary text-center'>
-            {t('requests.null')}
-          </h2>
-        </div>
       )}
     </div>
   );

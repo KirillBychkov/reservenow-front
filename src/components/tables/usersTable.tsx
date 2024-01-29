@@ -14,10 +14,11 @@ import { observer } from 'mobx-react-lite';
 import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
+import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
 import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 interface Props {
-  users: User[];
+  users: User[] | null;
   onPageChange: (event: PaginatorPageChangeEvent) => void;
   first: number;
   sortField: SortField;
@@ -42,16 +43,16 @@ const UsersTable: React.FC<Props> = observer(
       navigate(`${id}/edit`);
     };
 
-    const formattedUsers: User[] = users.map((user) => ({
-      ...formatObjectIn(user, i18n.language),
-      created_at: formatCreatedAtTable(user, i18n.language),
-    }));
+    const formattedUsers = users?.map((user) =>
+      formatObjectIn(user, i18n.language),
+    );
 
     return (
       <div>
         <DataTable
           removableSort
           value={formattedUsers}
+          emptyMessage={<TableEmptyMessage text={t('invalid.search')} />}
           selectionMode='single'
           selection={selectedUser!}
           onSelectionChange={(e) => handleViewUser(e.value)}
@@ -93,8 +94,11 @@ const UsersTable: React.FC<Props> = observer(
           <Column
             style={{ minWidth: '170px' }}
             header={t('dates.createdAt')}
-            field='created_at'
+            sortField='created_at'
             sortable
+            body={({ created_at }: User) => (
+              <p>{formatCreatedAtTable({ created_at }, i18n.language)}</p>
+            )}
           />
           <Column
             header={t('actions.actions')}

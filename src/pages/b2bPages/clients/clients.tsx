@@ -3,7 +3,7 @@ import useFetch from '@/hooks/useFetch';
 import usePaginate from '@/hooks/usePaginate';
 import { useSort } from '@/hooks/useSort';
 import { Client } from '@/models/Client';
-import clientStore from '@/store/ClientStore';
+import clientStore from '@/store/clientStore';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,8 +31,6 @@ const Clients = observer(() => {
     [limit, skip, search, sort],
     { onError: showError },
   );
-  const isClientsEmpty =
-    (clients === null || clients.length === 0) && !isLoading;
 
   return (
     <div className={styles.pageBody}>
@@ -58,24 +56,11 @@ const Clients = observer(() => {
         </Flex>
       </div>
 
-      {isLoading && (
+      {isLoading ? (
         <div className={styles.content}>
           <ProgressSpinner />
         </div>
-      )}
-
-      {clients?.length && (
-        <ClientsTable
-          clients={clients}
-          onPageChange={onPageChange}
-          onSortChange={handleSort}
-          first={first}
-          sortField={sortField}
-          sortOrder={sortOrder}
-        />
-      )}
-
-      {isClientsEmpty && (
+      ) : !clients?.length && !search ? (
         <div className={styles.content}>
           <h2 className='heading heading-2 heading-primary text-center'>
             {t('clients.null')}
@@ -84,6 +69,15 @@ const Clients = observer(() => {
             {t('clients.add')}
           </Button>
         </div>
+      ) : (
+        <ClientsTable
+          clients={clients}
+          onPageChange={onPageChange}
+          onSortChange={handleSort}
+          first={first}
+          sortField={sortField}
+          sortOrder={sortOrder}
+        />
       )}
     </div>
   );

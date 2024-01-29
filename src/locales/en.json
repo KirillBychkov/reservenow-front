@@ -162,7 +162,8 @@
     "phone": "Invalid phone number format",
     "positiveOnly": "Positive values only",
     "invalidCredentials": "Password or email is invalid",
-    "nonexistentEmail": "The user with this email does not exist"
+    "nonexistentEmail": "The user with this email does not exist",
+    "search": "No results found"
   },
   "dates": {
     "date": "Date",
@@ -303,7 +304,7 @@
   },
   "statistics": {
     "statistics": "Statistics",
-    "pickOrganization": "Pick an organization",
+    "selectOrganization": "Select an organization",
     "notSelected": "You have not selected an organization",
     "organizationLoad": "Organization load"
   },
@@ -335,7 +336,7 @@
         "organization": "Organization",
         "chooseOrganization": "Select an organization",
         "object": "Object",
-        "chooseObject": "Choose an object"
+        "chooseObject": "Select an object"
       },
       "addToOrder": "Add to order:",
       "trainer": "Trainer",

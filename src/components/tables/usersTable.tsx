@@ -15,7 +15,6 @@ import { SortField, SortOrder } from '@/hooks/useSort';
 import { formatObjectIn } from '@/utils/formatters/formatObject';
 import Paginator from '../UI/paginator/paginator';
 import { TableEmptyMessage } from '../UI/tableEmptyMessage/tableEmptyMessage';
-import { formatCreatedAtTable } from '@/utils/formatters/formatDate';
 
 interface Props {
   users: User[] | null;
@@ -92,13 +91,11 @@ const UsersTable: React.FC<Props> = observer(
             )}
           />
           <Column
+            field='created_at'
             style={{ minWidth: '170px' }}
             header={t('dates.createdAt')}
             sortField='created_at'
             sortable
-            body={({ created_at }: User) => (
-              <p>{formatCreatedAtTable({ created_at }, i18n.language)}</p>
-            )}
           />
           <Column
             header={t('actions.actions')}

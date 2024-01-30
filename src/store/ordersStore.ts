@@ -11,7 +11,7 @@ import { TimeRange } from '@/types/timeRange';
 
 class OrdersStore {
   orders: Order[] = [];
-  filters: Filters = { total: 0, limit: 4 };
+  filters: Filters = { total: 0, limit: 8 };
 
   constructor() {
     makeAutoObservable(this);

@@ -23,6 +23,11 @@
 
 .section {
   flex: 1;
+  height: fit-content;
+
+  @media (max-width: 1300px) {
+    height: auto;
+  }
 }
 
 .tableHeader {

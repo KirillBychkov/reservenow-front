@@ -9,7 +9,7 @@ import { makeAutoObservable } from 'mobx';
 
 class SupportRecordsStore {
   supportRecords: Support[] = [];
-  filters: Filters = { total: 0, limit: 4 };
+  filters: Filters = { total: 0, limit: 8 };
 
   constructor() {
     makeAutoObservable(this);

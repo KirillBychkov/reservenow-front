@@ -64,7 +64,14 @@ const ManageUserForm: React.FC<Props> = observer(({ initialValues }) => {
     email: Yup.string()
       .email(t('invalid.email'))
       .required(t('invalid.required')),
-    companyName: Yup.string().required(t('invalid.required')),
+    companyName: Yup.string()
+      .required(t('invalid.required'))
+      .test('companyName', t('invalid.companyName'), (value) => {
+        if (value) {
+          return /^[a-z0-9-]+$/.test(value);
+        }
+        return false;
+      }),
   });
 
   const formData: UserFormData = initialValues || {

@@ -21,7 +21,7 @@ export const ReservationDetailCard = ({ title, details, status }: Props) => {
   const { t } = useTranslation();
   return (
     <Flex options={{ direction: 'column', gap: 1 }} className={styles.card}>
-      <Flex options={{align: 'center', gap: 0.875}}>
+      <Flex options={{ align: 'center', gap: 0.875 }}>
         <h4 className='heading heading-4'>{title}</h4>
         {status && (
           <div className={classNames(styles.status, styles[status])}>
@@ -33,7 +33,8 @@ export const ReservationDetailCard = ({ title, details, status }: Props) => {
       {details.map(({ label, value, direction }) => (
         <Flex
           key={value}
-          options={{ justify: 'space-between', gap: 0.375, direction }}
+          className={styles.details}
+          options={{ justify: 'space-between', gap: 0.5, direction }}
         >
           <p className='heading heading-6'>{label}</p>
           <p className='paragraph paragraph--normal'>{value || <Minus />}</p>

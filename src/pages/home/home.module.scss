@@ -1,14 +1,7 @@
-@use 'src/primereact-theme/theme-base/mixins.scss' as mixins;
-
 .home {
-  padding: 25px 25px 25px 0;
   width: 100%;
   display: flex;
   gap: 1.125rem;
   flex-wrap: wrap;
   align-content: baseline;
-
-  @include mixins.onLaptop {
-    padding: 25px 16px 25px 0;
-  }
 }

@@ -47,7 +47,7 @@ const LeftSide: React.FC<Props> = ({ data }) => {
           </div>
         </div>
 
-        <div>
+        <div className={styles.hours}>
           <h6 className={classNames('heading', 'heading-6', styles.hoursHeading)}>
             {t('organizations.workHours')}
           </h6>

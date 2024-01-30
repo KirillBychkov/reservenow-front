@@ -23,7 +23,7 @@ const ReservationDetailsSection = ({ order }: Props) => {
   const { t } = useTranslation();
   const { created_at, id, payment_method, reservations, client, user } = order;
   const objectNames = getObjectNames(reservations);
-  const isLaptop = useMediaQuery('(max-width:1200px)');
+  const isLaptop = useMediaQuery('(max-width:1300px)');
 
   return (
     <Flex options={{ gap: 1.5, justify: 'space-between' }}>

@@ -10,7 +10,7 @@ import { makeAutoObservable } from 'mobx';
 
 class EquipmentStore {
   equipment: Equipment[] = [];
-  filters: Filters = { total: 0, limit: 4 };
+  filters: Filters = { total: 0, limit: 8 };
 
   constructor() {
     makeAutoObservable(this);

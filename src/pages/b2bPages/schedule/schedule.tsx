@@ -30,7 +30,7 @@ const Schedule = observer(() => {
   const [currentObj, setCurrentObj] = useState<RentalObject | null>(null);
   const [event, setEvents] = useState<Event[] | null>(null);
   const navigate = useNavigate();
-  const isLaptop = useMediaQuery('(max-width: 1300px)');
+  const isLaptop = useMediaQuery('(max-width: 1350px)');
 
   const { data: organizations } = useFetch(
     () => organizationStore.getOrganizations(),

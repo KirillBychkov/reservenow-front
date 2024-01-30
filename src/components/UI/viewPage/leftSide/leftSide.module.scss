@@ -45,6 +45,13 @@
 
   .infoItem {
     margin-bottom: 1rem;
+
+    @include mixins.onLaptopL {
+      max-width: 145px;
+    }
+  }
+  .hours {
+    min-width: 120px;
   }
 }
 

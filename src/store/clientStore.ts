@@ -11,9 +11,9 @@ import { makeAutoObservable } from 'mobx';
 
 class ClientStore {
   clients: Client[] = [];
-  filters: Filters = { total: 0, limit: 4 };
+  filters: Filters = { total: 0, limit: 8 };
   clientOrders: Order[] = [];
-  ordersFilters: Filters = { total: 0, limit: 4 };
+  ordersFilters: Filters = { total: 0, limit: 10 };
 
   constructor() {
     makeAutoObservable(this);

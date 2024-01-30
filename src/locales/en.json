@@ -160,6 +160,7 @@
     "passwordMatch": "Invalid password",
     "confirmPasswordMustMatch": "Passwords must match",
     "phone": "Invalid phone number format",
+    "companyName": "The domain must contain only lowercase Latin letters (a-z), numbers (0-9) and a hyphen (-)",
     "positiveOnly": "Positive values only",
     "invalidCredentials": "Password or email is invalid",
     "nonexistentEmail": "The user with this email does not exist",

@@ -28,6 +28,7 @@
   height: calc(100vh - 78px);
   overflow: scroll;
   scroll-margin: 78px;
+  padding: 20px 25px 25px 0;
 }
 @media (max-width: 1200px) {
   .content {

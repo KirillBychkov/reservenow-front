@@ -34,7 +34,7 @@ export const Toolbar = ({
   const navigate = useNavigate();
   const { onObjChange, objOptions, objectName } = objUtils;
   const { orgName, onOrgChange, orgOptions } = orgUtils;
-  const isLaptop = useMediaQuery('(max-width:1300px)');
+  const isLaptop = useMediaQuery('(max-width:1350px)');
 
   const handleNext = () => {
     onNavigate('NEXT');

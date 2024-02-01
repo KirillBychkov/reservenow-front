@@ -71,7 +71,7 @@ const ContactUs = observer(() => {
             <Flex options={{ direction: 'column', gap: 0.25 }}>
               <h6 className='heading heading-6'>{t('forms.chooseFile')}</h6>
               <FileUpload
-                onDrop={handleDrop}
+                onBeforeDrop={handleDrop}
                 fileUploadRef={ref}
                 onChange={handleSelect}
                 onClear={handleClearFile}

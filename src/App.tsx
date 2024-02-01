@@ -15,7 +15,8 @@ const App = observer(() => {
   const isDomainInUrl = domain && location.host.split('.')[0] !== domain;
 
   if (isDomainInUrl && isProductionMode) {
-    navigateToSubDomain(domain);
+    // TODO: Uncomment when subdomain redirection will work
+    // navigateToSubDomain(domain);
   }
 
   return (

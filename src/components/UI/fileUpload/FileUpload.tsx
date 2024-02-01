@@ -1,6 +1,6 @@
 import {
-  ItemTemplateOptions,
   FileUpload as PrFileUpload,
+  FileUploadProps,
 } from 'primereact/fileupload';
 import { ChangeEvent, ReactNode, RefObject } from 'react';
 import Button from '../buttons/button';
@@ -8,24 +8,12 @@ import styles from './FileUpload.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Cross, Media } from '@blueprintjs/icons';
 
-// TODO:
-// refactor Props to extend FileUploadProps from primereact
-// check ./dropdown/customDropdown or ./buttons/button for example
-// show initialValues url as attached file too
-// check ./links/viewImage.tsx for example
-
 type Props = {
   fileUploadRef: RefObject<PrFileUpload>;
   buttonText?: string;
-  emptyTemplate?: ReactNode;
-  itemTemplate?:
-    | ReactNode
-    | ((file: object, options: ItemTemplateOptions) => ReactNode);
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onDrop: (e: DragEvent) => void;
-  onClear: () => void;
   fileName: string;
-};
+} & FileUploadProps;
 
 export const FileUpload = ({
   fileUploadRef,
@@ -34,8 +22,9 @@ export const FileUpload = ({
   buttonText,
   onChange,
   onClear,
-  onDrop,
+  onBeforeDrop,
   fileName,
+  ...rest
 }: Props) => {
   const { t } = useTranslation();
 
@@ -44,12 +33,14 @@ export const FileUpload = ({
       <>
         <input id='file' type='file' onChange={onChange} hidden />
         <label className={styles.label} htmlFor='file'>
-          {emptyTemplate || (
+          {(emptyTemplate as ReactNode) || (
             <>
               <div className={styles.icon}>
                 <Media color='white' size={22} />
               </div>
-              <p className='heading heading-6 heading-disabled '>{t('contact-us.howToAddFile')}</p>
+              <p className='heading heading-6 heading-disabled '>
+                {t('contact-us.howToAddFile')}
+              </p>
               <Button type='button' className={styles.btn} outlined>
                 {buttonText || t('contact-us.addFile')}
               </Button>
@@ -65,9 +56,10 @@ export const FileUpload = ({
       <PrFileUpload
         headerTemplate={() => null}
         emptyTemplate={template}
-        onBeforeDrop={onDrop}
+        onBeforeDrop={onBeforeDrop}
         itemTemplate={template || itemTemplate}
         ref={fileUploadRef}
+        {...rest}
       />
       {fileName && (
         <div className={styles.fileContainer}>

@@ -139,7 +139,7 @@ const ManageOrganizationForm: React.FC<Props> = observer(
             </Flex>
           ) : (
             <FileUpload
-              onDrop={handleDrop}
+              onBeforeDrop={handleDrop}
               fileUploadRef={ref}
               onChange={handleSelect}
               onClear={handleClearFile}

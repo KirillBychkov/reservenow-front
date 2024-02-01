@@ -200,7 +200,7 @@ const ManageObjectForm: React.FC<Props> = observer(({ initialValues }) => {
           </Flex>
         ) : (
           <FileUpload
-            onDrop={handleDrop}
+            onBeforeDrop={handleDrop}
             fileUploadRef={ref}
             onChange={handleSelect}
             onClear={handleClearFile}
